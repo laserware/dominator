@@ -32,7 +32,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@laserware/arcade": "^1.0.0"
+    "@laserware/arcade": "^1.0.1"
   },
   "devDependencies": {
     "@laserware/eslint-config": "^1.0.0",
