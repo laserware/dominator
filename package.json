@@ -32,7 +32,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@dazzlegram/caboodle": "^1.6.2"
+    "@laserware/arcade": "^1.0.0"
   },
   "devDependencies": {
     "@laserware/eslint-config": "^1.0.0",

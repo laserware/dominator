@@ -1,4 +1,4 @@
-import { kebabCase } from "@dazzlegram/caboodle";
+import { kebabCase } from "@laserware/arcade";
 
 /**
  * Creates a CSS selector string from the attributes object.

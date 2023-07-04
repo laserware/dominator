@@ -1,4 +1,4 @@
-import { isNil } from "@dazzlegram/caboodle";
+import { isNil } from "@laserware/arcade";
 
 import { asElement } from "../asElement.js";
 import type { ElementInput } from "../types.js";

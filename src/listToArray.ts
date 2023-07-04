@@ -1,4 +1,4 @@
-import { isNil } from "@dazzlegram/caboodle";
+import { isNil } from "@laserware/arcade";
 
 /**
  * Converts the specified NodeList or HTMLCollection to an array to be able to

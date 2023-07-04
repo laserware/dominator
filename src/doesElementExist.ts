@@ -1,4 +1,4 @@
-import { isNil } from "@dazzlegram/caboodle";
+import { isNil } from "@laserware/arcade";
 
 import { findOneElement } from "./findOneElement.js";
 import { isPrimitive } from "./typeAssertions.js";

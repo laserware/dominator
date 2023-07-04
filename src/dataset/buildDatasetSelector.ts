@@ -1,4 +1,4 @@
-import { isNil, kebabCase } from "@dazzlegram/caboodle";
+import { isNil, kebabCase } from "@laserware/arcade";
 
 /**
  * Returns a valid selector for a dataset with the specified key and optional
