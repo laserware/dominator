@@ -12,3 +12,5 @@ export type ElementInputWithoutString =
   | undefined;
 
 export type ElementInput = ElementInputWithoutString | string;
+
+export type TargetType = "currentTarget" | "target";

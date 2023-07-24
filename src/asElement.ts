@@ -1,7 +1,5 @@
 import { isElementOrDocument, isEvent } from "./typeAssertions.js";
-import type { ElementInput } from "./types.js";
-
-type TargetType = "currentTarget" | "target";
+import type { ElementInput, TargetType } from "./types.js";
 
 /**
  * Returns an element (or null) based on the specified input and parent. Allows

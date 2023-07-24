@@ -9,16 +9,12 @@ export function maintainElementScrollVisibility(
   activeElement: ElementInput,
   scrollParent: ElementInput,
 ): void {
-  const validScrollElement = asElement(scrollParent, {
-    useCurrentTarget: false,
-  });
+  const validScrollElement = asElement(scrollParent, "target");
   if (validScrollElement === null) {
     return;
   }
 
-  const validActiveElement = asElement(activeElement, {
-    useCurrentTarget: false,
-  });
+  const validActiveElement = asElement(activeElement, "target");
   if (validActiveElement === null) {
     return;
   }

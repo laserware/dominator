@@ -1,4 +1,4 @@
-import { asElement } from "./asElement.js";
+import { getValidElement } from "./getValidElement.js";
 import type { ElementInput } from "./types.js";
 
 export interface SetFocusOptions {
@@ -23,9 +23,12 @@ export function setFocusToElement(
     return;
   }
 
-  const validElement = asElement(element, { parent: options?.parent });
+  const validElement = getValidElement(element, options?.parent);
 
-  setTimeout(() => {
-    validElement?.focus({ preventScroll: options?.preventScroll ?? false });
-  }, options?.delay ?? 0);
+  setTimeout(
+    () => {
+      validElement?.focus({ preventScroll: options?.preventScroll ?? false });
+    },
+    options?.delay ?? 0,
+  );
 }

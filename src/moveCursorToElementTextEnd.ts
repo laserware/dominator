@@ -1,4 +1,4 @@
-import { asElement } from "./asElement.js";
+import { getValidElement } from "./getValidElement.js";
 import type { ElementInput } from "./types.js";
 
 /**
@@ -10,7 +10,7 @@ export function moveCursorToElementTextEnd(
   element: ElementInput | null,
   parent: ElementInput | null = document,
 ): void {
-  const validElement = asElement(element, { parent });
+  const validElement = getValidElement(element, parent);
   if (validElement === null) {
     return;
   }

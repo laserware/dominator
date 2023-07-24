@@ -1,4 +1,4 @@
-import { asElement } from "./asElement.js";
+import { getValidElement } from "./getValidElement.js";
 import type { ElementInput } from "./types.js";
 
 /**
@@ -14,8 +14,8 @@ export function hasParentElement(
   parent: ElementInput | null,
   options: { maxDepth: number } = { maxDepth: 10 },
 ): boolean {
-  const parentElement = asElement(parent);
-  const childElement = asElement(child, { parent: parentElement });
+  const parentElement = getValidElement(parent);
+  const childElement = getValidElement(child, parentElement);
 
   if (childElement === null || parentElement === null) {
     return false;
