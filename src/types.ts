@@ -2,12 +2,13 @@ type FormInputEvent = Event & {
   currentTarget: EventTarget & HTMLInputElement;
 };
 
-export type ElementInput =
+export type ElementInputWithoutString =
   | Document
   | Element
   | HTMLElement
   | Event
   | FormInputEvent
-  | string
   | null
   | undefined;
+
+export type ElementInput = ElementInputWithoutString | string;

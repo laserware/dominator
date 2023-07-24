@@ -1,21 +1,18 @@
-import { isNil } from "@laserware/arcade";
-
-import { isElementOrDocument, isEvent, isPrimitive } from "./typeAssertions.js";
+import { isElementOrDocument, isEvent } from "./typeAssertions.js";
 import type { ElementInput } from "./types.js";
+
+type TargetType = "currentTarget" | "target";
 
 /**
  * Returns an element (or null) based on the specified input and parent. Allows
  * you to specify a CSS selector, an Event, or an HTML element as the element
  * and optional parent input.
  * @param element Element input to assert as an element
- * @param [options] Optional options for getting the element
+ * @param targetType Target type to get if specified element is an event
  */
 export function asElement<T = HTMLElement>(
   element: ElementInput | null,
-  options: { parent?: ElementInput | null; useCurrentTarget?: boolean } = {
-    parent: null,
-    useCurrentTarget: false,
-  },
+  targetType: TargetType = "target",
 ): T | null {
   if (element === null) {
     return null;
@@ -26,29 +23,14 @@ export function asElement<T = HTMLElement>(
     return element as unknown as T;
   }
 
-  // CSS selector was passed in. Find the appropriate element in the DOM.
-  if (isPrimitive(element)) {
-    let parentElement: HTMLElement | null = options.parent as HTMLElement;
-
-    if (isEvent(options.parent)) {
-      parentElement = options.parent.currentTarget as HTMLElement;
-    } else if (isPrimitive(options.parent)) {
-      parentElement = document.querySelector(parent.toString());
-    } else if (isNil(parentElement)) {
-      parentElement = document as unknown as HTMLElement;
-    }
-
-    const selector = element.toString();
-
-    return (parentElement?.querySelector(selector) as unknown as T) ?? null;
-  }
-
-  // The element was an event, so we extract the target and return it.
+  // The element was an event, so we extract the target/currentTarget and return it.
   if (isEvent(element)) {
-    if (options.useCurrentTarget) {
+    if (targetType === "currentTarget") {
       return (element?.currentTarget as unknown as T) ?? null;
-    } else {
+    } else if (targetType === "target") {
       return (element?.target as unknown as T) ?? null;
+    } else {
+      throw new Error(`Invalid target type: ${targetType}`);
     }
   }
 
