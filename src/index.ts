@@ -10,6 +10,7 @@ export { findFirstFocusableInput } from "./findFirstFocusableInput.js";
 export { findOneElement } from "./findOneElement.js";
 export { getCssVar } from "./getCssVar.js";
 export { getElementValue } from "./getElementValue.js";
+export { getInputElementWidth } from "./getInputElementWidth.js";
 export { hasParentElement } from "./hasParentElement.js";
 export { isElementDifferentFrom } from "./isElementDifferentFrom.js";
 export { isElementInView } from "./isElementInView.js";
