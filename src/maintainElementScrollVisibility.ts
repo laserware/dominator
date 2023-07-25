@@ -1,4 +1,4 @@
-import { asElement } from "./asElement.js";
+import { getValidElement } from "./getValidElement.js";
 import type { ElementInput } from "./types.js";
 
 /**
@@ -9,12 +9,12 @@ export function maintainElementScrollVisibility(
   activeElement: ElementInput,
   scrollParent: ElementInput,
 ): void {
-  const validScrollElement = asElement(scrollParent, "target");
+  const validScrollElement = getValidElement(scrollParent, "target");
   if (validScrollElement === null) {
     return;
   }
 
-  const validActiveElement = asElement(activeElement, "target");
+  const validActiveElement = getValidElement(activeElement, "target");
   if (validActiveElement === null) {
     return;
   }

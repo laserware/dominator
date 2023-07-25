@@ -1,6 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
-import { asElement } from "../asElement.js";
+import { getValidElement } from "../getValidElement.js";
 import type { ElementInput } from "../types.js";
 
 /**
@@ -16,7 +16,7 @@ export function hasDatasetValue(
   datasetValue: string | number | boolean,
 ): boolean {
   try {
-    const validElement = asElement(element);
+    const validElement = getValidElement(element);
 
     const datasetEntry = validElement?.dataset[datasetKey];
     if (isNil(datasetEntry)) {

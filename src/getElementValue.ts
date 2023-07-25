@@ -1,4 +1,4 @@
-import { asElement } from "./asElement.js";
+import { getValidElement } from "./getValidElement.js";
 import type { ElementInput } from "./types.js";
 
 /**
@@ -6,7 +6,7 @@ import type { ElementInput } from "./types.js";
  * @param element Element to get the value of
  */
 export function getElementValue<T>(element: ElementInput | null): T | null {
-  const validElement = asElement<HTMLInputElement>(element);
+  const validElement = getValidElement<HTMLInputElement>(element);
   if (validElement === null) {
     return null;
   }

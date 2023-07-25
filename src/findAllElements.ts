@@ -1,4 +1,4 @@
-import { asElement } from "./asElement.js";
+import { getValidElement } from "./getValidElement.js";
 import { listToArray } from "./listToArray.js";
 import type { ElementInput } from "./types.js";
 
@@ -13,7 +13,7 @@ export function findAllElements<T extends Element>(
   parent: ElementInput = document,
 ): T[] {
   try {
-    const elements = asElement(parent)?.querySelectorAll(selector);
+    const elements = getValidElement(parent)?.querySelectorAll(selector);
 
     return listToArray<T>(elements as NodeListOf<T>);
   } catch {

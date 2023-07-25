@@ -1,4 +1,4 @@
-import { asElement } from "./asElement.js";
+import { getValidElement } from "./getValidElement.js";
 import type { ElementInput } from "./types.js";
 
 /**
@@ -12,7 +12,7 @@ export function findOneElement<T = HTMLElement>(
   parent: ElementInput = document,
 ): T | null {
   try {
-    const element = asElement(parent)?.querySelector(selector);
+    const element = getValidElement(parent)?.querySelector(selector);
 
     return (element ?? null) as unknown as T;
   } catch {

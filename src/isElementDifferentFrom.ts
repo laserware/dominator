@@ -1,4 +1,4 @@
-import { asElement } from "./asElement.js";
+import { getValidElement } from "./getValidElement.js";
 import type { ElementInput } from "./types.js";
 
 /**
@@ -30,8 +30,8 @@ function isSingleElementDifferentFrom(
   source: ElementInput | null,
   target: ElementInput | null,
 ): boolean {
-  const sourceElement = asElement(source);
-  const targetElement = asElement(target);
+  const sourceElement = getValidElement(source);
+  const targetElement = getValidElement(target);
 
   if (sourceElement === null && targetElement === null) {
     return false;

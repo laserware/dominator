@@ -1,11 +1,11 @@
-import { asElement } from "./asElement.js";
+import { getValidElement } from "./getValidElement.js";
 import type { ElementInput } from "./types.js";
 
 /**
  * Returns true if the specified element has the specified ID property.
  */
 export function doesElementHaveId(element: ElementInput, id: string): boolean {
-  const validElement = asElement<HTMLInputElement>(element);
+  const validElement = getValidElement<HTMLInputElement>(element);
   if (validElement === null) {
     return false;
   }

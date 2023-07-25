@@ -1,4 +1,4 @@
-import { asElement } from "./asElement.js";
+import { getValidElement } from "./getValidElement.js";
 import type { ElementInput } from "./types.js";
 
 /**
@@ -11,7 +11,7 @@ export function isElementOfType(
   tagName: string,
 ): boolean {
   try {
-    const validElement = asElement(element);
+    const validElement = getValidElement(element);
 
     return validElement?.tagName?.toLowerCase() === tagName;
   } catch {

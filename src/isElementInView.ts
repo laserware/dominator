@@ -1,11 +1,11 @@
-import { asElement } from "./asElement.js";
+import { getValidElement } from "./getValidElement.js";
 import type { ElementInput } from "./types.js";
 
 /**
  * Returns true if the specified element is visible in browser viewport.
  */
 export function isElementInView(element: ElementInput): boolean {
-  const validElement = asElement(element);
+  const validElement = getValidElement(element);
   if (validElement === null) {
     throw new Error("Invalid element");
   }
