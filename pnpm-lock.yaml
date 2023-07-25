@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@laserware/arcade':
-    specifier: ^1.0.1
-    version: 1.0.1
+    specifier: ^1.1.0
+    version: 1.1.0
 
 devDependencies:
   '@laserware/eslint-config':
@@ -111,8 +111,8 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@laserware/arcade@1.0.1:
-    resolution: {integrity: sha512-MOqqV/ms8pKUsbGaLlBjY4X6ydO1F+yJbqrWrZxOIjghKJCusApUecqEDMyLPh9np0jjIAwnrS4w7nq92MtfsQ==}
+  /@laserware/arcade@1.1.0:
+    resolution: {integrity: sha512-KmqwZaEtOdsuW9CKjP7NIbmNJtE50QsPzDcNsrAgYHpDGj2FVcgT3M6XBwqz4XWZnZ70aIAJW2JKAkXVM0hIPQ==}
     dependencies:
       '@types/lodash.groupby': 4.6.7
       '@types/lodash.isequal': 4.5.6

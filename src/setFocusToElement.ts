@@ -25,7 +25,9 @@ export function setFocusToElement(
 
   const validElement = getValidElement(element, options?.parent);
 
-  setTimeout(() => {
+  const focusCallback = (): void => {
     validElement?.focus({ preventScroll: options?.preventScroll ?? false });
-  }, options?.delay ?? 0);
+  };
+
+  setTimeout(focusCallback, options?.delay ?? 0);
 }
