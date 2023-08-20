@@ -1,4 +1,4 @@
-import { isElementOrDocument, isEvent } from "./typeAssertions.js";
+import { isElementOrDocument, isEvent } from "./typeGuards.js";
 import type { ElementInput, TargetType } from "./types.js";
 
 /**

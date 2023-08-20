@@ -1,7 +1,7 @@
 import { isNil } from "@laserware/arcade";
 
 import { findOneElement } from "./findOneElement.js";
-import { isPrimitive } from "./typeAssertions.js";
+import { isPrimitive } from "./typeGuards.js";
 import type { ElementOrSelectorInput } from "./types.js";
 
 /**

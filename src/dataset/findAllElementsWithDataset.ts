@@ -1,6 +1,6 @@
 import { buildDatasetSelector } from "./buildDatasetSelector.js";
 import { findAllElements } from "../findAllElements.js";
-import { isPrimitive } from "../typeAssertions.js";
+import { isPrimitive } from "../typeGuards.js";
 import type { ElementOrSelectorInput } from "../types.js";
 
 /**
