@@ -1,9 +1,9 @@
 import { getValidElement } from "./getValidElement.js";
-import type { ElementInput } from "./types.js";
+import type { ElementOrSelectorInput } from "./types.js";
 
 export interface SetFocusOptions {
   delay?: number;
-  parent?: ElementInput;
+  parent?: ElementOrSelectorInput;
   preventScroll?: boolean;
 }
 
@@ -16,7 +16,7 @@ export interface SetFocusOptions {
  * @property [options.preventScroll] preventScroll If true, don't scroll the focused element into view
  */
 export function setFocusToElement(
-  element: ElementInput | null,
+  element: ElementOrSelectorInput | null,
   options?: SetFocusOptions,
 ): void {
   if (element === null) {

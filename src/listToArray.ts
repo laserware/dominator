@@ -5,7 +5,7 @@ import { isNil } from "@laserware/arcade";
  * utilize array methods.
  * @param items NodeList or HTMLCollection to convert to array
  */
-export function listToArray<T extends Element>(
+export function listToArray<T extends Element = HTMLElement>(
   items: NodeListOf<T> | NodeList | HTMLCollection | null,
 ): T[] {
   if (isNil(items)) {

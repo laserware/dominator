@@ -23,4 +23,8 @@ export { maintainElementScrollVisibility } from "./maintainElementScrollVisibili
 export { moveCursorToElementTextEnd } from "./moveCursorToElementTextEnd.js";
 export { parseTransferData } from "./parseTransferData.js";
 export { setFocusToElement } from "./setFocusToElement.js";
-export type { ElementInput } from "./types.js";
+export type {
+  ElementInput,
+  ElementOrSelectorInput,
+  SelectorInput,
+} from "./types.js";

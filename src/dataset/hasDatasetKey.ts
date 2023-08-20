@@ -1,7 +1,7 @@
-import { isNil } from "@laserware/arcade";
+import { isNotNil } from "@laserware/arcade";
 
 import { getValidElement } from "../getValidElement.js";
-import type { ElementInput } from "../types.js";
+import type { ElementOrSelectorInput } from "../types.js";
 
 /**
  * Returns true if the specified element has a dataset entry with the specified
@@ -10,13 +10,17 @@ import type { ElementInput } from "../types.js";
  * @param datasetKey Dataset key to check for
  */
 export function hasDatasetKey(
-  element: ElementInput | null,
+  element: ElementOrSelectorInput | null,
   datasetKey: string,
 ): boolean {
   try {
     const validElement = getValidElement(element);
 
-    return !isNil(validElement?.dataset[datasetKey]);
+    if (datasetKey.startsWith("data-")) {
+      return validElement?.hasAttribute(datasetKey) ?? false;
+    } else {
+      return isNotNil(validElement?.dataset[datasetKey]);
+    }
   } catch {
     return false;
   }

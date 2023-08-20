@@ -1,5 +1,5 @@
 import { getValidElement } from "./getValidElement.js";
-import type { ElementInput } from "./types.js";
+import type { ElementOrSelectorInput } from "./types.js";
 
 /**
  * Query the DOM for a specific element and return that element as the specified
@@ -7,9 +7,9 @@ import type { ElementInput } from "./types.js";
  * @param selector CSS selector string to find the element
  * @param [parent=document] Optional parent element to perform search
  */
-export function findOneElement<T = HTMLElement>(
+export function findOneElement<T extends Element = HTMLElement>(
   selector: string,
-  parent: ElementInput = document,
+  parent: ElementOrSelectorInput = document,
 ): T | null {
   try {
     const element = getValidElement(parent)?.querySelector(selector);

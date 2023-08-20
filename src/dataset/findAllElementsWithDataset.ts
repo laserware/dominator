@@ -1,7 +1,7 @@
 import { buildDatasetSelector } from "./buildDatasetSelector.js";
 import { findAllElements } from "../findAllElements.js";
 import { isPrimitive } from "../typeAssertions.js";
-import type { ElementInput } from "../types.js";
+import type { ElementOrSelectorInput } from "../types.js";
 
 /**
  * Query the DOM for the element with the specified dataset name and optionally
@@ -13,17 +13,17 @@ export function findAllElementsWithDataset<T extends Element = HTMLElement>(
 ): T[];
 export function findAllElementsWithDataset<T extends Element = HTMLElement>(
   datasetKey: string,
-  parent?: ElementInput,
+  parent?: ElementOrSelectorInput,
 ): T[];
 export function findAllElementsWithDataset<T extends Element = HTMLElement>(
   datasetKey: string,
   datasetValue?: string | number | boolean,
-  parent?: ElementInput,
+  parent?: ElementOrSelectorInput,
 ): T[];
 export function findAllElementsWithDataset<T extends Element = HTMLElement>(
   datasetKey: string,
-  datasetValueOrParent?: ElementInput | number | boolean | string,
-  parent?: ElementInput,
+  datasetValueOrParent?: ElementOrSelectorInput | number | boolean | string,
+  parent?: ElementOrSelectorInput,
 ): T[] {
   if (isPrimitive(datasetValueOrParent)) {
     const selector = buildDatasetSelector(datasetKey, datasetValueOrParent);

@@ -1,5 +1,5 @@
 import { getValidElement } from "./getValidElement.js";
-import type { ElementInput } from "./types.js";
+import type { ElementOrSelectorInput } from "./types.js";
 
 /**
  * Moves the cursor to the end of the text in an element.
@@ -7,8 +7,8 @@ import type { ElementInput } from "./types.js";
  * @param [parent] Optional parent element of the specified element
  */
 export function moveCursorToElementTextEnd(
-  element: ElementInput | null,
-  parent: ElementInput | null = document,
+  element: ElementOrSelectorInput | null,
+  parent: ElementOrSelectorInput | null = document,
 ): void {
   const validElement = getValidElement(element, parent);
   if (validElement === null) {

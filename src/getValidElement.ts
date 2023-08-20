@@ -2,29 +2,29 @@ import { isNil } from "@laserware/arcade";
 
 import { asElement } from "./asElement.js";
 import { findOneElement } from "./findOneElement.js";
-import type { ElementInput, TargetType } from "./types.js";
+import type { ElementOrSelectorInput, TargetType } from "./types.js";
 
 /**
  * If the specified element is a string, it represents a selector, so try to
  * find it and return it. Otherwise, coerce it to an element based on whether
  * it is an element or an Event.
  */
-export function getValidElement<T = HTMLElement>(
-  element: ElementInput | null,
-  parent?: ElementInput,
+export function getValidElement<T extends Element = HTMLElement>(
+  element: ElementOrSelectorInput | null,
+  parent?: ElementOrSelectorInput,
 ): T | null;
-export function getValidElement<T = HTMLElement>(
-  element: ElementInput | null,
+export function getValidElement<T extends Element = HTMLElement>(
+  element: ElementOrSelectorInput | null,
   targetType?: TargetType,
 ): T | null;
-export function getValidElement<T = HTMLElement>(
-  element: ElementInput | null,
-  parent?: ElementInput,
+export function getValidElement<T extends Element = HTMLElement>(
+  element: ElementOrSelectorInput | null,
+  parent?: ElementOrSelectorInput,
   targetType?: TargetType,
 ): T | null;
-export function getValidElement<T = HTMLElement>(
-  element: ElementInput | null,
-  parentOrTargetType?: ElementInput | TargetType,
+export function getValidElement<T extends Element = HTMLElement>(
+  element: ElementOrSelectorInput | null,
+  parentOrTargetType?: ElementOrSelectorInput | TargetType,
   targetType: TargetType = "target",
 ): T | null {
   let validParent: Document | HTMLElement | null = null;
@@ -42,6 +42,8 @@ export function getValidElement<T = HTMLElement>(
   }
 }
 
-function isTargetType(value: ElementInput | TargetType): value is TargetType {
+function isTargetType(
+  value: ElementOrSelectorInput | TargetType,
+): value is TargetType {
   return value === "target" || value === "currentTarget";
 }

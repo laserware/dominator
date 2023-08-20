@@ -1,7 +1,7 @@
 import { isNil } from "@laserware/arcade";
 
 import { getValidElement } from "../getValidElement.js";
-import type { ElementInput } from "../types.js";
+import type { ElementOrSelectorInput } from "../types.js";
 
 /**
  * Returns the value associated with the specified dataset entry key. If the
@@ -10,13 +10,19 @@ import type { ElementInput } from "../types.js";
  * @param datasetKey Key of the dataset entry for which to get value
  */
 export function getDatasetValue<T = string>(
-  element: ElementInput | null,
+  element: ElementOrSelectorInput | null,
   datasetKey: string,
 ): T | null {
   try {
     const validElement = getValidElement(element);
 
-    const value = validElement?.dataset[datasetKey];
+    let value;
+
+    if (datasetKey.startsWith("data-")) {
+      value = validElement?.getAttribute(datasetKey);
+    } else {
+      value = validElement?.dataset[datasetKey];
+    }
 
     return isNil(value) ? null : (value as unknown as T);
   } catch {

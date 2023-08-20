@@ -1,13 +1,13 @@
 import { getValidElement } from "./getValidElement.js";
-import type { ElementInput } from "./types.js";
+import type { ElementOrSelectorInput } from "./types.js";
 
 /**
  * Ensures a given child element is within the parent's visible scroll area. If
  * the child is not visible, scroll the parent.
  */
 export function maintainElementScrollVisibility(
-  activeElement: ElementInput,
-  scrollParent: ElementInput,
+  activeElement: ElementOrSelectorInput,
+  scrollParent: ElementOrSelectorInput,
 ): void {
   const validScrollElement = getValidElement(scrollParent, "target");
   if (validScrollElement === null) {

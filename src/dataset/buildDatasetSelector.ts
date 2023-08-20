@@ -22,7 +22,7 @@ export function buildDatasetSelector(
 }
 
 /**
- * Returns a valid selector to find an element in the DOM based on its data
+ * Returns a valid selector to find an element in the DOM based on its `data`
  * attribute.
  * @param datasetKey Key of the dataset entry
  * @param datasetValue Optional value of the dataset entry
@@ -31,21 +31,34 @@ function validDatasetSelector(
   datasetKey: string,
   datasetValue?: string | number | boolean,
 ): string {
-  const validKey = kebabCase(datasetKey);
+  // If the datasetKey already starts with `data-`, we don't need to change it,
+  // we can use it as is:
+  let name = datasetKey;
 
-  let selector = `[data-${validKey}]`;
-
-  if (!isNil(datasetValue)) {
-    let validValue = datasetValue;
-
-    if (typeof datasetValue === "boolean") {
-      validValue = datasetValue ? "true" : "false";
-    } else if (typeof datasetValue === "number") {
-      validValue = datasetValue.toString();
-    }
-
-    selector = `[data-${validKey}="${validValue}"]`;
+  // Otherwise, we need to convert it to a valid dataset selector, so assuming
+  // the specified key was `someKey`, we need to convert it to `data-some-key`
+  // in order to use it as a selector:
+  if (!datasetKey.startsWith("data-")) {
+    name = `data-${kebabCase(datasetKey)}`;
   }
 
-  return selector;
+  // If a value was specified, that's what we want to search by. So for key
+  // of `someKey` and value of `someValue`, we would return `[data-some-key="someValue"]`,
+  // otherwise we would just return `[data-some-key]`:
+  if (isNil(datasetValue)) {
+    return `[${name}]`;
+  } else {
+    const value = validDatasetValue(datasetValue);
+    return `[${name}="${value}"]`;
+  }
+}
+
+function validDatasetValue(value: string | number | boolean): string {
+  if (typeof value === "boolean") {
+    return value ? "true" : "false";
+  } else if (typeof value === "number") {
+    return value.toString();
+  } else {
+    return value;
+  }
 }

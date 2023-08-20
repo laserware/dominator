@@ -1,6 +1,6 @@
 import { getValidElement } from "./getValidElement.js";
 import { listToArray } from "./listToArray.js";
-import type { ElementInput } from "./types.js";
+import type { ElementOrSelectorInput } from "./types.js";
 
 /**
  * Query the DOM for the elements that match that selector and return as an
@@ -8,9 +8,9 @@ import type { ElementInput } from "./types.js";
  * @param selector CSS selector string to find the element
  * @param [parent=document] Optional parent element to perform search
  */
-export function findAllElements<T extends Element>(
+export function findAllElements<T extends Element = HTMLElement>(
   selector: string,
-  parent: ElementInput = document,
+  parent: ElementOrSelectorInput = document,
 ): T[] {
   try {
     const elements = getValidElement(parent)?.querySelectorAll(selector);

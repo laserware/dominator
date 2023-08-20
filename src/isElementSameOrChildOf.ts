@@ -1,6 +1,6 @@
 import { hasParentElement } from "./hasParentElement.js";
 import { isElementSameAs } from "./isElementSameAs.js";
-import type { ElementInput } from "./types.js";
+import type { ElementOrSelectorInput } from "./types.js";
 
 /**
  * Returns true if the specified element is the same or a child of the specified
@@ -9,8 +9,8 @@ import type { ElementInput } from "./types.js";
  * @param parent Parent element (or same element) for comparison
  */
 export function isElementSameOrChildOf(
-  element: ElementInput | null,
-  parent: ElementInput | null,
+  element: ElementOrSelectorInput | null,
+  parent: ElementOrSelectorInput | null,
 ): boolean {
   // Return immediately if the is same check passes, so we don't have to
   // iterate through the DOM if we don't need to:

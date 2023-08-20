@@ -1,12 +1,12 @@
 import { isNil } from "@laserware/arcade";
 
-import type { ElementInput } from "./types.js";
+import type { ElementOrSelectorInput } from "./types.js";
 
 /**
  * Returns true if the specified value is an Element or Document.
  */
 export function isElementOrDocument(
-  value: ElementInput | number | boolean,
+  value: ElementOrSelectorInput | number | boolean,
 ): value is Element | HTMLElement | Document {
   return (
     value instanceof Element ||
@@ -20,7 +20,7 @@ export function isElementOrDocument(
  * property.
  */
 export function isEvent(
-  value: ElementInput | number | boolean,
+  value: ElementOrSelectorInput | number | boolean,
 ): value is Event {
   const validValue = value as { currentTarget: unknown; target: unknown };
 
@@ -36,7 +36,7 @@ export function isEvent(
  * boolean).
  */
 export function isPrimitive(
-  value: ElementInput | number | boolean,
+  value: ElementOrSelectorInput | number | boolean,
 ): value is string | number | boolean {
   return (
     typeof value === "string" ||

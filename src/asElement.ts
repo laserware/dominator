@@ -3,12 +3,12 @@ import type { ElementInput, TargetType } from "./types.js";
 
 /**
  * Returns an element (or null) based on the specified input and parent. Allows
- * you to specify a CSS selector, an Event, or an HTML element as the element
- * and optional parent input.
+ * you to specify an Event or an HTML element as the element and optional parent
+ * input.
  * @param element Element input to assert as an element
  * @param targetType Target type to get if specified element is an event
  */
-export function asElement<T = HTMLElement>(
+export function asElement<T extends Element = HTMLElement>(
   element: ElementInput | null,
   targetType: TargetType = "target",
 ): T | null {

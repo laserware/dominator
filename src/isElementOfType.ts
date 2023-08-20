@@ -1,5 +1,5 @@
 import { getValidElement } from "./getValidElement.js";
-import type { ElementInput } from "./types.js";
+import type { ElementOrSelectorInput } from "./types.js";
 
 /**
  * Returns true if the specified element matches the specified type.
@@ -7,7 +7,7 @@ import type { ElementInput } from "./types.js";
  * @param tagName Tag name to check for
  */
 export function isElementOfType(
-  element: ElementInput | null,
+  element: ElementOrSelectorInput | null,
   tagName: string,
 ): boolean {
   try {

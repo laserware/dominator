@@ -1,5 +1,5 @@
 import { findAllElements } from "./findAllElements.js";
-import type { ElementInput } from "./types.js";
+import type { ElementOrSelectorInput } from "./types.js";
 
 const focusableElementsSelector = [
   "a",
@@ -16,6 +16,8 @@ const focusableElementsSelector = [
  * Returns an array of all focusable elements in the specified parent.
  * @see https://zellwk.com/blog/keyboard-focusable-elements/
  */
-export function findAllFocusableElements(parent?: ElementInput): HTMLElement[] {
+export function findAllFocusableElements(
+  parent?: ElementOrSelectorInput,
+): HTMLElement[] {
   return findAllElements<HTMLElement>(focusableElementsSelector, parent);
 }

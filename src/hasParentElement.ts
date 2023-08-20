@@ -1,5 +1,5 @@
 import { getValidElement } from "./getValidElement.js";
-import type { ElementInput } from "./types.js";
+import type { ElementOrSelectorInput } from "./types.js";
 
 /**
  * Iterates up through the DOM tree from the child element and returns true
@@ -10,8 +10,8 @@ import type { ElementInput } from "./types.js";
  * @prop [options.maxDepth=10] Maximum depth to perform search
  */
 export function hasParentElement(
-  child: ElementInput | null,
-  parent: ElementInput | null,
+  child: ElementOrSelectorInput | null,
+  parent: ElementOrSelectorInput | null,
   options: { maxDepth: number } = { maxDepth: 10 },
 ): boolean {
   const parentElement = getValidElement(parent);
