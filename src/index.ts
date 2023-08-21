@@ -22,6 +22,7 @@ export { listToArray } from "./listToArray.js";
 export { maintainElementScrollVisibility } from "./maintainElementScrollVisibility.js";
 export { moveCursorToElementTextEnd } from "./moveCursorToElementTextEnd.js";
 export { parseTransferData } from "./parseTransferData.js";
+export { setElementStyles } from "./setElementStyles.js";
 export { setFocusToElement } from "./setFocusToElement.js";
 export type {
   ElementInput,
