@@ -1,6 +1,6 @@
-import { getValidElement } from "./getValidElement.js";
-import { InvalidElementError } from "./InvalidElementError.js";
-import type { ElementOrSelectorInput } from "./types.js";
+import { getValidElement } from "../getValidElement.js";
+import { InvalidElementError } from "../InvalidElementError.js";
+import type { ElementOrSelectorInput } from "../types.js";
 
 type CSSStyleProperty = Exclude<
   keyof CSSStyleDeclaration,

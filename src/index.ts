@@ -1,5 +1,6 @@
 export * from "./attributes/index.js";
 export * from "./dataset/index.js";
+export * from "./styles/index.js";
 
 export { asElement } from "./asElement.js";
 export { doesElementExist } from "./doesElementExist.js";
@@ -8,7 +9,6 @@ export { findAllElements } from "./findAllElements.js";
 export { findAllFocusableElements } from "./findAllFocusableElements.js";
 export { findFirstFocusableInput } from "./findFirstFocusableInput.js";
 export { findOneElement } from "./findOneElement.js";
-export { getCssVar } from "./getCssVar.js";
 export { getElementValue } from "./getElementValue.js";
 export { getInputElementWidth } from "./getInputElementWidth.js";
 export { hasParentElement } from "./hasParentElement.js";
@@ -22,7 +22,6 @@ export { listToArray } from "./listToArray.js";
 export { maintainElementScrollVisibility } from "./maintainElementScrollVisibility.js";
 export { moveCursorToElementTextEnd } from "./moveCursorToElementTextEnd.js";
 export { parseTransferData } from "./parseTransferData.js";
-export { setElementStyles } from "./setElementStyles.js";
 export { setFocusToElement } from "./setFocusToElement.js";
 export type {
   ElementInput,
