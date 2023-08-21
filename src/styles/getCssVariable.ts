@@ -26,7 +26,7 @@ export function getCssVariable<T>(
   try {
     const value = window.getComputedStyle(validElement).getPropertyValue(name);
 
-    const parsedValue = Number(value);
+    const parsedValue = Number.parseFloat(value);
     if (Number.isNaN(parsedValue)) {
       return value as unknown as T;
     }
