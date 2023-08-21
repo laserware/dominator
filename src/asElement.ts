@@ -18,19 +18,16 @@ import type { ElementInput, TargetType } from "./types.js";
  *
  *   function doSomethingWithParent(): void {
  *     // Assuming `childElement` is defined somewhere else and we _know_ it
- *     // has a parent that's a `<div>`, we can assert that here. Note that
- *     // if the `parentElement` is null, this will throw an error:
+ *     // has a parent that's a `<div>`, we can assert that here:
  *     const parent = asElement<HTMLDivElement>(childElement.parentElement);
  *   }
  */
 export function asElement<T extends Element = HTMLElement>(
   element: ElementInput | null,
   targetType: TargetType = "target",
-): T {
-  // Since this is an assertion, we want to make sure we throw an error if the
-  // specified element input is null:
+): T | null {
   if (element === null) {
-    throw new Error(`Element passed to asElement is null`);
+    return null;
   }
 
   // The element is a valid HTML element or document, so we return it.
@@ -49,5 +46,5 @@ export function asElement<T extends Element = HTMLElement>(
     }
   }
 
-  throw new Error(`Invalid element ${element} passed to asElement`);
+  return null;
 }
