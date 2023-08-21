@@ -1,37 +1,23 @@
-import { isNil } from "@laserware/arcade";
-
-import { getValidElement } from "../getValidElement.js";
+import { getDatasetValue } from "./getDatasetValue.js";
 import type { ElementOrSelectorInput } from "../types.js";
 
 /**
  * Returns true if the specified element has the dataset key with the specified
  * dataset value.
- * @param element Selector, element, or event to check
- * @param datasetKey Dataset key to check for
- * @param datasetValue Optional dataset value to check for
+ * @param element Element, Event, or selector for element to check
+ * @param keyOrAttributeName Key or attribute name for the dataset entry
+ * @param value Optional dataset value to check for
  */
 export function hasDatasetValue(
   element: ElementOrSelectorInput | null,
-  datasetKey: string,
-  datasetValue: string | number | boolean,
+  keyOrAttributeName: string,
+  value: string | number | boolean,
 ): boolean {
-  try {
-    const validElement = getValidElement(element);
+  const elementValue = getDatasetValue(element, keyOrAttributeName);
 
-    let datasetEntry;
-
-    if (datasetKey.startsWith("data-")) {
-      datasetEntry = validElement?.getAttribute(datasetKey);
-    } else {
-      datasetEntry = validElement?.dataset[datasetKey];
-    }
-
-    if (isNil(datasetEntry)) {
-      return false;
-    }
-
-    return datasetEntry.toString() === datasetValue.toString();
-  } catch {
+  if (elementValue === null) {
     return false;
+  } else {
+    return elementValue.toString() === value.toString();
   }
 }

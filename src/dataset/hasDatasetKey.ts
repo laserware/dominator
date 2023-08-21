@@ -1,26 +1,28 @@
 import { isNotNil } from "@laserware/arcade";
 
+import { ensureDatasetKeyName } from "./datasetNames.js";
 import { getValidElement } from "../getValidElement.js";
 import type { ElementOrSelectorInput } from "../types.js";
 
 /**
  * Returns true if the specified element has a dataset entry with the specified
- * key.
- * @param element Selector, element, or event to check
- * @param datasetKey Dataset key to check for
+ * key or attribute name.
+ * @param element Element, Event, or selector for element to check
+ * @param keyOrAttributeName Dataset key or attribute name to check for
  */
 export function hasDatasetKey(
   element: ElementOrSelectorInput | null,
-  datasetKey: string,
+  keyOrAttributeName: string,
 ): boolean {
   try {
     const validElement = getValidElement(element);
-
-    if (datasetKey.startsWith("data-")) {
-      return validElement?.hasAttribute(datasetKey) ?? false;
-    } else {
-      return isNotNil(validElement?.dataset[datasetKey]);
+    if (validElement === null) {
+      return false;
     }
+
+    const key = ensureDatasetKeyName(keyOrAttributeName);
+
+    return isNotNil(validElement.dataset?.[key]);
   } catch {
     return false;
   }

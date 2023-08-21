@@ -8,30 +8,30 @@ import type { ElementOrSelectorInput } from "../types.js";
  * value.
  */
 export function findOneElementWithDataset<T extends Element = HTMLElement>(
-  datasetKey: string,
-  datasetValue?: string | number | boolean,
+  keyOrAttributeName: string,
+  value?: string | number | boolean,
 ): T | null;
 export function findOneElementWithDataset<T extends Element = HTMLElement>(
-  datasetKey: string,
+  keyOrAttributeName: string,
   parent?: ElementOrSelectorInput,
 ): T | null;
 export function findOneElementWithDataset<T extends Element = HTMLElement>(
-  datasetKey: string,
-  datasetValue?: string | number | boolean,
+  keyOrAttributeName: string,
+  value?: string | number | boolean,
   parent?: ElementOrSelectorInput,
 ): T | null;
 export function findOneElementWithDataset<T extends Element = HTMLElement>(
-  datasetKey: string,
-  datasetValueOrParent?: ElementOrSelectorInput | number | boolean | string,
+  keyOrAttributeName: string,
+  valueOrParent?: ElementOrSelectorInput | number | boolean | string,
   parent?: ElementOrSelectorInput,
 ): T | null {
-  if (isPrimitive(datasetValueOrParent)) {
-    const selector = buildDatasetSelector(datasetKey, datasetValueOrParent);
+  if (isPrimitive(valueOrParent)) {
+    const selector = buildDatasetSelector(keyOrAttributeName, valueOrParent);
 
     return findOneElement(selector, parent);
   } else {
-    const selector = buildDatasetSelector(datasetKey);
+    const selector = buildDatasetSelector(keyOrAttributeName);
 
-    return findOneElement(selector, datasetValueOrParent);
+    return findOneElement(selector, valueOrParent);
   }
 }
