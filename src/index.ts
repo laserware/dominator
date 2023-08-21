@@ -1,7 +1,7 @@
+export * from "./attributes/index.js";
 export * from "./dataset/index.js";
 
 export { asElement } from "./asElement.js";
-export { buildAttributeSelector } from "./buildAttributeSelector.js";
 export { doesElementExist } from "./doesElementExist.js";
 export { doesElementHaveId } from "./doesElementHaveId.js";
 export { findAllElements } from "./findAllElements.js";
