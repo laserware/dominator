@@ -6,7 +6,7 @@ import type { ElementOrSelectorInput } from "../types.js";
  * If the value is found it is coerced to a boolean if "true" or "false", a
  * number if numeric, or the string value if a string. If a default value is
  * specified, returns if not found. Otherwise, it returns null if not found.
- * @param element Element, event, or selector to get attribute of
+ * @param element Element, Event, or selector for element
  * @param name Name of the attribute to get
  * @param [defaultValue] Optional default value to return if the attribute is not found
  */

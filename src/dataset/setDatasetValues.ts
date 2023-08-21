@@ -5,7 +5,7 @@ import type { ElementOrSelectorInput } from "../types.js";
 /**
  * Assigns the specified dataset values to the specified element. Returns the
  * element with the updated dataset values if successful.
- * @param element Element, Event, or selector for element to set dataset values
+ * @param element Element, Event, or selector for element
  * @param datasetValues Object with key of dataset key and value of dataset value
  */
 export function setDatasetValues<T extends Element = HTMLElement>(

@@ -1,11 +1,12 @@
 import { getValidElement } from "../getValidElement.js";
+import { InvalidElementError } from "../InvalidElementError.js";
 import type { ElementOrSelectorInput } from "../types.js";
 
 /**
  * Sets the attributes of the specified element to the specified attributes
  * object, where the key of the object is the attribute name and the value of
  * the object is the attribute value.
- * @param element Element, event, or selector to set attribute of
+ * @param element Element, Event, or selector for element
  * @param attributes Object with key of attribute name and value of attribute value
  */
 export function setAttributes(
@@ -14,7 +15,7 @@ export function setAttributes(
 ): void {
   const validElement = getValidElement(element);
   if (validElement === null) {
-    throw new Error("Unable to set attributes on element, element not found");
+    throw new InvalidElementError("Unable to set attributes");
   }
 
   const attributeEntries = Object.entries(attributes);

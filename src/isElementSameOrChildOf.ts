@@ -5,8 +5,8 @@ import type { ElementOrSelectorInput } from "./types.js";
 /**
  * Returns true if the specified element is the same or a child of the specified
  * parent element.
- * @param element Element to check for same/parent
- * @param parent Parent element (or same element) for comparison
+ * @param element Element, Event, or selector for element
+ * @param parent Element, Event, or selector for parent (or same) element
  */
 export function isElementSameOrChildOf(
   element: ElementOrSelectorInput | null,

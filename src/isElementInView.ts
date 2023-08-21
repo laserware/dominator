@@ -1,13 +1,15 @@
 import { getValidElement } from "./getValidElement.js";
+import { InvalidElementError } from "./InvalidElementError.js";
 import type { ElementOrSelectorInput } from "./types.js";
 
 /**
  * Returns true if the specified element is visible in browser viewport.
+ * @param element Element, Event, or selector for element
  */
 export function isElementInView(element: ElementOrSelectorInput): boolean {
   const validElement = getValidElement(element);
   if (validElement === null) {
-    throw new Error("Invalid element");
+    throw new InvalidElementError("Unable to determine if element is in view");
   }
 
   const { top, left, bottom, right } = validElement.getBoundingClientRect();

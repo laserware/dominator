@@ -9,10 +9,10 @@ export interface SetFocusOptions {
 
 /**
  * Sets focus to the specified element.
- * @param element Selector, element, or event to set focus
+ * @param element Element, Event, or selector for element to focus
  * @param [options] Options for setting focus
  * @property [options.delay] delay Delay for setting focus to element
- * @property [options.parent] parent Parent element of the specified element
+ * @property [options.parent] parent Element, Event, or selector for parent element
  * @property [options.preventScroll] preventScroll If true, don't scroll the focused element into view
  */
 export function setFocusToElement(

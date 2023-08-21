@@ -7,8 +7,8 @@ import type { ElementOrSelectorInput } from "../types.js";
 /**
  * Returns true if the specified element has a dataset entry with the specified
  * key or attribute name.
- * @param element Element, Event, or selector for element to check
- * @param keyOrAttributeName Dataset key or attribute name to check for
+ * @param element Element, Event, or selector for element
+ * @param keyOrAttributeName Key or attribute name for the dataset entry
  */
 export function hasDatasetKey(
   element: ElementOrSelectorInput | null,

@@ -3,7 +3,7 @@ import type { ElementOrSelectorInput } from "./types.js";
 
 /**
  * Returns the value of the specified element.
- * @param element Element to get the value of
+ * @param element Element, Event, or selector for element
  */
 export function getElementValue<T>(
   element: ElementOrSelectorInput | null,

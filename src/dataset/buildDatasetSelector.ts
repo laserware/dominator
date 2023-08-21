@@ -26,7 +26,7 @@ export function buildDatasetSelector(
 /**
  * Returns a valid selector to find an element in the DOM based on its `data`
  * attribute.
- * @param keyOrAttributeName Key or attribute name of the dataset entry
+ * @param keyOrAttributeName Key or attribute name for the dataset entry
  * @param value Optional value of the dataset entry
  */
 function validDatasetSelector(

@@ -3,8 +3,8 @@ import type { ElementOrSelectorInput } from "./types.js";
 
 /**
  * Moves the cursor to the end of the text in an element.
- * @param element Element containing text
- * @param [parent] Optional parent element of the specified element
+ * @param element Element, Event, or selector for element
+ * @param [parent] Optional Element, Event, or selector for parent element
  */
 export function moveCursorToElementTextEnd(
   element: ElementOrSelectorInput | null,

@@ -7,8 +7,8 @@ import type { ElementInput, TargetType } from "./types.js";
  * element is an Event and "currentTarget" is specified, returns
  * `event.currentTarget`. This function is useful to prevent TypeScript from
  * complaining about an invalid or unknown element.
- * @param element Element input to assert as an element
- * @param targetType Target type to get if specified element is an event
+ * @param element Element or Event to assert as an Element
+ * @param targetType Target type to get if specified element is an Event
  * @example
  *   function handleMouseEvent(event: MouseEvent): void {
  *     // If the mouse event is attached to an `<input>` element, we know that

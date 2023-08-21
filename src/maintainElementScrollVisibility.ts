@@ -4,6 +4,8 @@ import type { ElementOrSelectorInput } from "./types.js";
 /**
  * Ensures a given child element is within the parent's visible scroll area. If
  * the child is not visible, scroll the parent.
+ * @param activeElement Element, Event, or selector for active element
+ * @param scrollParent Element, Event, or selector for scroll parent element
  */
 export function maintainElementScrollVisibility(
   activeElement: ElementOrSelectorInput,

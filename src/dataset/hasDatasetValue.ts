@@ -4,7 +4,7 @@ import type { ElementOrSelectorInput } from "../types.js";
 /**
  * Returns true if the specified element has the dataset key with the specified
  * dataset value.
- * @param element Element, Event, or selector for element to check
+ * @param element Element, Event, or selector for element
  * @param keyOrAttributeName Key or attribute name for the dataset entry
  * @param value Optional dataset value to check for
  */

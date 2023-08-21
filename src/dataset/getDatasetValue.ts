@@ -5,8 +5,8 @@ import type { ElementOrSelectorInput } from "../types.js";
 /**
  * Returns the value associated with the specified dataset entry key. If the
  * value doesn't exist, return null.
- * @param element Element, Event, or selector for element to search dataset
- * @param keyOrAttributeName Key or attribute name of the dataset entry for which to get value
+ * @param element Element, Event, or selector for element
+ * @param keyOrAttributeName Key or attribute name for the dataset entry
  */
 export function getDatasetValue<T = string>(
   element: ElementOrSelectorInput | null,
