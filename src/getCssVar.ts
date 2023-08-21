@@ -8,7 +8,7 @@ export function getCssVar<T>(variableName: string, defaultValue?: T): T {
     const root = document.querySelector(":root") as Element;
     const value = window.getComputedStyle(root).getPropertyValue(variableName);
 
-    const parsedValue = Number.parseInt(value);
+    const parsedValue = Number(value);
     if (Number.isNaN(parsedValue)) {
       return value as unknown as T;
     }
