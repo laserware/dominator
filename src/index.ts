@@ -1,6 +1,20 @@
-export * from "./attributes/index.js";
-export * from "./dataset/index.js";
-export * from "./styles/index.js";
+export { buildAttributeSelector } from "./attributes/buildAttributeSelector.js";
+export { getAttribute } from "./attributes/getAttribute.js";
+export { setAttribute } from "./attributes/setAttribute.js";
+export { setAttributes } from "./attributes/setAttributes.js";
+
+export { buildDatasetSelector } from "./dataset/buildDatasetSelector.js";
+export { findAllElementsWithDataset } from "./dataset/findAllElementsWithDataset.js";
+export { findOneElementWithDataset } from "./dataset/findOneElementWithDataset.js";
+export { getDatasetValue } from "./dataset/getDatasetValue.js";
+export { hasDatasetKey } from "./dataset/hasDatasetKey.js";
+export { hasDatasetValue } from "./dataset/hasDatasetValue.js";
+export { setDatasetValue } from "./dataset/setDatasetValue.js";
+export { setDatasetValues } from "./dataset/setDatasetValues.js";
+
+export { getCssVariable } from "./styles/getCssVariable.js";
+export { setCssVariable } from "./styles/setCssVariable.js";
+export { setElementStyles } from "./styles/setElementStyles.js";
 
 export { asElement } from "./asElement.js";
 export { doesElementExist } from "./doesElementExist.js";
