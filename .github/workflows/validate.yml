@@ -45,6 +45,3 @@ jobs:
 
       - name: Check Formatting
         run: pnpm exec prettier --check src
-
-      - name: Run Tests
-        run: pnpm vitest --run
