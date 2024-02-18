@@ -23,22 +23,21 @@
   "scripts": {
     "build": "rm -rf dist && tsc --project tsconfig.build.json",
     "prepublishOnly": "npm run build",
-    "preversion": "pnpm lint && pnpm check:types",
-    "version": "pnpm format && git add -A src",
+    "preversion": "pnpm eslint && pnpm typecheck",
+    "version": "pnpm prettier && git add -A src",
     "postversion": "git push && git push --tags",
-    "check:format": "prettier --check src",
-    "check:types": "tsc --noEmit",
-    "format": "prettier --cache --write src",
-    "lint": "eslint --cache src"
+    "typecheck": "tsc --noEmit",
+    "prettier": "prettier --cache --write src",
+    "eslint": "eslint --cache src"
   },
   "dependencies": {
-    "@laserware/arcade": "^2.2.2"
+    "@laserware/arcade": "^2.3.0"
   },
   "devDependencies": {
-    "@laserware/eslint-config": "^1.2.1",
+    "@laserware/eslint-config": "^2.0.0",
     "@rushstack/eslint-patch": "^1.7.2",
     "eslint": "^8.56.0",
-    "prettier": "^3.2.4",
+    "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   },
   "prettier": {

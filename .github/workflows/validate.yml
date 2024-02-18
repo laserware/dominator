@@ -6,17 +6,17 @@ env:
 jobs:
   check:
     name: Run Checks
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
           version: latest
           run_install: false
@@ -26,7 +26,7 @@ jobs:
         run: |
           echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
@@ -37,11 +37,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Lint
-        run: pnpm lint
+      - name: ESLint
+        run: pnpm eslint
 
       - name: Check Types
-        run: pnpm check:types
+        run: pnpm typecheck
 
       - name: Check Formatting
-        run: pnpm check:format
+        run: pnpm exec prettier --check src
+
+      - name: Run Tests
+        run: pnpm vitest --run
