@@ -26,10 +26,10 @@
     "preversion": "npm run eslint && npm run typecheck",
     "version": "npm run prettier && git add -A src",
     "postversion": "git push && git push --tags",
-    "typecheck": "tsc --noEmit",
+    "eslint": "eslint --cache src",
     "prettier": "prettier --cache --write src",
     "prettier:ci": "prettier --check src",
-    "eslint": "eslint --cache src"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@laserware/arcade": "^2.4.0"
