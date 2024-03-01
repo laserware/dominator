@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
-    "url": "git+https://github.com/laserware/dominator.git",
+    "url": "https://github.com/laserware/dominator.git",
     "type": "git"
   },
   "author": "Mike Rourke <mike.w.rourke@gmail.com>",
@@ -21,23 +21,25 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc --project tsconfig.build.json",
+    "build": "tsup",
     "prepublishOnly": "npm run build",
-    "preversion": "pnpm eslint && pnpm typecheck",
-    "version": "pnpm prettier && git add -A src",
+    "preversion": "npm run eslint && npm run typecheck",
+    "version": "npm run prettier && git add -A src",
     "postversion": "git push && git push --tags",
     "typecheck": "tsc --noEmit",
     "prettier": "prettier --cache --write src",
+    "prettier:ci": "prettier --check src",
     "eslint": "eslint --cache src"
   },
   "dependencies": {
-    "@laserware/arcade": "^2.3.0"
+    "@laserware/arcade": "^2.4.0"
   },
   "devDependencies": {
     "@laserware/eslint-config": "^2.0.0",
     "@rushstack/eslint-patch": "^1.7.2",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.0",
     "prettier": "^3.2.5",
+    "tsup": "^8.0.2",
     "typescript": "^5.3.3"
   },
   "prettier": {
