@@ -10,7 +10,10 @@
       "default": "./dist/index.mjs"
     }
   },
-  "repository": "github:laserware/dominator.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laserware/dominator.git"
+  },
   "bugs": "https://github.com/laserware/dominator/issues",
   "author": "Mike Rourke <mike.w.rourke@gmail.com>",
   "license": "MIT",
