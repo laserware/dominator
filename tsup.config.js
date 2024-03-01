@@ -2,12 +2,12 @@ import { defineConfig } from "tsup";
 
 export default defineConfig({
   entry: ["src/index.ts"],
-  format: "esm",
-  outExtension: () => ({ js: ".mjs" }),
-  dts: true,
   clean: true,
-  sourcemap: true,
-  splitting: true,
+  dts: true,
+  format: "esm",
   minify: false,
+  outExtension: () => ({ js: ".mjs" }),
+  platform: "browser",
+  sourcemap: true,
   tsconfig: "./tsconfig.build.json",
 });

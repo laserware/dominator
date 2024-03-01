@@ -2,12 +2,11 @@
   "name": "@laserware/dominator",
   "version": "2.3.1",
   "description": "Simplify DOM usage.",
-  "main": "dist/index.mjs",
+  "browser": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
       "default": "./dist/index.mjs"
     }
   },
