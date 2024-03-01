@@ -9,5 +9,7 @@ export default defineConfig({
   outExtension: () => ({ js: ".mjs" }),
   platform: "browser",
   sourcemap: true,
+  target: "esnext",
+  treeshake: true,
   tsconfig: "./tsconfig.build.json",
 });
