@@ -2,12 +2,17 @@
   "name": "@laserware/dominator",
   "version": "2.3.0",
   "description": "Simplify DOM usage.",
-  "main": "dist/index.js",
+  "main": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "repository": {
-    "url": "https://github.com/laserware/dominator.git",
-    "type": "git"
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    }
   },
+  "repository": "github:laserware/dominator.git",
+  "bugs": "https://github.com/laserware/dominator/issues",
   "author": "Mike Rourke <mike.w.rourke@gmail.com>",
   "license": "MIT",
   "type": "module",
