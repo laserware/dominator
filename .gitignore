@@ -53,8 +53,3 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
-
-.yarn/*
-yarn.lock
-pnpm-lock.yaml
-.pnp.*
