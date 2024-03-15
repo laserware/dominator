@@ -2,7 +2,7 @@ type FormInputEvent = Event & {
   currentTarget: EventTarget & HTMLInputElement;
 };
 
-export type ElementInput =
+export type ElemInput =
   | Document
   | Element
   | HTMLElement
@@ -11,8 +11,8 @@ export type ElementInput =
   | null
   | undefined;
 
-export type SelectorInput = string | null | undefined;
+export type SelectInput = string | null | undefined;
 
-export type ElementOrSelectorInput = ElementInput | SelectorInput;
+export type ElemOrSelectInput = ElemInput | SelectInput;
 
 export type TargetType = "currentTarget" | "target";

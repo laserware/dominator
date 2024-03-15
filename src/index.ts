@@ -1,44 +1,40 @@
-export { buildAttributeSelector } from "./attributes/buildAttributeSelector.js";
-export { getAttribute } from "./attributes/getAttribute.js";
-export { setAttribute } from "./attributes/setAttribute.js";
-export { setAttributes } from "./attributes/setAttributes.js";
+export { attrSelector } from "./attrs/attrSelector";
+export { getAttr } from "./attrs/getAttr";
+export { setAttr } from "./attrs/setAttr";
+export { setAttrs } from "./attrs/setAttrs";
 
-export { buildDatasetSelector } from "./dataset/buildDatasetSelector.js";
-export { findAllElementsWithDataset } from "./dataset/findAllElementsWithDataset.js";
-export { findOneElementWithDataset } from "./dataset/findOneElementWithDataset.js";
-export { getDatasetValue } from "./dataset/getDatasetValue.js";
-export { hasDatasetKey } from "./dataset/hasDatasetKey.js";
-export { hasDatasetValue } from "./dataset/hasDatasetValue.js";
-export { setDatasetValue } from "./dataset/setDatasetValue.js";
-export { setDatasetValues } from "./dataset/setDatasetValues.js";
+export { allWithDataMatching } from "./data/allWithDataMatching";
+export { dataSelector } from "./data/dataSelector";
+export { getDataValue } from "./data/getDataValue";
+export { hasDataKey } from "./data/hasDataKey";
+export { hasDataValue } from "./data/hasDataValue";
+export { oneWithDataMatching } from "./data/oneWithDataMatching";
+export { setDataValue } from "./data/setDataValue";
+export { setDataValues } from "./data/setDataValues";
 
-export { getCssVariable } from "./styles/getCssVariable.js";
-export { setCssVariable } from "./styles/setCssVariable.js";
-export { setElementStyles } from "./styles/setElementStyles.js";
+export { getCssVar } from "./styles/getCssVar";
+export { setCssVar } from "./styles/setCssVar";
+export { setStyles } from "./styles/setStyles";
 
-export { asElement } from "./asElement.js";
-export { doesElementExist } from "./doesElementExist.js";
-export { doesElementHaveId } from "./doesElementHaveId.js";
-export { findAllElements } from "./findAllElements.js";
-export { findAllFocusableElements } from "./findAllFocusableElements.js";
-export { findFirstFocusableInput } from "./findFirstFocusableInput.js";
-export { findOneElement } from "./findOneElement.js";
-export { getElementValue } from "./getElementValue.js";
-export { getInputElementWidth } from "./getInputElementWidth.js";
-export { hasParentElement } from "./hasParentElement.js";
-export { isElementDifferentFrom } from "./isElementDifferentFrom.js";
-export { isElementInView } from "./isElementInView.js";
-export { isElementOfType } from "./isElementOfType.js";
-export { isElementSameAs } from "./isElementSameAs.js";
-export { isElementSameOrChildOf } from "./isElementSameOrChildOf.js";
-export { isElementScrollable } from "./isElementScrollable.js";
-export { listToArray } from "./listToArray.js";
-export { maintainElementScrollVisibility } from "./maintainElementScrollVisibility.js";
-export { moveCursorToElementTextEnd } from "./moveCursorToElementTextEnd.js";
-export { parseTransferData } from "./parseTransferData.js";
-export { setFocusToElement } from "./setFocusToElement.js";
-export type {
-  ElementInput,
-  ElementOrSelectorInput,
-  SelectorInput,
-} from "./types.js";
+export { allFocusable } from "./allFocusable";
+export { allMatching } from "./allMatching";
+export { cursorToTextEnd } from "./cursorToTextEnd";
+export { element } from "./element";
+export { exists } from "./exists";
+export { firstFocusable } from "./firstFocusable";
+export { hasId } from "./hasId";
+export { hasParent } from "./hasParent";
+export { inputWidth } from "./inputWidth";
+export { isDifferentFrom } from "./isDifferentFrom";
+export { isInView } from "./isInView";
+export { isOfType } from "./isOfType";
+export { isSameAs } from "./isSameAs";
+export { isSameOrChildOf } from "./isSameOrChildOf";
+export { isScrollable } from "./isScrollable";
+export { keepInView } from "./keepInView";
+export { listToArray } from "./listToArray";
+export { oneMatching } from "./oneMatching";
+export { parseTransferData } from "./parseTransferData";
+export { setFocus } from "./setFocus";
+export { valueOf } from "./valueOf";
+export type { ElemInput, ElemOrSelectInput, SelectInput } from "./types";
