@@ -1,7 +1,7 @@
 import { isNil } from "@laserware/arcade";
 
 import { element } from "../element";
-import { oneMatching } from "../oneMatching";
+import { findOne } from "../findOne";
 import type { ElemOrSelectInput, TargetType } from "../types";
 
 /**
@@ -23,7 +23,7 @@ export function toValidElem<T extends Element = HTMLElement>(
   }
 
   if (typeof input === "string") {
-    return oneMatching(input, parent);
+    return findOne(input, parent);
   } else {
     return element(input, targetType);
   }

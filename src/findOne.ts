@@ -8,7 +8,7 @@ import type { ElemOrSelectInput } from "./types";
  * @param selector CSS selector string to find the element.
  * @param [parent=document] Optional Element, Event, or selector for parent element.
  */
-export function oneMatching<T extends Element = HTMLElement>(
+export function findOne<T extends Element = HTMLElement>(
   selector: string,
   parent: ElemOrSelectInput = document,
 ): T | null {

@@ -9,7 +9,7 @@ import type { ElemOrSelectInput } from "./types";
  * @param selector CSS selector string to find the element.
  * @param [parent=document] Optional parent element to perform search.
  */
-export function allMatching<T extends Element = HTMLElement>(
+export function findAll<T extends Element = HTMLElement>(
   selector: string,
   parent: ElemOrSelectInput = document,
 ): T[] {

@@ -11,7 +11,7 @@ let context: CanvasRenderingContext2D | null = null;
  *
  * @see https://stackoverflow.com/a/68326447
  */
-export function inputWidth(input: HTMLInputElement): number {
+export function widthFromText(input: HTMLInputElement): number {
   if (canvas === null) {
     canvas = document.createElement("canvas");
   }

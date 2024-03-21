@@ -1,7 +1,7 @@
 import { isNil } from "@laserware/arcade";
 
 import { isPrimitive } from "./internal/typeGuards";
-import { oneMatching } from "./oneMatching";
+import { findOne } from "./findOne";
 import type { ElemOrSelectInput } from "./types";
 
 /**
@@ -11,7 +11,7 @@ import type { ElemOrSelectInput } from "./types";
  */
 export function exists(input: ElemOrSelectInput | null): boolean {
   if (isPrimitive(input)) {
-    return oneMatching(input) !== null;
+    return findOne(input) !== null;
   } else {
     return !isNil(input);
   }
