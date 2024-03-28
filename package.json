@@ -42,13 +42,13 @@
     "@laserware/arcade": "^2.5.1"
   },
   "devDependencies": {
-    "@laserware/eslint-config": "^2.2.0",
-    "@rushstack/eslint-patch": "^1.7.2",
+    "@laserware/eslint-config": "^2.2.2",
+    "@rushstack/eslint-patch": "^1.9.0",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
     "tslib": "^2.6.2",
     "tsup": "^8.0.2",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.3"
   },
   "prettier": {
     "trailingComma": "all"
