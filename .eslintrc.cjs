@@ -7,4 +7,12 @@ module.exports = {
     project: ["./tsconfig.json", "./tsconfig.node.json"],
   },
   ignorePatterns: ["*.js"],
+  overrides: [
+    {
+      files: "*.test.ts",
+      rules: {
+        "import/no-named-as-default": "off"
+      }
+    }
+  ]
 };

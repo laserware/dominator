@@ -1,34 +1,18 @@
-import { isNil } from "@laserware/arcade";
-
 import type { ElementOrSelectorInput } from "./types.js";
 
 /**
- * Returns true if the specified value is an Element or Document.
+ * Returns true if the specified value is an Element or Document or EventTarget
+ * that can be represented as an HTML Element.
  */
-export function isElementOrDocument(
+export function canBeElement(
   value: ElementOrSelectorInput | number | boolean,
 ): value is Element | HTMLElement | Document {
   return (
     value instanceof Element ||
     value instanceof HTMLElement ||
-    value instanceof Document
+    value instanceof Document ||
+    value instanceof EventTarget
   );
-}
-
-/**
- * Returns true if the specified value is an Event with a `currentTarget`
- * property.
- */
-export function isEvent(
-  value: ElementOrSelectorInput | number | boolean,
-): value is Event {
-  const validValue = value as { currentTarget: unknown; target: unknown };
-
-  if (isNil(validValue?.target)) {
-    return false;
-  }
-
-  return value instanceof Event;
 }
 
 /**

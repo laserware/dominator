@@ -5,14 +5,16 @@ type FormInputEvent = Event & {
 export type ElementInput =
   | Document
   | Element
-  | HTMLElement
   | Event
+  | EventTarget
   | FormInputEvent
+  | HTMLElement
+  | ChildNode
+  | Node
+  | ParentNode
   | null
   | undefined;
 
 export type SelectorInput = string | null | undefined;
 
 export type ElementOrSelectorInput = ElementInput | SelectorInput;
-
-export type TargetType = "currentTarget" | "target";
