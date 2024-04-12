@@ -1,5 +1,6 @@
 export { buildAttributeSelector } from "./attributes/buildAttributeSelector.js";
 export { getAttribute } from "./attributes/getAttribute.js";
+export { hasAttribute } from "./attributes/hasAttribute.js";
 export { setAttribute } from "./attributes/setAttribute.js";
 export { setAttributes } from "./attributes/setAttributes.js";
 
