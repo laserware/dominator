@@ -5,7 +5,6 @@ type FormInputEvent = Event & {
 export type ElementInput =
   | Document
   | Element
-  | Event
   | EventTarget
   | FormInputEvent
   | HTMLElement

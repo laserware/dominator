@@ -11,12 +11,12 @@ export function maintainElementScrollVisibility(
   activeElement: ElementOrSelectorInput,
   scrollParent: ElementOrSelectorInput,
 ): void {
-  const validScrollElement = getValidElement(scrollParent, "target");
+  const validScrollElement = getValidElement(scrollParent);
   if (validScrollElement === null) {
     return;
   }
 
-  const validActiveElement = getValidElement(activeElement, "target");
+  const validActiveElement = getValidElement(activeElement);
   if (validActiveElement === null) {
     return;
   }
