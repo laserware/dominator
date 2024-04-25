@@ -1,7 +1,8 @@
-import { buildDatasetSelector } from "./buildDatasetSelector.js";
 import { findOneElement } from "../findOneElement.js";
 import { isPrimitive } from "../typeGuards.js";
 import type { ElementOrSelectorInput } from "../types.js";
+
+import { buildDatasetSelector } from "./buildDatasetSelector.js";
 
 /**
  * Query the DOM for the element with the specified dataset name and optionally

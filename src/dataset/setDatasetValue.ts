@@ -1,7 +1,8 @@
-import { ensureDatasetKeyName } from "./datasetNames.js";
 import { getValidElement } from "../getValidElement.js";
 import { InvalidElementError } from "../InvalidElementError.js";
 import type { ElementOrSelectorInput } from "../types.js";
+
+import { ensureDatasetKeyName } from "./datasetNames.js";
 
 /**
  * Assigns the specified value to the specified dataset key in the specified

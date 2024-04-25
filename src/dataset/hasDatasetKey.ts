@@ -1,8 +1,9 @@
 import { isNotNil } from "@laserware/arcade";
 
-import { ensureDatasetKeyName } from "./datasetNames.js";
 import { getValidElement } from "../getValidElement.js";
 import type { ElementOrSelectorInput } from "../types.js";
+
+import { ensureDatasetKeyName } from "./datasetNames.js";
 
 /**
  * Returns true if the specified element has a dataset entry with the specified

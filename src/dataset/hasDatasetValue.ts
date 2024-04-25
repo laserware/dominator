@@ -1,5 +1,6 @@
-import { getDatasetValue } from "./getDatasetValue.js";
 import type { ElementOrSelectorInput } from "../types.js";
+
+import { getDatasetValue } from "./getDatasetValue.js";
 
 /**
  * Returns true if the specified element has the dataset key with the specified
