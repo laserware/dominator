@@ -1,6 +1,6 @@
 {
   "name": "@laserware/dominator",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "description": "Simplify DOM usage.",
   "browser": "dist/index.mjs",
   "types": "dist/index.d.ts",
