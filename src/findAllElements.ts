@@ -1,6 +1,6 @@
-import { getValidElement } from "./getValidElement.js";
-import { listToArray } from "./listToArray.js";
-import type { ElementOrSelectorInput } from "./types.js";
+import { getValidElement } from "./getValidElement.ts";
+import { listToArray } from "./listToArray.ts";
+import type { ElementOrSelectorInput } from "./types.ts";
 
 /**
  * Query the DOM for the elements that match that selector and return as an

@@ -1,6 +1,6 @@
-import { hasParentElement } from "./hasParentElement.js";
-import { isElementSameAs } from "./isElementSameAs.js";
-import type { ElementOrSelectorInput } from "./types.js";
+import { hasParentElement } from "./hasParentElement.ts";
+import { isElementSameAs } from "./isElementSameAs.ts";
+import type { ElementOrSelectorInput } from "./types.ts";
 
 /**
  * Returns true if the specified element is the same or a child of the specified

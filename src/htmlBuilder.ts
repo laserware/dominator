@@ -1,4 +1,4 @@
-import type { AriaAttrs } from "./types.js";
+import type { AriaAttrs } from "./types.ts";
 
 type HTMLElementTagName = keyof HTMLElementTagNameMap;
 

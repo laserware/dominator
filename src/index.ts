@@ -1,48 +1,48 @@
-export { buildAttributeSelector } from "./attributes/buildAttributeSelector.js";
-export { getAttribute } from "./attributes/getAttribute.js";
-export { hasAttribute } from "./attributes/hasAttribute.js";
-export { setAttribute } from "./attributes/setAttribute.js";
-export { setAttributes } from "./attributes/setAttributes.js";
+export { buildAttributeSelector } from "./attributes/buildAttributeSelector.ts";
+export { getAttribute } from "./attributes/getAttribute.ts";
+export { hasAttribute } from "./attributes/hasAttribute.ts";
+export { setAttribute } from "./attributes/setAttribute.ts";
+export { setAttributes } from "./attributes/setAttributes.ts";
 
-export { buildDatasetSelector } from "./dataset/buildDatasetSelector.js";
-export { findAllElementsWithDataset } from "./dataset/findAllElementsWithDataset.js";
-export { findOneElementWithDataset } from "./dataset/findOneElementWithDataset.js";
-export { getDatasetValue } from "./dataset/getDatasetValue.js";
-export { hasDatasetKey } from "./dataset/hasDatasetKey.js";
-export { hasDatasetValue } from "./dataset/hasDatasetValue.js";
-export { setDatasetValue } from "./dataset/setDatasetValue.js";
-export { setDatasetValues } from "./dataset/setDatasetValues.js";
+export { buildDatasetSelector } from "./dataset/buildDatasetSelector.ts";
+export { findAllElementsWithDataset } from "./dataset/findAllElementsWithDataset.ts";
+export { findOneElementWithDataset } from "./dataset/findOneElementWithDataset.ts";
+export { getDatasetValue } from "./dataset/getDatasetValue.ts";
+export { hasDatasetKey } from "./dataset/hasDatasetKey.ts";
+export { hasDatasetValue } from "./dataset/hasDatasetValue.ts";
+export { setDatasetValue } from "./dataset/setDatasetValue.ts";
+export { setDatasetValues } from "./dataset/setDatasetValues.ts";
 
-export { getCssVariable } from "./styles/getCssVariable.js";
-export { setCssVariable } from "./styles/setCssVariable.js";
-export { setElementStyles } from "./styles/setElementStyles.js";
+export { getCssVariable } from "./styles/getCssVariable.ts";
+export { setCssVariable } from "./styles/setCssVariable.ts";
+export { setElementStyles } from "./styles/setElementStyles.ts";
 
-export { asElement } from "./asElement.js";
-export { doesElementExist } from "./doesElementExist.js";
-export { doesElementHaveId } from "./doesElementHaveId.js";
-export { findAllElements } from "./findAllElements.js";
-export { findAllFocusableElements } from "./findAllFocusableElements.js";
-export { findFirstFocusableInput } from "./findFirstFocusableInput.js";
-export { findOneElement } from "./findOneElement.js";
-export { getElementValue } from "./getElementValue.js";
-export { getInputElementWidth } from "./getInputElementWidth.js";
-export { hasParentElement } from "./hasParentElement.js";
-export { html } from "./htmlBuilder.js";
-export { isElementDifferentFrom } from "./isElementDifferentFrom.js";
-export { isElementInView } from "./isElementInView.js";
-export { isElementOfType } from "./isElementOfType.js";
-export { isElementSameAs } from "./isElementSameAs.js";
-export { isElementSameOrChildOf } from "./isElementSameOrChildOf.js";
-export { isElementScrollable } from "./isElementScrollable.js";
-export { listToArray } from "./listToArray.js";
-export { maintainElementScrollVisibility } from "./maintainElementScrollVisibility.js";
-export { moveCursorToElementTextEnd } from "./moveCursorToElementTextEnd.js";
-export { parseTransferData } from "./parseTransferData.js";
-export { setFocusToElement } from "./setFocusToElement.js";
-export { TypedEventTarget } from "./TypedEventTarget.js";
+export { asElement } from "./asElement.ts";
+export { doesElementExist } from "./doesElementExist.ts";
+export { doesElementHaveId } from "./doesElementHaveId.ts";
+export { findAllElements } from "./findAllElements.ts";
+export { findAllFocusableElements } from "./findAllFocusableElements.ts";
+export { findFirstFocusableInput } from "./findFirstFocusableInput.ts";
+export { findOneElement } from "./findOneElement.ts";
+export { getElementValue } from "./getElementValue.ts";
+export { getInputElementWidth } from "./getInputElementWidth.ts";
+export { hasParentElement } from "./hasParentElement.ts";
+export { html } from "./htmlBuilder.ts";
+export { isElementDifferentFrom } from "./isElementDifferentFrom.ts";
+export { isElementInView } from "./isElementInView.ts";
+export { isElementOfType } from "./isElementOfType.ts";
+export { isElementSameAs } from "./isElementSameAs.ts";
+export { isElementSameOrChildOf } from "./isElementSameOrChildOf.ts";
+export { isElementScrollable } from "./isElementScrollable.ts";
+export { listToArray } from "./listToArray.ts";
+export { maintainElementScrollVisibility } from "./maintainElementScrollVisibility.ts";
+export { moveCursorToElementTextEnd } from "./moveCursorToElementTextEnd.ts";
+export { parseTransferData } from "./parseTransferData.ts";
+export { setFocusToElement } from "./setFocusToElement.ts";
+export { TypedEventTarget } from "./TypedEventTarget.ts";
 export type {
   AriaAttrs,
   ElementInput,
   ElementOrSelectorInput,
   SelectorInput,
-} from "./types.js";
+} from "./types.ts";

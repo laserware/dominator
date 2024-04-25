@@ -1,5 +1,5 @@
-import { getValidElement } from "../getValidElement.js";
-import type { ElementOrSelectorInput } from "../types.js";
+import { getValidElement } from "../getValidElement.ts";
+import type { ElementOrSelectorInput } from "../types.ts";
 
 /**
  * Returns the value of the specified attribute name in the specified element.

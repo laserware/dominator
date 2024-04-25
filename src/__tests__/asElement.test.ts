@@ -1,6 +1,6 @@
 import userEvent from "@testing-library/user-event";
 
-import { asElement } from "../asElement.js";
+import { asElement } from "../asElement.ts";
 
 describe("the asElement function", () => {
   it("returns an element when an element is passed in", () => {

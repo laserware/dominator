@@ -1,6 +1,6 @@
-import { getValidElement } from "../getValidElement.js";
-import { InvalidElementError } from "../InvalidElementError.js";
-import type { ElementOrSelectorInput } from "../types.js";
+import { getValidElement } from "../getValidElement.ts";
+import { InvalidElementError } from "../InvalidElementError.ts";
+import type { ElementOrSelectorInput } from "../types.ts";
 
 /**
  * Sets the attributes of the specified element to the specified attributes

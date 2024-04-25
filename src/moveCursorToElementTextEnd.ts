@@ -1,5 +1,5 @@
-import { getValidElement } from "./getValidElement.js";
-import type { ElementOrSelectorInput } from "./types.js";
+import { getValidElement } from "./getValidElement.ts";
+import type { ElementOrSelectorInput } from "./types.ts";
 
 /**
  * Moves the cursor to the end of the text in an element.

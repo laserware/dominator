@@ -1,5 +1,5 @@
-import { findAllElements } from "./findAllElements.js";
-import type { ElementOrSelectorInput } from "./types.js";
+import { findAllElements } from "./findAllElements.ts";
+import type { ElementOrSelectorInput } from "./types.ts";
 
 const focusableElementsSelector = [
   "a",

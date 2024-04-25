@@ -1,8 +1,8 @@
-import { getValidElement } from "../getValidElement.js";
-import { InvalidElementError } from "../InvalidElementError.js";
-import type { ElementOrSelectorInput } from "../types.js";
+import { getValidElement } from "../getValidElement.ts";
+import { InvalidElementError } from "../InvalidElementError.ts";
+import type { ElementOrSelectorInput } from "../types.ts";
 
-import { ensureDatasetKeyName } from "./datasetNames.js";
+import { ensureDatasetKeyName } from "./datasetNames.ts";
 
 /**
  * Assigns the specified value to the specified dataset key in the specified

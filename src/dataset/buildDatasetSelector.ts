@@ -1,6 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
-import { ensureDatasetAttributeName } from "./datasetNames.js";
+import { ensureDatasetAttributeName } from "./datasetNames.ts";
 
 /**
  * Returns a valid selector for a dataset with the specified key and optional

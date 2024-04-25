@@ -1,8 +1,8 @@
 import { isNil } from "@laserware/arcade";
 
-import { getValidElement } from "../getValidElement.js";
-import { InvalidElementError } from "../InvalidElementError.js";
-import type { ElementOrSelectorInput } from "../types.js";
+import { getValidElement } from "../getValidElement.ts";
+import { InvalidElementError } from "../InvalidElementError.ts";
+import type { ElementOrSelectorInput } from "../types.ts";
 
 /**
  * Returns the value associated with the specified CSS variable name. If

@@ -1,4 +1,4 @@
-import type { ElementOrSelectorInput } from "./types.js";
+import type { ElementOrSelectorInput } from "./types.ts";
 
 /**
  * Returns true if the specified value is an Element or Document or EventTarget

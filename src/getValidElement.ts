@@ -1,8 +1,8 @@
 import { isNil } from "@laserware/arcade";
 
-import { asElement } from "./asElement.js";
-import { findOneElement } from "./findOneElement.js";
-import type { ElementOrSelectorInput } from "./types.js";
+import { asElement } from "./asElement.ts";
+import { findOneElement } from "./findOneElement.ts";
+import type { ElementOrSelectorInput } from "./types.ts";
 
 /**
  * If the specified element is a string, it represents a selector, so try to

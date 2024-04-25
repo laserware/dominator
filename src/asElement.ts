@@ -1,5 +1,5 @@
-import { canBeElement } from "./typeGuards.js";
-import type { ElementInput } from "./types.js";
+import { canBeElement } from "./typeGuards.ts";
+import type { ElementInput } from "./types.ts";
 
 /**
  * Returns an element of type T for the specified Element or Event. This function
