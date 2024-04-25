@@ -19,7 +19,7 @@
     "target": "ESNext",
     "verbatimModuleSyntax": true
   },
-  "include": ["src/**/*.ts", "./declarations.d.ts"],
+  "include": ["./src/**/*.ts", "./declarations.d.ts"],
   "exclude": ["dist", "node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

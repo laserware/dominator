@@ -43,21 +43,20 @@
     "@laserware/arcade": "^3.0.1"
   },
   "devDependencies": {
-    "@laserware/eslint-config": "^2.2.2",
-    "@rushstack/eslint-patch": "^1.10.1",
+    "@laserware/eslint-config": "^3.0.1",
+    "@rushstack/eslint-patch": "^1.10.2",
     "@testing-library/dom": "^10.0.0",
     "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/svelte": "^4.1.0",
     "@testing-library/user-event": "^14.5.2",
     "@types/node": "^20.12.7",
-    "@vitest/coverage-istanbul": "^1.4.0",
+    "@vitest/coverage-istanbul": "^1.5.2",
     "eslint": "^8.57.0",
     "happy-dom": "^14.7.1",
     "prettier": "^3.2.5",
     "tslib": "^2.6.2",
     "tsup": "^8.0.2",
     "typescript": "^5.4.5",
-    "vitest": "^1.4.0"
+    "vitest": "^1.5.2"
   },
   "prettier": {
     "trailingComma": "all"
