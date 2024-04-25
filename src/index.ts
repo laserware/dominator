@@ -39,6 +39,7 @@ export { maintainElementScrollVisibility } from "./maintainElementScrollVisibili
 export { moveCursorToElementTextEnd } from "./moveCursorToElementTextEnd.js";
 export { parseTransferData } from "./parseTransferData.js";
 export { setFocusToElement } from "./setFocusToElement.js";
+export { TypedEventTarget } from "./TypedEventTarget.js";
 export type {
   AriaAttrs,
   ElementInput,
