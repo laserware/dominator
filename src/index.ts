@@ -27,6 +27,7 @@ export { findOneElement } from "./findOneElement.js";
 export { getElementValue } from "./getElementValue.js";
 export { getInputElementWidth } from "./getInputElementWidth.js";
 export { hasParentElement } from "./hasParentElement.js";
+export { html } from "./htmlBuilder.js";
 export { isElementDifferentFrom } from "./isElementDifferentFrom.js";
 export { isElementInView } from "./isElementInView.js";
 export { isElementOfType } from "./isElementOfType.js";
@@ -39,6 +40,7 @@ export { moveCursorToElementTextEnd } from "./moveCursorToElementTextEnd.js";
 export { parseTransferData } from "./parseTransferData.js";
 export { setFocusToElement } from "./setFocusToElement.js";
 export type {
+  AriaAttrs,
   ElementInput,
   ElementOrSelectorInput,
   SelectorInput,
