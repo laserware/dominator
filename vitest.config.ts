@@ -7,7 +7,7 @@ const rootDirPath = fileURLToPath(new URL(".", import.meta.url));
 
 export default defineConfig({
   test: {
-    environment: "happy-dom",
+    environment: "jsdom",
     globals: true,
     setupFiles: resolve(rootDirPath, "vitest.setup.ts"),
     coverage: {
