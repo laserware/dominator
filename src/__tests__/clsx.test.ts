@@ -1,3 +1,5 @@
+// noinspection PointlessBooleanExpressionJS
+
 import { clsx } from "../clsx.ts";
 
 /**
