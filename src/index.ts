@@ -18,6 +18,7 @@ export { setCssVariable } from "./styles/setCssVariable.ts";
 export { setElementStyles } from "./styles/setElementStyles.ts";
 
 export { asElement } from "./asElement.ts";
+export { clsx } from "./clsx.ts";
 export { doesElementExist } from "./doesElementExist.ts";
 export { doesElementHaveId } from "./doesElementHaveId.ts";
 export { findAllElements } from "./findAllElements.ts";
