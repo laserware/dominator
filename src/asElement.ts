@@ -6,7 +6,7 @@ import type { ElementInput } from "./types.ts";
  * is useful to prevent TypeScript from complaining about an invalid or unknown
  * element.
  *
- * @param element Element or Event or EventTarget to assert as an Element.
+ * @param element Element or EventTarget to assert as an Element.
  */
 export function asElement<T extends Element = HTMLElement>(
   element: ElementInput | null,

@@ -5,9 +5,10 @@ let context: CanvasRenderingContext2D | null = null;
 
 /**
  * Returns the ideal width of an input element (in pixels) that based on its
- * value or placeholder.
- * @param element Input element for which to get width
- * @see https://stackoverflow.com/a/68326447
+ * value or placeholder using the {@link https://stackoverflow.com/a/68326447|measureText}
+ * approach.
+ *
+ * @param element Input element for which to get width.
  */
 export function getInputElementWidth(element: HTMLInputElement): number {
   if (canvas === null) {

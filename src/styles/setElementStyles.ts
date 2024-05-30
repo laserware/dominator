@@ -17,8 +17,9 @@ type CSSStyleProperty = Exclude<
  * Sets the style properties of the specified element to the specified values
  * where styles is an object with key of style property name and value of the
  * style property value.
- * @param element Element, Event, or selector for element
- * @param styles Object with style property values keyed by name
+ *
+ * @param element Element, EventTarget, or selector for element.
+ * @param styles Object with style property values keyed by name.
  */
 export function setElementStyles(
   element: ElementOrSelectorInput,

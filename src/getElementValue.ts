@@ -3,7 +3,8 @@ import type { ElementOrSelectorInput } from "./types.ts";
 
 /**
  * Returns the value of the specified element.
- * @param element Element, Event, or selector for element
+ *
+ * @param element Element, EventTarget, or selector for element.
  */
 export function getElementValue<T>(
   element: ElementOrSelectorInput | null,

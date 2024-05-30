@@ -4,7 +4,8 @@ import type { ElementOrSelectorInput } from "./types.ts";
 
 /**
  * Returns true if the specified element is visible in browser viewport.
- * @param element Element, Event, or selector for element
+ *
+ * @param element Element, EventTarget, or selector for element.
  */
 export function isElementInView(element: ElementOrSelectorInput): boolean {
   const validElement = getValidElement(element);

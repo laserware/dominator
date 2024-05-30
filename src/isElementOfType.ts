@@ -3,8 +3,9 @@ import type { ElementOrSelectorInput } from "./types.ts";
 
 /**
  * Returns true if the specified element matches the specified type.
- * @param element Element, Event, or selector for element
- * @param tagName Tag name to check for (e.g. `div`, `span`, etc.)
+ *
+ * @param element Element, EventTarget, or selector for element.
+ * @param tagName Tag name to check for (e.g. `div`, `span`, etc.).
  */
 export function isElementOfType(
   element: ElementOrSelectorInput | null,

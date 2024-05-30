@@ -3,7 +3,8 @@ import { isNil } from "@laserware/arcade";
 /**
  * Converts the specified NodeList or HTMLCollection to an array to be able to
  * utilize array methods.
- * @param items NodeList or HTMLCollection to convert to array
+ *
+ * @param items NodeList or HTMLCollection to convert to array.
  */
 export function listToArray<T extends Element = HTMLElement>(
   items: NodeListOf<T> | NodeList | HTMLCollection | null,

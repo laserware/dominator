@@ -5,8 +5,9 @@ import { ensureDatasetAttributeName } from "./datasetNames.ts";
 /**
  * Returns a valid selector for a dataset with the specified key and optional
  * value.
- * @param keyOrAttributeName Key or attribute name for the dataset entry
- * @param value Optional value of the dataset entry
+ *
+ * @param keyOrAttributeName Key or attribute name for the dataset entry.
+ * @param value Optional value of the dataset entry.
  */
 export function buildDatasetSelector(
   keyOrAttributeName: string,
@@ -26,8 +27,9 @@ export function buildDatasetSelector(
 /**
  * Returns a valid selector to find an element in the DOM based on its `data`
  * attribute.
- * @param keyOrAttributeName Key or attribute name for the dataset entry
- * @param value Optional value of the dataset entry
+ *
+ * @param keyOrAttributeName Key or attribute name for the dataset entry.
+ * @param value Optional value of the dataset entry.
  */
 function validDatasetSelector(
   keyOrAttributeName: string,

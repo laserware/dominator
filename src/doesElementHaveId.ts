@@ -3,8 +3,9 @@ import type { ElementOrSelectorInput } from "./types.ts";
 
 /**
  * Returns true if the specified element has the specified ID property.
- * @param element Element, Event, or selector for element
- * @param id ID to check for element
+ *
+ * @param element Element, EventTarget, or selector for element.
+ * @param id ID to check for element.
  */
 export function doesElementHaveId(
   element: ElementOrSelectorInput,

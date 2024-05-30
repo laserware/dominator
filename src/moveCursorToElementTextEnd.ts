@@ -3,8 +3,9 @@ import type { ElementOrSelectorInput } from "./types.ts";
 
 /**
  * Moves the cursor to the end of the text in an element.
- * @param element Element, Event, or selector for element
- * @param [parent] Optional Element, Event, or selector for parent element
+ *
+ * @param element Element, EventTarget, or selector for element.
+ * @param [parent] Optional Element, EventTarget, or selector for parent element.
  */
 export function moveCursorToElementTextEnd(
   element: ElementOrSelectorInput | null,

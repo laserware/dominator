@@ -6,7 +6,8 @@ import type { ElementOrSelectorInput } from "./types.ts";
 
 /**
  * Returns true if the specified element input exists in the DOM.
- * @param element Element, Event, or selector for element
+ *
+ * @param element Element, EventTarget, or selector for element.
  */
 export function doesElementExist(
   element: ElementOrSelectorInput | null,

@@ -3,6 +3,7 @@ import { capitalize, kebabCase } from "@laserware/arcade";
 /**
  * Ensures the specified key or name is `kebab-case` with a `data-` prefix and
  * returns the result.
+ *
  * @param keyOrAttributeName Key for the dataset entry that is either camelCase
  *                           or already in the `data-` name form.
  */
@@ -17,6 +18,7 @@ export function ensureDatasetAttributeName(keyOrAttributeName: string): string {
 /**
  * Ensures the specified key or name is camelCase without a `data-` prefix and
  * returns the result.
+ *
  * @param keyOrAttributeName Key for the dataset entry that is either camelCase
  *                           or already in the `data-` name form.
  */

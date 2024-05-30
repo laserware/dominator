@@ -7,9 +7,10 @@ import { ensureDatasetKeyName } from "./datasetNames.ts";
 /**
  * Assigns the specified value to the specified dataset key in the specified
  * element.
- * @param element Element, Event, or selector for element
- * @param keyOrAttributeName Key or attribute name for the dataset entry
- * @param value Value to set for associated key or attribute name
+ *
+ * @param element Element, EventTarget, or selector for element.
+ * @param keyOrAttributeName Key or attribute name for the dataset entry.
+ * @param value Value to set for associated key or attribute name.
  */
 export function setDatasetValue(
   element: ElementOrSelectorInput,

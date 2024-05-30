@@ -43,14 +43,14 @@
     "@laserware/arcade": "^3.2.0"
   },
   "devDependencies": {
-    "@laserware/eslint-config": "^3.0.1",
+    "@laserware/eslint-config": "^3.1.1",
     "@testing-library/dom": "^10.1.0",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/user-event": "^14.5.2",
-    "@types/node": "^20.12.12",
+    "@types/node": "^20.12.13",
     "@vitest/coverage-istanbul": "^1.6.0",
     "eslint": "^8.57.0",
-    "jsdom": "^24.0.0",
+    "jsdom": "^24.1.0",
     "prettier": "^3.2.5",
     "tslib": "^2.6.2",
     "tsup": "^8.0.2",

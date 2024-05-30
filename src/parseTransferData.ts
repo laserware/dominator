@@ -1,6 +1,7 @@
 /**
  * Parses the drop data from a Drag event.
- * @param event Drag event to parse the data from
+ *
+ * @param event Drag event to parse the data from.
  */
 export function parseTransferData<T = Record<string, unknown>>(
   event: DragEvent,

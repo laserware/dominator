@@ -6,8 +6,9 @@ import type { ElementOrSelectorInput } from "../types.ts";
  * Sets the attributes of the specified element to the specified attributes
  * object, where the key of the object is the attribute name and the value of
  * the object is the attribute value.
- * @param element Element, Event, or selector for element
- * @param attributes Object with key of attribute name and value of attribute value
+ *
+ * @param element Element, EventTarget, or selector for element.
+ * @param attributes Object with key of attribute name and value of attribute value.
  */
 export function setAttributes(
   element: ElementOrSelectorInput | null,

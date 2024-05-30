@@ -3,7 +3,7 @@ import type { ElementOrSelectorInput } from "./types.ts";
 
 /**
  * Returns true if the specified element is currently scrollable.
- * @param element Element, Event, or selector for element
+ * @param element Element, EventTarget, or selector for element
  */
 export function isElementScrollable(
   element: ElementOrSelectorInput | null,

@@ -4,10 +4,11 @@ import type { ElementOrSelectorInput } from "./types.ts";
 /**
  * Iterates up through the DOM tree from the child element and returns true
  * if the parent of the element matches the parent specified.
- * @param child Element, Event, or selector for element to check
- * @param parent Element, Event, or selector for parent element
- * @param [options] Options for checking for parent
- * @prop [options.maxDepth=10] Maximum depth to perform search
+ *
+ * @param child Element, Event, or selector for element to check.
+ * @param parent Element, Event, or selector for parent element.
+ * @param [options] Options for checking for parent.
+ * @prop [options.maxDepth=10] Maximum depth to perform search.
  */
 export function hasParentElement(
   child: ElementOrSelectorInput | null,

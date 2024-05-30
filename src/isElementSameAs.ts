@@ -3,10 +3,11 @@ import type { ElementOrSelectorInput } from "./types.ts";
 
 /**
  * Returns true if the source element(s) and target elements match.
+ *
  * @param source Single element input or array of element inputs to check; if
  *               an array, returns true if _one_ of the elements matches the
- *               target element input
- * @param target Element input to compare against
+ *               target element input.
+ * @param target Element input to compare against.
  */
 export function isElementSameAs(
   source: ElementOrSelectorInput | ElementOrSelectorInput[] | null,

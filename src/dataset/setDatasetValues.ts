@@ -5,8 +5,9 @@ import type { ElementOrSelectorInput } from "../types.ts";
 /**
  * Assigns the specified dataset values to the specified element. Returns the
  * element with the updated dataset values if successful.
- * @param element Element, Event, or selector for element
- * @param datasetValues Object with key of dataset key and value of dataset value
+ *
+ * @param element Element, EventTarget, or selector for element.
+ * @param datasetValues Object with key of dataset key and value of dataset value.
  */
 export function setDatasetValues<T extends Element = HTMLElement>(
   element: ElementOrSelectorInput,

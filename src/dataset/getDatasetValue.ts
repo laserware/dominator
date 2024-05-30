@@ -6,8 +6,9 @@ import { ensureDatasetKeyName } from "./datasetNames.ts";
 /**
  * Returns the value associated with the specified dataset entry key. If the
  * value doesn't exist, return null.
- * @param element Element, Event, or selector for element
- * @param keyOrAttributeName Key or attribute name for the dataset entry
+ *
+ * @param element Element, EventTarget, or selector for element.
+ * @param keyOrAttributeName Key or attribute name for the dataset entry.
  */
 export function getDatasetValue<T = string>(
   element: ElementOrSelectorInput | null,

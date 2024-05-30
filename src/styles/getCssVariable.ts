@@ -7,9 +7,10 @@ import type { ElementOrSelectorInput } from "../types.ts";
 /**
  * Returns the value associated with the specified CSS variable name. If
  * no element is specified, gets the variable value from the `:root` element.
- * @param name Name of the variable to get value for
- * @param [defaultValue=undefined] Optional default value to fall back to if not found
- * @param [element] Optional Element, Event, or selector for element from which to get CSS variable
+ *
+ * @param name Name of the variable to get value for.
+ * @param [defaultValue=undefined] Optional default value to fall back to if not found.
+ * @param [element] Optional Element, EventTarget, or selector for element from which to get CSS variable.
  */
 export function getCssVariable<T>(
   name: string,
