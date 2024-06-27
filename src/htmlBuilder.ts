@@ -144,7 +144,7 @@ export function html<TN extends AnyElementTagName>(
         }
 
         if (isPrimitive(child)) {
-          return document.createTextNode(child.toString());
+          return document.createTextNode(stringifyValue(child));
         }
 
         if (child instanceof Element) {
@@ -214,7 +214,7 @@ function setElementProperties<TN extends AnyElementTagName>(
       continue;
     }
 
-    element.setAttribute(name, value.toString());
+    element.setAttribute(name, stringifyValue(value));
   }
 }
 
@@ -291,11 +291,11 @@ function setStyleProperty<TN extends AnyElementTagName>(
 ): void {
   // Using `setProperty` here to set a custom CSS variable:
   if (propertyName.startsWith("--")) {
-    element.style.setProperty(propertyName, value.toString());
+    element.style.setProperty(propertyName, stringifyValue(value));
   } else {
     const allowedName = propertyName as keyof AllowedCSSStyleDeclaration;
 
-    element.style[allowedName] = value.toString();
+    element.style[allowedName] = stringifyValue(value);
   }
 }
 
@@ -312,7 +312,7 @@ function setDatasetProperty<TN extends AnyElementTagName>(
   value: Primitive,
 ): void {
   if (isPrimitive(value)) {
-    element.dataset[key] = value.toString();
+    element.dataset[key] = stringifyValue(value);
   } else {
     // prettier-ignore
     throw new Error(`Invalid dataset property value type ${typeof value} for ${key}`)
@@ -329,4 +329,12 @@ function isPrimitive(value: unknown): value is Primitive {
     typeof value === "number" ||
     typeof value === "string"
   );
+}
+
+function stringifyValue(value: any): string {
+  try {
+    return value.toString();
+  } catch {
+    return "";
+  }
 }
