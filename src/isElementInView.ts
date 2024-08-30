@@ -1,13 +1,13 @@
 import { getValidElement } from "./getValidElement.ts";
 import { InvalidElementError } from "./InvalidElementError.ts";
-import type { ElementOrSelectorInput } from "./types.ts";
+import type { ElemOrSelectorInput } from "./types.ts";
 
 /**
  * Returns true if the specified element is visible in browser viewport.
  *
  * @param element Element, EventTarget, or selector for element.
  */
-export function isElementInView(element: ElementOrSelectorInput): boolean {
+export function isElementInView(element: ElemOrSelectorInput): boolean {
   const validElement = getValidElement(element);
   if (validElement === null) {
     throw new InvalidElementError("Unable to determine if element is in view");

@@ -1,5 +1,5 @@
 import { getValidElement } from "./getValidElement.ts";
-import type { ElementOrSelectorInput } from "./types.ts";
+import type { ElemOrSelectorInput } from "./types.ts";
 
 /**
  * Returns true if the source element(s) and target elements match.
@@ -10,8 +10,8 @@ import type { ElementOrSelectorInput } from "./types.ts";
  * @param target Element input to compare against.
  */
 export function isElementSameAs(
-  source: ElementOrSelectorInput | ElementOrSelectorInput[] | null,
-  target: ElementOrSelectorInput | null,
+  source: ElemOrSelectorInput | ElemOrSelectorInput[] | null,
+  target: ElemOrSelectorInput | null,
 ): boolean {
   if (Array.isArray(source)) {
     for (const item of source) {
@@ -27,8 +27,8 @@ export function isElementSameAs(
 }
 
 function isSingleElementSameAs(
-  source: ElementOrSelectorInput | null,
-  target: ElementOrSelectorInput | null,
+  source: ElemOrSelectorInput | null,
+  target: ElemOrSelectorInput | null,
 ): boolean {
   const sourceElement = getValidElement(source);
   const targetElement = getValidElement(target);

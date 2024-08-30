@@ -1,7 +1,7 @@
 import { isNotNil } from "@laserware/arcade";
 
 import { getValidElement } from "../getValidElement.ts";
-import type { ElementOrSelectorInput } from "../types.ts";
+import type { ElemOrSelectorInput } from "../types.ts";
 
 import { ensureDatasetKeyName } from "./datasetNames.ts";
 
@@ -13,7 +13,7 @@ import { ensureDatasetKeyName } from "./datasetNames.ts";
  * @param keyOrAttributeName Key or attribute name for the dataset entry.
  */
 export function hasDatasetKey(
-  element: ElementOrSelectorInput | null,
+  element: ElemOrSelectorInput | null,
   keyOrAttributeName: string,
 ): boolean {
   try {

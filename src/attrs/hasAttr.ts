@@ -4,12 +4,12 @@ import type { ElemOrSelectorInput } from "../types.ts";
 /**
  * Returns true if the specified element has the specified attribute.
  *
- * @param element Element, EventTarget, or selector for element.
+ * @param input Element, EventTarget, or selector for element.
  * @param name Name of the attribute to check for.
  */
-export function hasAttribute(
-  element: ElemOrSelectorInput | null,
+export function hasAttr(
+  input: ElemOrSelectorInput | null,
   name: string,
 ): boolean {
-  return getValidElement(element)?.hasAttribute(name) ?? false;
+  return getValidElement(input)?.hasAttribute(name) ?? false;
 }

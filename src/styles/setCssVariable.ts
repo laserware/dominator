@@ -2,7 +2,7 @@ import { isNil } from "@laserware/arcade";
 
 import { getValidElement } from "../getValidElement.ts";
 import { InvalidElementError } from "../InvalidElementError.ts";
-import type { ElementOrSelectorInput } from "../types.ts";
+import type { ElemOrSelectorInput } from "../types.ts";
 
 /**
  * Sets the specified CSS variable name to the specified value in the optionally
@@ -16,7 +16,7 @@ import type { ElementOrSelectorInput } from "../types.ts";
 export function setCssVariable(
   name: string,
   value: boolean | number | string,
-  element?: ElementOrSelectorInput,
+  element?: ElemOrSelectorInput,
 ): void {
   const validElement = isNil(element)
     ? document.documentElement

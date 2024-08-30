@@ -1,6 +1,6 @@
 import { getValidElement } from "../getValidElement.ts";
 import { InvalidElementError } from "../InvalidElementError.ts";
-import type { ElementOrSelectorInput } from "../types.ts";
+import type { ElemOrSelectorInput } from "../types.ts";
 
 type CSSStyleProperty = Exclude<
   keyof CSSStyleDeclaration,
@@ -22,7 +22,7 @@ type CSSStyleProperty = Exclude<
  * @param styles Object with style property values keyed by name.
  */
 export function setElementStyles(
-  element: ElementOrSelectorInput,
+  element: ElemOrSelectorInput,
   styles: Record<CSSStyleProperty, string>,
 ): void {
   const validElement = getValidElement(element);

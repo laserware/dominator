@@ -1,5 +1,5 @@
 import { findAllElements } from "./findAllElements.ts";
-import type { ElementOrSelectorInput } from "./types.ts";
+import type { ElemOrSelectorInput } from "./types.ts";
 
 const focusableElementsSelector = [
   "a",
@@ -19,7 +19,7 @@ const focusableElementsSelector = [
  * @param parent Optional Element, EventTarget, or selector for parent element.
  */
 export function findAllFocusableElements(
-  parent?: ElementOrSelectorInput,
+  parent?: ElemOrSelectorInput,
 ): HTMLElement[] {
   return findAllElements<HTMLElement>(focusableElementsSelector, parent);
 }

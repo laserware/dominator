@@ -1,6 +1,6 @@
 import { getValidElement } from "../getValidElement.ts";
 import { InvalidElementError } from "../InvalidElementError.ts";
-import type { ElementOrSelectorInput } from "../types.ts";
+import type { ElemOrSelectorInput } from "../types.ts";
 
 /**
  * Sets the attributes of the specified element to the specified attributes
@@ -11,7 +11,7 @@ import type { ElementOrSelectorInput } from "../types.ts";
  * @param attributes Object with key of attribute name and value of attribute value.
  */
 export function setAttributes(
-  element: ElementOrSelectorInput | null,
+  element: ElemOrSelectorInput | null,
   attributes: Record<string, boolean | number | string>,
 ): void {
   const validElement = getValidElement(element);

@@ -2,7 +2,7 @@ import { isNil } from "@laserware/arcade";
 
 import { asElement } from "./asElement.ts";
 import { findOneElement } from "./findOneElement.ts";
-import type { ElementOrSelectorInput } from "./types.ts";
+import type { ElemOrSelectorInput } from "./types.ts";
 
 /**
  * If the specified element is a string, it represents a selector, so try to
@@ -13,8 +13,8 @@ import type { ElementOrSelectorInput } from "./types.ts";
  * @param [parent=document] Optional Element, EventTarget, or selector for parent element.
  */
 export function getValidElement<T extends Element = HTMLElement>(
-  element: ElementOrSelectorInput | null,
-  parent?: ElementOrSelectorInput,
+  element: ElemOrSelectorInput | null,
+  parent?: ElemOrSelectorInput,
 ): T | null {
   let validParent: Document | HTMLElement | null = null;
 

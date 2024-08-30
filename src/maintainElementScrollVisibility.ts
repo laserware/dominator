@@ -1,5 +1,5 @@
 import { getValidElement } from "./getValidElement.ts";
-import type { ElementOrSelectorInput } from "./types.ts";
+import type { ElemOrSelectorInput } from "./types.ts";
 
 /**
  * Ensures a given child element is within the parent's visible scroll area. If
@@ -9,8 +9,8 @@ import type { ElementOrSelectorInput } from "./types.ts";
  * @param scrollParent Element, EventTarget, or selector for scroll parent element.
  */
 export function maintainElementScrollVisibility(
-  activeElement: ElementOrSelectorInput,
-  scrollParent: ElementOrSelectorInput,
+  activeElement: ElemOrSelectorInput,
+  scrollParent: ElemOrSelectorInput,
 ): void {
   const validScrollElement = getValidElement(scrollParent);
   if (validScrollElement === null) {

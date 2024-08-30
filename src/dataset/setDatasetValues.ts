@@ -1,6 +1,6 @@
 import { getValidElement } from "../getValidElement.ts";
 import { InvalidElementError } from "../InvalidElementError.ts";
-import type { ElementOrSelectorInput } from "../types.ts";
+import type { ElemOrSelectorInput } from "../types.ts";
 
 /**
  * Assigns the specified dataset values to the specified element. Returns the
@@ -10,7 +10,7 @@ import type { ElementOrSelectorInput } from "../types.ts";
  * @param datasetValues Object with key of dataset key and value of dataset value.
  */
 export function setDatasetValues<T extends Element = HTMLElement>(
-  element: ElementOrSelectorInput,
+  element: ElemOrSelectorInput,
   datasetValues: Record<string, boolean | number | string>,
 ): T {
   const validElement = getValidElement(element);

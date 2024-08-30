@@ -1,5 +1,5 @@
 import { canBeElement } from "./typeGuards.ts";
-import type { ElementInput } from "./types.ts";
+import type { ElemInput } from "./types.ts";
 
 /**
  * Returns an element of type T for the specified Element or Event. This function
@@ -9,7 +9,7 @@ import type { ElementInput } from "./types.ts";
  * @param element Element or EventTarget to assert as an Element.
  */
 export function asElement<T extends Element = HTMLElement>(
-  element: ElementInput | null,
+  element: ElemInput | null,
 ): T | null {
   if (element === null) {
     return null;

@@ -1,5 +1,5 @@
 import { getValidElement } from "./getValidElement.ts";
-import type { ElementOrSelectorInput } from "./types.ts";
+import type { ElemOrSelectorInput } from "./types.ts";
 
 /**
  * Returns the value of the specified element.
@@ -7,7 +7,7 @@ import type { ElementOrSelectorInput } from "./types.ts";
  * @param element Element, EventTarget, or selector for element.
  */
 export function getElementValue<T>(
-  element: ElementOrSelectorInput | null,
+  element: ElemOrSelectorInput | null,
 ): T | null {
   const validElement = getValidElement<HTMLInputElement>(element);
   if (validElement === null) {

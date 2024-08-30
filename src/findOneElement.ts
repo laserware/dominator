@@ -1,5 +1,5 @@
 import { getValidElement } from "./getValidElement.ts";
-import type { ElementOrSelectorInput } from "./types.ts";
+import type { ElemOrSelectorInput } from "./types.ts";
 
 /**
  * Query the DOM for a specific element and return that element as the specified
@@ -10,7 +10,7 @@ import type { ElementOrSelectorInput } from "./types.ts";
  */
 export function findOneElement<T extends Element = HTMLElement>(
   selector: string,
-  parent: ElementOrSelectorInput = document,
+  parent: ElemOrSelectorInput = document,
 ): T | null {
   try {
     const element = getValidElement(parent)?.querySelector(selector);

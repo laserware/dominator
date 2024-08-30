@@ -1,12 +1,12 @@
 import { getValidElement } from "./getValidElement.ts";
-import type { ElementOrSelectorInput } from "./types.ts";
+import type { ElemOrSelectorInput } from "./types.ts";
 
 /**
  * Returns true if the specified element is currently scrollable.
  * @param element Element, EventTarget, or selector for element
  */
 export function isElementScrollable(
-  element: ElementOrSelectorInput | null,
+  element: ElemOrSelectorInput | null,
 ): boolean {
   const validElement = getValidElement<HTMLElement>(element);
   if (validElement === null) {

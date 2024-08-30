@@ -1,6 +1,6 @@
 import { findOneElement } from "../findOneElement.ts";
 import { isPrimitive } from "../typeGuards.ts";
-import type { ElementOrSelectorInput } from "../types.ts";
+import type { ElemOrSelectorInput } from "../types.ts";
 
 import { buildDatasetSelector } from "./buildDatasetSelector.ts";
 
@@ -14,17 +14,17 @@ export function findOneElementWithDataset<T extends Element = HTMLElement>(
 ): T | null;
 export function findOneElementWithDataset<T extends Element = HTMLElement>(
   keyOrAttributeName: string,
-  parent?: ElementOrSelectorInput,
+  parent?: ElemOrSelectorInput,
 ): T | null;
 export function findOneElementWithDataset<T extends Element = HTMLElement>(
   keyOrAttributeName: string,
   value?: string | number | boolean,
-  parent?: ElementOrSelectorInput,
+  parent?: ElemOrSelectorInput,
 ): T | null;
 export function findOneElementWithDataset<T extends Element = HTMLElement>(
   keyOrAttributeName: string,
-  valueOrParent?: ElementOrSelectorInput | number | boolean | string,
-  parent?: ElementOrSelectorInput,
+  valueOrParent?: ElemOrSelectorInput | number | boolean | string,
+  parent?: ElemOrSelectorInput,
 ): T | null {
   if (isPrimitive(valueOrParent)) {
     const selector = buildDatasetSelector(keyOrAttributeName, valueOrParent);

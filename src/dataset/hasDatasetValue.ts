@@ -1,4 +1,4 @@
-import type { ElementOrSelectorInput } from "../types.ts";
+import type { ElemOrSelectorInput } from "../types.ts";
 
 import { getDatasetValue } from "./getDatasetValue.ts";
 
@@ -11,7 +11,7 @@ import { getDatasetValue } from "./getDatasetValue.ts";
  * @param value Optional dataset value to check for.
  */
 export function hasDatasetValue(
-  element: ElementOrSelectorInput | null,
+  element: ElemOrSelectorInput | null,
   keyOrAttributeName: string,
   value: string | number | boolean,
 ): boolean {

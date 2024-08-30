@@ -1,12 +1,15 @@
-type FormInputEvent = Event & {
-  currentTarget: EventTarget & HTMLInputElement;
-};
+export type AttrName = string | number | symbol;
 
-export type ElementInput =
+export type AttrValue = boolean | number | string | null;
+
+export type Attrs = Record<AttrName, AttrValue>;
+
+export type DataValue = boolean | number | string | null;
+
+export type ElemInput =
   | Document
   | Element
   | EventTarget
-  | FormInputEvent
   | HTMLElement
   | ChildNode
   | Node
@@ -16,7 +19,7 @@ export type ElementInput =
 
 export type SelectorInput = string | null | undefined;
 
-export type ElementOrSelectorInput = ElementInput | SelectorInput;
+export type ElemOrSelectorInput = ElemInput | SelectorInput;
 
 type Booleanish = boolean | "true" | "false";
 

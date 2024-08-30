@@ -1,6 +1,6 @@
 import { getValidElement } from "../getValidElement.ts";
 import { InvalidElementError } from "../InvalidElementError.ts";
-import type { ElementOrSelectorInput } from "../types.ts";
+import type { ElemOrSelectorInput } from "../types.ts";
 
 import { ensureDatasetKeyName } from "./datasetNames.ts";
 
@@ -13,7 +13,7 @@ import { ensureDatasetKeyName } from "./datasetNames.ts";
  * @param value Value to set for associated key or attribute name.
  */
 export function setDatasetValue(
-  element: ElementOrSelectorInput,
+  element: ElemOrSelectorInput,
   keyOrAttributeName: string,
   value: boolean | number | string,
 ): void {

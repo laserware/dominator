@@ -2,7 +2,7 @@ import { isNil } from "@laserware/arcade";
 
 import { getValidElement } from "../getValidElement.ts";
 import { InvalidElementError } from "../InvalidElementError.ts";
-import type { ElementOrSelectorInput } from "../types.ts";
+import type { ElemOrSelectorInput } from "../types.ts";
 
 /**
  * Returns the value associated with the specified CSS variable name. If
@@ -15,7 +15,7 @@ import type { ElementOrSelectorInput } from "../types.ts";
 export function getCssVariable<T>(
   name: string,
   defaultValue: T | undefined = undefined,
-  element?: ElementOrSelectorInput,
+  element?: ElemOrSelectorInput,
 ): T {
   const validElement = isNil(element)
     ? document.documentElement

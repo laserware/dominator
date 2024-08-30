@@ -43,7 +43,7 @@ export { setFocusToElement } from "./setFocusToElement.ts";
 export { TypedEventTarget } from "./TypedEventTarget.ts";
 export type {
   AriaAttrs,
-  ElementInput,
-  ElementOrSelectorInput,
+  ElemInput,
+  ElemOrSelectorInput,
   SelectorInput,
 } from "./types.ts";

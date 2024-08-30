@@ -1,5 +1,5 @@
 import { getValidElement } from "./getValidElement.ts";
-import type { ElementOrSelectorInput } from "./types.ts";
+import type { ElemOrSelectorInput } from "./types.ts";
 
 /**
  * Returns true if the specified element has the specified ID property.
@@ -8,7 +8,7 @@ import type { ElementOrSelectorInput } from "./types.ts";
  * @param id ID to check for element.
  */
 export function doesElementHaveId(
-  element: ElementOrSelectorInput,
+  element: ElemOrSelectorInput,
   id: string,
 ): boolean {
   const validElement = getValidElement<HTMLInputElement>(element);

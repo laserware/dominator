@@ -1,5 +1,5 @@
 import { getValidElement } from "./getValidElement.ts";
-import type { ElementOrSelectorInput } from "./types.ts";
+import type { ElemOrSelectorInput } from "./types.ts";
 
 /**
  * Returns true if the specified element matches the specified type.
@@ -8,7 +8,7 @@ import type { ElementOrSelectorInput } from "./types.ts";
  * @param tagName Tag name to check for (e.g. `div`, `span`, etc.).
  */
 export function isElementOfType(
-  element: ElementOrSelectorInput | null,
+  element: ElemOrSelectorInput | null,
   tagName: string,
 ): boolean {
   try {

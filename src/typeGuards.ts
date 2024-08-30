@@ -1,11 +1,11 @@
-import type { ElementOrSelectorInput } from "./types.ts";
+import type { ElemOrSelectorInput } from "./types.ts";
 
 /**
  * Returns true if the specified value is an Element or Document or EventTarget
  * that can be represented as an HTML Element.
  */
 export function canBeElement(
-  value: ElementOrSelectorInput | number | boolean,
+  value: ElemOrSelectorInput | number | boolean,
 ): value is Element | HTMLElement | Document {
   return (
     value instanceof Element ||
@@ -20,7 +20,7 @@ export function canBeElement(
  * boolean).
  */
 export function isPrimitive(
-  value: ElementOrSelectorInput | number | boolean,
+  value: ElemOrSelectorInput | number | boolean,
 ): value is string | number | boolean {
   return (
     typeof value === "string" ||
