@@ -23,11 +23,3 @@ export function safeStringify(
     return "";
   }
 }
-
-export function unstringify<T = string>(value: string): T {
-  try {
-    if (value === "true")
-  } catch {
-    return value as T;
-  }
-}

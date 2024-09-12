@@ -4,9 +4,9 @@ module.exports = {
   extends: ["@laserware/eslint-config"],
   parserOptions: {
     tsconfigRootDir: __dirname,
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
+    project: ["./tsconfig.json"],
   },
-  ignorePatterns: ["*.js"],
+  ignorePatterns: ["*.js", "*.cjs"],
   overrides: [
     {
       files: "*.test.ts",

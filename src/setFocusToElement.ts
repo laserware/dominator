@@ -24,11 +24,15 @@ export function setFocusToElement(
     return;
   }
 
-  const validElement = getValidElement(element, options?.parent);
+  const delay = options?.delay ?? 0;
 
-  const focusCallback = (): void => {
-    validElement?.focus({ preventScroll: options?.preventScroll ?? false });
-  };
+  const focusOptions = { preventScroll: options?.preventScroll ?? false };
 
-  setTimeout(focusCallback, options?.delay ?? 0);
+  if (delay === 0) {
+    getValidElement(element, options?.parent)?.focus(focusOptions);
+  } else {
+    setTimeout(() => {
+      getValidElement(element, options?.parent)?.focus(focusOptions);
+    }, delay);
+  }
 }
