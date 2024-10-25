@@ -19,6 +19,7 @@ export function getInputElementWidth(element: HTMLInputElement): number {
     context = canvas.getContext("2d")!;
   }
 
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   const text = element.value || element.placeholder;
 
   const elementStyle = window.getComputedStyle(element);

@@ -28,7 +28,7 @@ export function maintainElementScrollVisibility(
   const isAbove = offsetTop < scrollTop;
   const isBelow = offsetTop + offsetHeight > scrollTop + parentOffsetHeight;
 
-  let yScroll: number = 0;
+  let yScroll = 0;
 
   if (isAbove) {
     yScroll = offsetTop;

@@ -169,7 +169,7 @@ export function html<TN extends AnyElementTagName>(
           continue;
         }
 
-        element.appendChild(childElement);
+        element.append(childElement);
       }
 
       return element;

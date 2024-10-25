@@ -1,3 +1,5 @@
+import { isNil } from "@laserware/arcade";
+
 import { getValidElement } from "./getValidElement.ts";
 import type { ElementOrSelectorInput } from "./types.ts";
 
@@ -44,7 +46,7 @@ export function hasParentElement(
       return false;
     }
 
-    if (!element.parentElement) {
+    if (isNil(element.parentElement)) {
       return false;
     }
 

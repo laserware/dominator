@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-binary-expression */
 // noinspection PointlessBooleanExpressionJS
 
 import { clsx } from "../clsx.ts";

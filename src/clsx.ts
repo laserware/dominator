@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions,@typescript-eslint/no-unused-expressions */
 /*
  * MIT License
  *
