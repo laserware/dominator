@@ -8,6 +8,8 @@ import { validDataKey } from "./dataNames.ts";
  * Returns the value associated with the specified dataset entry key. If the
  * value doesn't exist, return null.
  *
+ * @template V Type of value to return for the corresponding key.
+ *
  * @param input Element, EventTarget, or selector for element.
  * @param key Key or attribute name for the dataset entry.
  */

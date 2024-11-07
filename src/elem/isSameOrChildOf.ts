@@ -9,16 +9,19 @@ import { hasParent } from "./hasParent.ts";
  *
  * @param child Element, EventTarget, or selector for element.
  * @param parent Element, EventTarget, or selector for parent (or same) element.
+ * @param [options] Options for checking for parent.
+ * @prop [options.maxDepth=10] Maximum depth to perform search.
  */
 export function isSameOrChildOf(
   child: NullOr<ElemOrCssSelector>,
   parent: NullOr<ElemOrCssSelector>,
+  options?: { maxDepth: number },
 ): boolean {
   // Return immediately if the is same check passes, so we don't have to
   // iterate through the DOM if we don't need to:
   if (areSame(child, parent)) {
     return true;
   } else {
-    return hasParent(child, parent);
+    return hasParent(child, parent, options);
   }
 }

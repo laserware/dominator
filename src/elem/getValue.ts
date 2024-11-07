@@ -9,9 +9,6 @@ import { toElem } from "./toElem.ts";
  */
 export function getValue<T>(input: NullOr<ElemOrCssSelector>): NullOr<T> {
   const elem = toElem<HTMLInputElement>(input);
-  if (elem === null) {
-    return null;
-  }
 
   return (elem?.value ?? null) as unknown as T;
 }

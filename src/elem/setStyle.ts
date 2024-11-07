@@ -1,6 +1,7 @@
-import { InvalidElemError } from "../elem/InvalidElemError.ts";
-import { toElem } from "../elem/toElem.ts";
-import type { ElemOrCssSelector } from "../types.ts";
+import type { ElemOrCssSelector, NullOr } from "../types.ts";
+
+import { InvalidElemError } from "./InvalidElemError.ts";
+import { toElem } from "./toElem.ts";
 
 type CSSStyleProperty = Exclude<
   keyof CSSStyleDeclaration,
@@ -21,17 +22,24 @@ type CSSStyleProperty = Exclude<
  * @param input Element, EventTarget, or selector for element.
  * @param styles Object with style property values keyed by name.
  */
-export function setElemStyle(
-  input: ElemOrCssSelector,
+export function setStyle<E extends Element = HTMLElement>(
+  input: NullOr<ElemOrCssSelector>,
   styles: Record<CSSStyleProperty, string>,
-): void {
-  const elem = toElem(input);
+): NullOr<E> {
+  const elem = toElem<E>(input);
   if (elem === null) {
     throw new InvalidElemError("Unable to set styles");
   }
 
+  if (!("style" in elem)) {
+    throw new Error("Could not set style on invalid element");
+  }
+
   for (const key of Object.keys(styles)) {
     const styleName = key as CSSStyleProperty;
+    // @ts-ignore
     elem.style[styleName] = styles[styleName];
   }
+
+  return elem;
 }

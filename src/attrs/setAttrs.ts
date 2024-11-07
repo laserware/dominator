@@ -9,11 +9,16 @@ import { setAttr } from "./setAttr.ts";
  * object, where the key of the object is the attribute name and the value of
  * the object is the attribute value.
  *
+ * @template E Type of Element to return.
+ *
  * @param input Element, EventTarget, or selector for element.
  * @param attrs Object with key of attribute name and value of attribute value.
  */
-export function setAttrs(input: NullOr<ElemOrCssSelector>, attrs: Attrs): void {
-  const elem = toElem(input);
+export function setAttrs<E extends Element = HTMLElement>(
+  input: NullOr<ElemOrCssSelector>,
+  attrs: Attrs,
+): NullOr<E> {
+  const elem = toElem<E>(input);
 
   if (elem === null) {
     throw new InvalidElemError("Unable to set attributes");
@@ -22,4 +27,6 @@ export function setAttrs(input: NullOr<ElemOrCssSelector>, attrs: Attrs): void {
   for (const name of Object.keys(attrs)) {
     setAttr(elem, name, attrs[name]);
   }
+
+  return elem;
 }

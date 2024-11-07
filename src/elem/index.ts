@@ -24,6 +24,7 @@ export { findOne } from "./findOne.ts";
 export { getValue } from "./getValue.ts";
 export { hasId } from "./hasId.ts";
 export { hasParent } from "./hasParent.ts";
+export { InvalidElemError } from "./InvalidElemError.ts";
 export { inViewport } from "./inViewport.ts";
 export { isOfType } from "./isOfType.ts";
 export { isSameOrChildOf } from "./isSameOrChildOf.ts";
@@ -32,7 +33,7 @@ export { keepVisibleInParent } from "./keepVisibleInParent.ts";
 export { setFocusTo } from "./setFocusTo.ts";
 export { toElem } from "./toElem.ts";
 
-export const elem = {
+export const elems = {
   areDifferent,
   areSame,
   exists,
@@ -48,5 +49,5 @@ export const elem = {
   isScrollable,
   keepVisibleInParent,
   setFocusTo,
-  to: toElem,
+  toElem,
 };

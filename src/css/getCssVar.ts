@@ -1,7 +1,7 @@
 import { isNil } from "@laserware/arcade";
 
 import { toElem } from "../elem/toElem.ts";
-import type { ElemOrCssSelector } from "../types.ts";
+import type { ElemOrCssSelector, NullOr } from "../types.ts";
 
 import { CssVarError } from "./CssVarError.ts";
 
@@ -11,17 +11,17 @@ import { CssVarError } from "./CssVarError.ts";
  *
  * @param name Name of the variable to get value for.
  * @param [defaultValue=undefined] Optional default value to fall back to if not found.
- * @param [input] Optional Element, EventTarget, or selector for element from
+ * @param [target] Optional Element, EventTarget, or selector for element from
  *                which to get CSS variable.
  */
 export function getCssVar<T>(
   name: string,
   defaultValue: T | undefined = undefined,
-  input?: ElemOrCssSelector,
+  target?: NullOr<ElemOrCssSelector>,
 ): T {
-  const elem = isNil(input) ? document.documentElement : toElem(input);
+  const elem = isNil(target) ? document.documentElement : toElem(target);
   if (elem === null) {
-    throw new CssVarError(`Unable to get CSS variable ${name}`);
+    throw new CssVarError(`Unable to get CSS variable: ${name}`);
   }
 
   try {
@@ -38,7 +38,7 @@ export function getCssVar<T>(
       return defaultValue;
     } else {
       // prettier-ignore
-      throw new CssVarError("Could not find CSS variable and no default value defined");
+      throw new CssVarError(`Unable to get CSS variable ${name} and no default value defined`);
     }
   }
 }

@@ -14,24 +14,24 @@ import { selectData } from "./selectData.ts";
  * Query the DOM for the element with the specified dataset name and optionally
  * value.
  */
-export function findAllWithData<T extends Element = HTMLElement>(
+export function findAllWithData<E extends Element = HTMLElement>(
   key: string,
   value?: AttrValue,
-): T[];
-export function findAllWithData<T extends Element = HTMLElement>(
+): E[];
+export function findAllWithData<E extends Element = HTMLElement>(
   key: string,
   parent?: ElemOrCssSelector,
-): T[];
-export function findAllWithData<T extends Element = HTMLElement>(
+): E[];
+export function findAllWithData<E extends Element = HTMLElement>(
   key: string,
   value?: AttrValue,
   parent?: ElemOrCssSelector,
-): T[];
-export function findAllWithData<T extends Element = HTMLElement>(
+): E[];
+export function findAllWithData<E extends Element = HTMLElement>(
   key: string,
   valueOrParent?: ElemOrCssSelector | AttrValue,
   parent?: ElemOrCssSelector,
-): T[] {
+): E[] {
   const valueOrParentElem = toElem(valueOrParent as string);
 
   const parentElem = toElem(parent) ?? valueOrParentElem;
