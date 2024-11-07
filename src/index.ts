@@ -1,49 +1,35 @@
-export { buildAttributeSelector } from "./attributes/buildAttributeSelector.ts";
-export { getAttribute } from "./attributes/getAttribute.ts";
-export { hasAttribute } from "./attributes/hasAttribute.ts";
-export { setAttribute } from "./attributes/setAttribute.ts";
-export { setAttributes } from "./attributes/setAttributes.ts";
+export { selectAttr } from "./attrs/selectAttr.ts";
+export { getAttr } from "./attrs/getAttr.ts";
+export { hasAttr } from "./attrs/hasAttr.ts";
+export { setAttr } from "./attrs/setAttr.ts";
+export { setAttrs } from "./attrs/setAttrs.ts";
 
-export { buildDatasetSelector } from "./dataset/buildDatasetSelector.ts";
-export { findAllElementsWithDataset } from "./dataset/findAllElementsWithDataset.ts";
-export { findOneElementWithDataset } from "./dataset/findOneElementWithDataset.ts";
-export { getDatasetValue } from "./dataset/getDatasetValue.ts";
-export { hasDatasetKey } from "./dataset/hasDatasetKey.ts";
-export { hasDatasetValue } from "./dataset/hasDatasetValue.ts";
-export { setDatasetValue } from "./dataset/setDatasetValue.ts";
-export { setDatasetValues } from "./dataset/setDatasetValues.ts";
+export { selectData } from "./data/selectData.ts";
+export { findAllWithData } from "./data/findAllWithData.ts";
+export { findOneWithData } from "./data/findOneWithData.ts";
+export { getData } from "./data/getData.ts";
+export { hasData } from "./data/hasData.ts";
+export { setData } from "./data/setData.ts";
 
-export { getCssVariable } from "./styles/getCssVariable.ts";
-export { setCssVariable } from "./styles/setCssVariable.ts";
-export { setElementStyles } from "./styles/setElementStyles.ts";
+export { measureInputWidth } from "./extras/measureInputWidth.ts";
+export { moveCursorToTextEnd } from "./extras/moveCursorToTextEnd.ts";
+export { parseTransferData } from "./extras/parseTransferData.ts";
 
-export { asElement } from "./asElement.ts";
+export * from "./elem/index.ts";
+
+export { getCssVar } from "./styles/getCssVar.ts";
+export { setCssVar } from "./styles/setCssVar.ts";
+export { setElemStyle } from "./styles/setElemStyle.ts";
+
+export type { AriaAttrs } from "./aria.ts";
 export { clsx } from "./clsx.ts";
-export { doesElementExist } from "./doesElementExist.ts";
-export { doesElementHaveId } from "./doesElementHaveId.ts";
-export { findAllElements } from "./findAllElements.ts";
-export { findAllFocusableElements } from "./findAllFocusableElements.ts";
-export { findFirstFocusableInput } from "./findFirstFocusableInput.ts";
-export { findOneElement } from "./findOneElement.ts";
-export { getElementValue } from "./getElementValue.ts";
-export { getInputElementWidth } from "./getInputElementWidth.ts";
-export { hasParentElement } from "./hasParentElement.ts";
 export { html } from "./htmlBuilder.ts";
-export { isElementDifferentFrom } from "./isElementDifferentFrom.ts";
-export { isElementInView } from "./isElementInView.ts";
-export { isElementOfType } from "./isElementOfType.ts";
-export { isElementSameAs } from "./isElementSameAs.ts";
-export { isElementSameOrChildOf } from "./isElementSameOrChildOf.ts";
-export { isElementScrollable } from "./isElementScrollable.ts";
 export { listToArray } from "./listToArray.ts";
-export { maintainElementScrollVisibility } from "./maintainElementScrollVisibility.ts";
-export { moveCursorToElementTextEnd } from "./moveCursorToElementTextEnd.ts";
-export { parseTransferData } from "./parseTransferData.ts";
-export { setFocusToElement } from "./setFocusToElement.ts";
 export { TypedEventTarget } from "./TypedEventTarget.ts";
 export type {
-  AriaAttrs,
-  ElementInput,
-  ElementOrSelectorInput,
-  SelectorInput,
+  Attrs,
+  AttrValue,
+  CssSelector,
+  Elem,
+  ElemOrCssSelector,
 } from "./types.ts";
