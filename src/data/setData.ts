@@ -5,17 +5,18 @@ import { toElem } from "../elem/toElem.ts";
 import { validDataKey } from "../internal/validDataKey.ts";
 import type {
   Dataset,
+  DatasetAttrName,
   DatasetKey,
   DatasetValue,
   ElemOrCssSelector,
-  Maybe,
+  NilOr,
 } from "../types.ts";
 
 /**
  * Assigns the specified `value` to the specified dataset `key` in the specified
  * `target`. Returns the `Element` representation of the specified `target`.
  *
- * @template E Type of the `Element` that gets returned.
+ * @template E Type of `Element` to return.
  *
  * @param target `Element`, `EventTarget`, or CSS selector.
  * @param key Key or attribute name for the dataset entry.
@@ -31,7 +32,7 @@ export function setData<E extends Element = HTMLElement>(
  * Assigns the specified `dataset` key/value pairs to the specified `target`.
  * Returns the `Element` representation of the specified `target`.
  *
- * @template E Type of the `Element` that gets returned.
+ * @template E Type of `Element` to return.
  *
  * @param target `Element`, `EventTarget`, or CSS selector.
  * @param dataset Object with key of dataset key and value of entry value.
@@ -43,7 +44,7 @@ export function setData<E extends Element = HTMLElement>(
 
 export function setData<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
-  keyOrDataset: DatasetKey | Dataset,
+  keyOrDataset: DatasetKey | DatasetAttrName | Dataset,
   value?: DatasetValue,
 ): E {
   const elem = toElem<HTMLElement>(target);
@@ -53,22 +54,22 @@ export function setData<E extends Element = HTMLElement>(
   }
 
   if (typeof keyOrDataset === "string") {
-    setElemData(elem, keyOrDataset, value);
+    setSingleElemData(elem, keyOrDataset, value);
   } else {
     const entries = Object.entries(keyOrDataset);
 
     for (const [name, value] of entries) {
-      setElemData(elem, name, value);
+      setSingleElemData(elem, name, value);
     }
   }
 
   return elem as unknown as E;
 }
 
-function setElemData(
+function setSingleElemData(
   elem: HTMLElement,
-  key: DatasetKey,
-  value?: Maybe<DatasetValue>,
+  key: DatasetKey | DatasetAttrName,
+  value?: NilOr<DatasetValue>,
 ): void {
   const validKey = validDataKey(key);
 

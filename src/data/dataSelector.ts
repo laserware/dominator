@@ -1,14 +1,16 @@
 import { isNil, isPlainObject } from "@laserware/arcade";
 
 import { attrSelector } from "../attrs/attrSelector.ts";
-import { toAttrValue } from "../internal/toAttrValue.ts";
+import { stringifyAttributeValue } from "../internal/stringifyAttributeValue.ts";
 import { validDataAttrName } from "../internal/validDataAttrName.ts";
 import type {
   AnyElementTagName,
   CssSelector,
   Dataset,
+  DatasetAttrName,
+  DatasetKey,
   DatasetValue,
-  Maybe,
+  NilOr,
 } from "../types.ts";
 
 /**
@@ -61,32 +63,32 @@ export function dataSelector(
  * // `a[data-some-thing="stuff"]`
  */
 export function dataSelector(
-  key: string,
-  value: Maybe<DatasetValue>,
+  key: DatasetKey | DatasetAttrName,
+  value: NilOr<DatasetValue>,
   tag?: AnyElementTagName | "",
 ): CssSelector;
 
 export function dataSelector(
-  dataOrKey: Dataset | string,
-  valueOrTag: Maybe<DatasetValue> | AnyElementTagName | "" = undefined,
+  keyOrDataset: Dataset | DatasetKey | DatasetAttrName,
+  valueOrTag: NilOr<DatasetValue> | AnyElementTagName | "" = undefined,
   tag: AnyElementTagName | "" = "",
 ): CssSelector {
-  if (isPlainObject(dataOrKey)) {
+  if (isPlainObject(keyOrDataset)) {
     let selector = "";
 
-    for (const key of Object.keys(dataOrKey)) {
-      selector += singleDataSelector(key, dataOrKey[key]);
+    for (const key of Object.keys(keyOrDataset)) {
+      selector += singleDataSelector(key, keyOrDataset[key]);
     }
 
     return `${valueOrTag ?? ""}${selector}`;
   } else {
-    return `${tag}${singleDataSelector(dataOrKey, valueOrTag)}`;
+    return `${tag}${singleDataSelector(keyOrDataset, valueOrTag)}`;
   }
 }
 
 function singleDataSelector(
   key: string,
-  value: Maybe<DatasetValue>,
+  value: NilOr<DatasetValue>,
 ): CssSelector {
   const attrName = validDataAttrName(key);
 
@@ -96,7 +98,7 @@ function singleDataSelector(
   if (isNil(value)) {
     return `[${attrName}]`;
   } else {
-    const validValue = toAttrValue(value);
+    const validValue = stringifyAttributeValue(value);
 
     return attrSelector({ [attrName]: validValue });
   }

@@ -1,4 +1,6 @@
-import type { ElemOrCssSelector, NullOr } from "../types.ts";
+import { isNil } from "@laserware/arcade";
+
+import type { ElemOrCssSelector, NilOr, NullOr } from "../types.ts";
 
 import { InvalidElemError } from "./InvalidElemError.ts";
 import { toElem } from "./toElem.ts";
@@ -49,7 +51,7 @@ export function getElemValueAs<T extends ElemValueType>(
   const elem = toElem(target)!;
 
   if (!isInputElement(elem)) {
-    throw new Error("");
+    throw new Error("Cannot get value on an element if it is not an input");
   }
 
   if (elem === null) {
@@ -86,7 +88,11 @@ const inputTypes = [
   "datetime",
 ];
 
-function isInputElement(elem: HTMLElement): elem is HTMLInputElement {
+function isInputElement(elem: NilOr<HTMLElement>): elem is HTMLInputElement {
+  if (isNil(elem)) {
+    return false;
+  }
+
   if (elem instanceof HTMLInputElement) {
     return true;
   }

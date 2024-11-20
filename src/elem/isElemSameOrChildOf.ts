@@ -4,8 +4,8 @@ import { areElemsSame } from "./areElemsSame.ts";
 import { isElemChildOf } from "./isElemChildOf.ts";
 
 /**
- * Returns true if the specified target is the same or a child of the specified
- * parent element.
+ * Returns true if the specified `target` is the same or a child of the specified
+ * `parent`.
  *
  * @param child `Element`, `EventTarget`, or CSS selector.
  * @param parent `Element`, `EventTarget`, or CSS selector for parent (or same) element.

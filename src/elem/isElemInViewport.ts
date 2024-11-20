@@ -5,9 +5,11 @@ import { InvalidElemError } from "./InvalidElemError.ts";
 import { toElem } from "./toElem.ts";
 
 /**
- * Returns true if the specified target is visible in browser viewport.
+ * Returns true if the specified `target` is visible in browser viewport.
  *
- * @param target `Element`, `EventTarget`, or CSS selector to check.
+ * @param target `Element`, `EventTarget`, or CSS selector.
+ *
+ * @throws {InvalidElemError} If the `target` wasn't found.
  */
 export function isElemInViewport(target: ElemOrCssSelector): boolean {
   const elem = toElem(target);

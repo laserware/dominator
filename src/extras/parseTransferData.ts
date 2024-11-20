@@ -1,9 +1,9 @@
 import type { NullOr } from "../types.ts";
 
 /**
- * Parses the drop data from a Drag event.
+ * Parses the drop data from the specified {@link https://developer.mozilla.org/en-US/docs/Web/API/DragEvent|DragEvent}.
  *
- * @param event Drag event to parse the data from.
+ * @param event `DragEvent` to parse the data from.
  */
 export function parseTransferData<T = Record<string, unknown>>(
   event: DragEvent,

@@ -1,10 +1,9 @@
 import type { AriaAttrs } from "./aria.ts";
 import {
-  isAttrValue,
+  AttrValue,
   type AnyElement,
   type AnyElementTagName,
   type AttrsDefined,
-  type AttrValue,
   type ElementWithTagName,
 } from "./types.ts";
 
@@ -132,7 +131,7 @@ export function html<TN extends AnyElementTagName>(
           return null;
         }
 
-        if (isAttrValue(child)) {
+        if (AttrValue.is(child)) {
           return document.createTextNode(stringifyValue(child));
         }
 
@@ -300,7 +299,7 @@ function setDatasetProperty<TN extends AnyElementTagName>(
   key: string,
   value: AttrValue,
 ): void {
-  if (isAttrValue(value)) {
+  if (AttrValue.is(value)) {
     element.dataset[key] = stringifyValue(value);
   } else {
     // prettier-ignore

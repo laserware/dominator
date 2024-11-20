@@ -1,9 +1,20 @@
-import { getElemValueAs } from "../values.ts";
+import { getElemValue, getElemValueAs } from "../getElemValue.ts";
 
 describe("within values", () => {
-  describe("the getElem", () => {
-    const result = getElemValueAs("#test", "boolean");
+  describe("the getElemValue function", () => {
+    it("returns the value of the element", ({ selectors }) => {
+      const result = getElemValue(selectors.forTextInput);
 
-    console.log(result.valueOf());
+      expect(result).toBe("Test");
+    });
+  });
+
+  describe("the getElemValueAs function", () => {
+    it("returns a string value if valid", ({ selectors }) => {
+      const result = getElemValueAs(selectors.forTextInput, "string");
+
+      expect(result).toBeTruthy();
+      expect(typeof result).toBe("string");
+    });
   });
 });

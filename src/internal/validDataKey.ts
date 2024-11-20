@@ -1,5 +1,7 @@
 import { capitalize } from "@laserware/arcade";
 
+import type { DatasetAttrName, DatasetKey } from "../types.ts";
+
 /**
  * Ensures the specified key or name is camelCase without a `data-` prefix and
  * returns the result.
@@ -7,7 +9,7 @@ import { capitalize } from "@laserware/arcade";
  * @param key Key for the dataset entry that is either camelCase or already in
  *            the `data-` name form.
  */
-export function validDataKey(key: string): string {
+export function validDataKey(key: DatasetKey | DatasetAttrName): DatasetKey {
   if (key.startsWith("data-")) {
     // Split the words on the `-`. Exclude the first word (`data`), because
     // that's the attribute prefix. The word immediately after `data` should

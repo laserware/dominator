@@ -1,6 +1,6 @@
-import { isNil } from "@laserware/arcade";
+import { Elem, type NilOr } from "../types.ts";
 
-import { isElem, type Elem, type Maybe } from "../types.ts";
+import { InvalidElemError } from "./InvalidElemError.ts";
 
 /**
  * Returns an element of type `E` for the specified target.
@@ -19,7 +19,9 @@ import { isElem, type Elem, type Maybe } from "../types.ts";
  *
  * @template E Type of `Element` to return.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target `Element` or `EventTarget`.
+ *
+ * @throws {InvalidElemError} If specified `target` is `null` or `undefined`.
  *
  * @remarks
  * With this function, you are telling TypeScript what the `Element` is, even if
@@ -37,17 +39,11 @@ import { isElem, type Elem, type Maybe } from "../types.ts";
  * }
  */
 export function asElem<E extends Element = HTMLElement>(
-  target: Maybe<Elem>,
+  target: NilOr<Elem>,
 ): E {
-  if (isNil(target)) {
-    // prettier-ignore
-    throw new Error("Cannot assert using asElem when Element is null or undefined");
-  }
-
-  if (isElem(target)) {
+  if (Elem.is(target)) {
     return target as E;
+  } else {
+    throw new InvalidElemError("Cannot assert using asElem");
   }
-
-  // prettier-ignore
-  throw new Error("Target passed to asElem is not a valid Element or EventTarget");
 }

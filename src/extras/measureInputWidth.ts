@@ -8,7 +8,7 @@ let context: CanvasRenderingContext2D | null = null;
  * value or placeholder using the {@link https://stackoverflow.com/a/68326447|measureText}
  * approach.
  *
- * @param target Input element for which to get width.
+ * @param target `HTMLInputElement` for which to get width.
  */
 export function measureInputWidth(target: HTMLInputElement): number {
   if (canvas === null) {

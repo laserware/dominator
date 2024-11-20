@@ -12,20 +12,18 @@ export interface FocusOptions<E extends Element> {
   /** Parent element (if `target` is a CSS selector). */
   parent?: ElemOrCssSelector;
 
-  /** If true, prevent the */
+  /** If true, don't scroll the focused element into view. */
   preventScroll?: boolean;
+
+  /** Optional callback that fires after trying to set focus. */
   onDone?(elem: NullOr<E>): void;
 }
 
 /**
- * Sets focus to the specified target.
+ * Sets focus to the specified `target`.
  *
  * @param target `Element`, `EventTarget`, or CSS selector.
- * @param [options] Options for setting focus.
- * @property [options.delay] Delay for setting focus to element.
- * @property [options.parent] Element, EventTarget, or selector for parent element.
- * @property [options.preventScroll] If true, don't scroll the focused element into view.
- * @property [options.onDone] Optional callback that fires after trying to set focus.
+ * @param [options] Options for setting focus. See {@linkcode FocusOptions}.
  */
 export function focusElem<E extends Element = HTMLElement>(
   target: NullOr<ElemOrCssSelector>,

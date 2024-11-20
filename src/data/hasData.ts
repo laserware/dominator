@@ -3,8 +3,7 @@ import { isNotNil } from "@laserware/arcade";
 import { toElem } from "../elem/toElem.ts";
 import { validDataKey } from "../internal/validDataKey.ts";
 import type {
-  AttrName,
-  AttrValue,
+  DatasetAttrName,
   DatasetKey,
   DatasetValue,
   ElemOrCssSelector,
@@ -13,16 +12,16 @@ import type {
 
 /**
  * Returns true if the specified `target` has a dataset entry with the specified
- * `keyOrAttrName` and optionally, the matching `value`.
+ * `key` and optionally, the matching `value`.
  *
  * @param target `Element`, `EventTarget`, or CSS selector.
- * @param keyOrAttrName Key (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
+ * @param key Key (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
  * @param [value] Optional dataset value to check for.
  */
-export function hasData<KN extends DatasetKey | AttrName>(
+export function hasData(
   target: NullOr<ElemOrCssSelector>,
-  keyOrAttrName: KN,
-  value?: KN extends DatasetKey ? DatasetValue : AttrValue,
+  key: DatasetKey | DatasetAttrName,
+  value?: DatasetValue,
 ): boolean {
   try {
     const elem = toElem(target);
@@ -30,7 +29,7 @@ export function hasData<KN extends DatasetKey | AttrName>(
       return false;
     }
 
-    const validKey = validDataKey(keyOrAttrName);
+    const validKey = validDataKey(key);
 
     const datasetValue = elem.dataset?.[validKey];
 

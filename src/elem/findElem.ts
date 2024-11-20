@@ -1,3 +1,4 @@
+import type { FindOptions } from "../internal/findOptions.ts";
 import { parseFindArgs } from "../internal/parseFindArgs.ts";
 import type {
   AttrName,
@@ -5,7 +6,6 @@ import type {
   AttrValue,
   CssSelector,
   Elem,
-  FindOptions,
   NullOr,
   UndefinedOr,
 } from "../types.ts";
@@ -13,10 +13,10 @@ import type {
 import { toElem } from "./toElem.ts";
 
 /**
- * Query the DOM using one of the specified options and return that element as
- * the specified type or null if not found.
+ * Query the DOM to find the `Element` using one of the specified `options` or
+ * `null` if not found.
  *
- * @template E Type of Element to return.
+ * @template E Type of `Element` to return.
  *
  * @param options Options for finding the element. See {@link FindOptions}.
  */
@@ -25,12 +25,13 @@ export function findElem<E extends Element = HTMLElement>(
 ): NullOr<E>;
 
 /**
- * Query the DOM to find the element with the specified matching attributes.
+ * Query the DOM to find the `Element` with the specified matching `attrs` or
+ * `null` if not found.
  *
- * @template E Type of Element to return.
+ * @template E Type of `Element` to return.
  *
  * @param attrs Key/value pairs of attributes to query for matching elements.
- * @param [parent] Optional Element or EventTarget for parent element.
+ * @param [parent] Optional `Element` or `EventTarget` for parent.
  */
 export function findElem<E extends Element = HTMLElement>(
   attrs: Attrs,
@@ -38,13 +39,13 @@ export function findElem<E extends Element = HTMLElement>(
 ): NullOr<E>;
 
 /**
- * Query the DOM for a specific element and return that element as the specified
- * type or null if not found.
+ * Query the DOM for an `Element` matching the specified `selector` or
+ * `null` if not found.
  *
- * @template E Type of Element to return.
+ * @template E Type of `Element` to return.
  *
  * @param selector CSS selector string to find the element.
- * @param [parent] Optional Element or EventTarget for parent element.
+ * @param [parent] Optional `Element` or `EventTarget` for parent.
  */
 export function findElem<E extends Element = HTMLElement>(
   selector: CssSelector,
@@ -52,14 +53,14 @@ export function findElem<E extends Element = HTMLElement>(
 ): NullOr<E>;
 
 /**
- * Query the DOM to find the element with the specified key/value pair for an
- * attribute.
+ * Query the DOM to find the `Element` with the specified attribute `name` and
+ * optional `value` or `null` if not found.
  *
- * @template E Type of Element to return.
+ * @template E Type of `Element` to return.
  *
  * @param name Attribute name to find the element.
  * @param [value] Optional attribute value that corresponds with the name.
- * @param [parent] Optional Element or EventTarget for parent element.
+ * @param [parent] Optional `Element` or `EventTarget` for parent.
  */
 export function findElem<E extends Element = HTMLElement>(
   name: AttrName,
@@ -75,8 +76,10 @@ export function findElem<E extends Element = HTMLElement>(
   const result = parseFindArgs(firstArg, valueOrParent, parent);
 
   try {
+    const validParent = result.validParent ?? document;
+
     // prettier-ignore
-    return toElem(result.validParent)?.querySelector(result.selector) as unknown as E;
+    return toElem(validParent)?.querySelector(result.selector) as unknown as E;
   } catch {
     return null;
   }

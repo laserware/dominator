@@ -15,12 +15,14 @@ type CSSStyleProperty = Exclude<
 >;
 
 /**
- * Sets the style properties of the specified target to the specified values
+ * Sets the style properties of the specified `target` to the specified values
  * where `styles` is an object with key of style property name and value of the
  * style property value.
  *
  * @param target `Element`, `EventTarget`, or CSS selector.
  * @param styles Object with style property values keyed by name.
+ *
+ * @throws {InvalidElemError} If the `target` could not be found.
  */
 export function setStyle<E extends Element = HTMLElement>(
   target: NullOr<ElemOrCssSelector>,

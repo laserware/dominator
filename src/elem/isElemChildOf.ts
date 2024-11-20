@@ -8,6 +8,9 @@ import { toElem } from "./toElem.ts";
  * Iterates up through the DOM tree from the specified `child` target and returns
  * true if the parent of the `child` matches the `parent` specified.
  *
+ * Setting a `maxDepth` will limit how much DOM traversal happens. A higher number
+ * will require more time to search.
+ *
  * @param child `Element`, `EventTarget`, or CSS selector for child.
  * @param parent `Element`, `EventTarget`, or CSS selector for parent.
  * @param [options] Options for checking for parent.
@@ -45,6 +48,7 @@ function searchParentRecursively(
   currentDepth: number,
   maxDepth: number,
 ): boolean {
+  // TODO: Convert this to use a https://developer.mozilla.org/en-US/docs/Web/API/TreeWalker?
   const nextDepth = currentDepth + 1;
 
   if (nextDepth === maxDepth) {

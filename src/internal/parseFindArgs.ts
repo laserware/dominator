@@ -1,20 +1,15 @@
-import { isPlainObject } from "@laserware/arcade";
-
 import { attrSelector } from "../attrs/attrSelector.ts";
-import { dataSelector } from "../data/dataSelector.ts";
 import {
-  isAttrValue,
-  isElem,
+  AttrValue,
+  Elem,
   type Attrs,
-  type AttrValue,
   type CssSelector,
-  type Elem,
   type ElemOrCssSelector,
-  type FindOptions,
-  type Maybe,
   type NullOr,
   type UndefinedOr,
 } from "../types.ts";
+
+import { FindOptions } from "./findOptions.ts";
 
 /**
  * Parses the args passed to the {@link findElem} and {@link findAllElems}
@@ -28,11 +23,11 @@ export function parseFindArgs(
   const validParent = parent ?? document;
 
   if (typeof firstArg === "string") {
-    if (isElem(valueOrParent)) {
+    if (Elem.is(valueOrParent)) {
       return { selector: firstArg, validParent: valueOrParent };
     }
 
-    if (isAttrValue(valueOrParent)) {
+    if (AttrValue.is(valueOrParent)) {
       return {
         selector: attrSelector({ [firstArg]: valueOrParent }),
         validParent: parent ?? document,
@@ -46,8 +41,8 @@ export function parseFindArgs(
     return { selector: firstArg, validParent };
   }
 
-  if (isFindOptions(firstArg)) {
-    const options = parseFindOptions(firstArg);
+  if (FindOptions.is(firstArg)) {
+    const options = FindOptions.parse(firstArg);
 
     return {
       selector: options.selector,
@@ -56,50 +51,4 @@ export function parseFindArgs(
   }
 
   return { selector: attrSelector(firstArg), validParent };
-}
-
-function isFindOptions(value: any): value is FindOptions {
-  if (!isPlainObject(value)) {
-    return false;
-  }
-
-  return (
-    "withSelector" in value ||
-    "withKey" in value ||
-    "withAttrs" in value ||
-    "withData" in value
-  );
-}
-
-function parseFindOptions(options: FindOptions): {
-  selector: string;
-  parent: Maybe<ElemOrCssSelector>;
-} {
-  const validParent = options.parent ?? null;
-
-  const tag = options.tag ?? "";
-
-  if ("withSelector" in options) {
-    return { selector: options.withSelector, parent: validParent };
-  }
-
-  if ("withName" in options) {
-    const selector = attrSelector(options.withName, options.withValue, tag);
-
-    return { selector, parent: validParent };
-  }
-
-  if ("withAttrs" in options) {
-    const selector = attrSelector(options.withAttrs, tag);
-
-    return { selector, parent: validParent };
-  }
-
-  if ("withData" in options) {
-    const selector = dataSelector(options.withData, tag);
-
-    return { selector, parent: validParent };
-  }
-
-  throw new Error("Unable to parse find options");
 }

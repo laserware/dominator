@@ -1,41 +1,38 @@
+import { isNil } from "@laserware/arcade";
+
+import type { AttrValue, NullOr } from "../types.ts";
+
 /**
- * Converts the specified value to a string (valid representation of an attribute
- * value). If the `value` is an invalid type, throws error. If the value is
- * `null`, returns an empty string. If a conversion error occurs, returns
- * `undefined`.
+ * Coerces the specified `value` coming from the `getAttribute()` method on an
+ * `Element` to a value of type `T` that represents a valid {@linkcode AttrValue}.
+ * Returns `null` if `value` is not a string.
  *
- * @param value Value to convert to a valid attribute value.
+ * @template T Type of value to return.
+ *
+ * @param value Value to coerce to an {@linkcode AttrValue}.
  */
-export function toAttrValue(value: unknown): string | undefined {
-  if (value === undefined) {
-    return undefined;
+export function toAttrValue<T extends AttrValue>(value: unknown): NullOr<T> {
+  if (isNil(value)) {
+    return null;
   }
 
-  if (value === null) {
-    return "";
+  if (typeof value !== "string") {
+    return null;
   }
 
-  if (typeof value === "string") {
-    return value;
+  if (value === "true" || value === "false") {
+    return (value === "true") as T;
   }
 
-  if (Array.isArray(value)) {
-    throw new Error("Cannot convert value of array to attribute string");
+  if (value === "") {
+    return true as T;
   }
 
-  try {
-    if (
-      typeof value === "number" ||
-      typeof value === "boolean" ||
-      typeof value === "symbol"
-    ) {
-      return value.toString();
-    }
-  } catch {
-    return undefined;
+  const numericValue = Number(value);
+
+  if (Number.isNaN(numericValue)) {
+    return value as T;
   }
 
-  if (typeof value === "object") {
-    throw new Error("Cannot convert value of object to attribute string");
-  }
+  return numericValue as T;
 }

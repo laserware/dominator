@@ -3,7 +3,7 @@ import type { ElemOrCssSelector } from "../types.ts";
 import { toElem } from "./toElem.ts";
 
 /**
- * Returns true if the specified target has the specified `id` *property*.
+ * Returns true if the specified `target` has the specified `id` *property*.
  * Note that you can pass an ID string or CSS selector (e.g. `#some-id`).
  * If your ID starts with `#` and is *not* a CSS selector, ensure there are
  * two `#` prefixes instead of one.

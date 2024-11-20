@@ -3,7 +3,7 @@ import type { ElemOrCssSelector, NullOr } from "../types.ts";
 import { toElem } from "./toElem.ts";
 
 /**
- * Returns true if the specified target is currently scrollable.
+ * Returns true if the specified `target` is currently scrollable.
  *
  * @param target `Element`, `EventTarget`, or CSS selector.
  */

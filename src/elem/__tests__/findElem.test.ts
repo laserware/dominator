@@ -1,56 +1,9 @@
-import { dedent } from "@laserware/arcade";
-
 import { dataSelector } from "../../data/dataSelector.ts";
 import { findElem } from "../findElem.ts";
 
-function createTestDOM(): { dispose(): void } {
-  const main = document.createElement("main");
-
-  main.innerHTML = dedent`
-    <div id="test">
-      <div>Empty</div>
-      <div aria-hidden="true" data-value="test">Attrs</div>
-      <div id="parent">
-        <div aria-hidden="true" data-value="test">Child</div>
-      </div>
-      
-      <button 
-        id="test-button"
-        name="button"
-        disabled
-        aria-disabled="true"
-        aria-expanded="true"
-        draggable="true"
-        inert
-        data-some-property="thing"
-      >
-        Button
-      </button>
-    </div>
-  `;
-
-  document.body.appendChild(main);
-
-  return {
-    dispose() {
-      document.body.removeChild(main);
-    },
-  };
-}
-
 describe("the findElem function", () => {
-  let disposable: { dispose(): void };
-
-  beforeEach(() => {
-    disposable = createTestDOM();
-  });
-
-  afterEach(() => {
-    disposable.dispose();
-  });
-
-  it("finds an element with a matching CSS selector", () => {
-    const result = findElem("#test", document);
+  it("finds an element with a matching CSS selector", ({ selectors }) => {
+    const result = findElem(selectors.forRoot, document);
 
     expect(result).not.toBeNull();
   });
@@ -69,16 +22,16 @@ describe("the findElem function", () => {
     expect(result).not.toBeNull();
   });
 
-  it("finds an element with a CSS selector in an options object", () => {
-    const parent = findElem({ withSelector: "#parent" });
+  it("finds an element with a CSS selector in an options object", ({ selectors }) => {
+    const parent = findElem({ withSelector: selectors.forParent });
 
     const result = findElem({ withSelector: `[aria-hidden]`, parent });
 
     expect(result!.innerHTML).toBe("Child");
   });
 
-  it("finds an element with key/value pair in an options object", () => {
-    const parent = findElem("#parent");
+  it("finds an element with key/value pair in an options object", ({ selectors }) => {
+    const parent = findElem(selectors.forParent);
 
     const result = findElem({ withName: "data-value", withValue: "test", parent });
 

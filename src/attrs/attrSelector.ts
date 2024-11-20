@@ -6,7 +6,7 @@ import type {
   Attrs,
   AttrValue,
   CssSelector,
-  Maybe,
+  NilOr,
 } from "../types.ts";
 
 /**
@@ -15,7 +15,7 @@ import type {
  * but only includes a name.
  *
  * @param attrs Object with key of attribute name and value of attribute value.
- * @param [tag] Optional tag name for the element.
+ * @param [tag] Optional tag name to include in the selector.
  *
  * @example Single Entry With Value
  * const selector = attrSelector({ disabled: true });
@@ -41,7 +41,7 @@ export function attrSelector(
  *
  * @param name Attribute name to include in the selector.
  * @param [value=undefined] Optional attribute value.
- * @param [tag] Optional tag name for the element.
+ * @param [tag] Optional tag name to include in the selector.
  *
  * @example Name Only
  * const selector = attrSelector("disabled");
@@ -61,13 +61,13 @@ export function attrSelector(
  */
 export function attrSelector(
   name: AttrName,
-  value: Maybe<AttrValue>,
-  tag: AnyElementTagName | "",
+  value?: NilOr<AttrValue>,
+  tag?: AnyElementTagName | "",
 ): CssSelector;
 
 export function attrSelector(
   attrsOrName: Attrs | AttrName,
-  valueOrTag: Maybe<AttrValue> | AnyElementTagName | "" = undefined,
+  valueOrTag: NilOr<AttrValue> | AnyElementTagName | "" = undefined,
   tag: AnyElementTagName | "" = "",
 ): CssSelector {
   if (isPlainObject(attrsOrName)) {
@@ -85,11 +85,11 @@ export function attrSelector(
 
 function singleAttrSelector(
   name: AttrName,
-  value: Maybe<AttrValue>,
+  value: NilOr<AttrValue>,
 ): CssSelector {
   const validName = kebabCase(name);
 
-  if (isNil(value)) {
+  if (isNil(value) || typeof value === "object") {
     return `[${validName}]`;
   }
 
@@ -97,6 +97,7 @@ function singleAttrSelector(
   try {
     stringValue = value.toString();
   } catch {
+    /* istanbul ignore next -- @preserve: This will probably never get hit, but it's difficult to test. */
     stringValue = "";
   }
 

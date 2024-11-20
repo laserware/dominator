@@ -6,13 +6,16 @@ import type { ElemOrCssSelector, NullOr } from "../types.ts";
 import { CssVarError } from "./CssVarError.ts";
 
 /**
- * Returns the value associated with the specified CSS variable name. If
- * no element is specified, gets the variable value from the `:root` element.
+ * Returns the value associated with the specified CSS variable `name`. If
+ * no `target` is specified, gets the variable value from the `:root` element.
+ * Returns the `defaultValue` if the property doesn't exist..
  *
  * @param name Name of the variable to get value for.
  * @param [defaultValue=undefined] Optional default value to fall back to if not found.
- * @param [target] Optional Element, EventTarget, or selector for element from
- *                which to get CSS variable.
+ * @param [target] Optional `Element`, `EventTarget`, or CSS selector for element from
+ *                 which to get CSS variable.
+ *
+ * @throws {CssVarError} If the property doesn't exist and no `defaultValue` specified.
  */
 export function getCssVar<T>(
   name: string,

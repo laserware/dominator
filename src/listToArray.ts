@@ -1,12 +1,13 @@
 import { isNil } from "@laserware/arcade";
 
 /**
- * Converts the specified NodeList or HTMLCollection to an array to be able to
- * utilize array methods.
+ * Converts the specified {@link https://developer.mozilla.org/en-US/docs/Web/API/NodeList|NodeList}
+ * or {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLCollection|HTMLCollection}
+ * to an array.
  *
- * @template E Element types with the returned array.
+ * @template E `Element` types with the returned array.
  *
- * @param items NodeList or HTMLCollection to convert to array.
+ * @param items `NodeList` or `HTMLCollection` to convert to array.
  */
 export function listToArray<E extends Element = HTMLElement>(
   items: NodeListOf<E> | NodeList | HTMLCollection | null,

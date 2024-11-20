@@ -1,11 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
-import {
-  isElementLike,
-  type ElemOrCssSelector,
-  type Maybe,
-  type NullOr,
-} from "../types.ts";
+import type { ElemOrCssSelector, NilOr, NullOr } from "../types.ts";
 
 import { findElem } from "./findElem.ts";
 
@@ -46,8 +41,8 @@ import { findElem } from "./findElem.ts";
  * }
  */
 export function toElem<E extends Element = HTMLElement>(
-  target: Maybe<ElemOrCssSelector>,
-  parent?: Maybe<ElemOrCssSelector>,
+  target: NilOr<ElemOrCssSelector>,
+  parent?: NilOr<ElemOrCssSelector>,
 ): NullOr<E> {
   if (isNil(target)) {
     return null;
@@ -72,4 +67,19 @@ export function toElem<E extends Element = HTMLElement>(
   }
 
   return null;
+}
+
+/**
+ * Returns true if the specified value is an `Element`, `Document`, or `EventTarget`
+ * that can be represented as an `HTMLElement`.
+ */
+function isElementLike(
+  value: unknown,
+): value is Element | HTMLElement | Document {
+  return (
+    value instanceof Document ||
+    value instanceof Element ||
+    value instanceof EventTarget ||
+    value instanceof HTMLElement
+  );
 }

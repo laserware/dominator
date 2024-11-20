@@ -1,8 +1,8 @@
 import { toElem } from "../elem/toElem.ts";
-import { toPrimitiveValue } from "../internal/toPrimitiveValue.ts";
+import { toAttrValue } from "../internal/toAttrValue.ts";
 import { validDataKey } from "../internal/validDataKey.ts";
 import type {
-  AttrName,
+  DatasetAttrName,
   DatasetKey,
   DatasetValue,
   ElemOrCssSelector,
@@ -10,17 +10,18 @@ import type {
 } from "../types.ts";
 
 /**
- * Returns the value associated with the specified dataset `keyOrAttrName`.
- * If the value doesn't exist, return `null`.
+ * Returns the value associated with the specified dataset `key` on the
+ * specified `target`. Returns `null` if the `target` doesn't exist or no
+ * entry was found for the specified `key`.
  *
  * @template V Type of value to return for the corresponding key.
  *
  * @param target `Element`, `EventTarget`, or CSS selector.
- * @param keyOrAttrName Key (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
+ * @param key Key (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
  */
 export function getData<V extends DatasetValue = string>(
   target: NullOr<ElemOrCssSelector>,
-  keyOrAttrName: DatasetKey | AttrName,
+  key: DatasetKey | DatasetAttrName,
 ): NullOr<V> {
   try {
     const elem = toElem(target);
@@ -28,11 +29,11 @@ export function getData<V extends DatasetValue = string>(
       return null;
     }
 
-    const validKey = validDataKey(keyOrAttrName);
+    const validKey = validDataKey(key);
 
     const matchingValue = elem?.dataset[validKey] ?? null;
 
-    return toPrimitiveValue<V>(matchingValue);
+    return toAttrValue<V>(matchingValue);
   } catch {
     return null;
   }

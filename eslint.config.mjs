@@ -1,6 +1,6 @@
 import { fileURLToPath } from "node:url";
 
-import { getBaseConfigs } from "@laserware/eslint-config/base";
+import { getBaseConfigs, filePatterns } from "@laserware/eslint-config/base";
 
 const rootDirPath = fileURLToPath(new URL(".", import.meta.url));
 
@@ -11,6 +11,12 @@ const baseConfigs = getBaseConfigs({
 
 export default [
   ...baseConfigs,
+  {
+    files: filePatterns.tests,
+    rules: {
+      "vitest/no-done-callback": "off",
+    },
+  },
   {
     ignores: ["eslint.config.mjs", "dist"],
   },

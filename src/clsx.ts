@@ -41,8 +41,9 @@ export type ClassArray = ClassValue[];
  */
 
 /**
- * A tiny (239B) utility for constructing className strings conditionally.
- * Also serves as a faster & smaller drop-in replacement for the classnames module.
+ * A tiny (239B) utility for constructing `className` strings conditionally.
+ * Also serves as a faster & smaller drop-in replacement for the
+ * {@link https://www.npmjs.com/package/classnames|classnames} package.
  *
  * @param inputs Variable array of inputs to map to class names.
  */
