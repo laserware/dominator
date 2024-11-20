@@ -1,21 +1,21 @@
 /**
- * Type is either T or null or undefined.
+ * Type is either T or `null` or `undefined`.
  *
- * @template T Type if not null or undefined.
+ * @template T Type if not `null` or `undefined`.
  */
 export type Maybe<T> = T | null | undefined;
 
 /**
- * Type is either T or null.
+ * Type is either T or `null`.
  *
- * @template T Type if not null.
+ * @template T Type if not `null`.
  */
 export type NullOr<T> = T | null;
 
 /**
- * Type is either T or undefined.
+ * Type is either T or `undefined`.
  *
- * @template T Type if not undefined.
+ * @template T Type if not `undefined`.
  */
 export type UndefinedOr<T> = T | undefined;
 
@@ -25,7 +25,7 @@ export type UndefinedOr<T> = T | undefined;
 export type Primitive = string | number | boolean | symbol;
 
 /**
- * Element or EventTarget that can be passed into functions.
+ * `Element` or `EventTarget` that can be passed into functions.
  */
 export type Elem =
   | Document
@@ -36,9 +36,37 @@ export type Elem =
   | Node
   | ParentNode;
 
+/**
+ * CSS selector string.
+ */
 export type CssSelector = string;
 
+/**
+ * Represents a type that can be either an `Element`, `EventTarget` or a CSS
+ * Selector.
+ *
+ * This type allows for flexibility in functions or methods that can accept
+ * either an `Elem` type object or a string representing a CSS selector.
+ */
 export type ElemOrCssSelector = Elem | CssSelector;
+
+// Ensure the user
+type ExcludeMethods<T> = Pick<
+  T,
+  { [K in keyof T]: T[K] extends (...args: any[]) => any ? never : K }[keyof T]
+>;
+
+// Utility type to check if a type is `null` or `undefined`
+type NonNullableType<T> = T extends null | undefined ? never : T;
+
+type NonMethodAttrs = ExcludeMethods<AnyElement>;
+
+export type AnyElementAttrName = NonNullableType<keyof NonMethodAttrs>;
+
+/**
+ * Valid type for HTML/SVG attribute name.
+ */
+export type AttrName = AnyElementAttrName | string;
 
 /**
  * Valid HTML/SVG attribute value (prior to stringifying).
@@ -46,27 +74,35 @@ export type ElemOrCssSelector = Elem | CssSelector;
 export type AttrValue = boolean | number | string;
 
 /**
- * Valid dataset values (prior to stringifying).
- */
-export type DatasetValue = AttrValue;
-
-/**
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
  * Some of the values may be null or undefined.
  */
-export type Attrs = Record<string, Maybe<AttrValue>>;
-
-/**
- * Valid key/value pair representing dataset attributes (prior to stringifying).
- * Some of the values may be null or undefined.
- */
-export type Dataset = Record<string, Maybe<DatasetValue>>;
+export type Attrs = Record<AttrName, Maybe<AttrValue>>;
 
 /**
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
  * All the values must be defined.
  */
 export type AttrsDefined = Record<string, AttrValue>;
+
+/**
+ * Valid type for the key of `dataset` entries in HTML/SVG elements.
+ */
+export type DatasetKey = string;
+
+/**
+ * Valid dataset values (prior to stringifying).
+ */
+export type DatasetValue = AttrValue;
+
+/**
+ * Valid key/value pair representing dataset attributes (prior to stringifying).
+ * Some of the values may be null or undefined.
+ *
+ * Note that the `HTMLElement.dataset` property is a
+ * {@link https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap|DOMStringMap}.
+ */
+export type Dataset = Record<string, Maybe<DatasetValue>>;
 
 /**
  * Tag name for HTML element.
@@ -113,55 +149,55 @@ export interface FindWithSelectorOptions {
 }
 
 /**
- * Find element(s) with attribute name matching the specified key
+ * Find `Element(s)` with attribute name matching the specified key
  * field. If a value is specified, it is included in the CSS selector.
  */
 export interface FindWithAttrOptions {
-  /** Key of the attribute to find element(s). */
-  withKey: string;
+  /** Name of the attribute. */
+  withName: AttrName;
 
-  /** Optional value of the attribute to find element(s). */
+  /** Optional value of the attribute. */
   withValue?: AttrValue;
 
-  /** Optional parent element. */
+  /** Optional parent `Element`, `EventTarget`, or CSS selector. */
   parent?: Maybe<ElemOrCssSelector>;
 
-  /** Optional element tag to limit search. */
+  /** Optional `Element` tag to limit search. */
   tag?: AnyElementTagName;
 }
 
 /**
- * Find element(s) with the specified attributes. For attributes that don't have
- * a value, use `null`.
+ * Find `Element(s)` with the specified attributes. For attributes that don't
+ * have a value, use `null`.
  */
 export interface FindWithAttrsOptions {
-  /** Key/value pairs of attributes to search for. */
+  /** Key/value pairs of attributes. */
   withAttrs: Attrs;
 
-  /** Optional parent element. */
+  /** Optional parent `Element`, `EventTarget`, or CSS selector. */
   parent?: Maybe<ElemOrCssSelector>;
 
-  /** Optional element tag to limit search. */
+  /** Optional `Element` tag to limit search. */
   tag?: AnyElementTagName;
 }
 
 /**
- * Find element(s) with the specified dataset. For `data-` attributes that don't
- * have a value, use `null`.
+ * Find `Element(s)` with the specified dataset. For `data-` attributes that
+ * don't have a value, use `null`.
  */
 export interface FindWithDataOptions {
   /** Key/value pairs of dataset to search for. */
   withData: Attrs;
 
-  /** Optional parent element. */
+  /** Optional parent `Element`, `EventTarget`, or CSS selector. */
   parent?: Maybe<ElemOrCssSelector>;
 
-  /** Optional element tag to limit search. */
+  /** Optional `Element` tag to limit search. */
   tag?: AnyElementTagName;
 }
 
 /**
- * Options for finding element(s). You can find elements by selector, key/value
+ * Options for finding `Element(s)`. You can find elements by selector, name/value
  * pair for an attribute, or a set of attributes.
  *
  * Note that the search fields use a `with*` prefix to ensure they don't
@@ -174,21 +210,19 @@ export type FindOptions =
   | FindWithSelectorOptions;
 
 /**
- * Returns true if the specified value is an Elem instance.
+ * Returns true if the specified value is an {@linkcode Elem} instance.
  */
 export function isElem(value: unknown): value is Elem {
-  return (
-    value instanceof Document ||
-    value instanceof Element ||
-    value instanceof EventTarget ||
-    value instanceof HTMLElement ||
-    value instanceof Node
-  );
+  if (isElementLike(value)) {
+    return true;
+  }
+
+  return value instanceof Node;
 }
 
 /**
- * Returns true if the specified value is an Element or Document or EventTarget
- * that can be represented as an HTML Element.
+ * Returns true if the specified value is an `Element`, `Document`, or `EventTarget`
+ * that can be represented as an `HTMLElement`.
  */
 export function isElementLike(
   value: unknown,
@@ -202,9 +236,9 @@ export function isElementLike(
 }
 
 /**
- * Returns true if the specified value is a string.
+ * Returns true if the specified value is a CSS selector.
  */
-export function isSelector(value: unknown): value is string {
+export function isCssSelector(value: unknown): value is string {
   return typeof value === "string";
 }
 
@@ -221,8 +255,8 @@ export function isAttrValue(value: unknown): value is AttrValue {
 }
 
 /**
- * Returns true if the specified value is a primitive (i.e. number, string, or
- * boolean).
+ * Returns true if the specified value is a primitive (i.e. number, string,
+ * boolean, or symbol).
  */
 export function isPrimitive(value: unknown): value is Primitive {
   return (

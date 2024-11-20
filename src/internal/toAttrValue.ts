@@ -1,34 +1,18 @@
-import { isNil } from "@laserware/arcade";
-
-import type { NullOr, Primitive } from "../types.ts";
-
-export function toPrimitiveValue<T extends Primitive>(
-  value: unknown,
-): NullOr<T> {
-  if (isNil(value)) {
-    return null;
-  }
-
-  if (typeof value !== "string") {
-    return null;
-  }
-
-  if (value === "true" || value === "false") {
-    return (value === "true") as T;
-  }
-
-  const numericValue = Number(value);
-
-  if (Number.isNaN(numericValue)) {
-    return value as T;
-  }
-
-  return numericValue as T;
-}
-
+/**
+ * Converts the specified value to a string (valid representation of an attribute
+ * value). If the `value` is an invalid type, throws error. If the value is
+ * `null`, returns an empty string. If a conversion error occurs, returns
+ * `undefined`.
+ *
+ * @param value Value to convert to a valid attribute value.
+ */
 export function toAttrValue(value: unknown): string | undefined {
-  if (isNil(value)) {
+  if (value === undefined) {
     return undefined;
+  }
+
+  if (value === null) {
+    return "";
   }
 
   if (typeof value === "string") {

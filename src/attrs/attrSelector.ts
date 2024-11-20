@@ -1,11 +1,18 @@
 import { isNil, isPlainObject, kebabCase } from "@laserware/arcade";
 
-import type { AnyElementTagName, Attrs, AttrValue, Maybe } from "../types.ts";
+import type {
+  AnyElementTagName,
+  AttrName,
+  Attrs,
+  AttrValue,
+  CssSelector,
+  Maybe,
+} from "../types.ts";
 
 /**
- * Returns a CSS selector string from the attributes object. Note that the values
- * of the attributes object are coerced to a string and null excludes a value
- * but only includes a key.
+ * Returns a CSS selector string from the `attrs` object. Note that the values
+ * of the `attrs` object are coerced to a string and `null` excludes a value
+ * but only includes a name.
  *
  * @param attrs Object with key of attribute name and value of attribute value.
  * @param [tag] Optional tag name for the element.
@@ -25,11 +32,12 @@ import type { AnyElementTagName, Attrs, AttrValue, Maybe } from "../types.ts";
 export function attrSelector(
   attrs: Attrs,
   tag?: AnyElementTagName | "",
-): string;
+): CssSelector;
 
 /**
- * Returns a CSS selector string from the specified name and value. Note that the
- * value is coerced to a string and null excludes a value but only includes a name.
+ * Returns a CSS selector string from the specified `name` and `value`. Note
+ * that the `value` is coerced to a string and `null` excludes a value but only
+ * includes a name. Specifying a `tag` will further limit the search.
  *
  * @param name Attribute name to include in the selector.
  * @param [value=undefined] Optional attribute value.
@@ -52,16 +60,16 @@ export function attrSelector(
  * // `button[disabled]`
  */
 export function attrSelector(
-  name: string,
+  name: AttrName,
   value: Maybe<AttrValue>,
   tag: AnyElementTagName | "",
-): string;
+): CssSelector;
 
 export function attrSelector(
-  attrsOrName: Attrs | string,
+  attrsOrName: Attrs | AttrName,
   valueOrTag: Maybe<AttrValue> | AnyElementTagName | "" = undefined,
   tag: AnyElementTagName | "" = "",
-): string {
+): CssSelector {
   if (isPlainObject(attrsOrName)) {
     let selector = "";
 
@@ -75,7 +83,10 @@ export function attrSelector(
   }
 }
 
-function singleAttrSelector(name: string, value: Maybe<AttrValue>): string {
+function singleAttrSelector(
+  name: AttrName,
+  value: Maybe<AttrValue>,
+): CssSelector {
   const validName = kebabCase(name);
 
   if (isNil(value)) {

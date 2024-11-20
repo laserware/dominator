@@ -1,15 +1,15 @@
 import { toElem } from "../elem/toElem.ts";
-import type { ElemOrCssSelector, NullOr } from "../types.ts";
+import type { AttrName, ElemOrCssSelector, NullOr } from "../types.ts";
 
 /**
- * Returns true if the specified element has the specified attribute.
+ * Returns true if the specified `target` has the specified attribute `name`.
  *
- * @param target Element, EventTarget, or selector for element.
- * @param name Name of the attribute to check for.
+ * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param name Name of the attribute.
  */
 export function hasAttr(
   target: NullOr<ElemOrCssSelector>,
-  name: string,
+  name: AttrName,
 ): boolean {
   return toElem(target)?.hasAttribute(name) ?? false;
 }

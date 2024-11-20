@@ -5,11 +5,11 @@ import { InvalidElemError } from "./InvalidElemError.ts";
 import { toElem } from "./toElem.ts";
 
 /**
- * Returns true if the specified element is visible in browser viewport.
+ * Returns true if the specified target is visible in browser viewport.
  *
- * @param target Element, EventTarget, or selector for element.
+ * @param target `Element`, `EventTarget`, or CSS selector to check.
  */
-export function isInViewport(target: ElemOrCssSelector): boolean {
+export function isElemInViewport(target: ElemOrCssSelector): boolean {
   const elem = toElem(target);
   if (elem === null) {
     throw new InvalidElemError("Unable to determine if element is in view");

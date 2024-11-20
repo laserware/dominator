@@ -17,8 +17,8 @@ import {
 } from "../types.ts";
 
 /**
- * Parses the args passed to the {@link findOne} and {@link findAll} functions
- * to find elements in the DOM.
+ * Parses the args passed to the {@link findElem} and {@link findAllElems}
+ * functions to find elements in the DOM.
  */
 export function parseFindArgs(
   firstArg: FindOptions | CssSelector | Attrs | string,
@@ -83,8 +83,8 @@ function parseFindOptions(options: FindOptions): {
     return { selector: options.withSelector, parent: validParent };
   }
 
-  if ("withKey" in options) {
-    const selector = attrSelector(options.withKey, options.withValue, tag);
+  if ("withName" in options) {
+    const selector = attrSelector(options.withName, options.withValue, tag);
 
     return { selector, parent: validParent };
   }

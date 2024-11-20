@@ -3,32 +3,31 @@ import type { ElemOrCssSelector, NullOr } from "../types.ts";
 import { toElem } from "./toElem.ts";
 
 /**
- * Returns true if the source element(s) and target elements do not match.
+ * Returns true if the source element(s) and target elements match.
  *
  * @param left Single element input or array of element inputs to check; if
- *             an array, returns true only if _all_ elements don't match the
+ *             an array, returns true if _one_ of the elements matches the
  *             target element input.
  * @param right Element input to compare against.
  */
-export function areDifferent(
+export function areElemsSame(
   left: NullOr<ElemOrCssSelector | ElemOrCssSelector[]>,
   right: NullOr<ElemOrCssSelector>,
 ): boolean {
   if (Array.isArray(left)) {
-    // Ensure we bail early if we find an element that is the same:
     for (const item of left) {
-      if (!isDifferentFrom(item, right)) {
-        return false;
+      if (isSameAs(item, right)) {
+        return true;
       }
     }
 
-    return true;
+    return false;
   } else {
-    return isDifferentFrom(left, right);
+    return isSameAs(left, right);
   }
 }
 
-function isDifferentFrom(
+function isSameAs(
   left: NullOr<ElemOrCssSelector>,
   right: NullOr<ElemOrCssSelector>,
 ): boolean {
@@ -39,5 +38,5 @@ function isDifferentFrom(
     return false;
   }
 
-  return sourceElem !== targetElem;
+  return sourceElem === targetElem;
 }

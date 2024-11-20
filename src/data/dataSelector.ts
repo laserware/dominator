@@ -1,15 +1,15 @@
 import { isNil, isPlainObject } from "@laserware/arcade";
 
 import { attrSelector } from "../attrs/attrSelector.ts";
-import { toAttrValue } from "../attrs/internal.ts";
+import { toAttrValue } from "../internal/toAttrValue.ts";
+import { validDataAttrName } from "../internal/validDataAttrName.ts";
 import type {
   AnyElementTagName,
+  CssSelector,
   Dataset,
   DatasetValue,
   Maybe,
 } from "../types.ts";
-
-import { validDataAttrName } from "./internal.ts";
 
 /**
  * Returns a CSS selector string for the specified dataset object. Note that the
@@ -64,13 +64,13 @@ export function dataSelector(
   key: string,
   value: Maybe<DatasetValue>,
   tag?: AnyElementTagName | "",
-): string;
+): CssSelector;
 
 export function dataSelector(
   dataOrKey: Dataset | string,
   valueOrTag: Maybe<DatasetValue> | AnyElementTagName | "" = undefined,
   tag: AnyElementTagName | "" = "",
-): string {
+): CssSelector {
   if (isPlainObject(dataOrKey)) {
     let selector = "";
 
@@ -84,7 +84,10 @@ export function dataSelector(
   }
 }
 
-function singleDataSelector(key: string, value: Maybe<DatasetValue>): string {
+function singleDataSelector(
+  key: string,
+  value: Maybe<DatasetValue>,
+): CssSelector {
   const attrName = validDataAttrName(key);
 
   // If a value was specified, that's what we want to search by. So for key

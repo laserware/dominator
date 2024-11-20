@@ -1,6 +1,6 @@
 import type { Elem, NullOr } from "../types.ts";
 
-import { findAll } from "./findAll.ts";
+import { findAllElems } from "./findAllElems.ts";
 
 const focusableElementsSelector = [
   "a",
@@ -15,10 +15,13 @@ const focusableElementsSelector = [
 
 /**
  * Returns an array of all {@link https://zellwk.com/blog/keyboard-focusable-elements/|focusable}
- * elements in the specified parent.
+ * elements in either the document (if no parent specified) or the specified
+ * parent.
  *
- * @param parent Optional Element, EventTarget, or selector for parent element.
+ * @param [parent] Optional Element, EventTarget, or selector for parent element.
  */
-export function findAllFocusable(parent: NullOr<Elem>): HTMLElement[] {
-  return findAll<HTMLElement>(focusableElementsSelector, parent);
+export function findAllFocusable(
+  parent: NullOr<Elem> = document,
+): HTMLElement[] {
+  return findAllElems<HTMLElement>(focusableElementsSelector, parent);
 }

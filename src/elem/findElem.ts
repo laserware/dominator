@@ -1,4 +1,6 @@
+import { parseFindArgs } from "../internal/parseFindArgs.ts";
 import type {
+  AttrName,
   Attrs,
   AttrValue,
   CssSelector,
@@ -8,7 +10,6 @@ import type {
   UndefinedOr,
 } from "../types.ts";
 
-import { parseFindArgs } from "./internal.ts";
 import { toElem } from "./toElem.ts";
 
 /**
@@ -19,7 +20,7 @@ import { toElem } from "./toElem.ts";
  *
  * @param options Options for finding the element. See {@link FindOptions}.
  */
-export function findOne<E extends Element = HTMLElement>(
+export function findElem<E extends Element = HTMLElement>(
   options: FindOptions,
 ): NullOr<E>;
 
@@ -31,7 +32,7 @@ export function findOne<E extends Element = HTMLElement>(
  * @param attrs Key/value pairs of attributes to query for matching elements.
  * @param [parent] Optional Element or EventTarget for parent element.
  */
-export function findOne<E extends Element = HTMLElement>(
+export function findElem<E extends Element = HTMLElement>(
   attrs: Attrs,
   parent?: NullOr<Elem>,
 ): NullOr<E>;
@@ -45,7 +46,7 @@ export function findOne<E extends Element = HTMLElement>(
  * @param selector CSS selector string to find the element.
  * @param [parent] Optional Element or EventTarget for parent element.
  */
-export function findOne<E extends Element = HTMLElement>(
+export function findElem<E extends Element = HTMLElement>(
   selector: CssSelector,
   parent?: NullOr<Elem>,
 ): NullOr<E>;
@@ -56,18 +57,18 @@ export function findOne<E extends Element = HTMLElement>(
  *
  * @template E Type of Element to return.
  *
- * @param key Attribute name to find the element.
+ * @param name Attribute name to find the element.
  * @param [value] Optional attribute value that corresponds with the name.
  * @param [parent] Optional Element or EventTarget for parent element.
  */
-export function findOne<E extends Element = HTMLElement>(
-  key: string,
+export function findElem<E extends Element = HTMLElement>(
+  name: AttrName,
   value: UndefinedOr<AttrValue>,
   parent?: NullOr<Elem>,
 ): NullOr<E>;
 
-export function findOne<E extends Element = HTMLElement>(
-  firstArg: FindOptions | CssSelector | Attrs | string,
+export function findElem<E extends Element = HTMLElement>(
+  firstArg: FindOptions | CssSelector | Attrs | AttrName,
   valueOrParent?: NullOr<Elem> | UndefinedOr<AttrValue>,
   parent?: NullOr<Elem>,
 ): NullOr<E> {

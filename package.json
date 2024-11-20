@@ -33,7 +33,7 @@
     "preversion": "npm run eslint && npm run typecheck",
     "version": "npm run prettier && git add -A src",
     "postversion": "git push && git push --tags",
-    "eslint": "eslint --cache --no-warn-ignored src **/*.ts",
+    "eslint": "eslint --cache --cache-location \"./node_modules/.cache/.eslintcache\" --no-warn-ignored src **/*.ts",
     "prettier": "prettier --cache --write src",
     "prettier:ci": "prettier --check src",
     "typecheck": "tsc --noEmit",

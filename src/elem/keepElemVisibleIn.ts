@@ -3,17 +3,17 @@ import type { ElemOrCssSelector } from "../types.ts";
 import { toElem } from "./toElem.ts";
 
 /**
- * Ensures a given child element is within the parent's visible scroll area. If
- * the child is not visible, scroll the parent.
+ * Ensures the given `target` is within the visible scroll area of the specified
+ * `parent`. If the `target` is not visible, scroll the `parent`.
  *
- * @param target Element, EventTarget, or selector for active element.
- * @param scrollParent Element, EventTarget, or selector for scroll parent element.
+ * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param parent `Element`, `EventTarget`, or selector for scroll parent.
  */
-export function keepVisibleInParent(
+export function keepElemVisibleIn(
   target: ElemOrCssSelector,
-  scrollParent: ElemOrCssSelector,
+  parent: ElemOrCssSelector,
 ): void {
-  const scrollElem = toElem(scrollParent);
+  const scrollElem = toElem(parent);
   if (scrollElem === null) {
     return;
   }

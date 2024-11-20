@@ -2,26 +2,34 @@ import type { ElemOrCssSelector, NullOr } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
 
-export interface SetFocusOptions<E extends Element> {
+/**
+ * Options for setting focus to an element.
+ */
+export interface FocusOptions<E extends Element> {
+  /** Delay (in milliseconds) to wait until attempting to set focus. */
   delay?: number;
+
+  /** Parent element (if `target` is a CSS selector). */
   parent?: ElemOrCssSelector;
+
+  /** If true, prevent the */
   preventScroll?: boolean;
   onDone?(elem: NullOr<E>): void;
 }
 
 /**
- * Sets focus to the specified element.
+ * Sets focus to the specified target.
  *
- * @param target Element, EventTarget, or selector for element to focus.
+ * @param target `Element`, `EventTarget`, or CSS selector.
  * @param [options] Options for setting focus.
  * @property [options.delay] Delay for setting focus to element.
  * @property [options.parent] Element, EventTarget, or selector for parent element.
  * @property [options.preventScroll] If true, don't scroll the focused element into view.
  * @property [options.onDone] Optional callback that fires after trying to set focus.
  */
-export function setFocusTo<E extends Element = HTMLElement>(
+export function focusElem<E extends Element = HTMLElement>(
   target: NullOr<ElemOrCssSelector>,
-  options?: SetFocusOptions<E>,
+  options?: FocusOptions<E>,
 ): void {
   if (target === null) {
     return;

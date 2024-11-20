@@ -1,22 +1,28 @@
 import { isNotNil } from "@laserware/arcade";
 
 import { toElem } from "../elem/toElem.ts";
-import type { AttrValue, ElemOrCssSelector, NullOr } from "../types.ts";
-
-import { validDataKey } from "./internal.ts";
+import { validDataKey } from "../internal/validDataKey.ts";
+import type {
+  AttrName,
+  AttrValue,
+  DatasetKey,
+  DatasetValue,
+  ElemOrCssSelector,
+  NullOr,
+} from "../types.ts";
 
 /**
- * Returns true if the specified element has a dataset entry with the specified
- * key or attribute name and optionally, the matching attribute value.
+ * Returns true if the specified `target` has a dataset entry with the specified
+ * `keyOrAttrName` and optionally, the matching `value`.
  *
- * @param target Element, EventTarget, or selector for element.
- * @param key Key or attribute name for the dataset entry.
+ * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param keyOrAttrName Key (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
  * @param [value] Optional dataset value to check for.
  */
-export function hasData(
+export function hasData<KN extends DatasetKey | AttrName>(
   target: NullOr<ElemOrCssSelector>,
-  key: string,
-  value?: AttrValue,
+  keyOrAttrName: KN,
+  value?: KN extends DatasetKey ? DatasetValue : AttrValue,
 ): boolean {
   try {
     const elem = toElem(target);
@@ -24,14 +30,14 @@ export function hasData(
       return false;
     }
 
-    const validKey = validDataKey(key);
+    const validKey = validDataKey(keyOrAttrName);
 
-    const datasetEntry = elem.dataset?.[validKey];
+    const datasetValue = elem.dataset?.[validKey];
 
     if (value === undefined) {
-      return isNotNil(datasetEntry);
+      return isNotNil(datasetValue);
     } else {
-      return datasetEntry === value;
+      return datasetValue === value;
     }
   } catch {
     return false;

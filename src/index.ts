@@ -8,11 +8,27 @@ export { getData } from "./data/getData.ts";
 export { hasData } from "./data/hasData.ts";
 export { setData } from "./data/setData.ts";
 
+export { areElemsDifferent } from "./elem/areElemsDifferent.ts";
+export { areElemsSame } from "./elem/areElemsSame.ts";
+export { elemExists } from "./elem/elemExists.ts";
+export { findAllElems } from "./elem/findAllElems.ts";
+export { findAllFocusable } from "./elem/findAllFocusable.ts";
+export { findElem } from "./elem/findElem.ts";
+export { getElemValue } from "./elem/values.ts";
+export { idMatches } from "./elem/idMatches.ts";
+export { isElemChildOf } from "./elem/isElemChildOf.ts";
+export { InvalidElemError } from "./elem/InvalidElemError.ts";
+export { isElemInViewport } from "./elem/isElemInViewport.ts";
+export { isElemOfType } from "./elem/isElemOfType.ts";
+export { isElemSameOrChildOf } from "./elem/isElemSameOrChildOf.ts";
+export { isElemScrollable } from "./elem/isElemScrollable.ts";
+export { keepElemVisibleIn } from "./elem/keepElemVisibleIn.ts";
+export { focusElem } from "./elem/focusElem.ts";
+export { toElem } from "./elem/toElem.ts";
+
 export { measureInputWidth } from "./extras/measureInputWidth.ts";
 export { moveCursorToTextEnd } from "./extras/moveCursorToTextEnd.ts";
 export { parseTransferData } from "./extras/parseTransferData.ts";
-
-export * from "./elem/index.ts";
 
 export { CssVarError } from "./css/CssVarError.ts";
 export { getCssVar } from "./css/getCssVar.ts";
