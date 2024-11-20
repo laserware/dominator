@@ -1,8 +1,8 @@
-import { toPrimitiveValue } from "../attrs/conversions.ts";
+import { toPrimitiveValue } from "../attrs/internal.ts";
 import { toElem } from "../elem/toElem.ts";
 import type { ElemOrCssSelector, NullOr, Primitive } from "../types.ts";
 
-import { validDataKey } from "./dataNames.ts";
+import { validDataKey } from "./internal.ts";
 
 /**
  * Returns the value associated with the specified dataset entry key. If the
@@ -10,15 +10,15 @@ import { validDataKey } from "./dataNames.ts";
  *
  * @template V Type of value to return for the corresponding key.
  *
- * @param input Element, EventTarget, or selector for element.
+ * @param target Element, EventTarget, or selector for element.
  * @param key Key or attribute name for the dataset entry.
  */
 export function getData<V extends Primitive = string>(
-  input: NullOr<ElemOrCssSelector>,
+  target: NullOr<ElemOrCssSelector>,
   key: string,
 ): NullOr<V> {
   try {
-    const elem = toElem(input);
+    const elem = toElem(target);
     if (elem === null) {
       return null;
     }

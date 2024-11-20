@@ -7,10 +7,10 @@ import { toElem } from "./toElem.ts";
 /**
  * Returns true if the specified element is visible in browser viewport.
  *
- * @param input Element, EventTarget, or selector for element.
+ * @param target Element, EventTarget, or selector for element.
  */
-export function inViewport(input: ElemOrCssSelector): boolean {
-  const elem = toElem(input);
+export function isInViewport(target: ElemOrCssSelector): boolean {
+  const elem = toElem(target);
   if (elem === null) {
     throw new InvalidElemError("Unable to determine if element is in view");
   }

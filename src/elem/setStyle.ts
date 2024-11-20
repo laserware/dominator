@@ -19,14 +19,14 @@ type CSSStyleProperty = Exclude<
  * where styles is an object with key of style property name and value of the
  * style property value.
  *
- * @param input Element, EventTarget, or selector for element.
+ * @param target Element, EventTarget, or selector for element.
  * @param styles Object with style property values keyed by name.
  */
 export function setStyle<E extends Element = HTMLElement>(
-  input: NullOr<ElemOrCssSelector>,
+  target: NullOr<ElemOrCssSelector>,
   styles: Record<CSSStyleProperty, string>,
 ): NullOr<E> {
-  const elem = toElem<E>(input);
+  const elem = toElem<E>(target);
   if (elem === null) {
     throw new InvalidElemError("Unable to set styles");
   }

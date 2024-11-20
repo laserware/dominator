@@ -1,21 +1,12 @@
 import type { AriaAttrs } from "./aria.ts";
-
-type HTMLElementTagName = keyof HTMLElementTagNameMap;
-
-type SVGElementTagName = keyof SVGElementTagNameMap;
-
-type AnyElementTagName = HTMLElementTagName | SVGElementTagName;
-
-type ElementWithTagName<TN extends AnyElementTagName> =
-  TN extends HTMLElementTagName
-    ? HTMLElementTagNameMap[TN]
-    : TN extends SVGElementTagName
-      ? SVGElementTagNameMap[TN]
-      : never;
-
-type AnyElement =
-  | ElementWithTagName<HTMLElementTagName>
-  | ElementWithTagName<SVGElementTagName>;
+import {
+  isAttrValue,
+  type AnyElement,
+  type AnyElementTagName,
+  type AttrsDefined,
+  type AttrValue,
+  type ElementWithTagName,
+} from "./types.ts";
 
 type ElementAttrs<TN extends AnyElementTagName> = Omit<
   ElementWithTagName<TN>,
@@ -41,10 +32,8 @@ type ElementEventListenersOrDescriptors = {
   [EN in ElementEventName]?: ElementEventListenerOrDescriptor<EN>;
 };
 
-export type Primitive = boolean | string | number;
-
 export type CSSVariables = {
-  [key: `--${string}`]: Primitive;
+  [key: `--${string}`]: AttrValue;
 };
 
 type AllowedCSSStyleDeclaration = Omit<
@@ -69,7 +58,7 @@ type CustomProperties = {
   class?: string;
   dataset?: DOMStringMap;
   style?: AllowedCSSStyleDeclaration | CSSVariables;
-  [key: `data-${string}`]: Primitive;
+  [key: `data-${string}`]: AttrValue;
 };
 
 type AllowedProperties<TN extends AnyElementTagName> =
@@ -95,7 +84,7 @@ export interface ElementBuilder<
   ): ElementWithTagName<TN>;
 }
 
-type NonFunctionalChild = ElementBuilder | AnyElement | Primitive | null;
+type NonFunctionalChild = ElementBuilder | AnyElement | AttrValue | null;
 
 /**
  * Child item passed to the `html` function. A child item can be any one of the
@@ -143,7 +132,7 @@ export function html<TN extends AnyElementTagName>(
           return null;
         }
 
-        if (isPrimitive(child)) {
+        if (isAttrValue(child)) {
           return document.createTextNode(stringifyValue(child));
         }
 
@@ -192,7 +181,7 @@ function setElementProperties<TN extends AnyElementTagName>(
 ): void {
   const setObjectProperties = (
     name: "dataset" | "style",
-    attrsObject: Record<string, Primitive>,
+    attrsObject: AttrsDefined,
   ): void => {
     for (const [key, value] of Object.entries(attrsObject)) {
       if (name === "style") {
@@ -287,7 +276,7 @@ function isElementEventDescriptor(
 function setStyleProperty<TN extends AnyElementTagName>(
   element: ElementWithTagName<TN>,
   propertyName: string,
-  value: Primitive,
+  value: AttrValue,
 ): void {
   // Using `setProperty` here to set a custom CSS variable:
   if (propertyName.startsWith("--")) {
@@ -309,26 +298,14 @@ function setStyleProperty<TN extends AnyElementTagName>(
 function setDatasetProperty<TN extends AnyElementTagName>(
   element: ElementWithTagName<TN>,
   key: string,
-  value: Primitive,
+  value: AttrValue,
 ): void {
-  if (isPrimitive(value)) {
+  if (isAttrValue(value)) {
     element.dataset[key] = stringifyValue(value);
   } else {
     // prettier-ignore
     throw new Error(`Invalid dataset property value type ${typeof value} for ${key}`)
   }
-}
-
-/**
- * Returns true if the specified value is a valid property value (i.e. a boolean,
- * number, or string).
- */
-function isPrimitive(value: unknown): value is Primitive {
-  return (
-    typeof value === "boolean" ||
-    typeof value === "number" ||
-    typeof value === "string"
-  );
 }
 
 function stringifyValue(value: any): string {

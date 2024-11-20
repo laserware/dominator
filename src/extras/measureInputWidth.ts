@@ -8,9 +8,9 @@ let context: CanvasRenderingContext2D | null = null;
  * value or placeholder using the {@link https://stackoverflow.com/a/68326447|measureText}
  * approach.
  *
- * @param element Input element for which to get width.
+ * @param target Input element for which to get width.
  */
-export function measureInputWidth(element: HTMLInputElement): number {
+export function measureInputWidth(target: HTMLInputElement): number {
   if (canvas === null) {
     canvas = document.createElement("canvas");
   }
@@ -19,9 +19,9 @@ export function measureInputWidth(element: HTMLInputElement): number {
     context = canvas.getContext("2d")!;
   }
 
-  const text = element.value || element.placeholder;
+  const text = target.value || target.placeholder;
 
-  const elementStyle = window.getComputedStyle(element);
+  const elementStyle = window.getComputedStyle(target);
 
   const horizontalBorder =
     Number.parseFloat(elementStyle.borderLeftWidth) +

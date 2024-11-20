@@ -9,7 +9,7 @@ import {
   type NullOr,
 } from "../types.ts";
 
-import { selectData } from "./selectData.ts";
+import { dataSelector } from "./dataSelector.ts";
 
 /**
  * Query the DOM for the element with the specified dataset name and optionally
@@ -40,13 +40,13 @@ export function findOneWithData<E extends Element = HTMLElement>(
   // The valueOrParent argument was a CSS selector or an element, so we know
   // the `data-` selector is for the key only:
   if (typeof valueOrParent === "string" && isNotNil(valueOrParentElem)) {
-    const selector = selectData(key);
+    const selector = dataSelector(key);
 
     return findOne(selector, parentElem);
   }
 
   if (isPrimitive(valueOrParent)) {
-    const selector = selectData(key, valueOrParent);
+    const selector = dataSelector(key, valueOrParent);
 
     return findOne(selector, parentElem);
   }

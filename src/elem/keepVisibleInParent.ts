@@ -6,11 +6,11 @@ import { toElem } from "./toElem.ts";
  * Ensures a given child element is within the parent's visible scroll area. If
  * the child is not visible, scroll the parent.
  *
- * @param input Element, EventTarget, or selector for active element.
+ * @param target Element, EventTarget, or selector for active element.
  * @param scrollParent Element, EventTarget, or selector for scroll parent element.
  */
 export function keepVisibleInParent(
-  input: ElemOrCssSelector,
+  target: ElemOrCssSelector,
   scrollParent: ElemOrCssSelector,
 ): void {
   const scrollElem = toElem(scrollParent);
@@ -18,7 +18,7 @@ export function keepVisibleInParent(
     return;
   }
 
-  const activeElem = toElem(input);
+  const activeElem = toElem(target);
   if (activeElem === null) {
     return;
   }

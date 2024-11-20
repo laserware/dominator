@@ -4,14 +4,14 @@ import type { ElemOrCssSelector, NullOr } from "../types.ts";
 /**
  * Moves the cursor to the end of the text in an element.
  *
- * @param input Element, EventTarget, or selector for element.
+ * @param target Element, EventTarget, or selector for element.
  * @param [parent] Optional Element, EventTarget, or selector for parent element.
  */
 export function moveCursorToTextEnd<E extends Element = HTMLElement>(
-  input: NullOr<ElemOrCssSelector>,
+  target: NullOr<ElemOrCssSelector>,
   parent: NullOr<ElemOrCssSelector> = document,
 ): NullOr<E> {
-  const elem = toElem<E>(input, parent);
+  const elem = toElem<E>(target, parent);
   if (elem === null) {
     return null;
   }

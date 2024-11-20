@@ -8,11 +8,11 @@ import { toElem } from "./toElem.ts";
  * If your ID starts with `#` and is _not_ a CSS selector, ensure there are
  * two `#` prefixes instead of one.
  *
- * @param input Element, EventTarget, or selector for element.
+ * @param target Element, EventTarget, or selector for element.
  * @param id ID to check for element.
  */
-export function hasId(input: ElemOrCssSelector, id: string): boolean {
-  const element = toElem<HTMLInputElement>(input);
+export function hasId(target: ElemOrCssSelector, id: string): boolean {
+  const element = toElem<HTMLInputElement>(target);
   if (element === null) {
     return false;
   }

@@ -16,19 +16,19 @@ import { findOne } from "./findOne.ts";
  *
  * @template E Type of Element to return.
  *
- * @param input Element, EventTarget, or CSS selector to assert as an Element.
+ * @param target Element, EventTarget, or CSS selector to assert as an Element.
  * @param parent Optional parent element or CSS selector for the parent element.
  */
 export function toElem<E extends Element = HTMLElement>(
-  input: Maybe<ElemOrCssSelector>,
+  target: Maybe<ElemOrCssSelector>,
   parent?: Maybe<ElemOrCssSelector>,
 ): NullOr<E> {
-  if (isNil(input)) {
+  if (isNil(target)) {
     return null;
   }
 
-  if (isElementLike(input)) {
-    return input as unknown as E;
+  if (isElementLike(target)) {
+    return target as unknown as E;
   }
 
   let validParent: Document | HTMLElement | null = null;
@@ -41,8 +41,8 @@ export function toElem<E extends Element = HTMLElement>(
     validParent = document;
   }
 
-  if (typeof input === "string") {
-    return findOne(input, validParent);
+  if (typeof target === "string") {
+    return findOne(target, validParent);
   }
 
   return null;

@@ -10,18 +10,18 @@ import type {
   NullOr,
 } from "../types.ts";
 
-import { validDataKey } from "./dataNames.ts";
+import { validDataKey } from "./internal.ts";
 
 /**
  * Assigns the specified value to the specified dataset key in the specified
  * element.
  *
- * @param input Element, EventTarget, or selector for element.
+ * @param target Element, EventTarget, or selector for element.
  * @param key Key or attribute name for the dataset entry.
  * @param value Value to set for associated key or attribute name.
  */
 export function setData<E extends Element = HTMLElement>(
-  input: ElemOrCssSelector,
+  target: ElemOrCssSelector,
   key: string,
   value: AttrValue,
 ): NullOr<E>;
@@ -30,39 +30,39 @@ export function setData<E extends Element = HTMLElement>(
  * Assigns the specified value to the specified dataset key in the specified
  * element.
  *
- * @param input Element, EventTarget, or selector for element.
+ * @param target Element, EventTarget, or selector for element.
  * @param attrs Object with key of dataset key and value of entry value.
  */
 export function setData<E extends Element = HTMLElement>(
-  input: ElemOrCssSelector,
+  target: ElemOrCssSelector,
   attrs: Attrs,
 ): NullOr<E>;
 
 export function setData<E extends Element = HTMLElement>(
-  input: ElemOrCssSelector,
+  target: ElemOrCssSelector,
   keyOrAttrs: string | Attrs,
   value?: AttrValue,
 ): NullOr<E> {
-  const elem = toElem<E>(input);
+  const elem = toElem<E>(target);
   if (elem === null) {
     // prettier-ignore
     throw new InvalidElemError(`Unable to set dataset value`);
   }
 
   if (typeof keyOrAttrs === "string") {
-    setElemData(elem, keyOrAttrs, value);
+    setElementData(elem, keyOrAttrs, value);
   } else {
     const entries = Object.entries(keyOrAttrs);
 
     for (const [name, value] of entries) {
-      setElemData(elem, name, value);
+      setElementData(elem, name, value);
     }
   }
 
   return elem;
 }
 
-function setElemData(
+function setElementData(
   elem: Element,
   key: string,
   value?: Maybe<AttrValue>,

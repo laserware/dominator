@@ -12,7 +12,7 @@ export interface SetFocusOptions<E extends Element> {
 /**
  * Sets focus to the specified element.
  *
- * @param input Element, EventTarget, or selector for element to focus.
+ * @param target Element, EventTarget, or selector for element to focus.
  * @param [options] Options for setting focus.
  * @property [options.delay] Delay for setting focus to element.
  * @property [options.parent] Element, EventTarget, or selector for parent element.
@@ -20,17 +20,21 @@ export interface SetFocusOptions<E extends Element> {
  * @property [options.onDone] Optional callback that fires after trying to set focus.
  */
 export function setFocusTo<E extends Element = HTMLElement>(
-  input: NullOr<ElemOrCssSelector>,
+  target: NullOr<ElemOrCssSelector>,
   options?: SetFocusOptions<E>,
 ): void {
-  if (input === null) {
+  if (target === null) {
     return;
   }
 
   const focusCallback = (): void => {
-    const elem = toElem<HTMLInputElement>(input, options?.parent);
+    const elem = toElem<HTMLInputElement>(target, options?.parent);
 
-    elem?.focus({ preventScroll: options?.preventScroll ?? false });
+    if (elem === null) {
+      return;
+    }
+
+    elem.focus({ preventScroll: options?.preventScroll ?? false });
 
     options?.onDone?.(elem as unknown as E);
   };

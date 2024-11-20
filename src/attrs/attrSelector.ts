@@ -1,6 +1,6 @@
 import { isNil, kebabCase } from "@laserware/arcade";
 
-import type { Attrs } from "../types.ts";
+import type { AnyElementTagName, Attrs } from "../types.ts";
 
 /**
  * Creates a CSS selector string from the attributes object. Note that the values
@@ -8,8 +8,24 @@ import type { Attrs } from "../types.ts";
  * but only includes a key.
  *
  * @param attrs Object with key of attribute name and value of attribute value.
+ * @param [tag] Optional tag name for the element.
+ *
+ * @example Single Entry With Value
+ * const selector = attrSelector({ disabled: true });
+ * // `[disabled="true"]`
+
+ * @example Single Entry Without Value
+ * const selector = attrSelector({ inert: null });
+ * // `[inert]`
+ *
+ * @example Multiple Entries
+ * const selector = attrSelector({ disabled: true, inert: null });
+ * // `[disabled="true"][inert]`
  */
-export function selectAttr(attrs: Attrs): string {
+export function attrSelector(
+  attrs: Attrs,
+  tag: AnyElementTagName | "" = "",
+): string {
   let selector = "";
 
   for (const [name, value] of Object.entries(attrs)) {
@@ -30,5 +46,5 @@ export function selectAttr(attrs: Attrs): string {
     selector = `${selector}[${validName}="${stringValue}"]`;
   }
 
-  return selector;
+  return `${tag}${selector}`;
 }

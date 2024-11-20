@@ -7,7 +7,7 @@ import { findOne } from "./findOne.ts";
 import { getValue } from "./getValue.ts";
 import { hasId } from "./hasId.ts";
 import { hasParent } from "./hasParent.ts";
-import { inViewport } from "./inViewport.ts";
+import { isInViewport } from "./isInViewport.ts";
 import { isOfType } from "./isOfType.ts";
 import { isSameOrChildOf } from "./isSameOrChildOf.ts";
 import { isScrollable } from "./isScrollable.ts";
@@ -25,7 +25,7 @@ export { getValue } from "./getValue.ts";
 export { hasId } from "./hasId.ts";
 export { hasParent } from "./hasParent.ts";
 export { InvalidElemError } from "./InvalidElemError.ts";
-export { inViewport } from "./inViewport.ts";
+export { isInViewport } from "./isInViewport.ts";
 export { isOfType } from "./isOfType.ts";
 export { isSameOrChildOf } from "./isSameOrChildOf.ts";
 export { isScrollable } from "./isScrollable.ts";
@@ -43,7 +43,7 @@ export const elems = {
   getValue,
   hasId,
   hasParent,
-  inViewport,
+  inViewport: isInViewport,
   isOfType,
   isSameOrChildOf,
   isScrollable,

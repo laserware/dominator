@@ -5,34 +5,34 @@ import { toElem } from "./toElem.ts";
 /**
  * Returns true if the source element(s) and target elements match.
  *
- * @param source Single element input or array of element inputs to check; if
- *               an array, returns true if _one_ of the elements matches the
- *               target element input.
- * @param target Element input to compare against.
+ * @param left Single element input or array of element inputs to check; if
+ *             an array, returns true if _one_ of the elements matches the
+ *             target element input.
+ * @param right Element input to compare against.
  */
 export function areSame(
-  source: NullOr<ElemOrCssSelector | ElemOrCssSelector[]>,
-  target: NullOr<ElemOrCssSelector>,
+  left: NullOr<ElemOrCssSelector | ElemOrCssSelector[]>,
+  right: NullOr<ElemOrCssSelector>,
 ): boolean {
-  if (Array.isArray(source)) {
-    for (const item of source) {
-      if (isSameAs(item, target)) {
+  if (Array.isArray(left)) {
+    for (const item of left) {
+      if (isSameAs(item, right)) {
         return true;
       }
     }
 
     return false;
   } else {
-    return isSameAs(source, target);
+    return isSameAs(left, right);
   }
 }
 
 function isSameAs(
-  source: NullOr<ElemOrCssSelector>,
-  target: NullOr<ElemOrCssSelector>,
+  left: NullOr<ElemOrCssSelector>,
+  right: NullOr<ElemOrCssSelector>,
 ): boolean {
-  const sourceElem = toElem(source);
-  const targetElem = toElem(target);
+  const sourceElem = toElem(left);
+  const targetElem = toElem(right);
 
   if (sourceElem === null && targetElem === null) {
     return false;

@@ -5,10 +5,10 @@ import { toElem } from "./toElem.ts";
 /**
  * Returns true if the specified element is currently scrollable.
  *
- * @param element Element, EventTarget, or selector for element.
+ * @param target Element, EventTarget, or selector for element.
  */
-export function isScrollable(element: NullOr<ElemOrCssSelector>): boolean {
-  const elem = toElem<HTMLElement>(element);
+export function isScrollable(target: NullOr<ElemOrCssSelector>): boolean {
+  const elem = toElem<HTMLElement>(target);
   if (elem === null) {
     return false;
   }
