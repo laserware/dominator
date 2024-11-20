@@ -4,8 +4,6 @@ export { hasAttr } from "./attrs/hasAttr.ts";
 export { setAttr } from "./attrs/setAttr.ts";
 
 export { dataSelector } from "./data/dataSelector.ts";
-export { findAllWithData } from "./data/findAllWithData.ts";
-export { findOneWithData } from "./data/findOneWithData.ts";
 export { getData } from "./data/getData.ts";
 export { hasData } from "./data/hasData.ts";
 export { setData } from "./data/setData.ts";

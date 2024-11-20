@@ -46,10 +46,21 @@ export type ElemOrCssSelector = Elem | CssSelector;
 export type AttrValue = boolean | number | string;
 
 /**
+ * Valid dataset values (prior to stringifying).
+ */
+export type DatasetValue = AttrValue;
+
+/**
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
  * Some of the values may be null or undefined.
  */
 export type Attrs = Record<string, Maybe<AttrValue>>;
+
+/**
+ * Valid key/value pair representing dataset attributes (prior to stringifying).
+ * Some of the values may be null or undefined.
+ */
+export type Dataset = Record<string, Maybe<DatasetValue>>;
 
 /**
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
@@ -92,7 +103,7 @@ export type AnyElement =
 /** Find element(s) matching the specified CSS selector. */
 export interface FindWithSelectorOptions {
   /** CSS selector string used to find the element. */
-  selector: CssSelector;
+  withSelector: CssSelector;
 
   /** Optional parent element. */
   parent?: Maybe<ElemOrCssSelector>;
@@ -105,12 +116,12 @@ export interface FindWithSelectorOptions {
  * Find element(s) with attribute name matching the specified key
  * field. If a value is specified, it is included in the CSS selector.
  */
-export interface FindWithDataOptions {
+export interface FindWithAttrOptions {
   /** Key of the attribute to find element(s). */
-  key: string;
+  withKey: string;
 
   /** Optional value of the attribute to find element(s). */
-  value?: AttrValue;
+  withValue?: AttrValue;
 
   /** Optional parent element. */
   parent?: Maybe<ElemOrCssSelector>;
@@ -125,7 +136,22 @@ export interface FindWithDataOptions {
  */
 export interface FindWithAttrsOptions {
   /** Key/value pairs of attributes to search for. */
-  attrs: Attrs;
+  withAttrs: Attrs;
+
+  /** Optional parent element. */
+  parent?: Maybe<ElemOrCssSelector>;
+
+  /** Optional element tag to limit search. */
+  tag?: AnyElementTagName;
+}
+
+/**
+ * Find element(s) with the specified dataset. For `data-` attributes that don't
+ * have a value, use `null`.
+ */
+export interface FindWithDataOptions {
+  /** Key/value pairs of dataset to search for. */
+  withData: Attrs;
 
   /** Optional parent element. */
   parent?: Maybe<ElemOrCssSelector>;
@@ -137,11 +163,15 @@ export interface FindWithAttrsOptions {
 /**
  * Options for finding element(s). You can find elements by selector, key/value
  * pair for an attribute, or a set of attributes.
+ *
+ * Note that the search fields use a `with*` prefix to ensure they don't
+ * accidentally get treated as HTML/SVG attributes.
  */
 export type FindOptions =
-  | FindWithSelectorOptions
+  | FindWithAttrOptions
+  | FindWithAttrsOptions
   | FindWithDataOptions
-  | FindWithAttrsOptions;
+  | FindWithSelectorOptions;
 
 /**
  * Returns true if the specified value is an Elem instance.

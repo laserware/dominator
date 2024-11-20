@@ -4,7 +4,7 @@ import { exists } from "./exists.ts";
 import { findAll } from "./findAll.ts";
 import { findAllFocusable } from "./findAllFocusable.ts";
 import { findOne } from "./findOne.ts";
-import { getValue } from "./getValue.ts";
+import { getValue, getValueAsDate, getValueAsNumber } from "./getValue.ts";
 import { hasId } from "./hasId.ts";
 import { hasParent } from "./hasParent.ts";
 import { isInViewport } from "./isInViewport.ts";
@@ -41,9 +41,11 @@ export const elems = {
   findAllFocusable,
   findOne,
   getValue,
+  getValueAsDate,
+  getValueAsNumber,
   hasId,
   hasParent,
-  inViewport: isInViewport,
+  isInViewport,
   isOfType,
   isSameOrChildOf,
   isScrollable,

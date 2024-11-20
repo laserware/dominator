@@ -1,4 +1,4 @@
-import type { ElemOrCssSelector, Maybe } from "../types.ts";
+import type { Elem, NullOr } from "../types.ts";
 
 import { findAll } from "./findAll.ts";
 
@@ -19,8 +19,6 @@ const focusableElementsSelector = [
  *
  * @param parent Optional Element, EventTarget, or selector for parent element.
  */
-export function findAllFocusable(
-  parent?: Maybe<ElemOrCssSelector>,
-): HTMLElement[] {
+export function findAllFocusable(parent: NullOr<Elem>): HTMLElement[] {
   return findAll<HTMLElement>(focusableElementsSelector, parent);
 }

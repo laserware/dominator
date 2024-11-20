@@ -22,6 +22,7 @@ function createTestDOM(): { dispose(): void } {
         aria-expanded="true"
         draggable="true"
         inert
+        data-some-property="thing"
       >
         Button
       </button>
@@ -69,9 +70,9 @@ describe("the findOne function", () => {
   });
 
   it("finds an element with a CSS selector in an options object", () => {
-    const parent = findOne("#parent");
+    const parent = findOne({ withSelector: "#parent" });
 
-    const result = findOne({ selector: `[aria-hidden]`, parent });
+    const result = findOne({ withSelector: `[aria-hidden]`, parent });
 
     expect(result!.innerHTML).toBe("Child");
   });
@@ -79,14 +80,46 @@ describe("the findOne function", () => {
   it("finds an element with key/value pair in an options object", () => {
     const parent = findOne("#parent");
 
-    const result = findOne({ key: "data-value", value: "test", parent });
+    const result = findOne({ withKey: "data-value", withValue: "test", parent });
 
     expect(result!.innerHTML).toBe("Child");
   });
 
-  it("finds an element with attrs in an options object", () => {
-    const result = findOne({ key: "data-value", value: "test" });
+  it("finds an element with attrs", () => {
+    const result = findOne({
+      name: "button",
+      disabled: null,
+      "aria-disabled": true,
+      "aria-expanded": true,
+      draggable: true,
+      inert: null,
+    });
 
-    expect(result!.innerHTML).toBe("Child");
+    expect(result!).toHaveRole("button");
+  });
+
+  it("finds an element with attrs and tag in an options object", () => {
+    const result = findOne({
+      withAttrs: {
+        name: "button",
+        disabled: null,
+        "aria-disabled": true,
+        "aria-expanded": true,
+        draggable: true,
+        inert: null,
+      },
+      tag: "button",
+    });
+
+    expect(result!).toHaveRole("button");
+  });
+
+  it("finds an element with dataset and tag in an options object", () => {
+    const result = findOne({
+      withData: { someProperty: "thing" },
+      tag: "button",
+    });
+
+    expect(result!).toHaveRole("button");
   });
 });

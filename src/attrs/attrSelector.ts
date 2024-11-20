@@ -1,9 +1,9 @@
-import { isNil, kebabCase } from "@laserware/arcade";
+import { isNil, isPlainObject, kebabCase } from "@laserware/arcade";
 
-import type { AnyElementTagName, Attrs } from "../types.ts";
+import type { AnyElementTagName, Attrs, AttrValue, Maybe } from "../types.ts";
 
 /**
- * Creates a CSS selector string from the attributes object. Note that the values
+ * Returns a CSS selector string from the attributes object. Note that the values
  * of the attributes object are coerced to a string and null excludes a value
  * but only includes a key.
  *
@@ -24,27 +24,70 @@ import type { AnyElementTagName, Attrs } from "../types.ts";
  */
 export function attrSelector(
   attrs: Attrs,
+  tag?: AnyElementTagName | "",
+): string;
+
+/**
+ * Returns a CSS selector string from the specified name and value. Note that the
+ * value is coerced to a string and null excludes a value but only includes a name.
+ *
+ * @param name Attribute name to include in the selector.
+ * @param [value=undefined] Optional attribute value.
+ * @param [tag] Optional tag name for the element.
+ *
+ * @example Name Only
+ * const selector = attrSelector("disabled");
+ * // `[disabled]`
+
+ * @example Name and Value
+ * const selector = attrSelector("disabled", true);
+ * // `[disabled="true"]`
+ *
+ * @example Name, Value, and Tag
+ * const selector = attrSelector("disabled", true, "button");
+ * // `button[disabled="true"]`
+ *
+ * @example Name and Tag (No Value)
+ * const selector = attrSelector("disabled", undefined, "button");
+ * // `button[disabled]`
+ */
+export function attrSelector(
+  name: string,
+  value: Maybe<AttrValue>,
+  tag: AnyElementTagName | "",
+): string;
+
+export function attrSelector(
+  attrsOrName: Attrs | string,
+  valueOrTag: Maybe<AttrValue> | AnyElementTagName | "" = undefined,
   tag: AnyElementTagName | "" = "",
 ): string {
-  let selector = "";
+  if (isPlainObject(attrsOrName)) {
+    let selector = "";
 
-  for (const [name, value] of Object.entries(attrs)) {
-    const validName = kebabCase(name);
-
-    if (isNil(value)) {
-      selector = `${selector}[${validName}]`;
-      continue;
+    for (const name of Object.keys(attrsOrName)) {
+      selector += singleAttrSelector(name, attrsOrName[name]);
     }
 
-    let stringValue: string;
-    try {
-      stringValue = value.toString();
-    } catch {
-      stringValue = "";
-    }
+    return `${valueOrTag ?? ""}${selector}`;
+  } else {
+    return `${tag}${singleAttrSelector(attrsOrName, valueOrTag)}`;
+  }
+}
 
-    selector = `${selector}[${validName}="${stringValue}"]`;
+function singleAttrSelector(name: string, value: Maybe<AttrValue>): string {
+  const validName = kebabCase(name);
+
+  if (isNil(value)) {
+    return `[${validName}]`;
   }
 
-  return `${tag}${selector}`;
+  let stringValue: string;
+  try {
+    stringValue = value.toString();
+  } catch {
+    stringValue = "";
+  }
+
+  return `[${validName}="${stringValue}"]`;
 }

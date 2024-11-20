@@ -1,4 +1,4 @@
-import { isNotNil, isPlainObject } from "@laserware/arcade";
+import { isPlainObject } from "@laserware/arcade";
 
 import { attrSelector } from "../attrs/attrSelector.ts";
 import { dataSelector } from "../data/dataSelector.ts";
@@ -64,28 +64,39 @@ function isFindOptions(value: any): value is FindOptions {
   }
 
   return (
-    isNotNil(value.selector) || isNotNil(value.key) || isNotNil(value.attrs)
+    "withSelector" in value ||
+    "withKey" in value ||
+    "withAttrs" in value ||
+    "withData" in value
   );
 }
 
-function parseFindOptions(options: Record<string, any>): {
+function parseFindOptions(options: FindOptions): {
   selector: string;
   parent: Maybe<ElemOrCssSelector>;
 } {
   const validParent = options.parent ?? null;
 
-  if (options.selector) {
-    return { selector: options.selector, parent: validParent };
+  const tag = options.tag ?? "";
+
+  if ("withSelector" in options) {
+    return { selector: options.withSelector, parent: validParent };
   }
 
-  if (options.key) {
-    const selector = dataSelector(options.key, options.value);
+  if ("withKey" in options) {
+    const selector = attrSelector(options.withKey, options.withValue, tag);
 
     return { selector, parent: validParent };
   }
 
-  if (options.attrs) {
-    const selector = attrSelector(options.attrs);
+  if ("withAttrs" in options) {
+    const selector = attrSelector(options.withAttrs, tag);
+
+    return { selector, parent: validParent };
+  }
+
+  if ("withData" in options) {
+    const selector = dataSelector(options.withData, tag);
 
     return { selector, parent: validParent };
   }

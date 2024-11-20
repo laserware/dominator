@@ -58,6 +58,16 @@
     "vitest": "^2.1.5"
   },
   "prettier": {
-    "trailingComma": "all"
+    "trailingComma": "all",
+    "overrides": [
+      {
+        "files": [
+          "*.test.ts"
+        ],
+        "options": {
+          "printWidth": 100
+        }
+      }
+    ]
   }
 }
