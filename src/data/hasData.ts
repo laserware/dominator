@@ -14,7 +14,7 @@ import type {
  * Returns true if the specified `target` has a dataset entry with the specified
  * `key` and optionally, the matching `value`.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param key Key (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
  * @param [value] Optional dataset value to check for.
  */

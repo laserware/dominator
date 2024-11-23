@@ -1,34 +1,39 @@
 import type { ElemOrCssSelector, NullOr } from "../types.ts";
 
+import { asElem } from "./asElem.ts";
 import { InvalidElemError } from "./InvalidElemError.ts";
 import { toElem } from "./toElem.ts";
 
-type CSSStyleProperty = Exclude<
-  keyof CSSStyleDeclaration,
-  | "length"
-  | "parentRule"
-  | "getPropertyPriority"
-  | "getPropertyValue"
-  | "item"
-  | "removeProperty"
-  | "setProperty"
->;
+type CSSStyleProperty =
+  | Exclude<
+      keyof CSSStyleDeclaration,
+      | "length"
+      | "parentRule"
+      | "getPropertyPriority"
+      | "getPropertyValue"
+      | "item"
+      | "removeProperty"
+      | "setProperty"
+    >
+  | `--${string}`;
+
+export type SettableStyles = Record<CSSStyleProperty, string>;
 
 /**
  * Sets the style properties of the specified `target` to the specified values
  * where `styles` is an object with key of style property name and value of the
  * style property value.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param styles Object with style property values keyed by name.
  *
  * @throws {InvalidElemError} If the `target` could not be found.
  */
 export function setStyle<E extends Element = HTMLElement>(
   target: NullOr<ElemOrCssSelector>,
-  styles: Record<CSSStyleProperty, string>,
+  styles: SettableStyles,
 ): NullOr<E> {
-  const elem = toElem<E>(target);
+  const elem = toElem<HTMLElement>(target);
   if (elem === null) {
     throw new InvalidElemError("Unable to set styles, element not found");
   }
@@ -38,10 +43,15 @@ export function setStyle<E extends Element = HTMLElement>(
   }
 
   for (const key of Object.keys(styles)) {
-    const styleName = key as CSSStyleProperty;
-    // @ts-ignore
-    elem.style[styleName] = styles[styleName];
+    const propertyName = key as CSSStyleProperty;
+
+    if (key.startsWith("--")) {
+      elem.style.setProperty(key, styles[propertyName]);
+    } else {
+      // @ts-ignore
+      elem.style[propertyName] = styles[propertyName];
+    }
   }
 
-  return elem;
+  return asElem<E>(elem);
 }

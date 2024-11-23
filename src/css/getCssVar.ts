@@ -12,7 +12,7 @@ import { CssVarError } from "./CssVarError.ts";
  *
  * @param name Name of the variable to get value for.
  * @param [defaultValue=undefined] Optional default value to fall back to if not found.
- * @param [target] Optional `Element`, `EventTarget`, or CSS selector for element from
+ * @param [target] Optional Element, EventTarget, or CSS selector for element from
  *                 which to get CSS variable.
  *
  * @throws {CssVarError} If the property doesn't exist and no `defaultValue` specified.

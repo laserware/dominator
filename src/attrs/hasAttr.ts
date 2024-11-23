@@ -4,7 +4,7 @@ import type { AttrName, ElemOrCssSelector, NullOr } from "../types.ts";
 /**
  * Returns true if the specified `target` has the specified attribute `name`.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute.
  */
 export function hasAttr(
@@ -18,7 +18,7 @@ export function hasAttr(
  * Returns true if the specified `target` has *all* of the attributes that match
  * the specified `names`.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param names Attribute names to check for.
  */
 export function hasAllAttrs(
@@ -43,7 +43,7 @@ export function hasAllAttrs(
  * Returns true if the specified `target` has *some* of the attributes that match
  * the specified `names`.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param names Attribute names to check for.
  */
 export function hasSomeAttrs(

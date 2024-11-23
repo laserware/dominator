@@ -5,9 +5,9 @@ import { InvalidElemError } from "./InvalidElemError.ts";
 import { toElem } from "./toElem.ts";
 
 /**
- * Returns true if the specified `target` is visible in browser viewport.
+ * Returns true if the specified `target` is visible in the browser viewport.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  *
  * @throws {InvalidElemError} If the `target` wasn't found.
  */

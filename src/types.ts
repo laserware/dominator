@@ -1,3 +1,5 @@
+import { isPlainObject } from "@laserware/arcade";
+
 /**
  * Type is either T or `null` or `undefined`.
  *
@@ -20,7 +22,7 @@ export type NullOr<T> = T | null;
 export type UndefinedOr<T> = T | undefined;
 
 /**
- * `Element` or `EventTarget` that can be passed into functions.
+ * Element or EventTarget that can be passed into functions.
  */
 export type Elem =
   | Document
@@ -61,7 +63,7 @@ export namespace CssSelector {
 }
 
 /**
- * Represents a type that can be either an `Element`, `EventTarget` or a CSS
+ * Represents a type that can be either an Element, Element or a CSS
  * Selector.
  *
  * This type allows for flexibility in functions or methods that can accept
@@ -77,25 +79,41 @@ export type AttrName = string;
 /**
  * Value type that can be specified as the value for an HTML/SVG attribute.
  * Before actually setting the attribute on an element, the value is stringified.
+ *
+ * @remarks
+ * Objects and arrays are stringified via {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify|JSON.stringify}.
  */
-export type AttrValue = boolean | number | string;
+export type AttrValue =
+  | boolean
+  | number
+  | string
+  | any[]
+  | Record<number | string | symbol, any>;
 
 export namespace AttrValue {
   /**
    * Returns true if the specified value is a valid {@linkcode AttrValue}.
    */
   export function is(value: unknown): value is AttrValue {
-    return (
+    if (
       typeof value === "string" ||
       typeof value === "number" ||
       typeof value === "boolean"
-    );
+    ) {
+      return true;
+    }
+
+    if (Array.isArray(value)) {
+      return true;
+    }
+
+    return isPlainObject(value);
   }
 }
 
 /**
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
- * Some of the values may be null or undefined.
+ * Some of the values may be `null` or `undefined`.
  */
 export type Attrs = Record<AttrName, NilOr<AttrValue>>;
 
@@ -122,7 +140,7 @@ export type DatasetValue = AttrValue;
 
 /**
  * Valid key/value pair representing dataset attributes (prior to stringifying).
- * Some of the values may be null or undefined.
+ * Some of the values may be `null` or `undefined`.
  *
  * Note that the `HTMLElement.dataset` property is a
  * {@link https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap|DOMStringMap}.

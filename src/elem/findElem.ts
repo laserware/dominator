@@ -13,10 +13,10 @@ import type {
 import { toElem } from "./toElem.ts";
 
 /**
- * Query the DOM to find the `Element` using one of the specified `options` or
+ * Query the DOM to find the Element using one of the specified `options` or
  * `null` if not found.
  *
- * @template E Type of `Element` to return.
+ * @template E Type of Element to return.
  *
  * @param options Options for finding the element. See {@link FindOptions}.
  */
@@ -25,13 +25,13 @@ export function findElem<E extends Element = HTMLElement>(
 ): NullOr<E>;
 
 /**
- * Query the DOM to find the `Element` with the specified matching `attrs` or
+ * Query the DOM to find the Element with the specified matching `attrs` or
  * `null` if not found.
  *
- * @template E Type of `Element` to return.
+ * @template E Type of Element to return.
  *
  * @param attrs Key/value pairs of attributes to query for matching elements.
- * @param [parent] Optional `Element` or `EventTarget` for parent.
+ * @param [parent] Optional Element or EventTarget for parent.
  */
 export function findElem<E extends Element = HTMLElement>(
   attrs: Attrs,
@@ -39,13 +39,13 @@ export function findElem<E extends Element = HTMLElement>(
 ): NullOr<E>;
 
 /**
- * Query the DOM for an `Element` matching the specified `selector` or
+ * Query the DOM for an Element matching the specified `selector` or
  * `null` if not found.
  *
- * @template E Type of `Element` to return.
+ * @template E Type of Element to return.
  *
  * @param selector CSS selector string to find the element.
- * @param [parent] Optional `Element` or `EventTarget` for parent.
+ * @param [parent] Optional Element or EventTarget for parent.
  */
 export function findElem<E extends Element = HTMLElement>(
   selector: CssSelector,
@@ -53,14 +53,14 @@ export function findElem<E extends Element = HTMLElement>(
 ): NullOr<E>;
 
 /**
- * Query the DOM to find the `Element` with the specified attribute `name` and
+ * Query the DOM to find the Element with the specified attribute `name` and
  * optional `value` or `null` if not found.
  *
- * @template E Type of `Element` to return.
+ * @template E Type of Element to return.
  *
  * @param name Attribute name to find the element.
  * @param [value] Optional attribute value that corresponds with the name.
- * @param [parent] Optional `Element` or `EventTarget` for parent.
+ * @param [parent] Optional Element or EventTarget for parent.
  */
 export function findElem<E extends Element = HTMLElement>(
   name: AttrName,

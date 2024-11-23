@@ -5,19 +5,19 @@ import type { ElemOrCssSelector, NilOr, NullOr } from "../types.ts";
 import { findElem } from "./findElem.ts";
 
 /**
- * Returns an element of type `E` for the specified `Element` or `EventTarget`. You can
+ * Returns an element of type `E` for the specified Element or EventTarget. You can
  * also pass in a CSS selector string, which will attempt to find the element
  * in the DOM.
  *
  * This differs from {@linkcode asElem} in that it will never throw if you pass
  * in an invalid, `null`, or `undefined` target, rather it will return `null`.
- * The `asElem` function only accepts an `Element` or `EventTarget` whereas this
+ * The `asElem` function only accepts an Element or EventTarget whereas this
  * function also accepts a CSS selector.
  *
- * @template E Type of `Element` to return.
+ * @template E Type of Element to return.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
- * @param parent Optional parent `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
+ * @param parent Optional parent Element, EventTarget, or CSS selector.
  *
  * @remarks
  * This function accepts a `parent` element to accommodate for cases where the
@@ -31,7 +31,7 @@ import { findElem } from "./findElem.ts";
  * const elemNoExists = toElem<HTMLButtonElement>("#missing");
  * // Returns `null`
  *
- * @example Usage with `EventTarget`
+ * @example Usage with Element
  * function handleButtonClick(event: MouseEvent): void {
  *   const buttonElem = toElem<HTMLButtonElement>(event.currentTarget);
  *
@@ -70,7 +70,7 @@ export function toElem<E extends Element = HTMLElement>(
 }
 
 /**
- * Returns true if the specified value is an `Element`, `Document`, or `EventTarget`
+ * Returns true if the specified value is an Element, `Document`, or Element
  * that can be represented as an `HTMLElement`.
  */
 function isElementLike(

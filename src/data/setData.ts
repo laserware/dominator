@@ -1,5 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
+import { asElem } from "../elem/asElem.ts";
 import { InvalidElemError } from "../elem/InvalidElemError.ts";
 import { toElem } from "../elem/toElem.ts";
 import { validDataKey } from "../internal/validDataKey.ts";
@@ -14,11 +15,11 @@ import type {
 
 /**
  * Assigns the specified `value` to the specified dataset `key` in the specified
- * `target`. Returns the `Element` representation of the specified `target`.
+ * `target`. Returns the Element representation of the specified `target`.
  *
- * @template E Type of `Element` to return.
+ * @template E Type of Element to return.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param key Key or attribute name for the dataset entry.
  * @param value Value to set for associated key or attribute name.
  */
@@ -30,11 +31,11 @@ export function setData<E extends Element = HTMLElement>(
 
 /**
  * Assigns the specified `dataset` key/value pairs to the specified `target`.
- * Returns the `Element` representation of the specified `target`.
+ * Returns the Element representation of the specified `target`.
  *
- * @template E Type of `Element` to return.
+ * @template E Type of Element to return.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param dataset Object with key of dataset key and value of entry value.
  */
 export function setData<E extends Element = HTMLElement>(
@@ -63,7 +64,7 @@ export function setData<E extends Element = HTMLElement>(
     }
   }
 
-  return elem as unknown as E;
+  return asElem<E>(elem);
 }
 
 function setSingleElemData(

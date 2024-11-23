@@ -20,7 +20,7 @@ export interface FindWithSelectorOptions {
   /** CSS selector search string. */
   withSelector: CssSelector;
 
-  /** Optional parent `Element`, `EventTarget`, or CSS selector. */
+  /** Optional parent Element, EventTarget, or CSS selector. */
   parent?: NilOr<ElemOrCssSelector>;
 }
 
@@ -35,10 +35,10 @@ export interface FindWithAttrOptions {
   /** Optional value of the attribute. */
   withValue?: AttrValue;
 
-  /** Optional parent `Element`, `EventTarget`, or CSS selector. */
+  /** Optional parent Element, EventTarget, or CSS selector. */
   parent?: NilOr<ElemOrCssSelector>;
 
-  /** Optional `Element` tag to limit search. */
+  /** Optional Element tag to limit search. */
   tag?: AnyElementTagName;
 }
 
@@ -50,10 +50,10 @@ export interface FindWithAttrsOptions {
   /** Key/value pairs of attributes. */
   withAttrs: Attrs;
 
-  /** Optional parent `Element`, `EventTarget`, or CSS selector. */
+  /** Optional parent Element, EventTarget, or CSS selector. */
   parent?: NilOr<ElemOrCssSelector>;
 
-  /** Optional `Element` tag to limit search. */
+  /** Optional Element tag to limit search. */
   tag?: AnyElementTagName;
 }
 
@@ -65,10 +65,10 @@ export interface FindWithDataOptions {
   /** Key/value pairs of dataset to search for. */
   withData: Dataset;
 
-  /** Optional parent `Element`, `EventTarget`, or CSS selector. */
+  /** Optional parent Element, EventTarget, or CSS selector. */
   parent?: NilOr<ElemOrCssSelector>;
 
-  /** Optional `Element` tag to limit search. */
+  /** Optional Element tag to limit search. */
   tag?: AnyElementTagName;
 }
 

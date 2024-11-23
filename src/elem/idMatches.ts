@@ -8,7 +8,7 @@ import { toElem } from "./toElem.ts";
  * If your ID starts with `#` and is *not* a CSS selector, ensure there are
  * two `#` prefixes instead of one.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param id ID to check for element.
  */
 export function idMatches(target: ElemOrCssSelector, id: string): boolean {

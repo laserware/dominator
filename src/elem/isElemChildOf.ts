@@ -11,8 +11,8 @@ import { toElem } from "./toElem.ts";
  * Setting a `maxDepth` will limit how much DOM traversal happens. A higher number
  * will require more time to search.
  *
- * @param child `Element`, `EventTarget`, or CSS selector for child.
- * @param parent `Element`, `EventTarget`, or CSS selector for parent.
+ * @param child Element, EventTarget, or CSS selector for child.
+ * @param parent Element, EventTarget, or CSS selector for parent.
  * @param [options] Options for checking for parent.
  * @prop [options.maxDepth=10] Maximum depth to perform search.
  */

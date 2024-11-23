@@ -12,12 +12,12 @@ import type {
 
 /**
  * Sets the specified attribute name of the specified element to the specified
- * value. The value is coerced to a string. Returns the `Element` representation
+ * value. The value is coerced to a string. Returns the Element representation
  * of the specified `target`.
  *
- * @template E Type of `Element` to return.
+ * @template E Type of Element to return.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to set.
  * @param value Value to set for the attribute.
  */
@@ -39,12 +39,12 @@ export function setAttr<E extends Element = HTMLElement>(
 /**
  * Sets the attributes of the specified `target` to the specified `attrs`
  * object, where the key of the object is the attribute name and the value of
- * the object is the attribute value. Returns the `Element` representation of the
+ * the object is the attribute value. Returns the Element representation of the
  * specified `target`.
  *
- * @template E Type of `Element` to return.
+ * @template E Type of Element to return.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param attrs Object with key of attribute name and value of attribute value.
  */
 export function setAttrs<E extends Element = HTMLElement>(

@@ -16,7 +16,7 @@ import type {
  *
  * @template V Type of value to return for the corresponding key.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param key Key (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
  */
 export function getData<V extends DatasetValue = string>(

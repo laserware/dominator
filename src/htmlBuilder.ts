@@ -6,6 +6,10 @@ import {
   type AttrsDefined,
   type ElementWithTagName,
 } from "./types.ts";
+import { stringifyAttributeValue } from "./internal/stringifyAttributeValue.ts";
+import { setAttr } from "./attrs/setAttr.ts";
+import { setStyle, type SettableStyles } from "./elem/setStyle.ts";
+import { setData } from "./data/setData.ts";
 
 type ElementAttrs<TN extends AnyElementTagName> = Omit<
   ElementWithTagName<TN>,
@@ -132,19 +136,26 @@ export function html<TN extends AnyElementTagName>(
         }
 
         if (AttrValue.is(child)) {
-          return document.createTextNode(stringifyValue(child));
+          const stringValue = stringifyAttributeValue(child);
+
+          return document.createTextNode(stringValue ?? "");
         }
 
-        if (child instanceof Element) {
+        const nonAttrChild = child as
+          | ChildFunction
+          | ElementBuilder
+          | AnyElement;
+
+        if (nonAttrChild instanceof Element) {
           return child;
         }
 
-        if ("build" in child) {
-          return child.build(element, controller);
+        if ("build" in nonAttrChild) {
+          return nonAttrChild.build(element, controller);
         }
 
-        if (typeof child === "function") {
-          return getChildElement(child());
+        if (typeof nonAttrChild === "function") {
+          return getChildElement(nonAttrChild());
         }
 
         throw new Error("Invalid child");
@@ -182,12 +193,10 @@ function setElementProperties<TN extends AnyElementTagName>(
     name: "dataset" | "style",
     attrsObject: AttrsDefined,
   ): void => {
-    for (const [key, value] of Object.entries(attrsObject)) {
-      if (name === "style") {
-        setStyleProperty(element, key, value);
-      } else {
-        setDatasetProperty(element, key, value);
-      }
+    if (name === "style") {
+      setStyle(element, attrsObject as SettableStyles);
+    } else {
+      setData(element, attrsObject);
     }
   };
 
@@ -202,7 +211,7 @@ function setElementProperties<TN extends AnyElementTagName>(
       continue;
     }
 
-    element.setAttribute(name, stringifyValue(value));
+    setAttr(element, name, value);
   }
 }
 
@@ -263,54 +272,4 @@ function isElementEventDescriptor(
   }
 
   return "listener" in value;
-}
-
-/**
- * Sets the specified property name to the specified value on the element.
- *
- * @param element Element containing style to update.
- * @param propertyName Name of the style property to update.
- * @param value Value of the style property.
- */
-function setStyleProperty<TN extends AnyElementTagName>(
-  element: ElementWithTagName<TN>,
-  propertyName: string,
-  value: AttrValue,
-): void {
-  // Using `setProperty` here to set a custom CSS variable:
-  if (propertyName.startsWith("--")) {
-    element.style.setProperty(propertyName, stringifyValue(value));
-  } else {
-    const allowedName = propertyName as keyof AllowedCSSStyleDeclaration;
-
-    element.style[allowedName] = stringifyValue(value);
-  }
-}
-
-/**
- * Adds the specified key/value pair to the element's dataset.
- *
- * @param element Element containing dataset to update.
- * @param key Key of the dataset object to add/update.
- * @param value Value to assign to the dataset object for the specified key.
- */
-function setDatasetProperty<TN extends AnyElementTagName>(
-  element: ElementWithTagName<TN>,
-  key: string,
-  value: AttrValue,
-): void {
-  if (AttrValue.is(value)) {
-    element.dataset[key] = stringifyValue(value);
-  } else {
-    // prettier-ignore
-    throw new Error(`Invalid dataset property value type ${typeof value} for ${key}`)
-  }
-}
-
-function stringifyValue(value: any): string {
-  try {
-    return value.toString();
-  } catch {
-    return "";
-  }
 }

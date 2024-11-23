@@ -20,7 +20,7 @@ type AttrsFor<NS extends readonly AttrName[]> = {
  *
  * @template V Type of value to return.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to get.
  * @param [defaultValue] Optional default value to return if the attribute is not found.
  */
@@ -47,7 +47,7 @@ export function getAttr<V extends AttrValue = string>(
  *
  * @template NS Names of the attributes for which to find values.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param names Names of the attributes for which to find values.
  */
 export function getAttrs<NS extends AttrName[]>(

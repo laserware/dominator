@@ -3,14 +3,14 @@ import type { ElemOrCssSelector, NullOr } from "../types.ts";
 import { toElem } from "./toElem.ts";
 
 /**
- * Returns true if the `Element`, `EventTarget`, or CSS selector instance(s) specified
- * as `left` and the `Element`, `EventTarget`, or CSS selector specified as
+ * Returns true if the Element, EventTarget, or CSS selector instance(s) specified
+ * as `left` and the Element, EventTarget, or CSS selector specified as
  * `right` do *not* match.
  *
- * @param left One or many `Element`, `EventTarget`, or CSS selectors to check; if
+ * @param left One or many Element, EventTarget, or CSS selectors to check; if
  *             an array, returns true only if *all* elements don't match the
  *             target element input.
- * @param right `Element`, `EventTarget`, or CSS selector to compare against.
+ * @param right Element, EventTarget, or CSS selector to compare against.
  */
 export function areElemsDifferent(
   left: NullOr<ElemOrCssSelector | ElemOrCssSelector[]>,

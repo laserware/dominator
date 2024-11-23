@@ -5,7 +5,7 @@ import { isNil } from "@laserware/arcade";
  * or {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLCollection|HTMLCollection}
  * to an array.
  *
- * @template E `Element` types with the returned array.
+ * @template E Element types with the returned array.
  *
  * @param items `NodeList` or `HTMLCollection` to convert to array.
  */

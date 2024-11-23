@@ -24,7 +24,7 @@ type GetElemValueAsReturn<T extends ElemValueType> = T extends "boolean"
 /**
  * Returns the value of the specified element.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  */
 export function getElemValue<T>(target: NullOr<ElemOrCssSelector>): T {
   const elem = toElem<HTMLInputElement>(target);
@@ -41,7 +41,7 @@ export function getElemValue<T>(target: NullOr<ElemOrCssSelector>): T {
  *
  * @template T Type of the value that gets returned.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param as {@linkcode ElemValueType} to coerce the target value property to.
  */
 export function getElemValueAs<T extends ElemValueType>(

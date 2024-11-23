@@ -1,8 +1,9 @@
 /**
  * Converts the specified value to a string (valid representation of an attribute
- * value). If the `value` is an invalid type, throws error. If the value is
- * `null`, returns an empty string. If a conversion error occurs, returns
- * `undefined`.
+ * value). If the value is `null`, returns an empty string.
+ *
+ * Any non-primitive value (e.g. an object or array), is stringified via
+ * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify|JSON.stringify}.
  *
  * @param value Value to convert to a valid attribute value.
  */
@@ -19,23 +20,13 @@ export function stringifyAttributeValue(value: unknown): string | undefined {
     return value;
   }
 
-  if (Array.isArray(value)) {
-    throw new Error("Cannot convert value of array to attribute string");
+  if (
+    typeof value === "number" ||
+    typeof value === "boolean" ||
+    typeof value === "symbol"
+  ) {
+    return value.toString();
   }
 
-  try {
-    if (
-      typeof value === "number" ||
-      typeof value === "boolean" ||
-      typeof value === "symbol"
-    ) {
-      return value.toString();
-    }
-  } catch {
-    return undefined;
-  }
-
-  if (typeof value === "object") {
-    throw new Error("Cannot convert value of object to attribute string");
-  }
+  return JSON.stringify(value);
 }

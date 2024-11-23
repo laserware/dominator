@@ -6,8 +6,8 @@ import { toElem } from "./toElem.ts";
  * Ensures the given `target` is within the visible scroll area of the specified
  * `parent`. If the `target` is not visible, scroll the `parent`.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
- * @param parent `Element`, `EventTarget`, or selector for scroll parent.
+ * @param target Element, EventTarget, or CSS selector.
+ * @param parent Element, Element, or selector for scroll parent.
  */
 export function keepElemVisibleIn(
   target: ElemOrCssSelector,

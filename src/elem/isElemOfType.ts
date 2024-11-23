@@ -5,7 +5,7 @@ import { toElem } from "./toElem.ts";
 /**
  * Returns true if the specified `target` matches the specified `tag`.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param tag Tag name to check for (e.g. `div`, `span`, etc.).
  */
 export function isElemOfType(

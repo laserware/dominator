@@ -22,7 +22,7 @@ export interface FocusOptions<E extends Element> {
 /**
  * Sets focus to the specified `target`.
  *
- * @param target `Element`, `EventTarget`, or CSS selector.
+ * @param target Element, EventTarget, or CSS selector.
  * @param [options] Options for setting focus. See {@linkcode FocusOptions}.
  */
 export function focusElem<E extends Element = HTMLElement>(
