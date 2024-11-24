@@ -4,18 +4,13 @@ import { asDataAttrName } from "../internal/asDataAttrName.ts";
 import { elemOrThrow } from "../internal/elemOrThrow.ts";
 import { parseDOMValue } from "../internal/parseDOMValue.ts";
 import { stringifyDOMValue } from "../internal/stringifyDOMValue.ts";
-import type {
-  AttrValue,
-  ElemOrCssSelector,
-  NullOr,
-  Stringifiable,
-} from "../types.ts";
+import type { AttrValue, ElemOrCssSelector, Stringifiable } from "../types.ts";
 
 /**
  * Valid shape for dataset property. The values can be any type that can be
  * stringified.
  */
-type AnyDatasetShape = Record<string, Stringifiable>;
+type AnyDatasetShape = Record<string, Stringifiable | null>;
 
 /**
  * Wrapper for managing the {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset|dataset}
@@ -44,12 +39,14 @@ export class Dataset<DS extends AnyDatasetShape> {
    * property of the corresponding `target`. Optionally pass in `initialData`
    * that can fully match the shape specified in the `DS` generic or partially.
    *
+   * @template DS The shape of the dataset data.
+   *
    * @param target Element, EventTarget, or CSS selector.
    * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
    *
    * @throws {InvalidElemError} If the `target` specified does not exist.
    */
-  constructor(target: NullOr<ElemOrCssSelector>, initialData?: Partial<DS>) {
+  constructor(target: ElemOrCssSelector, initialData?: Partial<DS>) {
     this.#element = elemOrThrow(target, "Unable to initialize Dataset");
 
     if (isNotNil(initialData)) {
@@ -65,19 +62,25 @@ export class Dataset<DS extends AnyDatasetShape> {
   }
 
   /**
-   * Returns an object with all the dataset values.
+   * Builds an object with all *defined* dataset values. Note that the return value
+   * is a `Partial` because the expected shape of the dataset specified in the
+   * `DS` generic doesn't necessarily correspond to dataset properties that
+   * *exist* on the element.
+   *
+   * @returns Object with dataset entries that exist.
    */
-  public all(): DS {
+  public all(): Partial<DS> {
     if ("dataset" in this.#element) {
-      const entries: Record<string, NullOr<AttrValue>> = {};
+      const entries: Record<string, AttrValue> = {};
 
       for (const name of Object.keys(this.#element.dataset)) {
+        // @ts-ignore Expects a `Stringifiable`, but can be `null` or `undefined`.
         entries[name] = parseDOMValue(this.#element.dataset[name]);
       }
 
-      return entries as DS;
+      return entries as Partial<DS>;
     } else {
-      return {} as DS;
+      return {};
     }
   }
 
@@ -85,8 +88,11 @@ export class Dataset<DS extends AnyDatasetShape> {
    * Returns the value of the dataset entry with matching `key`.
    *
    * @param key Key of the dataset entry to get.
+   *
+   * @returns Dataset property value associated with the specified `key`.
    */
-  public get<K extends keyof DS>(key: K): NullOr<DS[K]> {
+  public get<K extends keyof DS>(key: K): DS[K] | undefined {
+    // @ts-ignore The return value type will match the valid values in the shape.
     return parseDOMValue(this.#dataset[key]);
   }
 
@@ -118,10 +124,12 @@ export class Dataset<DS extends AnyDatasetShape> {
   }
 
   /**
-   * Returns the element attribute name (i.e. `data-<key>`) for the specified
+   * Gets the element attribute name (i.e. `data-<key>`) for the specified
    * `key`.
    *
    * @param key Dataset key for which to get attribute.
+   *
+   * @returns Dataset attribute name associated with the specified `key`.
    */
   public attrNameFor<K extends keyof DS>(key: K): string {
     return asDataAttrName(key as string);
@@ -137,16 +145,20 @@ export class Dataset<DS extends AnyDatasetShape> {
 }
 
 /**
- * Returns a new {@linkcode Dataset} instance for managing the
+ * Creates a new {@linkcode Dataset} instance for managing the
  * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset|dataset}
  * property on the specified `target`. Optionally pass in `initialData`
- * that can fully match the shape specified in the `DS` generic or partially.
+ * that can fully or partially match the shape specified in the `DS` generic.
+ *
+ * @template DS The shape of the dataset data.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
+ *
+ * @returns Dataset instance associated with `target`.
  */
 export function datasetOf<DS extends AnyDatasetShape>(
-  target: NullOr<Element | ElemOrCssSelector>,
+  target: Element | ElemOrCssSelector,
   initialData?: Partial<DS>,
 ): Dataset<DS> {
   return new Dataset<DS>(target, initialData);

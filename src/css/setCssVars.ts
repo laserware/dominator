@@ -6,9 +6,9 @@ import { toElem } from "../elem/toElem.ts";
 import { stringifyDOMValue } from "../internal/stringifyDOMValue.ts";
 import {
   CssVarName,
+  type CssVars,
   type CssVarValue,
   type ElemOrCssSelector,
-  type NullOr,
 } from "../types.ts";
 
 import { CssVarError } from "./CssVarError.ts";
@@ -16,8 +16,7 @@ import { CssVarError } from "./CssVarError.ts";
 /**
  * Sets the specified CSS variable `name` to the specified `value` in the optionally
  * specified `target`. If no `target` was specified, updates the variable value
- * in `:root`. Returns the Element associated with the specified `target`.
- * If no `target` was specified, returns {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}.
+ * in `:root`.
  *
  * @remarks
  * The `name` argument is not limited to type {@linkcode CssVarName} because the
@@ -30,13 +29,16 @@ import { CssVarError } from "./CssVarError.ts";
  * @param [target] Optional Element, EventTarget, or CSS selector for element in
  *                 which to set CSS variable.
  *
+ * @returns The Element associated with the specified `target`. If no `target` was specified,
+ *          returns {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}.
+ *
  * @throws {CssVarError} If the specified `name` is not a valid {@linkcode CssVarName}.
  * @throws {InvalidElemError} If the `target` specified does not exist.
  */
 export function setCssVar<E extends Element = HTMLElement>(
   name: string,
   value: CssVarValue,
-  target?: NullOr<ElemOrCssSelector>,
+  target?: ElemOrCssSelector,
 ): E {
   const elem = isNil(target) ? document.documentElement : toElem(target);
   if (elem === null) {
@@ -51,8 +53,6 @@ export function setCssVar<E extends Element = HTMLElement>(
 /**
  * Sets the specified CSS `vars` on the optionally specified `target`.
  * If no `target` was specified, updates the variables in `:root`.
- * Returns the Element associated with the specified `target`. If no `target`
- * was specified, returns {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}.
  *
  * @remarks
  * The keys in the `vars` argument are not limited to type {@linkcode CssVarName}
@@ -65,12 +65,15 @@ export function setCssVar<E extends Element = HTMLElement>(
  * @param [target] Optional Element, EventTarget, or CSS selector for element in
  *                 which to set CSS variable.
  *
+ * @returns The Element associated with the specified `target`. If no `target` was specified,
+ *          returns {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}.
+ *
  * @throws {CssVarError} If a specified name in `vars` is not a valid {@linkcode CssVarName}.
  * @throws {InvalidElemError} If the `target` specified does not exist.
  */
 export function setCssVars<E extends Element = HTMLElement>(
-  vars: Record<string, CssVarValue>,
-  target?: NullOr<ElemOrCssSelector>,
+  vars: CssVars,
+  target?: ElemOrCssSelector,
 ): E {
   const elem = isNil(target) ? document.documentElement : toElem(target);
   if (elem === null) {

@@ -6,17 +6,18 @@ import type { ElemOrCssSelector } from "../types.ts";
  * `parent`. If the `target` is not visible, scroll the `parent`.
  *
  * @param target Element, EventTarget, or CSS selector.
- * @param parent Element, Element, or selector for scroll parent.
+ * @param parent Element, EventTarget, or selector for scroll parent.
  *
- * @throws {InvalidElemError} If the `target` specified does not exist.
+ * @throws {InvalidElemError} If the `target` or `parent` specified do not exist.
  */
 export function keepElemVisibleIn(
   target: ElemOrCssSelector,
   parent: ElemOrCssSelector,
 ): void {
+  const activeElem = elemOrThrow(target, "Unable to keep target visible");
+
   // prettier-ignore
   const scrollElem = elemOrThrow(parent, "Unable to keep element visible in parent");
-  const activeElem = elemOrThrow(target, "Unable to keep target visible");
 
   const isAbove = activeElem.offsetTop < scrollElem.scrollTop;
   const isBelow =

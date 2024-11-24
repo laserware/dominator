@@ -1,7 +1,7 @@
 import { asElem } from "../elem/asElem.ts";
 import { InvalidElemError } from "../elem/InvalidElemError.ts";
 import { toElem } from "../elem/toElem.ts";
-import type { ElemOrCssSelector, NullOr } from "../types.ts";
+import type { ElemOrCssSelector } from "../types.ts";
 
 /**
  * Returns an Element of type `E` that corresponds to the specified `target`.
@@ -11,7 +11,7 @@ import type { ElemOrCssSelector, NullOr } from "../types.ts";
  * @param error Error message to include with the error.
  */
 export function elemOrThrow<E extends Element = HTMLElement>(
-  target: NullOr<ElemOrCssSelector>,
+  target: ElemOrCssSelector,
   error: string,
 ): E {
   const elem = toElem(target);

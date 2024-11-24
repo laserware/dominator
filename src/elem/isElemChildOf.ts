@@ -1,6 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
-import type { ElemOrCssSelector, NullOr } from "../types.ts";
+import type { ElemOrCssSelector } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
 
@@ -18,11 +18,13 @@ import { toElem } from "./toElem.ts";
  * @param child Element, EventTarget, or CSS selector for child.
  * @param parent Element, EventTarget, or CSS selector for parent.
  * @param [options] Options for checking for parent.
- * @prop [options.maxDepth=10] Maximum depth to perform search.
+ * @property [options.maxDepth=10] Maximum depth to perform search.
+ *
+ * @returns `true` if the specified `child` is a child of the specified `parent`, otherwise `false`.
  */
 export function isElemChildOf(
-  child: NullOr<ElemOrCssSelector>,
-  parent: NullOr<ElemOrCssSelector>,
+  child: ElemOrCssSelector,
+  parent: ElemOrCssSelector,
   options: { maxDepth: number } = { maxDepth: 10 },
 ): boolean {
   const parentElem = toElem(parent);
@@ -44,6 +46,8 @@ export function isElemChildOf(
 /**
  * Iterate down the DOM (starting with the parent element) to try locating
  * the element.
+ *
+ * @internal
  */
 // eslint-disable-next-line max-params
 function searchParentRecursively(

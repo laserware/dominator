@@ -1,12 +1,26 @@
-import type { ElemOrCssSelector, NullOr } from "../types.ts";
+import { isNil } from "@laserware/arcade";
+
+import type { ElemOrCssSelector } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
 
 /**
- * Returns true if the specified `target` exists in the DOM.
+ * Checks if the specified `target` exists in the DOM.
+ *
+ * @remarks
+ * We allow `null` or `undefined` as well because a `null` or `undefined`
+ * Element technically doesn't exist.
  *
  * @param target Element, EventTarget, or CSS selector.
+ *
+ * @returns `true` if the specified `target` exists, otherwise `false`.
  */
-export function elemExists(target: NullOr<ElemOrCssSelector>): boolean {
-  return toElem(target) !== null;
+export function elemExists(
+  target: ElemOrCssSelector | null | undefined,
+): boolean {
+  if (isNil(target)) {
+    return false;
+  } else {
+    return toElem(target) !== null;
+  }
 }

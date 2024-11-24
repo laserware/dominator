@@ -1,46 +1,54 @@
+import { cast } from "../internal/cast.ts";
 import { elemOrThrow } from "../internal/elemOrThrow.ts";
-import { formatList } from "../internal/formatList.ts";
+import { formatForError } from "../internal/formatForError.ts";
 import { parseDOMValue } from "../internal/parseDOMValue.ts";
-import {
-  cast,
-  type AttrName,
-  type Attrs,
-  type AttrValue,
-  type ElemOrCssSelector,
-  type KeysOf,
-  type NullOr,
+import type {
+  AttrName,
+  Attrs,
+  AttrValue,
+  ElemOrCssSelector,
+  KeysOf,
 } from "../types.ts";
 
 /**
- * Returns the value of the specified attribute `name` in the specified `target`.
- * If the value is found it is coerced to a boolean if "true" or "false", a
+ * Attempts to get the specified attribute `name` from the specified `target`.
+ * If the value is found, it is coerced to a boolean if `"true"` or `"false"`, a
  * number if numeric, or the string value if a string. If not found, returns
- * `undefined` or the specified `fallback`.
+ * `null` or the specified `fallback`.
+ *
+ * @remarks
+ * We're returning `null`, rather than `undefined` to match the
+ * {@link https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute|Element.getAttribute} API.
+ *
  *
  * @template T Type of value to return.
- *
- * @throws {InvalidElemError} If the `target` specified does not exist.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to get.
  * @param [fallback] Optional fallback value to return if the attribute is not found.
+ *
+ * @returns Value of type `T` or `null` if not found.
+ *
+ * @throws {InvalidElemError} If the `target` specified does not exist.
  */
 export function getAttr<T extends AttrValue = string>(
-  target: NullOr<ElemOrCssSelector>,
+  target: ElemOrCssSelector,
   name: AttrName,
   fallback?: T,
-): T | undefined {
+): T | null {
   const elem = elemOrThrow(target, `Unable to get attribute ${name}`);
 
-  return getSingleAttr<T>(elem, name, fallback);
+  return getSingleAttr<T>(elem, name, fallback) ?? null;
 }
 
 /**
- * Returns an object with the keys equal to the specified attribute `names` and
+ * Builds an object with the keys equal to the specified attribute `names` and
  * the value equal to the corresponding attribute value in the specified `target`.
  * If the value is found it is coerced to a boolean if "true" or "false", a
  * number if numeric, or the string value if a string. If not found, the value
- * is set to `null`.
+ * is excluded from the return value. Specifying a `fallback` object will
+ * ensure any possibly missing attributes are included.
+ *
  *
  * @template T Shape of attributes object to return.
  *
@@ -48,18 +56,24 @@ export function getAttr<T extends AttrValue = string>(
  * @param names Names of the attributes for which to find values.
  * @param [fallback] Optional fallback value to use if values not found.
  *
+ * @returns Object with specified names as keys and corresponding attribute values.
+ *          Note that you will need to perform checks for the presence of a value in the
+ *          returned object because it's a `Partial` of the specified `T`.
+ *
  * @throws {InvalidElemError} If the `target` specified does not exist.
  *
  * @example Without Default Values
  * interface Shape {
  *   a: string;
  *   b: string;
+ *   c: string;
  * }
  *
  * elem.setAttribute("a", "a");
  * elem.setAttribute("b", "b");
  *
- * const result = getAttrs<Shape>(elem, ["a", "b"]);
+ * // Note that `c` doesn't exist on the element, so it's not returned in the result:
+ * const result = getAttrs<Shape>(elem, ["a", "b", "c"]);
  * // { a: "a", b: "b" }
 
  * @example With Default Values
@@ -78,12 +92,12 @@ export function getAttr<T extends AttrValue = string>(
  * // { a: "a", b: "b", c: 24 }
  */
 export function getAttrs<T extends Attrs = any>(
-  target: NullOr<ElemOrCssSelector>,
+  target: ElemOrCssSelector,
   names: KeysOf<T>,
   fallback?: Partial<T>,
 ): Partial<T> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to get attributes ${formatList(names)}`);
+  const elem = elemOrThrow(target, `Unable to get attributes ${formatForError(names)}`);
 
   const attrs: Record<string, any> = {};
 
@@ -104,5 +118,5 @@ function getSingleAttr<T extends AttrValue = string>(
 ): T | undefined {
   const attrValue = elem.getAttribute(name);
 
-  return parseDOMValue<T>(attrValue) ?? fallback ?? undefined;
+  return parseDOMValue<T>(attrValue) ?? fallback;
 }

@@ -1,27 +1,6 @@
 import { isPlainObject } from "@laserware/arcade";
 
 /**
- * Type is either T or `null` or `undefined`.
- *
- * @template T Type if not `null` or `undefined`.
- */
-export type NilOr<T> = T | null | undefined;
-
-/**
- * Type is either T or `null`.
- *
- * @template T Type if not `null`.
- */
-export type NullOr<T> = T | null;
-
-/**
- * Type is either T or `undefined`.
- *
- * @template T Type if not `undefined`.
- */
-export type UndefinedOr<T> = T | undefined;
-
-/**
  * Type is either a single item or array of items of type `T`.
  *
  * @template T Type of item or items.
@@ -32,18 +11,6 @@ export type OneOrManyOf<T> = T | T[];
  * Returns the keys of the specified object as an array.
  */
 export type KeysOf<T extends Record<string, any>> = (keyof T)[];
-
-/**
- * Forces the specified value to be the specified type `T` to get around annoying
- * TypeScript idiosyncrasies.
- *
- * @template T Type to cast specified `value` as.
- *
- * @param value Value to cast to `T`.
- */
-export function cast<T>(value: any): T {
-  return value as unknown as T;
-}
 
 /**
  * Represents primitive values that can be used to set certain attributes and
@@ -70,10 +37,7 @@ export namespace Primitive {
  * @remarks
  * Objects and arrays are stringified via {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify|JSON.stringify}.
  */
-export type Stringifiable =
-  | Primitive
-  | any[]
-  | Record<number | string | symbol, any>;
+export type Stringifiable = Primitive | any[] | Record<number | string, any>;
 
 export namespace Stringifiable {
   /**
@@ -120,13 +84,15 @@ export namespace Elem {
 }
 
 /**
- * CSS selector string.
+ * CSS selector string. Note that no validation is performed on the selector,
+ * so this could represent any string value (even if it is not a valid CSS
+ * selector).
  */
 export type CssSelector = string;
 
 export namespace CssSelector {
   /**
-   * Returns true if the specified `value` is a CSS selector.
+   * Returns true if the specified `value` is a {@linkcode CssSelector}.
    */
   export function is(value: unknown): value is CssSelector {
     return typeof value === "string";
@@ -134,11 +100,11 @@ export namespace CssSelector {
 }
 
 /**
- * Represents a type that can be either an Element, Element or a CSS
- * Selector.
+ * Represents a type that can be either an Element, EventTarget, or a CSS
+ * selector.
  *
  * This type allows for flexibility in functions or methods that can accept
- * either an `Elem` type object or a string representing a CSS selector.
+ * either an {@linkcode Elem} type object or a string representing a CSS selector.
  */
 export type ElemOrCssSelector = Elem | CssSelector;
 
@@ -166,7 +132,7 @@ export namespace AttrValue {
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
  * Some of the values may be `null` or `undefined`.
  */
-export type Attrs = Record<AttrName, NilOr<AttrValue>>;
+export type Attrs = Record<AttrName, AttrValue | null | undefined>;
 
 /**
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
@@ -176,6 +142,7 @@ export type AttrsDefined = Record<string, AttrValue>;
 
 /**
  * Valid name for a {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties|CSS variable}.
+ *
  * CSS variables *must* start with `--`.
  */
 export type CssVarName = `--${string}`;
@@ -195,7 +162,8 @@ export namespace CssVarName {
 export type CssVarValue = Primitive;
 
 /**
- * Represents an object with key of {@linkcode CssVarName} and value of {@linkcode CssVarValue}.
+ * Represents an object with key of {@linkcode CssVarName} and value
+ * of {@linkcode CssVarValue}.
  */
 export type CssVars = Record<CssVarName, CssVarValue>;
 
@@ -232,7 +200,7 @@ export type DataValue = Stringifiable;
  * Note that the `HTMLElement.dataset` property is a
  * {@link https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap|DOMStringMap}.
  */
-export type Data = Record<string, NilOr<DataValue>>;
+export type Data = Record<string, DataValue | null | undefined>;
 
 /**
  * Valid style keys (i.e. non-methods) that can be set on an element.

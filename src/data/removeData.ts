@@ -1,8 +1,8 @@
 import { removeAttr } from "../attrs/removeAttrs.ts";
 import { asElem } from "../elem/asElem.ts";
-import { InvalidElemError } from "../elem/InvalidElemError.ts";
-import { toElem } from "../elem/toElem.ts";
 import { asDataAttrName } from "../internal/asDataAttrName.ts";
+import { elemOrThrow } from "../internal/elemOrThrow.ts";
+import { formatForError } from "../internal/formatForError.ts";
 import type {
   DataKey,
   DataPropertyName,
@@ -47,12 +47,8 @@ export function removeData<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
   keyOrKeys: OneOrManyOf<DataKey>,
 ): E {
-  const elem = toElem(target);
-  if (elem === null) {
-    const display = Array.isArray(keyOrKeys) ? "entries" : "entry";
-
-    throw new InvalidElemError(`Unable to remove dataset ${display}`);
-  }
+  // prettier-ignore
+  const elem = elemOrThrow(target, `Unable to remove dataset for ${formatForError(keyOrKeys)}`);
 
   if (Array.isArray(keyOrKeys)) {
     for (const key of keyOrKeys) {

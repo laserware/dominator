@@ -1,4 +1,4 @@
-import type { ElemOrCssSelector, NullOr } from "../types.ts";
+import type { ElemOrCssSelector, OneOrManyOf } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
 
@@ -13,8 +13,8 @@ import { toElem } from "./toElem.ts";
  * @param right Element, EventTarget, or CSS selector to compare against.
  */
 export function areElemsDifferent(
-  left: NullOr<ElemOrCssSelector | ElemOrCssSelector[]>,
-  right: NullOr<ElemOrCssSelector>,
+  left: OneOrManyOf<ElemOrCssSelector>,
+  right: ElemOrCssSelector,
 ): boolean {
   if (Array.isArray(left)) {
     // Ensure we bail early if we find an element that is the same:
@@ -31,8 +31,8 @@ export function areElemsDifferent(
 }
 
 function isDifferentFrom(
-  left: NullOr<ElemOrCssSelector>,
-  right: NullOr<ElemOrCssSelector>,
+  left: ElemOrCssSelector,
+  right: ElemOrCssSelector,
 ): boolean {
   const sourceElem = toElem(left);
   const targetElem = toElem(right);

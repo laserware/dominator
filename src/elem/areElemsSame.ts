@@ -1,4 +1,4 @@
-import type { ElemOrCssSelector, NullOr } from "../types.ts";
+import type { ElemOrCssSelector, OneOrManyOf } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
 
@@ -17,8 +17,8 @@ import { toElem } from "./toElem.ts";
  * @param right Element, EventTarget, or CSS selector to compare against.
  */
 export function areElemsSame(
-  left: NullOr<ElemOrCssSelector | ElemOrCssSelector[]>,
-  right: NullOr<ElemOrCssSelector>,
+  left: OneOrManyOf<ElemOrCssSelector>,
+  right: ElemOrCssSelector,
 ): boolean {
   if (Array.isArray(left)) {
     for (const item of left) {
@@ -33,10 +33,7 @@ export function areElemsSame(
   }
 }
 
-function isSameAs(
-  left: NullOr<ElemOrCssSelector>,
-  right: NullOr<ElemOrCssSelector>,
-): boolean {
+function isSameAs(left: ElemOrCssSelector, right: ElemOrCssSelector): boolean {
   const sourceElem = toElem(left);
   const targetElem = toElem(right);
 

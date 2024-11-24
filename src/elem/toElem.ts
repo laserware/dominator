@@ -1,6 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
-import type { ElemOrCssSelector, NilOr, NullOr } from "../types.ts";
+import type { ElemOrCssSelector } from "../types.ts";
 
 import { findElem } from "./findElem.ts";
 
@@ -14,22 +14,24 @@ import { findElem } from "./findElem.ts";
  * The `asElem` function only accepts an Element or EventTarget whereas this
  * function also accepts a CSS selector.
  *
- * @template E Type of Element to return.
- *
- * @param target Element, EventTarget, or CSS selector.
- * @param parent Optional parent Element, EventTarget, or CSS selector.
- *
  * @remarks
  * This function accepts a `parent` element to accommodate for cases where the
  * `target` is a CSS selector and we want to limit the search to the specified
  * parent.
+ *
+ * @template E Type of Element to return.
+ *
+ * @param target Element, EventTarget, or CSS selector.
+ * @param parent Optional Element, EventTarget, or CSS selector for parent.
+ *
+ * @returns Element of type `E` if it exists, otherwise returns `null`.
  *
  * @example Usage with CSS Selector
  * const elemThatExists = toElem<HTMLInputElement>("#test");
  * // Returns the element and asserts as an `<input>`
  *
  * const elemNoExists = toElem<HTMLButtonElement>("#missing");
- * // Returns `null`
+ * // `null`
  *
  * @example Usage with Element
  * function handleButtonClick(event: MouseEvent): void {
@@ -41,9 +43,9 @@ import { findElem } from "./findElem.ts";
  * }
  */
 export function toElem<E extends Element = HTMLElement>(
-  target: NilOr<ElemOrCssSelector>,
-  parent?: NilOr<ElemOrCssSelector>,
-): NullOr<E> {
+  target: ElemOrCssSelector | null | undefined,
+  parent?: ElemOrCssSelector | null | undefined,
+): E | null {
   if (isNil(target)) {
     return null;
   }
@@ -70,7 +72,7 @@ export function toElem<E extends Element = HTMLElement>(
 }
 
 /**
- * Returns true if the specified value is an Element, `Document`, or Element
+ * Returns true if the specified value is an Element, Document, or EventTarget
  * that can be represented as an `HTMLElement`.
  */
 function isElementLike(

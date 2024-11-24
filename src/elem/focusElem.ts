@@ -1,10 +1,10 @@
-import type { ElemOrCssSelector, NullOr } from "../types.ts";
+import type { ElemOrCssSelector } from "../types.ts";
 
-import { toElem } from "./toElem.ts";
 import { asElem } from "./asElem.ts";
+import { toElem } from "./toElem.ts";
 
 /**
- * Options for setting focus to an element.
+ * Options for setting focus to an element in {@linkcode focusElem}.
  */
 export interface FocusOptions<E extends Element> {
   /** Delay (in milliseconds) to wait until attempting to set focus. */
@@ -13,21 +13,30 @@ export interface FocusOptions<E extends Element> {
   /** Parent element (if `target` is a CSS selector). */
   parent?: ElemOrCssSelector;
 
-  /** If true, don't scroll the focused element into view. */
+  /**
+   * If true, don't scroll the focused element into view.
+   * See the {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#preventscroll|MDN documentation}
+   * for additional details.
+   */
   preventScroll?: boolean;
 
   /** Optional callback that fires after trying to set focus. */
-  onDone?(elem: NullOr<E>): void;
+  onDone?(elem: E): void;
 }
 
 /**
- * Sets focus to the specified `target`.
+ * Sets focus to the specified `target`. Specify additional `options` to refine
+ * the `focus` operation.
+ *
+ * Note that we don't throw if the `target`
+ * is `null` because it may not exist yet if a {@linkcode CssSelector} is
+ * specified.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param [options] Options for setting focus. See {@linkcode FocusOptions}.
  */
 export function focusElem<E extends Element = HTMLElement>(
-  target: NullOr<ElemOrCssSelector>,
+  target: ElemOrCssSelector | null,
   options?: FocusOptions<E>,
 ): void {
   if (target === null) {

@@ -1,4 +1,4 @@
-import { Elem, type NilOr } from "../types.ts";
+import { Elem } from "../types.ts";
 
 import { InvalidElemError } from "./InvalidElemError.ts";
 
@@ -17,7 +17,8 @@ import { InvalidElemError } from "./InvalidElemError.ts";
  * assertion. In some cases, you know *exactly* what type of Element will be
  * associated with an Event and you want to assert it as such.
  *
- * **Important Note**<br>
+ * **Important Note**
+ *
  * With this function, you are telling TypeScript what the Element is, even if
  * the type you pass into the generic is incorrect. If you try to access properties
  * only available on an `HTMLButtonElement` when the Element or EventTarget you
@@ -49,7 +50,7 @@ import { InvalidElemError } from "./InvalidElemError.ts";
  * }
  */
 export function asElem<E extends Element = HTMLElement>(
-  target: NilOr<Elem>,
+  target: Elem | null | undefined,
 ): E {
   if (Elem.is(target)) {
     return target as E;

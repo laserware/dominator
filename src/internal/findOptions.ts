@@ -12,7 +12,6 @@ import type {
   Data,
   Elem,
   ElemOrCssSelector,
-  NilOr,
 } from "../types.ts";
 
 /** Find Element(s) matching the specified CSS selector. */
@@ -21,7 +20,7 @@ export interface FindWithSelectorOptions {
   withSelector: CssSelector;
 
   /** Optional parent Element, EventTarget, or CSS selector. */
-  parent?: NilOr<ElemOrCssSelector>;
+  parent?: ElemOrCssSelector | null | undefined;
 }
 
 /**
@@ -36,7 +35,7 @@ export interface FindWithAttrOptions {
   withValue?: AttrValue;
 
   /** Optional parent Element, EventTarget, or CSS selector. */
-  parent?: NilOr<ElemOrCssSelector>;
+  parent?: ElemOrCssSelector | null | undefined;
 
   /** Optional Element tag to limit search. */
   tag?: AnyElementTagName;
@@ -51,7 +50,7 @@ export interface FindWithAttrsOptions {
   withAttrs: Attrs;
 
   /** Optional parent Element, EventTarget, or CSS selector. */
-  parent?: NilOr<ElemOrCssSelector>;
+  parent?: ElemOrCssSelector | null | undefined;
 
   /** Optional Element tag to limit search. */
   tag?: AnyElementTagName;
@@ -66,7 +65,7 @@ export interface FindWithDataOptions {
   withData: Data;
 
   /** Optional parent Element, EventTarget, or CSS selector. */
-  parent?: NilOr<ElemOrCssSelector>;
+  parent?: ElemOrCssSelector | null | undefined;
 
   /** Optional Element tag to limit search. */
   tag?: AnyElementTagName;

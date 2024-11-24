@@ -1,17 +1,11 @@
 import { isNil } from "@laserware/arcade";
 
 import { asElem } from "../elem/asElem.ts";
-import { InvalidElemError } from "../elem/InvalidElemError.ts";
-import { toElem } from "../elem/toElem.ts";
 import { asDataPropertyName } from "../internal/asDataPropertyName.ts";
+import { elemOrThrow } from "../internal/elemOrThrow.ts";
+import { formatForError } from "../internal/formatForError.ts";
 import { stringifyDOMValue } from "../internal/stringifyDOMValue.ts";
-import type {
-  Data,
-  DataKey,
-  DataValue,
-  ElemOrCssSelector,
-  NilOr,
-} from "../types.ts";
+import type { Data, DataKey, DataValue, ElemOrCssSelector } from "../types.ts";
 
 /**
  * Assigns the specified `value` to the specified dataset `key` in the specified
@@ -52,15 +46,8 @@ export function setData<E extends Element = HTMLElement>(
   keyOrData: DataKey | Data,
   value?: DataValue,
 ): E {
-  const elem = toElem(target);
-  if (elem === null) {
-    if (typeof keyOrData === "string") {
-      // prettier-ignore
-      throw new InvalidElemError(`Unable to set dataset value for ${keyOrData}`);
-    } else {
-      throw new InvalidElemError("Unable to set dataset values");
-    }
-  }
+  // prettier-ignore
+  const elem = elemOrThrow(target, `Unable to set dataset value(s) for ${formatForError(keyOrData)}`)
 
   if (typeof keyOrData === "string") {
     setSingleDataEntry(elem, keyOrData, value);
@@ -76,7 +63,7 @@ export function setData<E extends Element = HTMLElement>(
 function setSingleDataEntry(
   elem: HTMLElement,
   key: DataKey,
-  value?: NilOr<DataValue>,
+  value?: DataValue | null | undefined,
 ): void {
   const validKey = asDataPropertyName(key);
 

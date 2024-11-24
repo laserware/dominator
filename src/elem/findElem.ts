@@ -6,24 +6,43 @@ import type {
   AttrValue,
   CssSelector,
   Elem,
-  NullOr,
-  UndefinedOr,
 } from "../types.ts";
 
 import { asElem } from "./asElem.ts";
 import { toElem } from "./toElem.ts";
 
 /**
- * Query the DOM to find the Element using one of the specified `options` or
- * `null` if not found.
+ * Query the DOM for an Element matching the specified `selector`.
  *
  * @template E Type of Element to return.
  *
- * @param options Options for finding the element. See {@linkcode FindOptions}.
+ * @param selector CSS selector string to find the element.
+ * @param [parent] Optional Element or EventTarget for parent.
+ *
+ * @returns Element of type `E` if found, otherwise `null`.
  */
 export function findElem<E extends Element = HTMLElement>(
-  options: FindOptions,
-): NullOr<E>;
+  selector: CssSelector,
+  parent?: Elem | null,
+): E | null;
+
+/**
+ * Query the DOM to find the Element with the specified attribute `name` and
+ * optional `value`.
+ *
+ * @template E Type of Element to return.
+ *
+ * @param name Attribute name to find the element.
+ * @param [value] Optional attribute value that corresponds with the name.
+ * @param [parent] Optional Element or EventTarget for parent.
+ *
+ * @returns Element of type `E` if found, otherwise `null`.
+ */
+export function findElem<E extends Element = HTMLElement>(
+  name: AttrName,
+  value: AttrValue | undefined,
+  parent?: Elem | null,
+): E | null;
 
 /**
  * Query the DOM to find the Element with the specified matching `attrs` or
@@ -33,47 +52,32 @@ export function findElem<E extends Element = HTMLElement>(
  *
  * @param attrs Key/value pairs of attributes to query for matching elements.
  * @param [parent] Optional Element or EventTarget for parent.
+ *
+ * @returns Element of type `E` if found, otherwise `null`.
  */
 export function findElem<E extends Element = HTMLElement>(
   attrs: Attrs,
-  parent?: NullOr<Elem>,
-): NullOr<E>;
+  parent?: Elem | null,
+): E | null;
 
 /**
- * Query the DOM for an Element matching the specified `selector` or
- * `null` if not found.
+ * Query the DOM to find the Element using one of the specified `options`.
  *
  * @template E Type of Element to return.
  *
- * @param selector CSS selector string to find the element.
- * @param [parent] Optional Element or EventTarget for parent.
+ * @param options Options for finding the element. See {@linkcode FindOptions}.
+ *
+ * @returns Element of type `E` if found, otherwise `null`.
  */
 export function findElem<E extends Element = HTMLElement>(
-  selector: CssSelector,
-  parent?: NullOr<Elem>,
-): NullOr<E>;
-
-/**
- * Query the DOM to find the Element with the specified attribute `name` and
- * optional `value` or `null` if not found.
- *
- * @template E Type of Element to return.
- *
- * @param name Attribute name to find the element.
- * @param [value] Optional attribute value that corresponds with the name.
- * @param [parent] Optional Element or EventTarget for parent.
- */
-export function findElem<E extends Element = HTMLElement>(
-  name: AttrName,
-  value: UndefinedOr<AttrValue>,
-  parent?: NullOr<Elem>,
-): NullOr<E>;
+  options: FindOptions,
+): E | null;
 
 export function findElem<E extends Element = HTMLElement>(
   firstArg: FindOptions | CssSelector | Attrs | AttrName,
-  valueOrParent?: NullOr<Elem> | UndefinedOr<AttrValue>,
-  parent?: NullOr<Elem>,
-): NullOr<E> {
+  valueOrParent?: Elem | null | AttrValue | undefined,
+  parent?: Elem | null,
+): E | null {
   const result = parseFindArgs(firstArg, valueOrParent, parent);
 
   try {

@@ -1,20 +1,24 @@
 import { InvalidElemError } from "../elem/InvalidElemError.ts";
 import { toElem } from "../elem/toElem.ts";
-import type { ElemOrCssSelector, NullOr } from "../types.ts";
+import type { ElemOrCssSelector } from "../types.ts";
 
 /**
  * Moves the cursor in the specified `target` in the optionally specified
  * `parent` to the end of the text.
  *
+ * @template E Type of Element to return.
+ *
  * @param target Element, EventTarget, or CSS selector.
  * @param [parent=document] Optional Element, EventTarget, or CSS selector for parent.
+ *
+ * @returns Element of type `E`.
  *
  * @throws {InvalidElemError} If the `target` specified does not exist.
  */
 export function moveCursorToTextEnd<E extends Element = HTMLElement>(
-  target: NullOr<ElemOrCssSelector>,
-  parent: NullOr<ElemOrCssSelector> = document,
-): NullOr<E> {
+  target: ElemOrCssSelector,
+  parent: ElemOrCssSelector = document,
+): E {
   const elem = toElem<E>(target, parent);
   if (elem === null) {
     throw new InvalidElemError("Unable to move cursor to text end");

@@ -1,10 +1,7 @@
-import { isNil } from "@laserware/arcade";
-
 import type {
   AttrValue,
   CssVarValue,
   DataValue,
-  NullOr,
   StyleValue,
 } from "../types.ts";
 
@@ -12,10 +9,18 @@ import type {
  * Coerces the specified `value` coming from the DOM via attributes, the style
  * property, or the dataset property for an element to the specified value `T`.
  *
- * Note that it will return the value directly (string or null) if it couldn't
- * convert it to the specified type `T` generic.
+ * Note that it will return the string value directly if it couldn't
+ * convert it to the specified type `T` generic. If the value is `null` or
+ * `undefined`, returns `undefined`.
  *
  * @internal
+ *
+ * @remarks
+ * We avoid using `null` here because we're parsing a DOM value which should
+ * either exist or it shouldn't. The return value of `getAttribute` is `null`
+ * if the attribute doesn't exist, but since we're also accessing properties
+ * from `style` and `dataset`, which are `undefined` if they don't exist, we
+ * want to ensure consistency across the board.
  *
  * @template T Type of value to return.
  *
@@ -52,9 +57,9 @@ import type {
  */
 export function parseDOMValue<
   T extends AttrValue | DataValue | CssVarValue | StyleValue,
->(value: unknown): NullOr<T> {
-  if (isNil(value)) {
-    return null;
+>(value: unknown): T | undefined {
+  if (value === null || value === undefined) {
+    return undefined;
   }
 
   // If an attribute is present on an element without a value, that represents

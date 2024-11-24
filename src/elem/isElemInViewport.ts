@@ -2,9 +2,11 @@ import { elemOrThrow } from "../internal/elemOrThrow.ts";
 import type { ElemOrCssSelector } from "../types.ts";
 
 /**
- * Returns true if the specified `target` is visible in the browser viewport.
+ * Checks if the specified `target` is visible in the browser viewport.
  *
  * @param target Element, EventTarget, or CSS selector.
+ *
+ * @returns `true` if the specified `target` is in the viewport, otherwise `false`.
  *
  * @throws {InvalidElemError} If the `target` wasn't found.
  */

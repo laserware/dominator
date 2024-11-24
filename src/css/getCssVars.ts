@@ -2,27 +2,34 @@ import { isNil } from "@laserware/arcade";
 
 import { InvalidElemError } from "../elem/InvalidElemError.ts";
 import { toElem } from "../elem/toElem.ts";
-import type { CssVarName, ElemOrCssSelector, NullOr } from "../types.ts";
+import type { CssVarName, CssVarValue, ElemOrCssSelector } from "../types.ts";
 
 import { CssVarError } from "./CssVarError.ts";
 
 /**
- * Returns the value associated with the specified CSS variable `name`. If
- * no `target` is specified, gets the variable value from the `:root` element.
- * Returns the `fallback` if the property doesn't exist.
+ * Attempts to get the value associated with the specified CSS variable `name`. If
+ * no `target` is specified, gets the variable value from {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
+ * (i.e. `:root`). Returns the `fallback` if the property doesn't exist.
+ *
+ * @remarks
+ * The function throws if the `target` doesn't exist, rather than just falling
+ * back to the `:root` element. If you specify a `target`, you want to explicitly
+ * set the CSS variable on that `target`.
  *
  * @param name Name of the variable to get value for.
  * @param [fallback=undefined] Optional fallback value to return if not found.
  * @param [target] Optional Element, EventTarget, or CSS selector for element from
  *                 which to get CSS variable.
  *
+ * @returns Value associated with the specified `name`.
+ *
  * @throws {CssVarError} If the property doesn't exist and no `fallback` specified.
  * @throws {InvalidElemError} If the `target` specified does not exist.
  */
-export function getCssVar<T>(
+export function getCssVar<T extends CssVarValue>(
   name: CssVarName,
   fallback: T | undefined = undefined,
-  target?: NullOr<ElemOrCssSelector>,
+  target?: ElemOrCssSelector,
 ): T {
   const elem = isNil(target) ? document.documentElement : toElem(target);
   if (elem === null) {

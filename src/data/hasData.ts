@@ -2,12 +2,7 @@ import { isNotNil } from "@laserware/arcade";
 
 import { asDataPropertyName } from "../internal/asDataPropertyName.ts";
 import { elemOrThrow } from "../internal/elemOrThrow.ts";
-import type {
-  DataKey,
-  DataValue,
-  ElemOrCssSelector,
-  NullOr,
-} from "../types.ts";
+import type { DataKey, DataValue, ElemOrCssSelector } from "../types.ts";
 
 /**
  * Returns true if the specified `target` has a dataset entry with the specified
@@ -20,7 +15,7 @@ import type {
  * @throws {InvalidElemError} If the `target` specified does not exist.
  */
 export function hasData(
-  target: NullOr<ElemOrCssSelector>,
+  target: ElemOrCssSelector,
   key: DataKey,
   value?: DataValue,
 ): boolean {

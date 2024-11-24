@@ -8,17 +8,22 @@ import type {
   Attrs,
   AttrValue,
   CssSelector,
-  NilOr,
 } from "../types.ts";
 
+import { InvalidAttrError } from "./InvalidAttrError.ts";
+
 /**
- * Returns a CSS selector string from the specified `name` and `value`. Note
+ * Attempts to build a CSS selector string from the specified `name` and `value`. Note
  * that the `value` is coerced to a string and `null` excludes a value but only
  * includes a name. If `tag` is specified, it is included in the resulting selector.
  *
  * @param name Attribute name to include in the selector.
  * @param [value=undefined] Optional attribute value.
  * @param [tag] Optional tag name to include in the selector.
+ *
+ * @returns CSS selector based on the specified attribute `name` and optional `value`.
+ *
+ * @throws {InvalidAttrError} If the specified `value` could not be stringified.
  *
  * @example Name Only
  * const selector = attrSelector("disabled");
@@ -38,20 +43,24 @@ import type {
  */
 export function attrSelector(
   name: AttrName,
-  value?: NilOr<AttrValue>,
+  value?: AttrValue | null | undefined,
   tag?: AnyElementTagName,
 ): CssSelector {
   return selectorWithTag(singleAttrSelector(name, value), tag);
 }
 
 /**
- * Returns a CSS selector string from the `attrs` object. Note that the values
- * of the `attrs` object are coerced to a string and `null` excludes a value
+ * Attempts to build a CSS selector string from the `attrs` object. Note that the
+ * values of the `attrs` object are coerced to a string and `null` excludes a value
  * but only includes a name. If `tag` is specified, it is included in the
  * resulting selector.
  *
  * @param attrs Object with key of attribute name and value of attribute value.
  * @param [tag] Optional tag name to include in the selector.
+ *
+ * @returns CSS selector based on the specified `attrs`.
+ *
+ * @throws {InvalidAttrError} If a value in the specified `attrs` could not be stringified.
  *
  * @example Single Entry With Value
  * const selector = attrSelector({ disabled: true });
@@ -80,15 +89,20 @@ export function attrsSelector(
 
 function singleAttrSelector(
   name: AttrName,
-  value: NilOr<AttrValue>,
+  value: AttrValue | null | undefined,
 ): CssSelector {
   const validName = kebabCase(name);
 
-  if (isNil(value) || typeof value === "object") {
+  if (isNil(value)) {
     return `[${validName}]`;
   }
 
-  const stringValue = stringifyDOMValue(value) ?? "";
+  try {
+    const stringValue = stringifyDOMValue(value) ?? "";
 
-  return `[${validName}="${stringValue}"]`;
+    return `[${validName}="${stringValue}"]`;
+  } catch (err: any) {
+    // prettier-ignore
+    throw new InvalidAttrError(`Could not get selector for ${name}: ${err.message}`);
+  }
 }

@@ -4,13 +4,15 @@ let canvas: HTMLCanvasElement | null = null;
 let context: CanvasRenderingContext2D | null = null;
 
 /**
- * Returns the ideal width of an input element (in pixels) that based on its
- * value or placeholder using the {@link https://stackoverflow.com/a/68326447|measureText}
+ * Gets the ideal width of the specified `input` element (in pixels) that based on
+ * its value or placeholder using the {@link https://stackoverflow.com/a/68326447|measureText}
  * approach.
  *
- * @param target `HTMLInputElement` for which to get width.
+ * @param input The `HTMLInputElement` for which to get width.
+ *
+ * @returns The ideal width for the `input`.
  */
-export function measureInputWidth(target: HTMLInputElement): number {
+export function measureInputWidth(input: HTMLInputElement): number {
   if (canvas === null) {
     canvas = document.createElement("canvas");
   }
@@ -19,9 +21,9 @@ export function measureInputWidth(target: HTMLInputElement): number {
     context = canvas.getContext("2d")!;
   }
 
-  const text = target.value || target.placeholder;
+  const text = input.value || input.placeholder;
 
-  const elementStyle = window.getComputedStyle(target);
+  const elementStyle = window.getComputedStyle(input);
 
   const horizontalBorder =
     Number.parseFloat(elementStyle.borderLeftWidth) +

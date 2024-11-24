@@ -5,8 +5,6 @@ import {
   type Attrs,
   type CssSelector,
   type ElemOrCssSelector,
-  type NullOr,
-  type UndefinedOr,
 } from "../types.ts";
 
 import { FindOptions } from "./findOptions.ts";
@@ -17,8 +15,8 @@ import { FindOptions } from "./findOptions.ts";
  */
 export function parseFindArgs(
   firstArg: FindOptions | CssSelector | Attrs | string,
-  valueOrParent: NullOr<Elem> | UndefinedOr<AttrValue> = document,
-  parent?: NullOr<Elem>,
+  valueOrParent: Elem | null | AttrValue | undefined = document,
+  parent?: Elem | null,
 ): { selector: string; validParent: ElemOrCssSelector } {
   const validParent = parent ?? document;
 

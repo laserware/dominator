@@ -1,7 +1,7 @@
 import { isNotNil } from "@laserware/arcade";
 
 import { elemOrThrow } from "../internal/elemOrThrow.ts";
-import type { ElemOrCssSelector, NullOr } from "../types.ts";
+import type { ElemOrCssSelector } from "../types.ts";
 
 /**
  * Type of value that can be returned from the {@linkcode getElemValueAs}
@@ -34,13 +34,16 @@ const inputTypes = [
 ];
 
 /**
- * Returns the value of the specified `target` as the raw string.
+ * Gets the value of the specified `target` as the raw string.
  *
  * @param target Element, EventTarget, or CSS selector.
  *
+ * @returns String value of the specified `target`.
+ *
  * @throws {InvalidElemError} If the `target` specified does not exist.
+ * @throws {Error} If the `target` specified is not of type `HTMLInputElement`.
  */
-export function getElemValue(target: NullOr<ElemOrCssSelector>): string {
+export function getElemValue(target: ElemOrCssSelector): string {
   const elem = elemOrThrow(target, "Could not get value for element");
 
   if (isInputElement(elem)) {
@@ -59,10 +62,13 @@ export function getElemValue(target: NullOr<ElemOrCssSelector>): string {
  * @param as {@linkcode ElemValueType} to coerce the target value property to.
  * @param [fallback] Optional fallback value to use if the value is missing/invalid.
  *
+ * @returns Value of the specified `target` as type `T`.
+ *
  * @throws {InvalidElemError} If the `target` specified does not exist.
+ * @throws {Error} If the `target` specified is not of type `HTMLInputElement`.
  */
 export function getElemValueAs<T extends ElemValueType>(
-  target: NullOr<ElemOrCssSelector>,
+  target: ElemOrCssSelector,
   as: T,
   fallback?: T,
 ): GetElemValueAsReturn<T> {

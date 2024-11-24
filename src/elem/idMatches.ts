@@ -2,13 +2,15 @@ import { elemOrThrow } from "../internal/elemOrThrow.ts";
 import type { ElemOrCssSelector } from "../types.ts";
 
 /**
- * Returns true if the specified `target` has the specified `id` *property*.
+ * Checks if the specified `target` has the specified `id` *property*.
  * Note that you can pass an ID string or CSS selector (e.g. `#some-id`).
  * If your ID starts with `#` and is *not* a CSS selector, ensure there are
  * two `#` prefixes instead of one.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param id ID to check for element.
+ *
+ * @returns `true` if the `target` has the specified `id`, otherwise `false`.
  *
  * @throws {InvalidElemError} If the `target` specified does not exist.
  */
