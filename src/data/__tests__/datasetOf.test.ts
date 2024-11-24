@@ -1,3 +1,4 @@
+import { render } from "../../testing.ts";
 import { datasetOf } from "../datasetOf.ts";
 
 type TestDatasetShape = {
@@ -15,18 +16,9 @@ const initialData: TestDatasetShape = {
 };
 
 describe("the datasetOf function", () => {
-  let element: HTMLElement;
-
-  beforeEach(() => {
-    element = document.createElement("div");
-    document.body.appendChild(element);
-  });
-
-  afterEach(() => {
-    document.body.removeChild(element);
-  });
-
   it("sets the dataset properties to the specified initial values when called", () => {
+    const element = render(`<div>Test</div>`);
+
     const dataset = datasetOf<TestDatasetShape>(element, initialData);
 
     expect(dataset.element.getAttribute("data-count")).toBe("20");
@@ -36,6 +28,8 @@ describe("the datasetOf function", () => {
   });
 
   it("returns all data when the all method is called", () => {
+    const element = render(`<div>Test</div>`);
+
     const dataset = datasetOf<TestDatasetShape>(element, initialData);
 
     expect(dataset.all()).toEqual(initialData);
@@ -43,6 +37,8 @@ describe("the datasetOf function", () => {
 
   describe("the get method", () => {
     it("returns the value when it exists in the dataset", () => {
+      const element = render(`<div>Test</div>`);
+
       const dataset = datasetOf<TestDatasetShape>(element, initialData);
 
       expect(dataset.get("count")).toBe(initialData.count);
@@ -52,6 +48,8 @@ describe("the datasetOf function", () => {
     });
 
     it("returns undefined if the value isn't found", () => {
+      const element = render(`<div>Test</div>`);
+
       const dataset = datasetOf<TestDatasetShape>(element, initialData);
 
       // @ts-ignore
@@ -60,6 +58,8 @@ describe("the datasetOf function", () => {
   });
 
   it("sets the dataset value when the set method is called", () => {
+    const element = render(`<div>Test</div>`);
+
     const dataset = datasetOf<TestDatasetShape>(element, initialData);
 
     const expected = 50;

@@ -8,6 +8,12 @@ describe("within attrsSelector", () => {
       expect(result).toBe("[inert]");
     });
 
+    it("returns a selector when an attribute name and undefined is specified", () => {
+      const result = attrSelector("aria-hidden", undefined);
+
+      expect(result).toBe(`[aria-hidden]`);
+    });
+
     it("returns a selector when an attribute name and valid value is specified", () => {
       const result = attrSelector("aria-hidden", true);
 
@@ -20,11 +26,25 @@ describe("within attrsSelector", () => {
       expect(result).toBe(`button[aria-hidden="true"]`);
     });
 
-    it("returns a selector when an attribute name and object value is specified", () => {
+    it("returns a selector when an attribute name and array value is specified", () => {
       // @ts-ignore
-      const result = attrSelector("aria-hidden", { thisIs: "object" });
+      const result = attrSelector("data-array", [1, 2, 3]);
 
-      expect(result).toBe(`[aria-hidden="{\\"thisIs\\":\\"object\\"}"]`);
+      expect(result).toBe(`[data-array="[1,2,3]"]`);
+    });
+
+    it("returns a selector when an attribute name and object value is specified", () => {
+      const result = attrSelector("data-object", { thisIs: "object" });
+
+      expect(result).toBe(`[data-object="{\\"thisIs\\":\\"object\\"}"]`);
+    });
+
+    it("throws an error if an invalid value is passed in", () => {
+      // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#exceptions
+      expect(() => {
+        // @ts-ignore
+        attrSelector("data-big-int", BigInt(20));
+      }).toThrow(/could not get selector/i);
     });
   });
 

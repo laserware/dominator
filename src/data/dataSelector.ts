@@ -1,7 +1,7 @@
 import { isNil, isPlainObject } from "@laserware/arcade";
 
 import { attrSelector } from "../attrs/attrsSelector.ts";
-import { asDataAttrName } from "../internal/asDataAttrName.ts";
+import { asDataAttrName } from "../internal/dataKeys.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
 import type {
   AnyElementTagName,

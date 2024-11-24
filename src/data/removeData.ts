@@ -1,6 +1,6 @@
 import { removeAttr } from "../attrs/removeAttrs.ts";
 import { asElem } from "../elem/asElem.ts";
-import { asDataAttrName } from "../internal/asDataAttrName.ts";
+import { asDataAttrName } from "../internal/dataKeys.ts";
 import { elemOrThrow } from "../internal/elemOrThrow.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import type {

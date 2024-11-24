@@ -1,7 +1,7 @@
-import { asDataPropertyName } from "../internal/asDataPropertyName.ts";
+import { asDataPropertyName } from "../internal/dataKeys.ts";
+import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOrThrow.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import { parseDOMValue } from "../internal/parseDOMValue.ts";
 import type {
   Data,
   DataKey,

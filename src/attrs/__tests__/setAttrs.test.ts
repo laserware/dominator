@@ -1,38 +1,57 @@
+import { render, selectorForNonExistent } from "../../testing.ts";
 import { setAttr, setAttrs } from "../setAttrs.ts";
 
 describe("within setAttrs", () => {
   describe("the setAttr function", () => {
-    it("sets the attribute on the target when a name and value is specified", ({ selectors }) => {
-      const elem = setAttr(selectors.forParent, "inert", null)!;
+    it("sets the attribute on the target when a name and value is specified", () => {
+      const element = render(`<div>Test</div>`);
 
-      expect(elem.hasAttribute("inert")).toBeTruthy();
+      const result = setAttr(element, "inert", null)!;
+
+      expect(result.hasAttribute("inert")).toBeTruthy();
     });
 
-    it("removes the attribute from a target when undefined is specified as the value", ({
-      selectors,
-    }) => {
-      const elem = setAttr(selectors.forParent, "inert", null)!;
+    it("sets the attribute on the target with an object value", () => {
+      const element = render(`<div>Test</div>`);
 
-      setAttr(selectors.forParent, "inert", undefined);
+      const result = setAttr(element, "data-object", { a: "b" });
 
-      expect(elem.hasAttribute("inert")).toBeFalsy();
+      expect(JSON.parse(result.getAttribute("data-object")!)).toEqual({ a: "b" });
     });
 
-    it("throws an error if the target does not exist", ({ selectors }) => {
-      expect(() => {
-        setAttr(selectors.forMissing, "name", "parent");
-      }).toThrow(/missing or invalid/);
+    it("sets the attribute on the target with an array value", () => {
+      const element = render(`<div>Test</div>`);
+
+      const result = setAttr(element, "data-array", [1, "2", true]);
+
+      expect(JSON.parse(result.getAttribute("data-array")!)).toEqual([1, "2", true]);
+    });
+
+    it("removes the attribute from a target when undefined is specified as the value", () => {
+      const element = render(`<div inert>Test</div>`);
+
+      const result = setAttr(element, "inert", null)!;
+
+      setAttr(result, "inert", undefined);
+
+      expect(result.hasAttribute("inert")).toBeFalsy();
+    });
+
+    it("throws an error if the target does not exist", () => {
+      render(`<div>Test</div>`);
+
+      expect(() => setAttr(selectorForNonExistent, "name", "parent")).toThrow(/Unable to set/);
     });
   });
 
   describe("the setAttrs function", () => {
-    it("sets the attributes on a target when an attributes object is specified", ({
-      selectors,
-    }) => {
-      const elem = setAttrs(selectors.forParent, { name: "parent", "aria-invalid": true })!;
+    it("sets the attributes on a target when an attributes object is specified", () => {
+      const element = render(`<div>Test</div>`);
 
-      expect(elem.getAttribute("name")).toBe("parent");
-      expect(elem.getAttribute("aria-invalid")).toBe("true");
+      const result = setAttrs(element, { name: "parent", "aria-invalid": true })!;
+
+      expect(result.getAttribute("name")).toBe("parent");
+      expect(result.getAttribute("aria-invalid")).toBe("true");
     });
   });
 });

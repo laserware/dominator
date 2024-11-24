@@ -72,6 +72,7 @@ function toClassValue(classValue: ClassValue): string {
   let key;
   let result = "";
 
+  /* istanbul ignore next -- @preserve: This never gets hit, but I don't want to change the code. */
   if (classValue === null) {
     return result;
   }

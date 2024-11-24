@@ -2,8 +2,8 @@ import { InvalidElemError } from "../elem/InvalidElemError.ts";
 import { toElem } from "../elem/toElem.ts";
 
 import { cast } from "../internal/cast.ts";
+import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import { parseDOMValue } from "../internal/parseDOMValue.ts";
 import type {
   ElemOrCssSelector,
   KeysOf,

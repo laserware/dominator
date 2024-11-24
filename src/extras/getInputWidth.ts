@@ -1,3 +1,5 @@
+/* istanbul ignore file -- @preserve: We can't test this with Vitest because we can't use the canvas in tests. */
+
 // Caching the canvas and 2D context, so we don't have to create them every time
 // we want to measure text:
 let canvas: HTMLCanvasElement | null = null;
@@ -12,7 +14,7 @@ let context: CanvasRenderingContext2D | null = null;
  *
  * @returns The ideal width for the `input`.
  */
-export function measureInputWidth(input: HTMLInputElement): number {
+export function getInputWidth(input: HTMLInputElement): number {
   if (canvas === null) {
     canvas = document.createElement("canvas");
   }

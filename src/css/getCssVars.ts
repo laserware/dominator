@@ -11,17 +11,23 @@ import { CssVarError } from "./CssVarError.ts";
  * no `target` is specified, gets the variable value from {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
  * (i.e. `:root`). Returns the `fallback` if the property doesn't exist.
  *
+ * Attempts to coerce the value to a numeric value if number-like, or a boolean
+ * if `"true"` or `"false"`. All CSS variables are technically strings, but it's
+ * nice to get/set the actual type without worrying about string conversion first.
+ *
  * @remarks
  * The function throws if the `target` doesn't exist, rather than just falling
  * back to the `:root` element. If you specify a `target`, you want to explicitly
  * set the CSS variable on that `target`.
+ *
+ * @template T Type of value to return.
  *
  * @param name Name of the variable to get value for.
  * @param [fallback=undefined] Optional fallback value to return if not found.
  * @param [target] Optional Element, EventTarget, or CSS selector for element from
  *                 which to get CSS variable.
  *
- * @returns Value associated with the specified `name`.
+ * @returns Value associated with the specified `name` or `fallback` if specified.
  *
  * @throws {CssVarError} If the property doesn't exist and no `fallback` specified.
  * @throws {InvalidElemError} If the `target` specified does not exist.

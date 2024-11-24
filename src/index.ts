@@ -46,11 +46,9 @@ export {
   type ClassDict,
   type ClassValue,
 } from "./extras/clsx.ts";
+export { getInputWidth } from "./extras/getInputWidth.ts";
 export { html, type ElementBuilder } from "./extras/htmlBuilder.ts";
 export { listToArray } from "./extras/listToArray.ts";
-export { measureInputWidth } from "./extras/measureInputWidth.ts";
-export { moveCursorToTextEnd } from "./extras/moveCursorToTextEnd.ts";
-export { parseTransferData } from "./extras/parseTransferData.ts";
 
 // Types
 export type { AriaAttrs } from "./aria.ts";

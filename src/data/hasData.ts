@@ -1,6 +1,6 @@
 import { isNotNil } from "@laserware/arcade";
 
-import { asDataPropertyName } from "../internal/asDataPropertyName.ts";
+import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { elemOrThrow } from "../internal/elemOrThrow.ts";
 import type { DataKey, DataValue, ElemOrCssSelector } from "../types.ts";
 

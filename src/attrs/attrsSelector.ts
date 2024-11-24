@@ -1,7 +1,7 @@
 import { isNil, kebabCase } from "@laserware/arcade";
 
+import { stringifyDOMValue } from "../internal/domValues.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
-import { stringifyDOMValue } from "../internal/stringifyDOMValue.ts";
 import type {
   AnyElementTagName,
   AttrName,
@@ -98,8 +98,12 @@ function singleAttrSelector(
   }
 
   try {
-    const stringValue = stringifyDOMValue(value) ?? "";
+    // Note that we don't need to coerce the value to a string because we already
+    // caught the `null` and `undefined` above:
+    const stringValue = stringifyDOMValue(value);
 
+    // Note that I stringify the value _again_ to ensure any JSON strings are
+    // escaped and non-string values are surrounded with quotes:
     return `[${validName}=${JSON.stringify(stringValue)}]`;
   } catch (err: any) {
     // prettier-ignore

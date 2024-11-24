@@ -36,8 +36,8 @@ export function hasAllAttrs(
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to check for attributes ${formatForError(names)}`);
 
-  for (const attributeName of elem.getAttributeNames()) {
-    if (!names.includes(attributeName)) {
+  for (const name of names) {
+    if (!elem.hasAttribute(name)) {
       return false;
     }
   }
@@ -63,14 +63,11 @@ export function hasSomeAttrs(
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to check for attributes ${formatForError(names)}`);
 
-  let matchFound: boolean = false;
-
-  for (const attributeName of elem.getAttributeNames()) {
-    if (names.includes(attributeName)) {
-      matchFound = true;
-      break;
+  for (const name of names) {
+    if (elem.hasAttribute(name)) {
+      return true;
     }
   }
 
-  return matchFound;
+  return false;
 }

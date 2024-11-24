@@ -6,6 +6,44 @@ import type {
 } from "../types.ts";
 
 /**
+ * Converts the specified value to a string. If the value is `null`, returns
+ * an empty string. HTML element attributes, properties, and dataset values
+ * usually can only be a string.
+ *
+ * @internal
+ *
+ * Any non-primitive value (e.g. an object or array), is stringified via
+ * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify|JSON.stringify}.
+ *
+ * @param value Value to convert to a valid attribute value.
+ *
+ * @returns The string representation of tha value if defined, otherwise `undefined`.
+ */
+export function stringifyDOMValue(value: unknown): string | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  if (value === null) {
+    return "";
+  }
+
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (
+    typeof value === "boolean" ||
+    typeof value === "number" ||
+    typeof value === "symbol"
+  ) {
+    return value.toString();
+  }
+
+  return JSON.stringify(value);
+}
+
+/**
  * Coerces the specified `value` coming from the DOM via attributes, the style
  * property, or the dataset property for an element to the specified value `T`.
  *

@@ -1,64 +1,61 @@
+import { render, selectorForNonExistent } from "../../testing.ts";
 import { getAttr, getAttrs } from "../getAttrs.ts";
 
 describe("within getAttrs", () => {
   describe("the getAttr function", () => {
-    it("returns the attribute value associated with the name if it exists", ({ selectors }) => {
-      const result = getAttr(selectors.forButton, "name");
+    it("returns the attribute value associated with the name if it exists", () => {
+      const element = render(`<button name="button">Button</button>`);
+
+      const result = getAttr(element, "name");
 
       expect(result).toBe("button");
     });
 
-    it("returns null if the attribute isn't present and no default value specified", ({
-      selectors,
-    }) => {
-      const result = getAttr(selectors.forButton, "invalid");
+    it("returns null if the attribute isn't present and no default value specified", () => {
+      const element = render(`<button name="button">Button</button>`);
+
+      const result = getAttr(element, "invalid");
 
       expect(result).toBeNull();
     });
 
-    it("throws an error if the element doesn't exist an no default value specified", ({
-      selectors,
-    }) => {
-      expect(() => {
-        getAttr(selectors.forMissing, "name");
-      }).toThrow(/missing or invalid/);
+    it("throws an error if the element doesn't exist", () => {
+      render(`<span>Test</span>`);
+
+      expect(() => getAttr("button", "name")).toThrow(/Unable to get/);
     });
 
-    it("returns the specified default value if the attribute isn't present", ({ selectors }) => {
-      const result = getAttr(selectors.forButton, "invalid", "Default");
+    it("returns the specified default value if the attribute isn't present", () => {
+      const element = render(`<button>Button</button>`);
+
+      const result = getAttr(element, "invalid", "Default");
 
       expect(result).toBe("Default");
-    });
-
-    it("throws an error if the element doesn't exist", ({ selectors }) => {
-      expect(() => {
-        getAttr(selectors.forMissing, "name", "Default");
-      }).toThrow(/missing or invalid/);
     });
   });
 
   describe("the getAttrs function", () => {
-    it("returns an object with the key of names passed in and values when all attributes exist", ({
-      selectors,
-    }) => {
-      const result = getAttrs(selectors.forButton, ["name", "disabled"]);
+    it("returns an object with the key of names passed in and values when all attributes exist", () => {
+      const element = render(`<button name="button" disabled>Button</button>`);
+
+      const result = getAttrs(element, ["name", "disabled"]);
 
       expect(result).toEqual({ name: "button", disabled: true });
     });
 
-    it("returns an object with the key of names passed in and values when some attributes missing", ({
-      selectors,
-    }) => {
-      const result = getAttrs(selectors.forButton, ["name", "disabled", "invalid"]);
+    it("returns an object with the key of names passed in and values when some attributes missing", () => {
+      const element = render(`<button name="button" disabled>Button</button>`);
+
+      const result = getAttrs(element, ["name", "disabled", "invalid"]);
 
       expect(result).toEqual({ name: "button", disabled: true });
     });
 
-    it("returns an object with the key of all names passed in and values when some attributes missing and fallback defined", ({
-      selectors,
-    }) => {
+    it("returns an object with the key of all names passed in and values when some attributes missing and fallback defined", () => {
+      const element = render(`<button name="button" disabled>Button</button>`);
+
       const result = getAttrs<{ name: string; disabled: boolean; invalid: boolean }>(
-        selectors.forButton,
+        element,
         ["name", "disabled", "invalid"],
         { invalid: true },
       );
@@ -66,11 +63,9 @@ describe("within getAttrs", () => {
       expect(result).toEqual({ name: "button", disabled: true, invalid: true });
     });
 
-    it("throws an error if the target isn't found when passing in an attributes object", ({
-      selectors,
-    }) => {
+    it("throws an error if the target isn't found when passing in an attributes object", () => {
       expect(() => {
-        getAttrs(selectors.forMissing, ["name", "disabled"]);
+        getAttrs(selectorForNonExistent, ["name", "disabled"]);
       }).toThrow(/Unable to get attributes/);
     });
   });

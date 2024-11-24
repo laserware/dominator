@@ -1,7 +1,7 @@
 import { cast } from "../internal/cast.ts";
+import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOrThrow.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import { parseDOMValue } from "../internal/parseDOMValue.ts";
 import type {
   AttrName,
   Attrs,

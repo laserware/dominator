@@ -89,6 +89,12 @@ describe("the clsx function", () => {
     expect(clsx(foo, "hello", [[clsx], "world"])).toBe("hello world");
   });
 
+  it("handles null", () => {
+    expect(clsx(null)).toBe("");
+    expect(clsx([null])).toBe("");
+    expect(clsx({ value: null })).toBe("");
+  });
+
   describe("is compatible with classnames", () => {
     it("keeps object keys with truthy values", () => {
       const result = clsx({

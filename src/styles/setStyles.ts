@@ -3,7 +3,7 @@ import { isNil } from "@laserware/arcade";
 import { asElem } from "../elem/asElem.ts";
 import { InvalidElemError } from "../elem/InvalidElemError.ts";
 import { toElem } from "../elem/toElem.ts";
-import { stringifyDOMValue } from "../internal/stringifyDOMValue.ts";
+import { stringifyDOMValue } from "../internal/domValues.ts";
 import {
   CssVarName,
   StyleValue,
