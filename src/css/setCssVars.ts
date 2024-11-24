@@ -18,10 +18,6 @@ import { CssVarError } from "./CssVarError.ts";
  * specified `target`. If no `target` was specified, updates the variable value
  * in `:root`.
  *
- * @remarks
- * The `name` argument is not limited to type {@linkcode CssVarName} because the
- * name is checked prior to setting it on the property.
- *
  * @template E Type of Element to return.
  *
  * @param name Name of the CSS variable to set or update.
@@ -36,7 +32,7 @@ import { CssVarError } from "./CssVarError.ts";
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function setCssVar<E extends Element = HTMLElement>(
-  name: string,
+  name: CssVarName,
   value: CssVarValue,
   target?: ElemOrCssSelector,
 ): E {
