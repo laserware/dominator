@@ -1,3 +1,5 @@
+/* istanbul ignore file -- @preserve: These are just type definitions, no need to enforce coverage. */
+
 import { isPlainObject } from "@laserware/arcade";
 
 /**
@@ -10,7 +12,7 @@ export type OneOrManyOf<T> = T | T[];
 /**
  * Returns the keys of the specified object as an array.
  */
-export type KeysOf<T extends Record<string, any>> = (keyof T)[];
+export type KeysOf<V extends Record<string, any>> = Extract<keyof V, string>[];
 
 /**
  * Represents primitive values that can be used to set certain attributes and

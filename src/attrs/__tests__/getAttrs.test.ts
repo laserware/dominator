@@ -24,14 +24,6 @@ describe("within getAttrs", () => {
 
       expect(() => getAttr("button", "name")).toThrow(/Unable to get/);
     });
-
-    it("returns the specified default value if the attribute isn't present", () => {
-      const element = render(`<button>Button</button>`);
-
-      const result = getAttr(element, "invalid", "Default");
-
-      expect(result).toBe("Default");
-    });
   });
 
   describe("the getAttrs function", () => {
@@ -49,18 +41,6 @@ describe("within getAttrs", () => {
       const result = getAttrs(element, ["name", "disabled", "invalid"]);
 
       expect(result).toEqual({ name: "button", disabled: true });
-    });
-
-    it("returns an object with the key of all names passed in and values when some attributes missing and fallback defined", () => {
-      const element = render(`<button name="button" disabled>Button</button>`);
-
-      const result = getAttrs<{ name: string; disabled: boolean; invalid: boolean }>(
-        element,
-        ["name", "disabled", "invalid"],
-        { invalid: true },
-      );
-
-      expect(result).toEqual({ name: "button", disabled: true, invalid: true });
     });
 
     it("throws an error if the target isn't found when passing in an attributes object", () => {

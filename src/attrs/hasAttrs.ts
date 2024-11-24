@@ -10,7 +10,7 @@ import type { AttrName, ElemOrCssSelector } from "../types.ts";
  *
  * @returns `true` if the specified attribute is present, otherwise `false`.
  *
- * @throws {InvalidElemError} If the `target` specified does not exist.
+ * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function hasAttr(target: ElemOrCssSelector, name: AttrName): boolean {
   const elem = elemOrThrow(target, `Unable to check for attribute ${name}`);
@@ -27,7 +27,7 @@ export function hasAttr(target: ElemOrCssSelector, name: AttrName): boolean {
  *
  * @returns `true` if the specified `target` has *all* specified attributes, otherwise `false`.
  *
- * @throws {InvalidElemError} If the `target` specified does not exist.
+ * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function hasAllAttrs(
   target: ElemOrCssSelector,
@@ -54,7 +54,7 @@ export function hasAllAttrs(
  *
  * @returns `true` if the specified `target` has *some* specified attributes, otherwise `false`.
  *
- * @throws {InvalidElemError} If the `target` specified does not exist.
+ * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function hasSomeAttrs(
   target: ElemOrCssSelector,

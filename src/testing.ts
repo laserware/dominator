@@ -1,6 +1,10 @@
+/* istanbul ignore file -- @preserve: These are testing utilities, so we don't care about coverage. */
+
 import { dedent, isNotNil } from "@laserware/arcade";
 
-/* istanbul ignore file -- @preserve: These are testing utilities, so we don't care about coverage. */
+export { screen } from "@testing-library/dom";
+
+export { default as userEvent } from "@testing-library/user-event";
 
 /**
  * Selector for an element that will never exist in the test DOM.

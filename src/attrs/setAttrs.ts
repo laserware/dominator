@@ -21,7 +21,7 @@ import type {
  *
  * @returns The Element representation of the specified `target`.
  *
- * @throws {InvalidElemError} If the `target` specified does not exist.
+ * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function setAttr<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
@@ -47,7 +47,7 @@ export function setAttr<E extends Element = HTMLElement>(
  *
  * @returns The Element representation of the specified `target`.
  *
- * @throws {InvalidElemError} If the `target` specified does not exist.
+ * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function setAttrs<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
@@ -64,15 +64,15 @@ export function setAttrs<E extends Element = HTMLElement>(
 }
 
 function setSingleAttr(
-  elem: HTMLElement,
+  element: HTMLElement,
   name: string,
   value: AttrValue | null | undefined,
 ): void {
   const attrValue = stringifyDOMValue(value);
 
   if (attrValue === undefined) {
-    elem.removeAttribute(name);
+    element.removeAttribute(name);
   } else {
-    elem.setAttribute(name, attrValue);
+    element.setAttribute(name, attrValue);
   }
 }

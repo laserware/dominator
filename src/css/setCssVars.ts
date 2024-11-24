@@ -33,7 +33,7 @@ import { CssVarError } from "./CssVarError.ts";
  *          returns {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}.
  *
  * @throws {CssVarError} If the specified `name` is not a valid {@linkcode CssVarName}.
- * @throws {InvalidElemError} If the `target` specified does not exist.
+ * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function setCssVar<E extends Element = HTMLElement>(
   name: string,
@@ -69,7 +69,7 @@ export function setCssVar<E extends Element = HTMLElement>(
  *          returns {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}.
  *
  * @throws {CssVarError} If a specified name in `vars` is not a valid {@linkcode CssVarName}.
- * @throws {InvalidElemError} If the `target` specified does not exist.
+ * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function setCssVars<E extends Element = HTMLElement>(
   vars: CssVars,
@@ -94,7 +94,7 @@ function setSingleCssVar(
 ): void {
   if (!CssVarName.is(name)) {
     // prettier-ignore
-    throw new CssVarError(`Property ${name} must be a string that starts with "--"`);
+    throw new CssVarError(`CSS variable ${name} must be a string that starts with "--"`);
   }
 
   const attrValue = stringifyDOMValue(value);

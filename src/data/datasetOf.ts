@@ -43,7 +43,7 @@ export class Dataset<DS extends AnyDatasetShape> {
    * @param target Element, EventTarget, or CSS selector.
    * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
    *
-   * @throws {InvalidElemError} If the `target` specified does not exist.
+   * @throws {InvalidElemError} If the specified `target` does not exist.
    */
   constructor(target: ElemOrCssSelector, initialData?: Partial<DS>) {
     this.#element = elemOrThrow(target, "Unable to initialize Dataset");

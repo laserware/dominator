@@ -27,7 +27,7 @@ export { findAllElems } from "./elem/findAllElems.ts";
 export { findAllFocusable } from "./elem/findAllFocusable.ts";
 export { findElem } from "./elem/findElem.ts";
 export { focusElem } from "./elem/focusElem.ts";
-export { getElemValue, getElemValueAs } from "./elem/getElemValue.ts";
+export { getInputValue, getInputValueRaw } from "./elem/getInputValue.ts";
 export { idMatches } from "./elem/idMatches.ts";
 export { InvalidElemError } from "./elem/InvalidElemError.ts";
 export { isElemChildOf } from "./elem/isElemChildOf.ts";

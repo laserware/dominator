@@ -19,7 +19,7 @@ import type {
  * @param target Element, EventTarget, or CSS selector.
  * @param key Dataset property or attribute name for the dataset entry to remove.
  *
- * @throws {InvalidElemError} If the `target` specified does not exist.
+ * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function removeData<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
@@ -36,7 +36,7 @@ export function removeData<E extends Element = HTMLElement>(
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Array of dataset properties or attribute names to remove.
  *
- * @throws {InvalidElemError} If the `target` specified does not exist.
+ * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function removeData<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,

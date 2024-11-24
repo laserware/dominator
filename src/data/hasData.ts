@@ -12,7 +12,7 @@ import type { DataKey, DataValue, ElemOrCssSelector } from "../types.ts";
  * @param key Property (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
  * @param [value] Optional dataset value to check for.
  *
- * @throws {InvalidElemError} If the `target` specified does not exist.
+ * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function hasData(
   target: ElemOrCssSelector,

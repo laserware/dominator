@@ -1,7 +1,6 @@
 import { InvalidElemError } from "../elem/InvalidElemError.ts";
 import { toElem } from "../elem/toElem.ts";
 
-import { cast } from "../internal/cast.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import type {
@@ -15,20 +14,18 @@ import type {
 export function getStyle<T extends StyleValue>(
   target: ElemOrCssSelector,
   key: StyleKey,
-  fallback?: T,
 ): T | undefined {
   const elem = toElem(target);
   if (elem === null || !("style" in elem)) {
     throw new InvalidElemError(`Unable to get style value for ${key}`);
   }
 
-  return getSingleStyle<T>(elem, key, fallback);
+  return getSingleStyle<T>(elem, key);
 }
 
-export function getStyles<T extends Styles = any>(
+export function getStyles<T extends Styles = Styles>(
   target: ElemOrCssSelector,
   keys: KeysOf<T>,
-  fallback?: Partial<T>,
 ): Partial<T> {
   const elem = toElem(target);
   if (elem === null || !("style" in elem)) {
@@ -36,25 +33,22 @@ export function getStyles<T extends Styles = any>(
     throw new InvalidElemError(`Unable to get style values for ${formatForError(keys)}`);
   }
 
-  const styles: Record<string, any> = {};
-
-  const validFallback = (fallback ?? {}) as Partial<T>;
+  const styles: Partial<T> = {};
 
   for (const key of keys) {
     // @ts-ignore
-    styles[key] = getSingleStyle(elem, key, validFallback[key]);
+    styles[key] = getSingleStyle(elem, key);
   }
 
-  return cast<Partial<T>>(styles);
+  return styles;
 }
 
 function getSingleStyle<T extends StyleValue>(
   element: HTMLElement,
   key: StyleKey,
-  fallback?: T,
 ): T | undefined {
-  // @ts-ignore I know `key` is a valid key for styles. If it wasn't we return the fallback.
+  // @ts-ignore I know `key` is a valid key for styles. If it wasn't we return `undefined`.
   const styleValue = element.style[key];
 
-  return parseDOMValue<T>(styleValue) ?? fallback ?? undefined;
+  return parseDOMValue<T>(styleValue) ?? undefined;
 }
