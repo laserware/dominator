@@ -100,7 +100,7 @@ function singleAttrSelector(
   try {
     const stringValue = stringifyDOMValue(value) ?? "";
 
-    return `[${validName}="${stringValue}"]`;
+    return `[${validName}=${JSON.stringify(stringValue)}]`;
   } catch (err: any) {
     // prettier-ignore
     throw new InvalidAttrError(`Could not get selector for ${name}: ${err.message}`);

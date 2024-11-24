@@ -14,10 +14,10 @@ describe("within hasAttrs", () => {
       expect(result).toBeFalsy();
     });
 
-    it("returns false if the target does not exist", ({ selectors }) => {
-      const result = hasAttr(selectors.forMissing, "name");
-
-      expect(result).toBeFalsy();
+    it("throws an error if the target does not exist", ({ selectors }) => {
+      expect(() => {
+        hasAttr(selectors.forMissing, "name");
+      }).toThrow(/missing or invalid/);
     });
   });
 });

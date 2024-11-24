@@ -1,9 +1,15 @@
 // Attributes
-export { attrSelector } from "./attrs/attrsSelector.ts";
+export { attrSelector, attrsSelector } from "./attrs/attrsSelector.ts";
 export { getAttr, getAttrs } from "./attrs/getAttrs.ts";
 export { hasAllAttrs, hasAttr, hasSomeAttrs } from "./attrs/hasAttrs.ts";
+export { InvalidAttrError } from "./attrs/InvalidAttrError.ts";
 export { removeAttr, removeAttrs } from "./attrs/removeAttrs.ts";
 export { setAttr, setAttrs } from "./attrs/setAttrs.ts";
+
+// CSS
+export { CssVarError } from "./css/CssVarError.ts";
+export { getCssVar } from "./css/getCssVars.ts";
+export { setCssVar, setCssVars } from "./css/setCssVars.ts";
 
 // Dataset
 export { dataSelector } from "./data/dataSelector.ts";
@@ -33,45 +39,46 @@ export { keepElemVisibleIn } from "./elem/keepElemVisibleIn.ts";
 export { setStyles } from "./styles/setStyles.ts";
 export { toElem } from "./elem/toElem.ts";
 
-// Miscellaneous Extras
-export { measureInputWidth } from "./extras/measureInputWidth.ts";
-export { moveCursorToTextEnd } from "./extras/moveCursorToTextEnd.ts";
-export { parseTransferData } from "./extras/parseTransferData.ts";
-
-// CSS
-export { CssVarError } from "./css/CssVarError.ts";
-export { getCssVar } from "./css/getCssVars.ts";
-export { setCssVar } from "./css/setCssVars.ts";
-
-// Handy Utilities
+// Miscellaneous Extras and Handy Utilities
 export {
   clsx,
   type ClassArray,
   type ClassDict,
   type ClassValue,
-} from "./clsx.ts";
-export { html, type ElementBuilder } from "./htmlBuilder.ts";
-export { listToArray } from "./listToArray.ts";
+} from "./extras/clsx.ts";
+export { html, type ElementBuilder } from "./extras/htmlBuilder.ts";
+export { listToArray } from "./extras/listToArray.ts";
+export { measureInputWidth } from "./extras/measureInputWidth.ts";
+export { moveCursorToTextEnd } from "./extras/moveCursorToTextEnd.ts";
+export { parseTransferData } from "./extras/parseTransferData.ts";
 
 // Types
 export type { AriaAttrs } from "./aria.ts";
 export type { FindOptions } from "./internal/findOptions.ts";
-export type {
-  AnyElement,
-  AnyElementTagName,
-  AttrName,
-  Attrs,
-  AttrsDefined,
+export {
   AttrValue,
   CssSelector,
-  Data,
-  DataAttrName,
-  DataKey,
-  DataPropertyName,
-  DataValue,
+  CssVarName,
   Elem,
-  ElementWithTagName,
-  ElemOrCssSelector,
-  HTMLElementTagName,
-  SVGElementTagName,
+  Primitive,
+  Stringifiable,
+  StyleValue,
+  type AnyElement,
+  type AnyElementTagName,
+  type AttrName,
+  type Attrs,
+  type AttrsDefined,
+  type CssVars,
+  type CssVarValue,
+  type Data,
+  type DataAttrName,
+  type DataKey,
+  type DataPropertyName,
+  type DataValue,
+  type ElementWithTagName,
+  type ElemOrCssSelector,
+  type HTMLElementTagName,
+  type StyleKey,
+  type Styles,
+  type SVGElementTagName,
 } from "./types.ts";

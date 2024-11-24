@@ -1,6 +1,6 @@
+import { listToArray } from "../extras/listToArray.ts";
 import type { FindOptions } from "../internal/findOptions.ts";
 import { parseFindArgs } from "../internal/parseFindArgs.ts";
-import { listToArray } from "../listToArray.ts";
 import type {
   AttrName,
   Attrs,

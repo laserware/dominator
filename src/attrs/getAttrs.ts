@@ -49,6 +49,9 @@ export function getAttr<T extends AttrValue = string>(
  * is excluded from the return value. Specifying a `fallback` object will
  * ensure any possibly missing attributes are included.
  *
+ * @remarks
+ * If you specify a `fallback`, you *must* define the specified `T` generic,
+ * otherwise you'll get type errors.
  *
  * @template T Shape of attributes object to return.
  *
@@ -91,7 +94,7 @@ export function getAttr<T extends AttrValue = string>(
  * const result = getAttrs<Shape>(elem, ["a", "b", "c"], { c: 24 });
  * // { a: "a", b: "b", c: 24 }
  */
-export function getAttrs<T extends Attrs = any>(
+export function getAttrs<T extends Attrs = Attrs>(
   target: ElemOrCssSelector,
   names: KeysOf<T>,
   fallback?: Partial<T>,

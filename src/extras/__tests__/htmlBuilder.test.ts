@@ -18,8 +18,6 @@ describe("the html function from htmlBuilder", () => {
   it("builds an element with no children and properties", () => {
     const result = html("div", { class: "test", style: { margin: 0, padding: 0 } }).build();
 
-    console.log(result.outerHTML);
-
-    expect(true).toBeTruthy();
+    expect(result.outerHTML).toBe(`<div class="test" style="margin: 0px; padding: 0px;"></div>`);
   });
 });

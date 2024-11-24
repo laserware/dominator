@@ -18,10 +18,10 @@ describe("within setAttrs", () => {
       expect(elem.hasAttribute("inert")).toBeFalsy();
     });
 
-    it("returns null and does not set attributes if the target does not exist", ({ selectors }) => {
-      const elem = setAttr(selectors.forMissing, "name", "parent");
-
-      expect(elem).toBeNull();
+    it("throws an error if the target does not exist", ({ selectors }) => {
+      expect(() => {
+        setAttr(selectors.forMissing, "name", "parent");
+      }).toThrow(/missing or invalid/);
     });
   });
 

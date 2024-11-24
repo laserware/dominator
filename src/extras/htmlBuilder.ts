@@ -1,10 +1,10 @@
 import { isNotNil } from "@laserware/arcade";
 
-import type { AriaAttrs } from "./aria.ts";
-import { setAttr } from "./attrs/setAttrs.ts";
-import { setData } from "./data/setData.ts";
-import { stringifyDOMValue } from "./internal/stringifyDOMValue.ts";
-import { setStyles } from "./styles/setStyles.ts";
+import type { AriaAttrs } from "../aria.ts";
+import { setAttr } from "../attrs/setAttrs.ts";
+import { setData } from "../data/setData.ts";
+import { stringifyDOMValue } from "../internal/stringifyDOMValue.ts";
+import { setStyles } from "../styles/setStyles.ts";
 import {
   AttrValue,
   type AnyElement,
@@ -13,7 +13,7 @@ import {
   type CssVars,
   type ElementWithTagName,
   type Styles,
-} from "./types.ts";
+} from "../types.ts";
 
 type ElementProperties<TN extends AnyElementTagName> = Omit<
   ElementWithTagName<TN>,

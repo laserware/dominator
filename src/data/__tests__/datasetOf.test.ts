@@ -51,11 +51,11 @@ describe("the datasetOf function", () => {
       expect(dataset.get("valid")).toBe(initialData.valid);
     });
 
-    it("returns null if the value isn't found", () => {
+    it("returns undefined if the value isn't found", () => {
       const dataset = datasetOf<TestDatasetShape>(element, initialData);
 
       // @ts-ignore
-      expect(dataset.get("[missing]")).toBeNull();
+      expect(dataset.get("[missing]")).toBeUndefined();
     });
   });
 

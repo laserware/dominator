@@ -20,11 +20,11 @@ describe("within attrsSelector", () => {
       expect(result).toBe(`button[aria-hidden="true"]`);
     });
 
-    it("returns a selector when an attribute name and invalid value is specified", () => {
+    it("returns a selector when an attribute name and object value is specified", () => {
       // @ts-ignore
-      const result = attrSelector("aria-hidden", { thisIs: "invalid" });
+      const result = attrSelector("aria-hidden", { thisIs: "object" });
 
-      expect(result).toBe(`[aria-hidden]`);
+      expect(result).toBe(`[aria-hidden="{\\"thisIs\\":\\"object\\"}"]`);
     });
   });
 
