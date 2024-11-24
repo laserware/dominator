@@ -1,6 +1,5 @@
+import { elemOrThrow } from "../internal/elemOrThrow.ts";
 import type { ElemOrCssSelector, NullOr } from "../types.ts";
-
-import { toElem } from "./toElem.ts";
 
 /**
  * Returns true if the specified `target` is currently scrollable.
@@ -8,10 +7,7 @@ import { toElem } from "./toElem.ts";
  * @param target Element, EventTarget, or CSS selector.
  */
 export function isElemScrollable(target: NullOr<ElemOrCssSelector>): boolean {
-  const elem = toElem<HTMLElement>(target);
-  if (elem === null) {
-    return false;
-  }
+  const elem = elemOrThrow(target, "Unable to check if target is scrollable");
 
   try {
     return elem.clientHeight < elem.scrollHeight;

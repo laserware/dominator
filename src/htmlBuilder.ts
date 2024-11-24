@@ -1,17 +1,21 @@
+import { isNotNil } from "@laserware/arcade";
+
 import type { AriaAttrs } from "./aria.ts";
+import { setAttr } from "./attrs/setAttrs.ts";
+import { setData } from "./data/setData.ts";
+import { stringifyDOMValue } from "./internal/stringifyDOMValue.ts";
+import { setStyles } from "./styles/setStyles.ts";
 import {
   AttrValue,
   type AnyElement,
   type AnyElementTagName,
   type AttrsDefined,
+  type CssVars,
   type ElementWithTagName,
+  type Styles,
 } from "./types.ts";
-import { stringifyAttributeValue } from "./internal/stringifyAttributeValue.ts";
-import { setAttr } from "./attrs/setAttr.ts";
-import { setStyle, type SettableStyles } from "./elem/setStyle.ts";
-import { setData } from "./data/setData.ts";
 
-type ElementAttrs<TN extends AnyElementTagName> = Omit<
+type ElementProperties<TN extends AnyElementTagName> = Omit<
   ElementWithTagName<TN>,
   "addEventListener"
 >;
@@ -35,56 +39,50 @@ type ElementEventListenersOrDescriptors = {
   [EN in ElementEventName]?: ElementEventListenerOrDescriptor<EN>;
 };
 
-export type CSSVariables = {
-  [key: `--${string}`]: AttrValue;
-};
-
-type AllowedCSSStyleDeclaration = Omit<
-  CSSStyleDeclaration,
-  // These are read-only:
-  | "length"
-  | "parentRule"
-
-  // These are functions which we don't want to allow in the builder:
-  | "getPropertyPriority"
-  | "getPropertyValue"
-  | "item"
-  | "removeProperty"
-  | "setProperty"
-
-  // This allows us to access the index of a style, which we also don't want
-  // to allow in the builder.
-  | number
->;
-
 type CustomProperties = {
   class?: string;
   dataset?: DOMStringMap;
-  style?: AllowedCSSStyleDeclaration | CSSVariables;
+  style?: Styles | CssVars;
   [key: `data-${string}`]: AttrValue;
 };
 
 type AllowedProperties<TN extends AnyElementTagName> =
   | Partial<AriaAttrs>
-  | Omit<ElementAttrs<TN>, "style" | "click">
+  | Omit<ElementProperties<TN>, "style" | "click">
   | { on: ElementEventListenersOrDescriptors }
   | CustomProperties;
+
+const identifier = Symbol("identifier");
 
 /**
  * Interface for the HTML element builder.
  *
+ * The AbortController (`controller` argument in the `build` callback) is required
+ * if you attach any event listeners to the element. The `parentElement` is
+ * optional for the root element.
+ *
  * @property build Function that takes in a parent element and optional AbortController
- *                 and returns an HTML element. The AbortController is required if
- *                 you attach any event listeners to the element. The parent element is
- *                 optional for the root element.
+ *                 and returns an HTML element.
  */
 export interface ElementBuilder<
   TN extends AnyElementTagName = AnyElementTagName,
 > {
+  [identifier]: "ElementBuilder";
   build(
     parentElement?: AnyElement | undefined,
     controller?: AbortController | undefined,
   ): ElementWithTagName<TN>;
+}
+
+namespace ElementBuilder {
+  export function is(value: unknown): value is ElementBuilder {
+    try {
+      // @ts-ignore
+      return value?.[identifier] === "ElementBuilder";
+    } catch {
+      return false;
+    }
+  }
 }
 
 type NonFunctionalChild = ElementBuilder | AnyElement | AttrValue | null;
@@ -114,65 +112,68 @@ type ChildFunction = () => NonFunctionalChild;
  * @param properties Attributes, properties, and event listeners to attach to the element.
  * @param children Child elements, element builders, primitives, callbacks, or null.
  *                 If null, the element is not added. This is useful for conditional rendering.
- *                 See {@link Child} for additional details.
+ *                 See {@linkcode Child} for additional details.
  */
 export function html<TN extends AnyElementTagName>(
   tagName: TN,
   properties: Partial<AllowedProperties<TN>>,
   ...children: Child[]
 ): ElementBuilder<TN> {
-  return {
-    build(
-      parentElement?: AnyElement | undefined,
-      controller?: AbortController | undefined,
-    ): ElementWithTagName<TN> {
-      const element = document.createElement(tagName) as ElementWithTagName<TN>;
+  const build = (
+    parentElement?: AnyElement | undefined,
+    controller?: AbortController | undefined,
+  ): ElementWithTagName<TN> => {
+    const element = document.createElement(tagName) as ElementWithTagName<TN>;
 
-      setElementProperties(element, properties, controller);
+    setElementProperties(element, properties, controller);
 
-      const getChildElement = (child: Child): AnyElement | Text | null => {
-        if (child === null) {
-          return null;
-        }
-
-        if (AttrValue.is(child)) {
-          const stringValue = stringifyAttributeValue(child);
-
-          return document.createTextNode(stringValue ?? "");
-        }
-
-        const nonAttrChild = child as
-          | ChildFunction
-          | ElementBuilder
-          | AnyElement;
-
-        if (nonAttrChild instanceof Element) {
-          return child;
-        }
-
-        if ("build" in nonAttrChild) {
-          return nonAttrChild.build(element, controller);
-        }
-
-        if (typeof nonAttrChild === "function") {
-          return getChildElement(nonAttrChild());
-        }
-
-        throw new Error("Invalid child");
-      };
-
-      for (const child of children) {
-        const childElement = getChildElement(child);
-
-        if (childElement === null) {
-          continue;
-        }
-
-        element.append(childElement);
+    const getChildElement = (child: Child): AnyElement | Text | null => {
+      if (child === null) {
+        return null;
       }
 
-      return element;
-    },
+      if (ElementBuilder.is(child)) {
+        return child.build(element, controller);
+      }
+
+      if (typeof child === "function") {
+        return getChildElement(child());
+      }
+
+      // @ts-ignore
+      if (child instanceof Element) {
+        return child;
+      }
+
+      if (AttrValue.is(child)) {
+        const stringValue = stringifyDOMValue(child);
+
+        return document.createTextNode(stringValue ?? "");
+      }
+
+      throw new Error("Invalid child");
+    };
+
+    for (const child of children) {
+      const childElement = getChildElement(child);
+
+      if (childElement === null) {
+        continue;
+      }
+
+      element.appendChild(childElement);
+    }
+
+    if (isNotNil(parentElement)) {
+      parentElement.appendChild(element);
+    }
+
+    return element;
+  };
+
+  return {
+    [identifier]: "ElementBuilder",
+    build,
   };
 }
 
@@ -182,7 +183,7 @@ export function html<TN extends AnyElementTagName>(
  *
  * @param element Element to be updated with specified properties.
  * @param properties Attributes and event listeners to set on element.
- * @param controller Abort controller to clean up event listeners.
+ * @param controller AbortController to clean up event listeners.
  */
 function setElementProperties<TN extends AnyElementTagName>(
   element: ElementWithTagName<TN>,
@@ -194,7 +195,7 @@ function setElementProperties<TN extends AnyElementTagName>(
     attrsObject: AttrsDefined,
   ): void => {
     if (name === "style") {
-      setStyle(element, attrsObject as SettableStyles);
+      setStyles(element, attrsObject as Styles);
     } else {
       setData(element, attrsObject);
     }
@@ -217,7 +218,7 @@ function setElementProperties<TN extends AnyElementTagName>(
 
 /**
  * Adds specified event listeners to the specified element. If the specified
- * AbortController is undefined, an error is thrown. Otherwise, the events
+ * AbortController is `undefined`, an error is thrown. Otherwise, the events
  * won't get cleaned up when `controller.abort` is called.
  *
  * @param element Element to attach events to.

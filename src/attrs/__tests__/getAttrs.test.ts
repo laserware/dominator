@@ -1,6 +1,6 @@
-import { getAttr, getAttrs } from "../getAttr.ts";
+import { getAttr, getAttrs } from "../getAttrs.ts";
 
-describe("within getAttr", () => {
+describe("within getAttrs", () => {
   describe("the getAttr function", () => {
     it("returns the attribute value associated with the name if it exists", ({ selectors }) => {
       const result = getAttr(selectors.forButton, "name");

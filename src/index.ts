@@ -1,13 +1,15 @@
 // Attributes
-export { attrSelector } from "./attrs/attrSelector.ts";
-export { getAttr, getAttrs } from "./attrs/getAttr.ts";
-export { hasAllAttrs, hasAttr, hasSomeAttrs } from "./attrs/hasAttr.ts";
-export { setAttr, setAttrs } from "./attrs/setAttr.ts";
+export { attrSelector } from "./attrs/attrsSelector.ts";
+export { getAttr, getAttrs } from "./attrs/getAttrs.ts";
+export { hasAllAttrs, hasAttr, hasSomeAttrs } from "./attrs/hasAttrs.ts";
+export { removeAttr, removeAttrs } from "./attrs/removeAttrs.ts";
+export { setAttr, setAttrs } from "./attrs/setAttrs.ts";
 
 // Dataset
 export { dataSelector } from "./data/dataSelector.ts";
 export { getData } from "./data/getData.ts";
 export { hasData } from "./data/hasData.ts";
+export { removeData } from "./data/removeData.ts";
 export { setData } from "./data/setData.ts";
 
 // Elements
@@ -28,7 +30,7 @@ export { isElemOfType } from "./elem/isElemOfType.ts";
 export { isElemSameOrChildOf } from "./elem/isElemSameOrChildOf.ts";
 export { isElemScrollable } from "./elem/isElemScrollable.ts";
 export { keepElemVisibleIn } from "./elem/keepElemVisibleIn.ts";
-export { setStyle } from "./elem/setStyle.ts";
+export { setStyles } from "./styles/setStyles.ts";
 export { toElem } from "./elem/toElem.ts";
 
 // Miscellaneous Extras
@@ -38,12 +40,17 @@ export { parseTransferData } from "./extras/parseTransferData.ts";
 
 // CSS
 export { CssVarError } from "./css/CssVarError.ts";
-export { getCssVar } from "./css/getCssVar.ts";
-export { setCssVar } from "./css/setCssVar.ts";
+export { getCssVar } from "./css/getCssVars.ts";
+export { setCssVar } from "./css/setCssVars.ts";
 
 // Handy Utilities
-export { clsx } from "./clsx.ts";
-export { html } from "./htmlBuilder.ts";
+export {
+  clsx,
+  type ClassArray,
+  type ClassDict,
+  type ClassValue,
+} from "./clsx.ts";
+export { html, type ElementBuilder } from "./htmlBuilder.ts";
 export { listToArray } from "./listToArray.ts";
 
 // Types
@@ -57,10 +64,11 @@ export type {
   AttrsDefined,
   AttrValue,
   CssSelector,
-  Dataset,
-  DatasetAttrName,
-  DatasetKey,
-  DatasetValue,
+  Data,
+  DataAttrName,
+  DataKey,
+  DataPropertyName,
+  DataValue,
   Elem,
   ElementWithTagName,
   ElemOrCssSelector,

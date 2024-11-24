@@ -3,12 +3,12 @@ import { isNil } from "@laserware/arcade";
 import { asElem } from "../elem/asElem.ts";
 import { InvalidElemError } from "../elem/InvalidElemError.ts";
 import { toElem } from "../elem/toElem.ts";
-import { validDataKey } from "../internal/validDataKey.ts";
+import { asDataPropertyName } from "../internal/asDataPropertyName.ts";
+import { stringifyDOMValue } from "../internal/stringifyDOMValue.ts";
 import type {
-  Dataset,
-  DatasetAttrName,
-  DatasetKey,
-  DatasetValue,
+  Data,
+  DataKey,
+  DataValue,
   ElemOrCssSelector,
   NilOr,
 } from "../types.ts";
@@ -22,61 +22,67 @@ import type {
  * @param target Element, EventTarget, or CSS selector.
  * @param key Key or attribute name for the dataset entry.
  * @param value Value to set for associated key or attribute name.
+ *
+ * @throws {InvalidElemError} If the `target` specified does not exist.
  */
 export function setData<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
-  key: DatasetKey,
-  value: DatasetValue,
+  key: DataKey,
+  value: DataValue,
 ): E;
 
 /**
- * Assigns the specified `dataset` key/value pairs to the specified `target`.
+ * Assigns the specified `data` key/value pairs to the specified `target`.
  * Returns the Element representation of the specified `target`.
  *
  * @template E Type of Element to return.
  *
  * @param target Element, EventTarget, or CSS selector.
- * @param dataset Object with key of dataset key and value of entry value.
+ * @param data Object with key of dataset key and value of entry value.
+ *
+ * @throws {InvalidElemError} If the `target` specified does not exist.
  */
 export function setData<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
-  dataset: Dataset,
+  data: Data,
 ): E;
 
 export function setData<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
-  keyOrDataset: DatasetKey | DatasetAttrName | Dataset,
-  value?: DatasetValue,
+  keyOrData: DataKey | Data,
+  value?: DataValue,
 ): E {
-  const elem = toElem<HTMLElement>(target);
+  const elem = toElem(target);
   if (elem === null) {
-    // prettier-ignore
-    throw new InvalidElemError("Unable to set dataset value");
+    if (typeof keyOrData === "string") {
+      // prettier-ignore
+      throw new InvalidElemError(`Unable to set dataset value for ${keyOrData}`);
+    } else {
+      throw new InvalidElemError("Unable to set dataset values");
+    }
   }
 
-  if (typeof keyOrDataset === "string") {
-    setSingleElemData(elem, keyOrDataset, value);
+  if (typeof keyOrData === "string") {
+    setSingleDataEntry(elem, keyOrData, value);
   } else {
-    const entries = Object.entries(keyOrDataset);
-
-    for (const [name, value] of entries) {
-      setSingleElemData(elem, name, value);
+    for (const key of Object.keys(keyOrData)) {
+      setSingleDataEntry(elem, key, keyOrData[key]);
     }
   }
 
   return asElem<E>(elem);
 }
 
-function setSingleElemData(
+function setSingleDataEntry(
   elem: HTMLElement,
-  key: DatasetKey | DatasetAttrName,
-  value?: NilOr<DatasetValue>,
+  key: DataKey,
+  value?: NilOr<DataValue>,
 ): void {
-  const validKey = validDataKey(key);
+  const validKey = asDataPropertyName(key);
 
   if (isNil(value)) {
     elem.dataset[validKey] = "";
   } else {
-    elem.dataset[validKey] = value.toString();
+    elem.dataset[validKey] = stringifyDOMValue(value);
   }
 }

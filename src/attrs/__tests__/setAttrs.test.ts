@@ -1,6 +1,6 @@
-import { setAttr, setAttrs } from "../setAttr.ts";
+import { setAttr, setAttrs } from "../setAttrs.ts";
 
-describe("within setAttr", () => {
+describe("within setAttrs", () => {
   describe("the setAttr function", () => {
     it("sets the attribute on the target when a name and value is specified", ({ selectors }) => {
       const elem = setAttr(selectors.forParent, "inert", null)!;

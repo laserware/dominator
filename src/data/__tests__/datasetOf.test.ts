@@ -1,11 +1,11 @@
 import { datasetOf } from "../datasetOf.ts";
 
-interface TestDatasetShape {
+type TestDatasetShape = {
   count: number;
   size: string;
   status: string;
   valid: boolean;
-}
+};
 
 const initialData: TestDatasetShape = {
   count: 20,

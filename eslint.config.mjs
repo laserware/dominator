@@ -14,6 +14,7 @@ export default [
   {
     files: filePatterns.tests,
     rules: {
+      "no-console": "off",
       "vitest/no-done-callback": "off",
     },
   },

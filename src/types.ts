@@ -22,6 +22,77 @@ export type NullOr<T> = T | null;
 export type UndefinedOr<T> = T | undefined;
 
 /**
+ * Type is either a single item or array of items of type `T`.
+ *
+ * @template T Type of item or items.
+ */
+export type OneOrManyOf<T> = T | T[];
+
+/**
+ * Returns the keys of the specified object as an array.
+ */
+export type KeysOf<T extends Record<string, any>> = (keyof T)[];
+
+/**
+ * Forces the specified value to be the specified type `T` to get around annoying
+ * TypeScript idiosyncrasies.
+ *
+ * @template T Type to cast specified `value` as.
+ *
+ * @param value Value to cast to `T`.
+ */
+export function cast<T>(value: any): T {
+  return value as unknown as T;
+}
+
+/**
+ * Represents primitive values that can be used to set certain attributes and
+ * properties on elements.
+ */
+export type Primitive = boolean | number | string;
+
+export namespace Primitive {
+  /**
+   * Returns true if the specified value is a {@linkcode Primitive}.
+   */
+  export function is(value: unknown): value is Primitive {
+    return (
+      typeof value === "boolean" ||
+      typeof value === "number" ||
+      typeof value === "string"
+    );
+  }
+}
+
+/**
+ * Represents a value that can be stringified.
+ *
+ * @remarks
+ * Objects and arrays are stringified via {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify|JSON.stringify}.
+ */
+export type Stringifiable =
+  | Primitive
+  | any[]
+  | Record<number | string | symbol, any>;
+
+export namespace Stringifiable {
+  /**
+   * Returns true if the specified value is a valid {@linkcode Stringifiable}.
+   */
+  export function is(value: unknown): value is Stringifiable {
+    if (Primitive.is(value)) {
+      return true;
+    }
+
+    if (Array.isArray(value)) {
+      return true;
+    }
+
+    return isPlainObject(value);
+  }
+}
+
+/**
  * Element or EventTarget that can be passed into functions.
  */
 export type Elem =
@@ -55,7 +126,7 @@ export type CssSelector = string;
 
 export namespace CssSelector {
   /**
-   * Returns true if the specified value is a CSS selector.
+   * Returns true if the specified `value` is a CSS selector.
    */
   export function is(value: unknown): value is CssSelector {
     return typeof value === "string";
@@ -79,35 +150,15 @@ export type AttrName = string;
 /**
  * Value type that can be specified as the value for an HTML/SVG attribute.
  * Before actually setting the attribute on an element, the value is stringified.
- *
- * @remarks
- * Objects and arrays are stringified via {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify|JSON.stringify}.
  */
-export type AttrValue =
-  | boolean
-  | number
-  | string
-  | any[]
-  | Record<number | string | symbol, any>;
+export type AttrValue = Stringifiable;
 
 export namespace AttrValue {
   /**
    * Returns true if the specified value is a valid {@linkcode AttrValue}.
    */
   export function is(value: unknown): value is AttrValue {
-    if (
-      typeof value === "string" ||
-      typeof value === "number" ||
-      typeof value === "boolean"
-    ) {
-      return true;
-    }
-
-    if (Array.isArray(value)) {
-      return true;
-    }
-
-    return isPlainObject(value);
+    return Stringifiable.is(value);
   }
 }
 
@@ -124,28 +175,108 @@ export type Attrs = Record<AttrName, NilOr<AttrValue>>;
 export type AttrsDefined = Record<string, AttrValue>;
 
 /**
- * Valid type for the key of `dataset` entries in HTML/SVG elements.
+ * Valid name for a {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties|CSS variable}.
+ * CSS variables *must* start with `--`.
  */
-export type DatasetKey = string;
+export type CssVarName = `--${string}`;
+
+export namespace CssVarName {
+  /**
+   * Returns true if the specified `name` is a valid {@linkcode CssVarName}.
+   */
+  export function is(name: string): name is CssVarName {
+    return name.startsWith("--");
+  }
+}
 
 /**
- * Valid type for dataset attribute on HTML/SVG elements (e.g. `data-some-value`).
+ * Valid value for a CSS variable.
  */
-export type DatasetAttrName = `data-${string}`;
+export type CssVarValue = Primitive;
+
+/**
+ * Represents an object with key of {@linkcode CssVarName} and value of {@linkcode CssVarValue}.
+ */
+export type CssVars = Record<CssVarName, CssVarValue>;
+
+/**
+ * Valid type for the key of {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset|HTMLElement.dataset}
+ * property entries in HTML/SVG elements.
+ */
+export type DataPropertyName = string;
+
+/**
+ * Valid name for dataset {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*|data-* attribute}
+ * on HTML/SVG elements (e.g. `data-some-value`).
+ */
+export type DataAttrName = `data-${string}`;
+
+/**
+ * Valid name for {@linkcode Data} entries. Represents either a key for the
+ * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset|HTMLElement.dataset} property
+ * or a name for the {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*|data-* attribute}.
+ */
+export type DataKey = DataPropertyName | DataAttrName;
 
 /**
  * Valid dataset values (prior to stringifying).
  */
-export type DatasetValue = AttrValue;
+export type DataValue = Stringifiable;
 
 /**
+ *
  * Valid key/value pair representing dataset attributes (prior to stringifying).
- * Some of the values may be `null` or `undefined`.
+ * The key should be a valid {@linkcode DataKey} and the value must be a valid
+ * {@linkcode DataValue}. Some of the values may be `null` or `undefined`.
  *
  * Note that the `HTMLElement.dataset` property is a
  * {@link https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap|DOMStringMap}.
  */
-export type Dataset = Record<string, NilOr<DatasetValue>>;
+export type Data = Record<string, NilOr<DataValue>>;
+
+/**
+ * Valid style keys (i.e. non-methods) that can be set on an element.
+ */
+export type StyleKey =
+  | Exclude<
+      keyof CSSStyleDeclaration,
+      // These are read-only:
+      | "length"
+      | "parentRule"
+
+      // These are methods which can't be stringified:
+      | "getPropertyPriority"
+      | "getPropertyValue"
+      | "item"
+      | "removeProperty"
+      | "setProperty"
+
+      // This allows us to access the index of a style, which we also don't want
+      // to allow in the builder.
+      | number
+    >
+  | CssVarName;
+
+/**
+ * Value that can be set for an element style. The value is stringified prior
+ * to being set on the element.
+ */
+export type StyleValue = Primitive;
+
+export namespace StyleValue {
+  /**
+   * Returns true if the specified value is a valid {@linkcode StyleValue}.
+   */
+  export function is(value: unknown): value is StyleValue {
+    return Primitive.is(value);
+  }
+}
+
+/**
+ * Object representing element styles with a key of {@linkcode StyleKey} and a
+ * value of {@linkcode StyleValue}.
+ */
+export type Styles = Record<StyleKey, StyleValue>;
 
 /**
  * Tag name for HTML element.

@@ -1,6 +1,5 @@
+import { elemOrThrow } from "../internal/elemOrThrow.ts";
 import type { ElemOrCssSelector } from "../types.ts";
-
-import { toElem } from "./toElem.ts";
 
 /**
  * Returns true if the specified `target` has the specified `id` *property*.
@@ -10,12 +9,11 @@ import { toElem } from "./toElem.ts";
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param id ID to check for element.
+ *
+ * @throws {InvalidElemError} If the `target` specified does not exist.
  */
 export function idMatches(target: ElemOrCssSelector, id: string): boolean {
-  const elem = toElem<HTMLInputElement>(target);
-  if (elem === null) {
-    return false;
-  }
+  const elem = elemOrThrow(target, "Unable to check for ID match");
 
   // Clear the `#` in case the ID CSS selector is part of the string:
   const validId = id.replace("#", "");

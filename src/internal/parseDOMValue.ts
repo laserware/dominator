@@ -1,13 +1,21 @@
 import { isNil } from "@laserware/arcade";
 
-import type { AttrValue, NullOr } from "../types.ts";
+import type {
+  AttrValue,
+  CssVarValue,
+  DataValue,
+  NullOr,
+  StyleValue,
+} from "../types.ts";
 
 /**
- * Coerces the specified `value` coming from the `getAttribute()` method on an
- * Element to a value of type `T` that represents a valid {@linkcode AttrValue}.
+ * Coerces the specified `value` coming from the DOM via attributes, the style
+ * property, or the dataset property for an element to the specified value `T`.
  *
  * Note that it will return the value directly (string or null) if it couldn't
  * convert it to the specified type `T` generic.
+ *
+ * @internal
  *
  * @template T Type of value to return.
  *
@@ -15,34 +23,36 @@ import type { AttrValue, NullOr } from "../types.ts";
  *
  * @example Boolean Attributes
  * element.setAttribute("inert", "");
- * const inert = toAttrValue<boolean>(element.getAttribute("inert"));
+ * const inert = parseDOMValue<boolean>(element.getAttribute("inert"));
  * // true
  *
  * element.setAttribute("aria-hidden", "true");
- * const ariaHidden = toAttrValue<boolean>(element.getAttribute("aria-hidden"));
+ * const ariaHidden = parseDOMValue<boolean>(element.getAttribute("aria-hidden"));
  * // true
  *
  * @example Number Attribute
  * element.setAttribute("aria-rowindex", "4");
- * const rowIndex = toAttrValue<number>(element.getAttribute("aria-rowindex"));
+ * const rowIndex = parseDOMValue<number>(element.getAttribute("aria-rowindex"));
  * // 4
  *
  * @example Array Attribute
  * element.setAttribute("data-value", JSON.stringify([1, 2, 3]));
- * const value = toAttrValue(element.getAttribute("data-value"));
+ * const value = parseDOMValue(element.getAttribute("data-value"));
  * // [1, 2, 3]
  *
  * @example Object Attribute
  * element.setAttribute("data-value", JSON.stringify({ a: "b", c: "d" }));
- * const value = toAttrValue(element.getAttribute("data-value"));
+ * const value = parseDOMValue(element.getAttribute("data-value"));
  * // { a: "b", c: "d" }
  *
  * @example Invalid Number Attribute
  * element.setAttribute("aria-rowindex", "4abc");
- * const rowIndex = toAttrValue<number>(element.getAttribute("aria-rowindex"));
+ * const rowIndex = parseDOMValue<number>(element.getAttribute("aria-rowindex"));
  * // "4abc"
  */
-export function toAttrValue<T extends AttrValue>(value: unknown): NullOr<T> {
+export function parseDOMValue<
+  T extends AttrValue | DataValue | CssVarValue | StyleValue,
+>(value: unknown): NullOr<T> {
   if (isNil(value)) {
     return null;
   }
@@ -72,6 +82,6 @@ export function toAttrValue<T extends AttrValue>(value: unknown): NullOr<T> {
   try {
     return JSON.parse(value as string) as T;
   } catch {
-    throw value as T;
+    return value as T;
   }
 }

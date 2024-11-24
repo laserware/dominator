@@ -1,5 +1,7 @@
 import { isNil } from "@laserware/arcade";
 
+import { asElem } from "./elem/asElem.ts";
+
 /**
  * Converts the specified {@link https://developer.mozilla.org/en-US/docs/Web/API/NodeList|NodeList}
  * or {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLCollection|HTMLCollection}
@@ -16,10 +18,10 @@ export function listToArray<E extends Element = HTMLElement>(
     return [];
   }
 
-  const elements: E[] = [];
+  const elems: E[] = [];
   for (let index = 0; index < items.length; index++) {
-    elements.push(items.item(index) as unknown as E);
+    elems.push(asElem<E>(items.item(index)));
   }
 
-  return elements;
+  return elems;
 }

@@ -1,15 +1,14 @@
 import { isNil, isPlainObject } from "@laserware/arcade";
 
-import { attrSelector } from "../attrs/attrSelector.ts";
-import { stringifyAttributeValue } from "../internal/stringifyAttributeValue.ts";
-import { validDataAttrName } from "../internal/validDataAttrName.ts";
+import { attrSelector } from "../attrs/attrsSelector.ts";
+import { asDataAttrName } from "../internal/asDataAttrName.ts";
+import { selectorWithTag } from "../internal/selectorWithTag.ts";
 import type {
   AnyElementTagName,
   CssSelector,
-  Dataset,
-  DatasetAttrName,
-  DatasetKey,
-  DatasetValue,
+  Data,
+  DataKey,
+  DataValue,
   NilOr,
 } from "../types.ts";
 
@@ -18,29 +17,26 @@ import type {
  * values of the dataset object are coerced to a string and null excludes a value
  * but only includes a key.
  *
- * @param dataset Object with key of dataset key and value of dataset value.
+ * @param data Object with key of dataset key and value of dataset value.
  * @param [tag] Optional tag name for the element.
  *
  * @example Dataset Object With `null` Value
  * const selector = dataSelector({ someThing: null });
  * // `[data-some-thing]`
  *
- * @example Dataset Object With Value
+ * @example Data Object With Value
  * const selector = dataSelector({ someThing: "stuff" });
  * // `[data-some-thing="stuff"]`
  *
- * @example Dataset Object With Value and Tag
+ * @example Data Object With Value and Tag
  * const selector = dataSelector({ someThing: "stuff", otherThing: "doodles" }, "a");
  * // `a[data-some-thing="stuff"][data-other-thing="doodles"]`
  */
-export function dataSelector(
-  dataset: Dataset,
-  tag?: AnyElementTagName | "",
-): string;
+export function dataSelector(data: Data, tag?: AnyElementTagName): string;
 
 /**
- * Returns a valid selector for a dataset with the specified key and optional
- * value.
+ * Returns a valid selector for a dataset with the specified `key` and optional
+ * `value`. If `tag` is specified, it is included in the resulting selector.
  *
  * @param key Key or attribute name for the dataset entry.
  * @param [value] Optional value of the dataset entry.
@@ -63,34 +59,31 @@ export function dataSelector(
  * // `a[data-some-thing="stuff"]`
  */
 export function dataSelector(
-  key: DatasetKey | DatasetAttrName,
-  value: NilOr<DatasetValue>,
-  tag?: AnyElementTagName | "",
+  key: DataKey,
+  value: NilOr<DataValue>,
+  tag?: AnyElementTagName,
 ): CssSelector;
 
 export function dataSelector(
-  keyOrDataset: Dataset | DatasetKey | DatasetAttrName,
-  valueOrTag: NilOr<DatasetValue> | AnyElementTagName | "" = undefined,
-  tag: AnyElementTagName | "" = "",
+  keyOrData: Data | DataKey,
+  valueOrTag: NilOr<DataValue> | AnyElementTagName = undefined,
+  tag?: AnyElementTagName,
 ): CssSelector {
-  if (isPlainObject(keyOrDataset)) {
+  if (isPlainObject(keyOrData)) {
     let selector = "";
 
-    for (const key of Object.keys(keyOrDataset)) {
-      selector += singleDataSelector(key, keyOrDataset[key]);
+    for (const key of Object.keys(keyOrData)) {
+      selector += singleDataSelector(key, keyOrData[key]);
     }
 
-    return `${valueOrTag ?? ""}${selector}`;
+    return selectorWithTag(selector, valueOrTag as AnyElementTagName);
   } else {
-    return `${tag}${singleDataSelector(keyOrDataset, valueOrTag)}`;
+    return selectorWithTag(singleDataSelector(keyOrData, valueOrTag), tag);
   }
 }
 
-function singleDataSelector(
-  key: string,
-  value: NilOr<DatasetValue>,
-): CssSelector {
-  const attrName = validDataAttrName(key);
+function singleDataSelector(key: string, value: NilOr<DataValue>): CssSelector {
+  const attrName = asDataAttrName(key);
 
   // If a value was specified, that's what we want to search by. So for key
   // of `someKey` and value of `someValue`, we would return `[data-some-key="someValue"]`,
@@ -98,8 +91,6 @@ function singleDataSelector(
   if (isNil(value)) {
     return `[${attrName}]`;
   } else {
-    const validValue = stringifyAttributeValue(value);
-
-    return attrSelector({ [attrName]: validValue });
+    return attrSelector(attrName, value);
   }
 }

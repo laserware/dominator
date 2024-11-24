@@ -1,9 +1,7 @@
-import { isNil } from "@laserware/arcade";
+import { isNotNil } from "@laserware/arcade";
 
-import type { ElemOrCssSelector, NilOr, NullOr } from "../types.ts";
-
-import { InvalidElemError } from "./InvalidElemError.ts";
-import { toElem } from "./toElem.ts";
+import { elemOrThrow } from "../internal/elemOrThrow.ts";
+import type { ElemOrCssSelector, NullOr } from "../types.ts";
 
 /**
  * Type of value that can be returned from the {@linkcode getElemValueAs}
@@ -22,62 +20,9 @@ type GetElemValueAsReturn<T extends ElemValueType> = T extends "boolean"
         : never;
 
 /**
- * Returns the value of the specified element.
- *
- * @param target Element, EventTarget, or CSS selector.
- */
-export function getElemValue<T>(target: NullOr<ElemOrCssSelector>): T {
-  const elem = toElem<HTMLInputElement>(target);
-
-  if (elem === null) {
-    throw new InvalidElemError("Could not get value for element");
-  }
-
-  return elem.value as unknown as T;
-}
-
-/**
- * Returns the value of the specified element with the specified type.
- *
- * @template T Type of the value that gets returned.
- *
- * @param target Element, EventTarget, or CSS selector.
- * @param as {@linkcode ElemValueType} to coerce the target value property to.
- */
-export function getElemValueAs<T extends ElemValueType>(
-  target: NullOr<ElemOrCssSelector>,
-  as: T,
-): GetElemValueAsReturn<T> {
-  const elem = toElem(target)!;
-
-  if (!isInputElement(elem)) {
-    throw new Error("Cannot get value on an element if it is not an input");
-  }
-
-  if (elem === null) {
-    throw new InvalidElemError("Could not get value for element");
-  }
-
-  if (as === "number") {
-    return elem.valueAsNumber as unknown as GetElemValueAsReturn<T>;
-  }
-
-  if (as === "date") {
-    return elem.valueAsDate as unknown as GetElemValueAsReturn<T>;
-  }
-
-  const elemValue = elem.value as string;
-
-  if (as === "boolean") {
-    return (elemValue === "true") as unknown as GetElemValueAsReturn<T>;
-  }
-
-  return elemValue as unknown as GetElemValueAsReturn<T>;
-}
-
-/**
  * List of HTML input types.
  * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
+ * @internal
  */
 // prettier-ignore
 const inputTypes = [
@@ -88,11 +33,83 @@ const inputTypes = [
   "datetime",
 ];
 
-function isInputElement(elem: NilOr<HTMLElement>): elem is HTMLInputElement {
-  if (isNil(elem)) {
-    return false;
+/**
+ * Returns the value of the specified `target` as the raw string.
+ *
+ * @param target Element, EventTarget, or CSS selector.
+ *
+ * @throws {InvalidElemError} If the `target` specified does not exist.
+ */
+export function getElemValue(target: NullOr<ElemOrCssSelector>): string {
+  const elem = elemOrThrow(target, "Could not get value for element");
+
+  if (isInputElement(elem)) {
+    return elem.value;
+  } else {
+    throw new Error("Cannot get value on an element if it is not an input");
+  }
+}
+
+/**
+ * Returns the value of the specified `target` with the specified type.
+ *
+ * @template T Type of the value that gets returned.
+ *
+ * @param target Element, EventTarget, or CSS selector.
+ * @param as {@linkcode ElemValueType} to coerce the target value property to.
+ * @param [fallback] Optional fallback value to use if the value is missing/invalid.
+ *
+ * @throws {InvalidElemError} If the `target` specified does not exist.
+ */
+export function getElemValueAs<T extends ElemValueType>(
+  target: NullOr<ElemOrCssSelector>,
+  as: T,
+  fallback?: T,
+): GetElemValueAsReturn<T> {
+  const elem = elemOrThrow(target, "Could not get value for element");
+
+  if (!isInputElement(elem)) {
+    throw new Error("Cannot get value on an element if it is not an input");
   }
 
+  if (as === "number") {
+    const numericValue = elem.valueAsNumber;
+
+    if (Number.isNaN(numericValue) && isNotNil(fallback)) {
+      return asElemReturnValue<T>(fallback);
+    } else {
+      return asElemReturnValue<T>(numericValue);
+    }
+  }
+
+  if (as === "date") {
+    const dateValue = elem.valueAsDate;
+
+    if (dateValue === null && isNotNil(fallback)) {
+      return asElemReturnValue<T>(fallback);
+    } else {
+      return asElemReturnValue<T>(dateValue);
+    }
+  }
+
+  const stringValue = elem.value as string;
+
+  if (as === "boolean") {
+    const hasValue = isNotNil(stringValue) && stringValue !== "";
+
+    if (hasValue) {
+      return asElemReturnValue<T>(stringValue === "true");
+    }
+
+    if (isNotNil(fallback)) {
+      return asElemReturnValue<T>(fallback);
+    }
+  }
+
+  return asElemReturnValue<T>(stringValue);
+}
+
+function isInputElement(elem: HTMLElement): elem is HTMLInputElement {
   if (elem instanceof HTMLInputElement) {
     return true;
   }
@@ -106,4 +123,10 @@ function isInputElement(elem: NilOr<HTMLElement>): elem is HTMLInputElement {
   }
 
   return false;
+}
+
+function asElemReturnValue<T extends ElemValueType>(
+  value: any,
+): GetElemValueAsReturn<T> {
+  return value as unknown as GetElemValueAsReturn<T>;
 }

@@ -1,6 +1,6 @@
 import { isPlainObject } from "@laserware/arcade";
 
-import { attrSelector } from "../attrs/attrSelector.ts";
+import { attrSelector, attrsSelector } from "../attrs/attrsSelector.ts";
 import { dataSelector } from "../data/dataSelector.ts";
 import { toElem } from "../elem/toElem.ts";
 import type {
@@ -9,13 +9,13 @@ import type {
   Attrs,
   AttrValue,
   CssSelector,
-  Dataset,
+  Data,
   Elem,
   ElemOrCssSelector,
   NilOr,
 } from "../types.ts";
 
-/** Find element(s) matching the specified CSS selector. */
+/** Find Element(s) matching the specified CSS selector. */
 export interface FindWithSelectorOptions {
   /** CSS selector search string. */
   withSelector: CssSelector;
@@ -25,7 +25,7 @@ export interface FindWithSelectorOptions {
 }
 
 /**
- * Find `Element(s)` with attribute name matching the specified key
+ * Find Element(s) with attribute name matching the specified key
  * field. If a value is specified, it is included in the CSS selector.
  */
 export interface FindWithAttrOptions {
@@ -43,8 +43,8 @@ export interface FindWithAttrOptions {
 }
 
 /**
- * Find `Element(s)` with the specified attributes. For attributes that don't
- * have a value, use `null`.
+ * Find Element(s) with the specified attributes. For attributes that don't
+ * have a value, use `null` or an empty string.
  */
 export interface FindWithAttrsOptions {
   /** Key/value pairs of attributes. */
@@ -58,12 +58,12 @@ export interface FindWithAttrsOptions {
 }
 
 /**
- * Find `Element(s)` with the specified dataset. For `data-` attributes that
+ * Find Element(s) with the specified dataset. For `data-` attributes that
  * don't have a value, use `null`.
  */
 export interface FindWithDataOptions {
   /** Key/value pairs of dataset to search for. */
-  withData: Dataset;
+  withData: Data;
 
   /** Optional parent Element, EventTarget, or CSS selector. */
   parent?: NilOr<ElemOrCssSelector>;
@@ -73,11 +73,12 @@ export interface FindWithDataOptions {
 }
 
 /**
- * Options for finding `Element(s)`. You can find elements by selector, name/value
+ * Options for finding Element(s). You can find elements by selector, name/value
  * pair for an attribute, or a set of attributes.
  *
- * Note that the search fields use a `with*` prefix to ensure they don't
- * accidentally get treated as HTML/SVG attributes.
+ * @remarks
+ * The search fields use a `with*` prefix to ensure they don't accidentally get
+ * treated as HTML/SVG attributes.
  */
 export type FindOptions =
   | FindWithAttrOptions
@@ -125,7 +126,7 @@ export namespace FindOptions {
     }
 
     if ("withAttrs" in options) {
-      selector = attrSelector(options.withAttrs, options.tag);
+      selector = attrsSelector(options.withAttrs, options.tag);
     }
 
     if ("withData" in options) {

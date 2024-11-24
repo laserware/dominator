@@ -1,29 +1,33 @@
 import { isNotNil } from "@laserware/arcade";
 
-import { InvalidElemError } from "../elem/InvalidElemError.ts";
-import { toElem } from "../elem/toElem.ts";
-import { stringifyAttributeValue } from "../internal/stringifyAttributeValue.ts";
-import { toAttrValue } from "../internal/toAttrValue.ts";
-import { validDataAttrName } from "../internal/validDataAttrName.ts";
-import type { AttrValue, ElemOrCssSelector, NullOr } from "../types.ts";
+import { asDataAttrName } from "../internal/asDataAttrName.ts";
+import { elemOrThrow } from "../internal/elemOrThrow.ts";
+import { parseDOMValue } from "../internal/parseDOMValue.ts";
+import { stringifyDOMValue } from "../internal/stringifyDOMValue.ts";
+import type {
+  AttrValue,
+  ElemOrCssSelector,
+  NullOr,
+  Stringifiable,
+} from "../types.ts";
 
 /**
  * Valid shape for dataset property. The values can be any type that can be
  * stringified.
  */
-type AnyDatasetShape = Record<string, any>;
+type AnyDatasetShape = Record<string, Stringifiable>;
 
 /**
  * Wrapper for managing the {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset|dataset}
  * property on an element.
  *
- * Trying to work with the dataset property using TypeScript is not great. You
+ * Trying to work with the `dataset` property using TypeScript is not great. You
  * have to *repeatedly* perform a bunch of type checks, which is tedious and
  * results in overly-verbose code. This class makes it much easier to get and
- * set properties of the dataset (which map to the corresponding `data-*`
+ * set properties of the `dataset` (which map to the corresponding `data-*`
  * attributes on an element).
  *
- * The dataset property is a (very barebones)
+ * The `dataset` property is a (very barebones)
  * {@link https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap|DOMStringMap}.
  * This wrapper class enables you to get and set values of any type that can be
  * stringified while retaining type safety via the generic passed in.
@@ -36,21 +40,17 @@ export class Dataset<DS extends AnyDatasetShape> {
   readonly #element: HTMLElement;
 
   /**
-   * Creates a new instance of a {@link Dataset} class to manage the dataset
+   * Creates a new instance of a {@linkcode Dataset} class to manage the dataset
    * property of the corresponding `target`. Optionally pass in `initialData`
    * that can fully match the shape specified in the `DS` generic or partially.
    *
    * @param target Element, EventTarget, or CSS selector.
    * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
+   *
+   * @throws {InvalidElemError} If the `target` specified does not exist.
    */
   constructor(target: NullOr<ElemOrCssSelector>, initialData?: Partial<DS>) {
-    const element = toElem<HTMLElement>(target);
-
-    if (element === null) {
-      throw new InvalidElemError("Unable to get element");
-    }
-
-    this.#element = element;
+    this.#element = elemOrThrow(target, "Unable to initialize Dataset");
 
     if (isNotNil(initialData)) {
       this.update(initialData);
@@ -72,7 +72,7 @@ export class Dataset<DS extends AnyDatasetShape> {
       const entries: Record<string, NullOr<AttrValue>> = {};
 
       for (const name of Object.keys(this.#element.dataset)) {
-        entries[name] = toAttrValue(this.#element.dataset[name]);
+        entries[name] = parseDOMValue(this.#element.dataset[name]);
       }
 
       return entries as DS;
@@ -87,7 +87,7 @@ export class Dataset<DS extends AnyDatasetShape> {
    * @param key Key of the dataset entry to get.
    */
   public get<K extends keyof DS>(key: K): NullOr<DS[K]> {
-    return toAttrValue(this.#dataset[key]);
+    return parseDOMValue(this.#dataset[key]);
   }
 
   /**
@@ -97,7 +97,7 @@ export class Dataset<DS extends AnyDatasetShape> {
    * @param value Value to set for the dataset entry.
    */
   public set<K extends keyof DS>(key: K, value: DS[K]): this {
-    this.#dataset[key as string] = stringifyAttributeValue(value);
+    this.#dataset[key as string] = stringifyDOMValue(value);
 
     return this;
   }
@@ -111,7 +111,7 @@ export class Dataset<DS extends AnyDatasetShape> {
    */
   public update(entries: Partial<DS>): this {
     for (const key of Object.keys(entries)) {
-      this.#dataset[key] = stringifyAttributeValue(entries[key]);
+      this.#dataset[key] = stringifyDOMValue(entries[key]);
     }
 
     return this;
@@ -124,7 +124,7 @@ export class Dataset<DS extends AnyDatasetShape> {
    * @param key Dataset key for which to get attribute.
    */
   public attrNameFor<K extends keyof DS>(key: K): string {
-    return validDataAttrName(key as string);
+    return asDataAttrName(key as string);
   }
 
   get #dataset(): DOMStringMap {
@@ -137,7 +137,8 @@ export class Dataset<DS extends AnyDatasetShape> {
 }
 
 /**
- * Returns a new {@link Dataset} instance for managing the {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset|dataset}
+ * Returns a new {@linkcode Dataset} instance for managing the
+ * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset|dataset}
  * property on the specified `target`. Optionally pass in `initialData`
  * that can fully match the shape specified in the `DS` generic or partially.
  *

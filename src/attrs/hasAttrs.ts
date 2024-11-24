@@ -1,4 +1,5 @@
-import { toElem } from "../elem/toElem.ts";
+import { elemOrThrow } from "../internal/elemOrThrow.ts";
+import { formatList } from "../internal/formatList.ts";
 import type { AttrName, ElemOrCssSelector, NullOr } from "../types.ts";
 
 /**
@@ -6,12 +7,16 @@ import type { AttrName, ElemOrCssSelector, NullOr } from "../types.ts";
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute.
+ *
+ * @throws {InvalidElemError} If the `target` specified does not exist.
  */
 export function hasAttr(
   target: NullOr<ElemOrCssSelector>,
   name: AttrName,
 ): boolean {
-  return toElem(target)?.hasAttribute(name) ?? false;
+  const elem = elemOrThrow(target, `Unable to check for attribute ${name}`);
+
+  return elem.hasAttribute(name);
 }
 
 /**
@@ -20,15 +25,15 @@ export function hasAttr(
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param names Attribute names to check for.
+ *
+ * @throws {InvalidElemError} If the `target` specified does not exist.
  */
 export function hasAllAttrs(
   target: NullOr<ElemOrCssSelector>,
   names: AttrName[],
 ): boolean {
-  const elem = toElem<HTMLElement>(target);
-  if (elem === null) {
-    return false;
-  }
+  // prettier-ignore
+  const elem = elemOrThrow(target, `Unable to check for attributes ${formatList(names)}`);
 
   for (const attributeName of elem.getAttributeNames()) {
     if (!names.includes(attributeName)) {
@@ -45,15 +50,15 @@ export function hasAllAttrs(
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param names Attribute names to check for.
+ *
+ * @throws {InvalidElemError} If the `target` specified does not exist.
  */
 export function hasSomeAttrs(
   target: NullOr<ElemOrCssSelector>,
   names: AttrName[],
 ): boolean {
-  const elem = toElem<HTMLElement>(target);
-  if (elem === null) {
-    return false;
-  }
+  // prettier-ignore
+  const elem = elemOrThrow(target, `Unable to check for attributes ${formatList(names)}`);
 
   let matchFound: boolean = false;
 

@@ -1,6 +1,5 @@
+import { elemOrThrow } from "../internal/elemOrThrow.ts";
 import type { ElemOrCssSelector } from "../types.ts";
-
-import { toElem } from "./toElem.ts";
 
 /**
  * Ensures the given `target` is within the visible scroll area of the specified
@@ -8,20 +7,16 @@ import { toElem } from "./toElem.ts";
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param parent Element, Element, or selector for scroll parent.
+ *
+ * @throws {InvalidElemError} If the `target` specified does not exist.
  */
 export function keepElemVisibleIn(
   target: ElemOrCssSelector,
   parent: ElemOrCssSelector,
 ): void {
-  const scrollElem = toElem(parent);
-  if (scrollElem === null) {
-    return;
-  }
-
-  const activeElem = toElem(target);
-  if (activeElem === null) {
-    return;
-  }
+  // prettier-ignore
+  const scrollElem = elemOrThrow(parent, "Unable to keep element visible in parent");
+  const activeElem = elemOrThrow(target, "Unable to keep target visible");
 
   const isAbove = activeElem.offsetTop < scrollElem.scrollTop;
   const isBelow =

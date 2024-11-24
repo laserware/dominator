@@ -1,6 +1,7 @@
 import { asElem } from "../elem/asElem.ts";
-import { toElem } from "../elem/toElem.ts";
-import { stringifyAttributeValue } from "../internal/stringifyAttributeValue.ts";
+import { elemOrThrow } from "../internal/elemOrThrow.ts";
+import { formatList } from "../internal/formatList.ts";
+import { stringifyDOMValue } from "../internal/stringifyDOMValue.ts";
 import type {
   AttrName,
   Attrs,
@@ -20,16 +21,15 @@ import type {
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to set.
  * @param value Value to set for the attribute.
+ *
+ * @throws {InvalidElemError} If the `target` specified does not exist.
  */
 export function setAttr<E extends Element = HTMLElement>(
   target: NullOr<ElemOrCssSelector>,
   name: AttrName,
   value: NilOr<AttrValue>,
-): NullOr<E> {
-  const elem = toElem<HTMLElement>(target);
-  if (elem === null) {
-    return null;
-  }
+): E {
+  const elem = elemOrThrow(target, `Unable to set attribute ${name}`);
 
   setSingleAttr(elem, name, value);
 
@@ -46,15 +46,15 @@ export function setAttr<E extends Element = HTMLElement>(
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param attrs Object with key of attribute name and value of attribute value.
+ *
+ * @throws {InvalidElemError} If the `target` specified does not exist.
  */
 export function setAttrs<E extends Element = HTMLElement>(
   target: NullOr<ElemOrCssSelector>,
   attrs: Attrs,
-): NullOr<E> {
-  const elem = toElem<HTMLElement>(target);
-  if (elem === null) {
-    return null;
-  }
+): E {
+  // prettier-ignore
+  const elem = elemOrThrow(target, `Unable to set attributes ${formatList(attrs)}`);
 
   for (const name of Object.keys(attrs)) {
     setSingleAttr(elem, name, attrs[name]);
@@ -68,7 +68,7 @@ function setSingleAttr(
   name: string,
   value: NilOr<AttrValue>,
 ): void {
-  const attrValue = stringifyAttributeValue(value);
+  const attrValue = stringifyDOMValue(value);
 
   if (attrValue === undefined) {
     elem.removeAttribute(name);

@@ -1,8 +1,5 @@
+import { elemOrThrow } from "../internal/elemOrThrow.ts";
 import type { ElemOrCssSelector } from "../types.ts";
-
-import { InvalidElemError } from "./InvalidElemError.ts";
-
-import { toElem } from "./toElem.ts";
 
 /**
  * Returns true if the specified `target` is visible in the browser viewport.
@@ -12,10 +9,7 @@ import { toElem } from "./toElem.ts";
  * @throws {InvalidElemError} If the `target` wasn't found.
  */
 export function isElemInViewport(target: ElemOrCssSelector): boolean {
-  const elem = toElem(target);
-  if (elem === null) {
-    throw new InvalidElemError("Unable to determine if element is in view");
-  }
+  const elem = elemOrThrow(target, "Unable to determine if element is in view");
 
   const { top, left, bottom, right } = elem.getBoundingClientRect();
 

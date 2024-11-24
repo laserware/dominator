@@ -1,4 +1,4 @@
-import { attrSelector } from "../attrs/attrSelector.ts";
+import { attrsSelector } from "../attrs/attrsSelector.ts";
 import {
   AttrValue,
   Elem,
@@ -12,7 +12,7 @@ import {
 import { FindOptions } from "./findOptions.ts";
 
 /**
- * Parses the args passed to the {@link findElem} and {@link findAllElems}
+ * Parses the args passed to the {@linkcode findElem} and {@linkcode findAllElems}
  * functions to find elements in the DOM.
  */
 export function parseFindArgs(
@@ -29,13 +29,13 @@ export function parseFindArgs(
 
     if (AttrValue.is(valueOrParent)) {
       return {
-        selector: attrSelector({ [firstArg]: valueOrParent }),
+        selector: attrsSelector({ [firstArg]: valueOrParent }),
         validParent: parent ?? document,
       };
     }
 
     if (valueOrParent === undefined) {
-      return { selector: attrSelector({ [firstArg]: null }), validParent };
+      return { selector: attrsSelector({ [firstArg]: null }), validParent };
     }
 
     return { selector: firstArg, validParent };
@@ -50,5 +50,5 @@ export function parseFindArgs(
     };
   }
 
-  return { selector: attrSelector(firstArg), validParent };
+  return { selector: attrsSelector(firstArg), validParent };
 }

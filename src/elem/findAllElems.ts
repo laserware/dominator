@@ -19,7 +19,7 @@ import { toElem } from "./toElem.ts";
  *
  * @template E Type of Element instances to return.
  *
- * @param options Options for finding the elements. See {@link FindOptions}.
+ * @param options Options for finding the elements. See {@linkcode FindOptions}.
  */
 export function findAllElems<E extends Element = HTMLElement>(
   options: FindOptions,

@@ -1,6 +1,7 @@
 import type { ElemOrCssSelector, NullOr } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
+import { asElem } from "./asElem.ts";
 
 /**
  * Options for setting focus to an element.
@@ -34,7 +35,7 @@ export function focusElem<E extends Element = HTMLElement>(
   }
 
   const focusCallback = (): void => {
-    const elem = toElem<HTMLInputElement>(target, options?.parent);
+    const elem = toElem(target, options?.parent);
 
     if (elem === null) {
       return;
@@ -42,7 +43,7 @@ export function focusElem<E extends Element = HTMLElement>(
 
     elem.focus({ preventScroll: options?.preventScroll ?? false });
 
-    options?.onDone?.(elem as unknown as E);
+    options?.onDone?.(asElem<E>(elem));
   };
 
   setTimeout(focusCallback, options?.delay ?? 0);

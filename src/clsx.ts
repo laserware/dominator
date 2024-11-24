@@ -35,15 +35,14 @@ export type ClassDict = Record<string, any>;
 export type ClassArray = ClassValue[];
 
 /**
- * @file This code was taken directly from the {@link https://github.com/lukeed/clsx|clsx}
- *       library. 99% of the time, I'm using the clsx library alongside dominator,
- *       so I decided to just vendor it.
- */
-
-/**
  * A tiny (239B) utility for constructing `className` strings conditionally.
  * Also serves as a faster & smaller drop-in replacement for the
  * {@link https://www.npmjs.com/package/classnames|classnames} package.
+ *
+ * @privateRemarks
+ * This code was taken directly from the {@link https://github.com/lukeed/clsx|clsx}
+ * library. 99% of the time, I'm using the clsx library alongside dominator,
+ * so I decided to just vendor it.
  *
  * @param inputs Variable array of inputs to map to class names.
  */

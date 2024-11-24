@@ -7,6 +7,10 @@ import { isElemChildOf } from "./isElemChildOf.ts";
  * Returns true if the specified `target` is the same or a child of the specified
  * `parent`.
  *
+ * @remarks
+ * This function doesn't throw if the specified `child` and/or `parent` elements
+ * don't exist. Rather, it just returns `false`. This was a deliberate choice.
+ *
  * @param child Element, EventTarget, or CSS selector.
  * @param parent Element, EventTarget, or CSS selector for parent (or same) element.
  * @param [options] Options for checking for parent.

@@ -10,6 +10,7 @@ import type {
   UndefinedOr,
 } from "../types.ts";
 
+import { asElem } from "./asElem.ts";
 import { toElem } from "./toElem.ts";
 
 /**
@@ -18,7 +19,7 @@ import { toElem } from "./toElem.ts";
  *
  * @template E Type of Element to return.
  *
- * @param options Options for finding the element. See {@link FindOptions}.
+ * @param options Options for finding the element. See {@linkcode FindOptions}.
  */
 export function findElem<E extends Element = HTMLElement>(
   options: FindOptions,
@@ -78,8 +79,9 @@ export function findElem<E extends Element = HTMLElement>(
   try {
     const validParent = result.validParent ?? document;
 
-    // prettier-ignore
-    return toElem(validParent)?.querySelector(result.selector) as unknown as E;
+    const elem = toElem(validParent)?.querySelector(result.selector);
+
+    return asElem<E>(elem);
   } catch {
     return null;
   }
