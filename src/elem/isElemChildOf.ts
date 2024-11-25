@@ -20,7 +20,7 @@ import { toElem } from "./toElem.ts";
  * @param [options] Options for checking for parent.
  * @property [options.maxDepth=10] Maximum depth to perform search.
  *
- * @returns `true` if the specified `child` is a child of the specified `parent`, otherwise `false`.
+ * @returns `true` if the specified `child` is a child of the specified `parent`.
  */
 export function isElemChildOf(
   child: ElemOrCssSelector,

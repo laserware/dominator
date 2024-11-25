@@ -1,6 +1,24 @@
+import { isNil } from "@laserware/arcade";
+
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type { ElemOrCssSelector, StyleKey } from "../types.ts";
+import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
+import type {
+  DOMPropertySearch,
+  ElemOrCssSelector,
+  StyleKey,
+  StyleValue,
+} from "../types.ts";
+
+import { getStyle } from "./getStyles.ts";
+
+/**
+ * Search criteria for checking if style properties are present in an element.
+ * You can use an array of style property names to check only if the styles are
+ * present, or an object to search for specific values. Use `null` for the value
+ * if you only care about the presence of a style property.
+ */
+export type StylesSearch = DOMPropertySearch<StyleKey, StyleValue | null>;
 
 /**
  * Checks if the specified `target` has the specified style property with name `key`.
@@ -8,7 +26,7 @@ import type { ElemOrCssSelector, StyleKey } from "../types.ts";
  * @param target Element, EventTarget, or CSS selector.
  * @param key Name of the style property to check for.
  *
- * @returns `true` if the specified style is present, otherwise `false`.
+ * @returns `true` if the specified style is present.
  *
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
@@ -19,68 +37,57 @@ export function hasStyle(target: ElemOrCssSelector, key: StyleKey): boolean {
 }
 
 /**
- * Checks if the specified `target` has *all* of the style properties with
- * names matching the specified `keys`.
+ * Checks if *all* of the style properties on the specified `target` match the
+ * specified `search` criteria.
  *
  * @param target Element, EventTarget, or CSS selector.
- * @param keys Names of the style properties to check for.
+ * @param search Array of style property names or styles filter to check for.
  *
- * @returns `true` if the specified `target` has *all* specified styles, otherwise `false`.
+ * @returns `true` if the specified `target` has *all* specified styles.
  *
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function hasAllStyles(
   target: ElemOrCssSelector,
-  keys: StyleKey[],
+  search: StylesSearch,
 ): boolean {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to check for all styles ${formatForError(keys)}`);
+  const elem = elemOrThrow(target, `Unable to check for all styles ${formatForError(search)}`);
 
-  for (const key of keys) {
-    if (!hasSingleStyle(elem, key)) {
-      return false;
-    }
-  }
-
-  return true;
+  return hasAllProperties(elem, search, hasSingleStyle);
 }
 
 /**
- * Checks if the specified `target` has *some* of the style properties with
- * names matching the specified `keys`
+ * Checks if *some* of the style properties on the specified `target` match the
+ * specified `search` criteria.
  *
  * @param target Element, EventTarget, or CSS selector.
- * @param keys Names of the style properties to check for.
+ * @param search Array of style property names or styles filter to check for.
  *
- * @returns `true` if the specified `target` has *some* specified styles, otherwise `false`.
+ * @returns `true` if the specified `target` has *some* specified styles.
  *
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function hasSomeStyles(
   target: ElemOrCssSelector,
-  keys: StyleKey[],
+  search: StylesSearch,
 ): boolean {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to check for some styles ${formatForError(keys)}`);
+  const elem = elemOrThrow(target, `Unable to check for some styles ${formatForError(search)}`);
 
-  for (const key of keys) {
-    if (hasSingleStyle(elem, key)) {
-      return true;
-    }
-  }
-
-  return false;
+  return hasSomeProperties(elem, search, hasSingleStyle);
 }
 
-function hasSingleStyle(element: HTMLElement, key: StyleKey): boolean {
-  // @ts-ignore I know `key` is a valid key for styles. If it wasn't we return `undefined`.
-  const styleValue = element.style[key];
+function hasSingleStyle(
+  element: HTMLElement,
+  key: string,
+  value?: StyleValue | null,
+): boolean {
+  const styleValue = getStyle(element, key as StyleKey);
 
-  if (styleValue !== undefined) {
-    return true;
+  if (isNil(value)) {
+    return styleValue !== undefined;
+  } else {
+    return styleValue === value;
   }
-
-  const styleProperty = element.style.getPropertyValue(key);
-
-  return styleProperty !== "";
 }

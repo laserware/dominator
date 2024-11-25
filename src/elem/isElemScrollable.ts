@@ -6,7 +6,7 @@ import type { ElemOrCssSelector } from "../types.ts";
  *
  * @param target Element, EventTarget, or CSS selector.
  *
- * @returns `true` if the `target` is scrollable, otherwise `false`.
+ * @returns `true` if the `target` is scrollable.
  */
 export function isElemScrollable(target: ElemOrCssSelector): boolean {
   const elem = elemOrThrow(target, "Unable to check if target is scrollable");

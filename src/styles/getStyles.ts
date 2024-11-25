@@ -80,12 +80,21 @@ function getSingleStyle<T extends StyleValue>(
   element: HTMLElement,
   key: StyleKey,
 ): T | undefined {
-  // @ts-ignore I know `key` is a valid key for styles. If it wasn't we return `undefined`.
-  const styleValue = element.style[key];
+  // Note that we're using nullish coalescing for the return value of
+  // `parseDOMValue` because it may be `null` and we only want to return
+  // `undefined` if the style doesn't exist.
 
-  if (styleValue === undefined) {
-    return undefined;
-  } else {
-    return parseDOMValue<T>(styleValue) ?? undefined;
+  // @ts-ignore I know `key` is a valid key for styles. If it wasn't we return `undefined`.
+  const styleEntry = element.style[key];
+
+  if (styleEntry !== undefined) {
+    return parseDOMValue<T>(styleEntry) ?? undefined;
   }
+
+  const styleProperty = element.style.getPropertyValue(key);
+  if (styleProperty !== "") {
+    return parseDOMValue<T>(styleProperty) ?? undefined;
+  }
+
+  return undefined;
 }

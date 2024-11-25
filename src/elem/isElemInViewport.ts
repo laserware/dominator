@@ -6,7 +6,7 @@ import type { ElemOrCssSelector } from "../types.ts";
  *
  * @param target Element, EventTarget, or CSS selector.
  *
- * @returns `true` if the specified `target` is in the viewport, otherwise `false`.
+ * @returns `true` if the specified `target` is in the viewport.
  *
  * @throws {InvalidElemError} If the `target` wasn't found.
  */

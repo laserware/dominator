@@ -10,7 +10,7 @@ import type { ElemOrCssSelector } from "../types.ts";
  * @param target Element, EventTarget, or CSS selector.
  * @param id ID to check for element.
  *
- * @returns `true` if the `target` has the specified `id`, otherwise `false`.
+ * @returns `true` if the `target` has the specified `id`.
  *
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */

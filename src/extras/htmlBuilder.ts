@@ -96,7 +96,7 @@ type NonFunctionalChild = ElementBuilder | AnyElement | AttrValue | null;
  * - Function that returns any one of the above child items
  * - null, which indicates that nothing should be built/rendered
  */
-export type Child = NonFunctionalChild | ChildFunction;
+export type ElementBuilderChild = NonFunctionalChild | ChildFunction;
 
 /**
  * Callback that returns a builder child. Note that you cannot return another
@@ -112,12 +112,12 @@ type ChildFunction = () => NonFunctionalChild;
  * @param properties Attributes, properties, and event listeners to attach to the element.
  * @param children Child elements, element builders, primitives, callbacks, or null.
  *                 If null, the element is not added. This is useful for conditional rendering.
- *                 See {@linkcode Child} for additional details.
+ *                 See {@linkcode ElementBuilderChild} for additional details.
  */
 export function html<TN extends AnyElementTagName>(
   tagName: TN,
   properties: Partial<AllowedProperties<TN>>,
-  ...children: Child[]
+  ...children: ElementBuilderChild[]
 ): ElementBuilder<TN> {
   const build = (
     parentElement?: AnyElement | undefined,
@@ -127,7 +127,9 @@ export function html<TN extends AnyElementTagName>(
 
     setElementProperties(element, properties, controller);
 
-    const getChildElement = (child: Child): AnyElement | Text | null => {
+    const getChildElement = (
+      child: ElementBuilderChild,
+    ): AnyElement | Text | null => {
       if (child === null) {
         return null;
       }

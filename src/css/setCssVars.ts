@@ -14,8 +14,8 @@ import {
 import { CssVarError } from "./CssVarError.ts";
 
 /**
- * Sets the specified CSS variable `name` to the specified `value` in the optionally
- * specified `target` (or `:root`).
+ * Sets the specified CSS variable `name` to the specified `value` in the
+ * optionally specified `target`.
  *
  * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
  * (i.e. `:root`).
@@ -44,7 +44,7 @@ export function setCssVar<E extends Element = HTMLElement>(
 }
 
 /**
- * Sets the specified CSS `vars` on the optionally specified `target` (or `:root`).
+ * Sets the specified CSS `vars` on the optionally specified `target`.
  *
  * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
  * (i.e. `:root`).

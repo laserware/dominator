@@ -1,4 +1,3 @@
-import { asElem } from "../elem/asElem.ts";
 import { InvalidElemError } from "../elem/InvalidElemError.ts";
 import { toElem } from "../elem/toElem.ts";
 import type { ElemOrCssSelector } from "../types.ts";
@@ -16,15 +15,15 @@ import type { ElemOrCssSelector } from "../types.ts";
  *
  * @returns The Element representation of the specified `target`.
  */
-export function elemOrThrow<E extends Element = HTMLElement>(
+export function elemOrThrow(
   target: ElemOrCssSelector,
   error: string,
-): E {
+): HTMLElement {
   const elem = toElem(target);
 
   if (elem === null) {
     throw new InvalidElemError(error);
   }
 
-  return asElem<E>(elem);
+  return elem;
 }

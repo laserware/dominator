@@ -18,26 +18,6 @@ type GetInputValueAsReturn<T extends InputValueType> = T extends "boolean"
         : never;
 
 /**
- * Gets the value of the specified `target` as the raw string.
- *
- * @param target Element, EventTarget, or CSS selector.
- *
- * @returns String value of the specified `target`.
- *
- * @throws {InvalidElemError} If the specified `target` does not exist.
- * @throws {Error} If the `target` specified is not of type `HTMLInputElement`.
- */
-export function getInputValueRaw(target: ElemOrCssSelector): string {
-  const elem = elemOrThrow(target, "Could not get value for element");
-
-  if (isInputElement(elem)) {
-    return elem.value;
-  } else {
-    throw new Error("Cannot get value on an element if it is not an input");
-  }
-}
-
-/**
  * Returns the value of the specified `target` with the specified type. The
  * value is returned as a number if the {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/valueAsNumber|valueAsNumber}
  * property returns a valid number, a Date if {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/valueAsDate|valueAsDate}
@@ -82,6 +62,26 @@ export function getInputValue<T extends InputValueType>(
   }
 
   return asInputReturnValue<T>(stringValue);
+}
+
+/**
+ * Gets the value of the specified `target` as the raw string.
+ *
+ * @param target Element, EventTarget, or CSS selector.
+ *
+ * @returns String value of the specified `target`.
+ *
+ * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {Error} If the `target` specified is not of type `HTMLInputElement`.
+ */
+export function getInputValueRaw(target: ElemOrCssSelector): string {
+  const elem = elemOrThrow(target, "Could not get value for element");
+
+  if (isInputElement(elem)) {
+    return elem.value;
+  } else {
+    throw new Error("Cannot get value on an element if it is not an input");
+  }
 }
 
 function isInputElement(elem: HTMLElement): elem is HTMLInputElement {

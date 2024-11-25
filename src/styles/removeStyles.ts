@@ -1,6 +1,4 @@
-import { kebabCase } from "@laserware/arcade";
-
-import { asElem } from "../elem/asElem.ts";
+import { cast } from "../internal/cast.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { CssVarName, type ElemOrCssSelector, type StyleKey } from "../types.ts";
@@ -25,7 +23,7 @@ export function removeStyle<E extends Element = HTMLElement>(
 
   removeSingleStyle(elem, key);
 
-  return asElem<E>(elem);
+  return cast<E>(elem);
 }
 
 /**
@@ -52,17 +50,14 @@ export function removeStyles<E extends Element = HTMLElement>(
     removeSingleStyle(elem, key);
   }
 
-  return asElem<E>(elem);
+  return cast<E>(elem);
 }
 
 function removeSingleStyle(element: HTMLElement, key: StyleKey): void {
-  let propertyName = key as string;
-
-  // If the key doesn't represent a CSS variable (i.e. starts with "--"), we
-  // need to convert it to kebab-case prior to removing the style:
-  if (!CssVarName.is(key)) {
-    propertyName = kebabCase(key);
+  if (CssVarName.is(key)) {
+    element.style.removeProperty(key);
+  } else {
+    // Setting a style value to an empty string removes it:
+    element.style[key] = "";
   }
-
-  element.style.removeProperty(propertyName);
 }

@@ -13,7 +13,7 @@ import { CssVarError } from "./CssVarError.ts";
 
 /**
  * Attempts to get the value associated with the specified CSS variable `name`
- * from the specified `target` (or `:root`).
+ * from the specified `target`.
  *
  * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
  * (i.e. `:root`).
@@ -48,8 +48,7 @@ export function getCssVar<T extends CssVarValue>(
 
 /**
  * Builds an object with the keys equal to the specified CSS variable `names` and
- * the value equal to the corresponding variable value in the specified `target`
- * (or `:root`).
+ * the value equal to the corresponding variable value in the specified `target`.
  *
  * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
  * (i.e. `:root`).

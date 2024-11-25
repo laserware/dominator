@@ -1,8 +1,24 @@
-import { isNotNil } from "@laserware/arcade";
+import { isNil, isNotNil } from "@laserware/arcade";
 
 import { asDataPropertyName } from "../internal/dataKeys.ts";
+import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
-import type { DataKey, DataValue, ElemOrCssSelector } from "../types.ts";
+import { formatForError } from "../internal/formatForError.ts";
+import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
+import type {
+  DataKey,
+  DataValue,
+  DOMPropertySearch,
+  ElemOrCssSelector,
+} from "../types.ts";
+
+/**
+ * Search criteria for checking if dataset entries are present in an element.
+ * You can use an array of dataset property/attribute names to check only if the
+ * dataset entries are present, or an object to search for specific values.
+ * Use `null` for the value if you only care about the presence of a dataset entry.
+ */
+export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
 
 /**
  * Returns true if the specified `target` has a dataset entry with the specified
@@ -14,20 +30,70 @@ import type { DataKey, DataValue, ElemOrCssSelector } from "../types.ts";
  *
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
-export function hasData(
+export function hasDataEntry(
   target: ElemOrCssSelector,
   key: DataKey,
   value?: DataValue,
 ): boolean {
-  const elem = elemOrThrow(target, "Unable to determine if target has data");
+  const elem = elemOrThrow(target, `Unable to check for data ${key}`);
 
-  const validKey = asDataPropertyName(key);
+  return hasSingleDataEntry(elem, key, value);
+}
 
-  const datasetValue = elem.dataset?.[validKey];
+/**
+ * Checks if the specified `target` has *all* of the dataset entries that match
+ * the specified `search` criteria.
+ *
+ * @param target Element, EventTarget, or CSS selector.
+ * @param search Array of dataset keys or dataset filter object to check for.
+ *
+ * @returns `true` if the specified `target` matches all search criteria.
+ *
+ * @throws {InvalidElemError} If the specified `target` does not exist.
+ */
+export function hasAllData(
+  target: ElemOrCssSelector,
+  search: DataSearch,
+): boolean {
+  // prettier-ignore
+  const elem = elemOrThrow(target, `Unable to check for data ${formatForError(search)}`);
 
-  if (value === undefined) {
+  return hasAllProperties(elem, search, hasSingleDataEntry);
+}
+
+/**
+ * Checks if the specified `target` has *some* of the dataset entries that match
+ * the specified `search` criteria.
+ *
+ * @param target Element, EventTarget, or CSS selector.
+ * @param search Array of dataset keys or dataset filter object to check for.
+ *
+ * @returns `true` if the specified `target` matches some search criteria.
+ *
+ * @throws {InvalidElemError} If the specified `target` does not exist.
+ */
+export function hasSomeData(
+  target: ElemOrCssSelector,
+  search: DataSearch,
+): boolean {
+  // prettier-ignore
+  const elem = elemOrThrow(target, `Unable to check for data ${formatForError(search)}`);
+
+  return hasSomeProperties(elem, search, hasSingleDataEntry);
+}
+
+function hasSingleDataEntry(
+  element: HTMLElement,
+  key: DataKey,
+  value?: DataValue,
+): boolean {
+  const propertyName = asDataPropertyName(key);
+
+  const datasetValue = element.dataset?.[propertyName];
+
+  if (isNil(value)) {
     return isNotNil(datasetValue);
   } else {
-    return datasetValue === value;
+    return datasetValue === stringifyDOMValue(value);
   }
 }

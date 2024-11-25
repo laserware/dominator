@@ -3,65 +3,61 @@ import { asElem } from "../elem/asElem.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type {
-  DataKey,
-  DataPropertyName,
-  ElemOrCssSelector,
-  OneOrManyOf,
-} from "../types.ts";
+import type { DataKey, DataPropertyName, ElemOrCssSelector } from "../types.ts";
 
 /**
  * Removes the dataset entry with the specified `key` from the specified
- * `target`. Returns the Element representation of the specified `target`.
+ * `target`.
  *
  * @template E Type of Element to return.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Dataset property or attribute name for the dataset entry to remove.
  *
+ * @returns The Element representation of the specified `target`.
+ *
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
-export function removeData<E extends Element = HTMLElement>(
+export function removeDataEntry<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
   key: DataPropertyName,
-): E;
+): E {
+  // prettier-ignore
+  const elem = elemOrThrow(target, `Unable to remove data for ${key}`);
+
+  removeSingleDataEntry(elem, key);
+
+  return asElem<E>(elem);
+}
 
 /**
  * Removes the specified dataset entries with the specified `keys` from the
- * specified `target`. Returns the Element representation of the specified
- * `target`.
+ * specified `target`.
  *
  * @template E Type of Element to return.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Array of dataset properties or attribute names to remove.
  *
+ * @returns The Element representation of the specified `target`.
+ *
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function removeData<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
   keys: DataKey[],
-): E;
-
-export function removeData<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector,
-  keyOrKeys: OneOrManyOf<DataKey>,
 ): E {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to remove dataset for ${formatForError(keyOrKeys)}`);
+  const elem = elemOrThrow(target, `Unable to remove data for ${formatForError(keys)}`);
 
-  if (Array.isArray(keyOrKeys)) {
-    for (const key of keyOrKeys) {
-      removeSingleData(elem, key);
-    }
-  } else {
-    removeSingleData(elem, keyOrKeys);
+  for (const key of keys) {
+    removeSingleDataEntry(elem, key);
   }
 
   return asElem<E>(elem);
 }
 
-function removeSingleData(element: HTMLElement, key: string): void {
+function removeSingleDataEntry(element: HTMLElement, key: string): void {
   const validAttrName = asDataAttrName(key);
 
   // We remove the _attribute_ rather than deleting the entry from the elements

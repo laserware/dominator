@@ -18,7 +18,7 @@ import {
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Name of the style property.
- * @param value {@linkcode StyleValue} to set for the corresponding key.
+ * @param value Value to set for the style property.
  *
  * @returns The Element representation of the specified `target`.
  *

@@ -34,18 +34,18 @@ export namespace Primitive {
 }
 
 /**
- * Represents a value that can be stringified.
+ * Represents a value that can be assigned to a DOM property after stringification.
  *
  * @remarks
  * Objects and arrays are stringified via {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify|JSON.stringify}.
  */
-export type Stringifiable = Primitive | any[] | Record<number | string, any>;
+export type DOMPropertyValue = Primitive | any[] | Record<number | string, any>;
 
-export namespace Stringifiable {
+export namespace DOMPropertyValue {
   /**
-   * Returns true if the specified value is a valid {@linkcode Stringifiable}.
+   * Returns true if the specified value is a valid {@linkcode DOMPropertyValue}.
    */
-  export function is(value: unknown): value is Stringifiable {
+  export function is(value: unknown): value is DOMPropertyValue {
     if (Primitive.is(value)) {
       return true;
     }
@@ -119,14 +119,14 @@ export type AttrName = string;
  * Value type that can be specified as the value for an HTML/SVG attribute.
  * Before actually setting the attribute on an element, the value is stringified.
  */
-export type AttrValue = Stringifiable;
+export type AttrValue = DOMPropertyValue;
 
 export namespace AttrValue {
   /**
    * Returns true if the specified value is a valid {@linkcode AttrValue}.
    */
   export function is(value: unknown): value is AttrValue {
-    return Stringifiable.is(value);
+    return DOMPropertyValue.is(value);
   }
 }
 
@@ -191,7 +191,7 @@ export type DataKey = DataPropertyName | DataAttrName;
 /**
  * Valid dataset values (prior to stringifying).
  */
-export type DataValue = Stringifiable;
+export type DataValue = DOMPropertyValue;
 
 /**
  *
@@ -247,6 +247,44 @@ export namespace StyleValue {
  * value of {@linkcode StyleValue}.
  */
 export type Styles = Record<StyleKey, StyleValue>;
+
+/**
+ * Key representing any type of DOM property (i.e. attributes, CSS variables,
+ * dataset attribute/property names and style keys).
+ */
+export type DOMPropertyKey = AttrName | CssVarName | DataKey | StyleKey;
+
+/**
+ * Filter value for performing DOM property searches. Use `null` to check if
+ * the attribute exists only (skip checking if values match).
+ */
+export type DOMPropertyFilterValue =
+  | AttrValue
+  | DataValue
+  | CssVarValue
+  | StyleValue
+  | null;
+
+/**
+ * Filter criteria for determining if a DOM property has the specified value.
+ */
+export type DOMPropertyFilter<
+  K extends DOMPropertyKey,
+  V extends DOMPropertyFilterValue,
+> = Record<K, V>;
+
+/**
+ * Search criteria that can be used to determine if a DOM property is present
+ * on an element. If an array, only the presence of the property *names* are
+ * checked. If an object, the property name *and* value are checked.
+ *
+ * @template K The type of {@linkcode DOMPropertyKey}.
+ * @template V The type of {@linkcode DOMPropertyFilterValue} (only needed if using {@linkcode DOMPropertyFilter}).
+ */
+export type DOMPropertySearch<
+  K extends DOMPropertyKey = DOMPropertyKey,
+  V extends DOMPropertyFilterValue = DOMPropertyFilterValue,
+> = K[] | DOMPropertyFilter<K, V>;
 
 /**
  * Tag name for HTML element.

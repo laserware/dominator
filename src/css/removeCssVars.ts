@@ -6,19 +6,20 @@ import type { CssVarName, ElemOrCssSelector } from "../types.ts";
 import { CssVarError } from "./CssVarError.ts";
 
 /**
- * Removes the specified CSS variable `name` from the specified `target`
- * (or `:root`).
+ * Removes the specified CSS variable `name` from the optionally specified
+ * `target`.
  *
  * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
  * (i.e. `:root`).
  *
  * @template E Type of Element to return.
  *
- * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the CSS variable to remove.
+ * @param [target] Optional Element, EventTarget, or CSS selector.
  *
  * @returns The Element representation of the specified `target`.
  *
+ * @throws {CssVarError} If the CSS variable could not be removed from `target`.
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function removeCssVar<E extends Element = HTMLElement>(
@@ -33,7 +34,7 @@ export function removeCssVar<E extends Element = HTMLElement>(
 }
 
 /**
- * Removes the CSS variables with `names` from specified `target` (or `:root`).
+ * Removes the CSS variables with `names` from the optionally specified `target`.
  *
  * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
  * (i.e. `:root`).
@@ -45,6 +46,7 @@ export function removeCssVar<E extends Element = HTMLElement>(
  *
  * @returns The Element representation of the specified `target`.
  *
+ * @throws {CssVarError} If a CSS variable could not be removed from `target`.
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function removeCssVars<E extends Element = HTMLElement>(

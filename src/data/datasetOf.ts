@@ -3,13 +3,17 @@ import { isNotNil } from "@laserware/arcade";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { parseDOMValue, stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
-import type { AttrValue, ElemOrCssSelector, Stringifiable } from "../types.ts";
+import type {
+  AttrValue,
+  DOMPropertyValue,
+  ElemOrCssSelector,
+} from "../types.ts";
 
 /**
  * Valid shape for dataset property. The values can be any type that can be
  * stringified.
  */
-type AnyDatasetShape = Record<string, Stringifiable | null>;
+type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
 
 /**
  * Wrapper for managing the {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset|dataset}

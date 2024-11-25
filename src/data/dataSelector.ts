@@ -1,4 +1,4 @@
-import { isNil, isPlainObject } from "@laserware/arcade";
+import { isNil } from "@laserware/arcade";
 
 import { attrSelector } from "../attrs/attrsSelector.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
@@ -37,11 +37,13 @@ import type {
  * const selector = dataSelector("data-some-thing", "stuff", "a");
  * // `a[data-some-thing="stuff"]`
  */
-export function dataSelector(
+export function dataEntrySelector(
   key: DataKey,
   value: DataValue | null | undefined,
   tag?: AnyElementTagName,
-): CssSelector;
+): CssSelector {
+  return selectorWithTag(singleDataSelector(key, value), tag);
+}
 
 /**
  * Attempts to build a CSS selector string for the specified `data` object. Note
@@ -66,24 +68,14 @@ export function dataSelector(
  * const selector = dataSelector({ someThing: "stuff", otherThing: "doodles" }, "a");
  * // `a[data-some-thing="stuff"][data-other-thing="doodles"]`
  */
-export function dataSelector(data: Data, tag?: AnyElementTagName): string;
+export function dataSelector(data: Data, tag?: AnyElementTagName): CssSelector {
+  let selector = "";
 
-export function dataSelector(
-  keyOrData: Data | DataKey,
-  valueOrTag: DataValue | AnyElementTagName | null | undefined = undefined,
-  tag?: AnyElementTagName,
-): CssSelector {
-  if (isPlainObject(keyOrData)) {
-    let selector = "";
-
-    for (const key of Object.keys(keyOrData)) {
-      selector += singleDataSelector(key, keyOrData[key]);
-    }
-
-    return selectorWithTag(selector, valueOrTag as AnyElementTagName);
-  } else {
-    return selectorWithTag(singleDataSelector(keyOrData, valueOrTag), tag);
+  for (const key of Object.keys(data)) {
+    selector += singleDataSelector(key, data[key]);
   }
+
+  return selectorWithTag(selector, tag);
 }
 
 function singleDataSelector(

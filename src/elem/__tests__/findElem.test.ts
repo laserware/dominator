@@ -1,4 +1,4 @@
-import { dataSelector } from "../../data/dataSelector.ts";
+import { dataEntrySelector } from "../../data/dataSelector.ts";
 import { render } from "../../testing.ts";
 import { findElem } from "../findElem.ts";
 
@@ -14,7 +14,7 @@ describe("the findElem function", () => {
   it("finds an element with a matching dataset", () => {
     render(`<div aria-hidden="true" data-value="test">Child</div>`);
 
-    const selector = dataSelector("value", "test");
+    const selector = dataEntrySelector("value", "test");
 
     const result = findElem(selector);
 

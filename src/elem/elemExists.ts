@@ -13,7 +13,7 @@ import { toElem } from "./toElem.ts";
  *
  * @param target Element, EventTarget, or CSS selector.
  *
- * @returns `true` if the specified `target` exists, otherwise `false`.
+ * @returns `true` if the specified `target` exists.
  */
 export function elemExists(
   target: ElemOrCssSelector | null | undefined,

@@ -1,56 +1,98 @@
 // Attributes
-export { attrSelector, attrsSelector } from "./attrs/attrsSelector.ts";
-export { getAttr, getAttrs } from "./attrs/getAttrs.ts";
-export { hasAllAttrs, hasAttr, hasSomeAttrs } from "./attrs/hasAttrs.ts";
-export { InvalidAttrError } from "./attrs/InvalidAttrError.ts";
-export { removeAttr, removeAttrs } from "./attrs/removeAttrs.ts";
-export { setAttr, setAttrs } from "./attrs/setAttrs.ts";
+export {
+  attrSelector,
+  attrsSelector,
+  getAttr,
+  getAttrs,
+  hasAllAttrs,
+  hasAttr,
+  hasSomeAttrs,
+  InvalidAttrError,
+  removeAttr,
+  removeAttrs,
+  setAttr,
+  setAttrs,
+  type AttrsSearch,
+} from "./attrs/index.ts";
 
 // CSS
-export { CssVarError } from "./css/CssVarError.ts";
-export { getCssVar, getCssVars } from "./css/getCssVars.ts";
-export { hasAllCssVars, hasCssVar, hasSomeCssVars } from "./css/hasCssVars.ts";
-export { removeCssVar, removeCssVars } from "./css/removeCssVars.ts";
-export { setCssVar, setCssVars } from "./css/setCssVars.ts";
+export {
+  CssVarError,
+  getCssVar,
+  getCssVars,
+  hasAllCssVars,
+  hasCssVar,
+  hasSomeCssVars,
+  removeCssVar,
+  removeCssVars,
+  setCssVar,
+  setCssVars,
+  type CssVarsSearch,
+} from "./css/index.ts";
 
 // Dataset
-export { dataSelector } from "./data/dataSelector.ts";
-export { getData } from "./data/getData.ts";
-export { hasData } from "./data/hasData.ts";
-export { removeData } from "./data/removeData.ts";
-export { setData } from "./data/setData.ts";
+export {
+  getData,
+  getDataValue,
+  hasAllData,
+  hasDataEntry,
+  hasSomeData,
+  removeData,
+  removeDataEntry,
+  setData,
+  setDataValue,
+  type DataSearch,
+} from "./data/index.ts";
 
 // Elements
-export { areElemsDifferent } from "./elem/areElemsDifferent.ts";
-export { areElemsSame } from "./elem/areElemsSame.ts";
-export { asElem } from "./elem/asElem.ts";
-export { elemExists } from "./elem/elemExists.ts";
-export { findAllElems } from "./elem/findAllElems.ts";
-export { findAllFocusable } from "./elem/findAllFocusable.ts";
-export { findElem } from "./elem/findElem.ts";
-export { focusElem } from "./elem/focusElem.ts";
-export { getInputValue, getInputValueRaw } from "./elem/getInputValue.ts";
-export { idMatches } from "./elem/idMatches.ts";
-export { InvalidElemError } from "./elem/InvalidElemError.ts";
-export { isElemChildOf } from "./elem/isElemChildOf.ts";
-export { isElemInViewport } from "./elem/isElemInViewport.ts";
-export { isElemOfType } from "./elem/isElemOfType.ts";
-export { isElemSameOrChildOf } from "./elem/isElemSameOrChildOf.ts";
-export { isElemScrollable } from "./elem/isElemScrollable.ts";
-export { keepElemVisibleIn } from "./elem/keepElemVisibleIn.ts";
-export { setStyles } from "./styles/setStyles.ts";
-export { toElem } from "./elem/toElem.ts";
+export {
+  areElemsDifferent,
+  areElemsSame,
+  asElem,
+  elemExists,
+  findAllElems,
+  findAllFocusable,
+  findElem,
+  focusElem,
+  getInputValue,
+  getInputValueRaw,
+  idMatches,
+  InvalidElemError,
+  isElemChildOf,
+  isElemInViewport,
+  isElemOfType,
+  isElemSameOrChildOf,
+  isElemScrollable,
+  keepElemVisibleIn,
+  toElem,
+} from "./elem/index.ts";
 
 // Miscellaneous Extras and Handy Utilities
 export {
   clsx,
+  getInputWidth,
+  html,
+  listToArray,
   type ClassArray,
   type ClassDict,
   type ClassValue,
-} from "./extras/clsx.ts";
-export { getInputWidth } from "./extras/getInputWidth.ts";
-export { html, type ElementBuilder } from "./extras/htmlBuilder.ts";
-export { listToArray } from "./extras/listToArray.ts";
+  type ElementBuilder,
+  type ElementBuilderChild,
+} from "./extras/index.ts";
+
+// Styles
+export {
+  getStyle,
+  getStyles,
+  hasAllStyles,
+  hasSomeStyles,
+  hasStyle,
+  removeStyle,
+  removeStyles,
+  setStyle,
+  setStyles,
+  type StylesSearch,
+} from "./styles/index.ts";
 
 // Types
 export type { AriaAttrs } from "./aria.ts";
@@ -59,9 +101,9 @@ export {
   AttrValue,
   CssSelector,
   CssVarName,
+  DOMPropertyValue,
   Elem,
   Primitive,
-  Stringifiable,
   StyleValue,
   type AnyElement,
   type AnyElementTagName,

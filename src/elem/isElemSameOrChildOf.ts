@@ -16,7 +16,7 @@ import { isElemChildOf } from "./isElemChildOf.ts";
  * @param [options] Options for checking for parent.
  * @prop [options.maxDepth=10] Maximum depth to perform search.
  *
- * @returns `true` if the specified `child` is a child of or the same as the specified `parent`, otherwise `false`.
+ * @returns `true` if the specified `child` is a child of or the same as the specified `parent`.
  */
 export function isElemSameOrChildOf(
   child: ElemOrCssSelector,

@@ -1,14 +1,9 @@
+import { cast } from "../internal/cast.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type {
-  Data,
-  DataKey,
-  DataValue,
-  ElemOrCssSelector,
-  OneOrManyOf,
-} from "../types.ts";
+import type { Data, DataKey, DataValue, ElemOrCssSelector } from "../types.ts";
 
 /**
  * Attempts to get the value associated with the specified dataset `key` on the
@@ -24,10 +19,15 @@ import type {
  *
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
-export function getData<T extends DataValue = string>(
+export function getDataValue<T extends DataValue = string>(
   target: ElemOrCssSelector,
   key: DataKey,
-): T | undefined;
+): T | undefined {
+  // prettier-ignore
+  const elem = elemOrThrow(target, `Unable to get data value for ${key}`);
+
+  return getSingleDataValue(elem, key);
+}
 
 /**
  * Builds an object with the values associated with the specified dataset `keys`
@@ -48,31 +48,20 @@ export function getData<T extends DataValue = string>(
 export function getData<T extends Data = any>(
   target: ElemOrCssSelector,
   keys: DataKey[],
-): Partial<T>;
-
-export function getData<T extends Data | DataValue>(
-  target: ElemOrCssSelector,
-  keyOrKeys: OneOrManyOf<DataKey>,
-): T extends Data ? Partial<T> : T | undefined {
+): Partial<T> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to get data for ${formatForError(keyOrKeys)}`);
+  const elem = elemOrThrow(target, `Unable to get data for ${formatForError(keys)}`);
 
-  if (Array.isArray(keyOrKeys)) {
-    const result: Record<string, any> = {};
+  const result: Record<DataKey, any> = {};
 
-    for (const key of keyOrKeys) {
-      result[key] = getSingleData(elem, key);
-    }
-
-    // @ts-ignore
-    return result;
-  } else {
-    // @ts-ignore
-    return getSingleData(elem, keyOrKeys);
+  for (const key of keys) {
+    result[key] = getSingleDataValue(elem, key);
   }
+
+  return cast<Partial<T>>(result);
 }
 
-function getSingleData<T extends DataValue>(
+function getSingleDataValue<T extends DataValue>(
   elem: HTMLElement,
   key: DataKey,
 ): T | undefined {
