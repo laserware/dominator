@@ -4,7 +4,7 @@ import { removeAttr, removeAttrs } from "../removeAttrs.ts";
 
 describe("within removeAttrs", () => {
   describe("the removeAttr function", () => {
-    it("removes the the specified attribute name from the target", () => {
+    it("removes the the specified attribute from the target", () => {
       const element = render(`<span aria-label="Test element">Hello</span>`);
 
       const result = removeAttr(element, "aria-label");
@@ -12,7 +12,7 @@ describe("within removeAttrs", () => {
       expect(result.hasAttribute("aria-label")).toBeFalsy();
     });
 
-    it("does nothing if the specified attribute name does not exist in the target", () => {
+    it("does nothing if the specified attribute does not exist in the target", () => {
       const element = render(`<span aria-label="Test element">Hello</span>`);
 
       const result = removeAttr(element, "name");

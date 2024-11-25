@@ -1,3 +1,4 @@
+import { cast } from "../internal/cast.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -27,6 +28,27 @@ import type {
  * @returns Value of type `T` or `null` if not found.
  *
  * @throws {InvalidElemError} If the specified `target` does not exist.
+ *
+ * @example With Existent String Attribute
+ * const elem = findElem("button")!;
+ * elem.setAttribute("aria-label", "Label");
+ *
+ * const result = getAttr(elem, "aria-label");
+ * // "Label"
+
+ * @example With Existent Number Attribute
+ * const elem = findElem("button")!;
+ * elem.setAttribute("aria-colcount", "20");
+ *
+ * const result = getAttr(elem, "aria-colcount");
+ * // 20
+
+ * @example With Existent Boolean Attribute
+ * const elem = findElem("button")!;
+ * elem.setAttribute("checked", "");
+ *
+ * const result = getAttr(elem, "checked");
+ * // true
  */
 export function getAttr<T extends AttrValue = string>(
   target: ElemOrCssSelector,
@@ -62,6 +84,7 @@ export function getAttr<T extends AttrValue = string>(
  *   c: string;
  * }
  *
+ * const elem = findElem("button")!;
  * elem.setAttribute("a", "a");
  * elem.setAttribute("b", "b");
  *
@@ -76,14 +99,13 @@ export function getAttrs<T extends Attrs = Attrs>(
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to get attributes ${formatForError(names)}`);
 
-  const attrs: Partial<T> = {};
+  const attrs: Record<string, AttrValue | undefined> = {};
 
   for (const name of names) {
-    // @ts-ignore This will work, but TypeScript isn't happy.
     attrs[name] = getSingleAttr(elem, name);
   }
 
-  return attrs;
+  return cast<Partial<T>>(attrs);
 }
 
 function getSingleAttr<T extends AttrValue = string>(

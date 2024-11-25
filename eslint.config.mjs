@@ -16,6 +16,9 @@ export default [
     rules: {
       "no-console": "off",
       "vitest/no-done-callback": "off",
+      // In some cases, we _need_ to check if the value is `true` and not just
+      // truthy:
+      "vitest/prefer-to-be-truthy": "off",
     },
   },
   {

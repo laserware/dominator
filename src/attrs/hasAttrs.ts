@@ -31,6 +31,15 @@ export type AttrsSearch = DOMPropertySearch<AttrName, AttrValue | null>;
  * @returns `true` if the specified attribute `name` is present and `value` matches (if specified).
  *
  * @throws {InvalidElemError} If the specified `target` does not exist.
+ *
+ * @example
+ * const elem = createElem(`<div aria-hidden="true" name="test">Test</div>`);
+ *
+ * const hasNameOnly = hasAttr(elem, "aria-hidden");
+ * // true
+ *
+ * const hasNameAndValue = hasAttr(elem, "name", "test");
+ * // true
  */
 export function hasAttr(
   target: ElemOrCssSelector,
@@ -52,6 +61,22 @@ export function hasAttr(
  * @returns `true` if the specified `target` matches all search criteria.
  *
  * @throws {InvalidElemError} If the specified `target` does not exist.
+ *
+ * @example
+ * const elem = createElem(`<div aria-hidden="true" name="test" inert>Test</div>`);
+ *
+ * const hasAllArray = hasAllAttrs(elem, ["aria-hidden"]);
+ * // true
+ *
+ * const notHasAllArray = hasAllAttrs(elem, ["aria-hidden", "missing"]);
+ * // false (missing does not exist)
+ *
+ * const hasAllSearch = hasAllAttrs(elem, {
+ *   "aria-hidden": true,
+ *   name: "test",
+ *   inert: null,
+ * });
+ * // true
  */
 export function hasAllAttrs(
   target: ElemOrCssSelector,
@@ -73,6 +98,20 @@ export function hasAllAttrs(
  * @returns `true` if the specified `target` matches some search criteria.
  *
  * @throws {InvalidElemError} If the specified `target` does not exist.
+ *
+ * @example
+ * const elem = createElem(`<div aria-hidden="true" name="test" inert>Test</div>`);
+ *
+ * const hasSomeArray = hasSomeAttrs(elem, ["aria-hidden", "missing"]);
+ * // true
+ *
+ * const hasSomeSearch = hasSomeAttrs(elem, {
+ *   "aria-hidden": true,
+ *   name: "test",
+ *   inert: null,
+ *   missing: null,
+ * });
+ * // true
  */
 export function hasSomeAttrs(
   target: ElemOrCssSelector,

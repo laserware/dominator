@@ -1,3 +1,5 @@
+// noinspection SpellCheckingInspection
+
 import { isNotNil } from "@laserware/arcade";
 
 import type { AriaAttrs } from "../aria.ts";
@@ -15,9 +17,49 @@ import {
   type Styles,
 } from "../types.ts";
 
+type NeverMethods<T> = {
+  [K in keyof T]: T[K] extends (...args: any[]) => any ? never : K;
+}[keyof T];
+
+// prettier-ignore
+type GlobalEventHandler =
+  | "onabort" | "onanimationcancel" | "onanimationend" | "onanimationiteration"
+  | "onanimationstart" | "onauxclick" | "onbeforeinput" | "onbeforetoggle"
+  | "onblur" | "oncancel" | "oncanplay" | "oncanplaythrough" | "onchange"
+  | "onclick" | "onclose" | "oncontextlost" | "oncontextmenu" | "oncontextrestored"
+  | "oncopy" | "oncuechange" | "oncut" | "ondblclick" | "ondrag" | "ondragend"
+  | "ondragenter" | "ondragleave" | "ondragover" | "ondragstart" | "ondrop"
+  | "ondurationchange" | "onemptied" | "onended" | "onerror" | "onfocus"
+  | "onformdata" | "ongotpointercapture" | "oninput" | "oninvalid" | "onkeydown"
+  | "onkeypress" | "onkeyup" | "onload" | "onloadeddata" | "onloadedmetadata"
+  | "onloadstart" | "onlostpointercapture" | "onmousedown" | "onmouseenter"
+  | "onmouseleave" | "onmousemove" | "onmouseout" | "onmouseover" | "onmouseup"
+  | "onpaste" | "onpause" | "onplay" | "onplaying" | "onpointercancel"
+  | "onpointerdown" | "onpointerenter" | "onpointerleave" | "onpointermove"
+  | "onpointerout" | "onpointerover" | "onpointerup" | "onprogress" | "onratechange"
+  | "onreset" | "onresize" | "onscroll" | "onscrollend"
+  | "onsecuritypolicyviolation" | "onseeked" | "onseeking" | "onselect"
+  | "onselectionchange" | "onselectstart" | "onslotchange" | "onstalled"
+  | "onsubmit" | "onsuspend" | "ontimeupdate" | "ontoggle" | "ontouchcancel"
+  | "ontouchend" | "ontouchmove" | "ontouchstart" | "ontransitioncancel"
+  | "ontransitionend" | "ontransitionrun" | "ontransitionstart" | "onvolumechange"
+  | "onwaiting" | "onwebkitanimationend" | "onwebkitanimationiteration"
+  | "onwebkitanimationstart" | "onwebkittransitionend" | "onwheel" | "onafterprint"
+  | "onbeforeprint" | "onbeforeunload" | "ongamepadconnected" | "ongamepaddisconnected"
+  | "onhashchange" | "onlanguagechange" | "onmessage" | "onmessageerror"
+  | "onoffline" | "ononline" | "onpagehide" | "onpageshow" | "onpopstate"
+  | "onrejectionhandled" | "onstorage" | "onunhandledrejection" | "onunload"
+  | "onfullscreenchange" | "onfullscreenerror";
+
+type ExcludeMethods<T> = Pick<T, NeverMethods<T>>;
+
+type NonMethodElementProperties<TN extends AnyElementTagName> = ExcludeMethods<
+  ElementWithTagName<TN>
+>;
+
 type ElementProperties<TN extends AnyElementTagName> = Omit<
-  ElementWithTagName<TN>,
-  "addEventListener"
+  NonMethodElementProperties<TN>,
+  GlobalEventHandler
 >;
 
 type ElementEventName = keyof GlobalEventHandlersEventMap;

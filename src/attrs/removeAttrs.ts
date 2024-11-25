@@ -1,4 +1,4 @@
-import { asElem } from "../elem/asElem.ts";
+import { cast } from "../internal/cast.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import type { AttrName, ElemOrCssSelector } from "../types.ts";
@@ -23,7 +23,7 @@ export function removeAttr<E extends Element = HTMLElement>(
 
   elem.removeAttribute(name);
 
-  return asElem<E>(elem);
+  return cast<E>(elem);
 }
 
 /**
@@ -49,5 +49,5 @@ export function removeAttrs<E extends Element = HTMLElement>(
     elem.removeAttribute(name);
   }
 
-  return asElem<E>(elem);
+  return cast<E>(elem);
 }

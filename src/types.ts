@@ -12,7 +12,7 @@ export type OneOrManyOf<T> = T | T[];
 /**
  * Returns the keys of the specified object as an array.
  */
-export type KeysOf<V extends Record<string, any>> = Extract<keyof V, string>[];
+export type KeysOf<V extends Record<any, any>> = Extract<keyof V, string>[];
 
 /**
  * Represents primitive values that can be used to set certain attributes and
@@ -246,7 +246,7 @@ export namespace StyleValue {
  * Object representing element styles with a key of {@linkcode StyleKey} and a
  * value of {@linkcode StyleValue}.
  */
-export type Styles = Record<StyleKey, StyleValue>;
+export type Styles = Partial<Record<StyleKey, StyleValue>>;
 
 /**
  * Key representing any type of DOM property (i.e. attributes, CSS variables,
