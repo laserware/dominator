@@ -8,7 +8,9 @@ export { setAttr, setAttrs } from "./attrs/setAttrs.ts";
 
 // CSS
 export { CssVarError } from "./css/CssVarError.ts";
-export { getCssVar } from "./css/getCssVars.ts";
+export { getCssVar, getCssVars } from "./css/getCssVars.ts";
+export { hasAllCssVars, hasCssVar, hasSomeCssVars } from "./css/hasCssVars.ts";
+export { removeCssVar, removeCssVars } from "./css/removeCssVars.ts";
 export { setCssVar, setCssVars } from "./css/setCssVars.ts";
 
 // Dataset

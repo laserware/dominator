@@ -1,8 +1,5 @@
-import { isNil } from "@laserware/arcade";
-
-import { InvalidElemError } from "../elem/InvalidElemError.ts";
-import { toElem } from "../elem/toElem.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
+import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import {
   CssVarName,
@@ -15,8 +12,10 @@ import {
 import { CssVarError } from "./CssVarError.ts";
 
 /**
- * Attempts to get the value associated with the specified CSS variable `name`. If
- * no `target` is specified, gets the variable value from {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
+ * Attempts to get the value associated with the specified CSS variable `name`
+ * from the specified `target` (or `:root`).
+ *
+ * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
  * (i.e. `:root`).
  *
  * If found, the value is coerced to a numeric value if number-like, or a boolean
@@ -31,8 +30,7 @@ import { CssVarError } from "./CssVarError.ts";
  * @template T Type of value to return.
  *
  * @param name Name of the variable to get value for.
- * @param [target] Optional Element, EventTarget, or CSS selector for element from
- *                 which to get CSS variable.
+ * @param [target] Optional Element, EventTarget, or CSS selector.
  *
  * @returns Value associated with the specified `name` or `undefined` if it doesn't exist.
  *
@@ -41,20 +39,19 @@ import { CssVarError } from "./CssVarError.ts";
  */
 export function getCssVar<T extends CssVarValue>(
   name: CssVarName,
-  target?: ElemOrCssSelector,
+  target: ElemOrCssSelector = document.documentElement,
 ): T | undefined {
-  const elem = isNil(target) ? document.documentElement : toElem(target);
-  if (elem === null) {
-    throw new InvalidElemError(`Unable to get CSS variable ${name}`);
-  }
+  const elem = elemOrThrow(target, `Unable to get CSS variable ${name}`);
 
   return getSingleCssVar<T>(elem, name);
 }
 
 /**
  * Builds an object with the keys equal to the specified CSS variable `names` and
- * the value equal to the corresponding variable value in the specified `target`.
- * If no `target` is specified, gets the variable value from {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
+ * the value equal to the corresponding variable value in the specified `target`
+ * (or `:root`).
+ *
+ * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
  * (i.e. `:root`).
  *
  * If the value is found it is coerced to a boolean if "true" or "false", a
@@ -64,8 +61,7 @@ export function getCssVar<T extends CssVarValue>(
  * @template T Shape of CSS variables object to return.
  *
  * @param names Names of the variable to get value for.
- * @param [target] Optional Element, EventTarget, or CSS selector for element from
- *                 which to get CSS variable.
+ * @param [target] Optional Element, EventTarget, or CSS selector.
  *
  * @returns Object with specified names as keys and corresponding CSS variable values.
  *          Note that you will need to perform checks for the presence of a value in the
@@ -86,13 +82,10 @@ export function getCssVar<T extends CssVarValue>(
  */
 export function getCssVars<T extends CssVars = CssVars>(
   names: KeysOf<T>,
-  target?: ElemOrCssSelector,
+  target: ElemOrCssSelector = document.documentElement,
 ): Partial<T> {
-  const elem = isNil(target) ? document.documentElement : toElem(target);
-  if (elem === null) {
-    // prettier-ignore
-    throw new InvalidElemError(`Unable to get CSS variables ${formatForError(names)}`);
-  }
+  // prettier-ignore
+  const elem = elemOrThrow(target, `Unable to get CSS variables ${formatForError(names)}`);
 
   const cssVars: Partial<T> = {};
 

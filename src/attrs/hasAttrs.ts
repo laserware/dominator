@@ -1,4 +1,4 @@
-import { elemOrThrow } from "../internal/elemOrThrow.ts";
+import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import type { AttrName, ElemOrCssSelector } from "../types.ts";
 
@@ -6,7 +6,7 @@ import type { AttrName, ElemOrCssSelector } from "../types.ts";
  * Checks if the specified `target` has the specified attribute `name`.
  *
  * @param target Element, EventTarget, or CSS selector.
- * @param name Name of the attribute.
+ * @param name Name of the attribute to check for.
  *
  * @returns `true` if the specified attribute is present, otherwise `false`.
  *

@@ -17,10 +17,10 @@ import {
  * specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
- * @param key {@linkcode StyleKey} representing the name of the style property.
+ * @param key Name of the style property.
  * @param value {@linkcode StyleValue} to set for the corresponding key.
  *
- * @returns Element of type `E`.
+ * @returns The Element representation of the specified `target`.
  *
  * @throws {InvalidElemError} If the `target` could not be found or doesn't have a
  *                           {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style|style} property.
@@ -44,14 +44,15 @@ export function setStyle<E extends Element = HTMLElement>(
 
 /**
  * Sets the style properties of the specified `target` to the specified `styles`
- * object with key of {@linkcode StyleKey} and value of the {@linkcode StyleValue}.
+ * object with key of style property name and value of the corresponding property
+ * value.
  *
  * @template E Type of Element to return.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param styles Object with style property values keyed by name.
  *
- * @returns Element of type `E`.
+ * @returns The Element representation of the specified `target`.
  *
  * @throws {InvalidElemError} If the `target` could not be found or doesn't have a {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style|style} property.
  */

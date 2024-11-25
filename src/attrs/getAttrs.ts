@@ -1,5 +1,5 @@
 import { parseDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOrThrow.ts";
+import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import type {
   AttrName,

@@ -55,6 +55,6 @@ export function asElem<E extends Element = HTMLElement>(
   if (Elem.is(target)) {
     return target as E;
   } else {
-    throw new InvalidElemError("Cannot assert using asElem");
+    throw new InvalidElemError("Cannot assert as elem");
   }
 }

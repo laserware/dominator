@@ -3,7 +3,7 @@ import { isNil } from "@laserware/arcade";
 import { asElem } from "../elem/asElem.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOrThrow.ts";
+import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import type { Data, DataKey, DataValue, ElemOrCssSelector } from "../types.ts";
 

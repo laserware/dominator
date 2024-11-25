@@ -1,4 +1,4 @@
-import { elemOrThrow } from "../internal/elemOrThrow.ts";
+import { elemOrThrow } from "../internal/elemOr.ts";
 import type { ElemOrCssSelector } from "../types.ts";
 
 /**

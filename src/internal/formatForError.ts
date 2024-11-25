@@ -52,7 +52,7 @@ function getStringValues(values: any[]): string[] {
       const stringValue = value.toString();
 
       if (typeof stringValue === "string") {
-        stringValues.push(stringValue);
+        stringValues.push(`"${stringValue}"`);
       }
     } catch {
       // Do nothing.
