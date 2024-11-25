@@ -26,7 +26,7 @@ describe("within getAttrs", () => {
       expect(getAttr(element, "inert")).toBe(true);
     });
 
-    it("returns null if the attribute isn't present and no default value specified", () => {
+    it("returns null if the attribute isn't present", () => {
       const element = render(`<button name="button">Button</button>`);
 
       const result = getAttr(element, "invalid");
@@ -35,9 +35,9 @@ describe("within getAttrs", () => {
     });
 
     it("throws an error if the element doesn't exist", () => {
-      render(`<span>Test</span>`);
-
-      expect(() => getAttr("button", "name")).toThrow(/Unable to get/);
+      expect(() => {
+        getAttr(selectorForNonExistent, "name");
+      }).toThrow(/Unable to get/);
     });
   });
 
@@ -73,10 +73,11 @@ describe("within getAttrs", () => {
         disabled: true,
         "aria-checked": true,
         "data-count": 20,
+        invalid: null,
       });
     });
 
-    it("throws an error if the target isn't found when passing in an attributes object", () => {
+    it("throws an error if the target doesn't exist", () => {
       expect(() => {
         getAttrs(selectorForNonExistent, ["name", "disabled"]);
       }).toThrow(/Unable to get attributes/);

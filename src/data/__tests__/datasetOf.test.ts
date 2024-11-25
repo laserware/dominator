@@ -27,12 +27,30 @@ describe("the datasetOf function", () => {
     expect(dataset.element.getAttribute("data-valid")).toBe("true");
   });
 
-  it("returns all data when the all method is called", () => {
+  it("creates an instance of Dataset with no initial data when specified", () => {
     const element = render(`<div>Test</div>`);
 
-    const dataset = datasetOf<TestDatasetShape>(element, initialData);
+    const dataset = datasetOf<TestDatasetShape>(element);
 
-    expect(dataset.all()).toEqual(initialData);
+    expect(dataset.element.hasAttribute("data-count")).toBeFalsy();
+  });
+
+  describe("the all method", () => {
+    it("returns all data when dataset entries exist on target", () => {
+      const element = render(`<div>Test</div>`);
+
+      const dataset = datasetOf<TestDatasetShape>(element, initialData);
+
+      expect(dataset.all()).toEqual(initialData);
+    });
+
+    it("returns an empty object when no dataset entries exist on target", () => {
+      const element = render(`<div>Test</div>`);
+
+      const dataset = datasetOf(element);
+
+      expect(dataset.all()).toEqual({});
+    });
   });
 
   describe("the get method", () => {
@@ -67,5 +85,13 @@ describe("the datasetOf function", () => {
     dataset.set("count", expected);
 
     expect(dataset.get("count")).toBe(expected);
+  });
+
+  it("returns the dataset attribute name when attrNameFor is called", () => {
+    const element = render(`<div data-name="test">Test</div>`);
+
+    const dataset = datasetOf<{ name: string }>(element);
+
+    expect(dataset.attrNameFor("name")).toBe("data-name");
   });
 });

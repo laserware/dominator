@@ -21,7 +21,9 @@ describe("within removeAttrs", () => {
     });
 
     it("throws an error if the target does not exist", () => {
-      expect(() => removeAttr(selectorForNonExistent, "name")).toThrow(InvalidElemError);
+      expect(() => {
+        removeAttr(selectorForNonExistent, "name");
+      }).toThrow(InvalidElemError);
     });
   });
 
@@ -36,7 +38,9 @@ describe("within removeAttrs", () => {
     });
 
     it("throws an error if the target does not exist", () => {
-      expect(() => removeAttrs(selectorForNonExistent, ["name"])).toThrow(InvalidElemError);
+      expect(() => {
+        removeAttrs(selectorForNonExistent, ["name"]);
+      }).toThrow(InvalidElemError);
     });
   });
 });

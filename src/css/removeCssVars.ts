@@ -1,9 +1,9 @@
-import { asElem } from "../elem/asElem.ts";
+import { cast } from "../internal/cast.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import type { CssVarName, ElemOrCssSelector } from "../types.ts";
 
-import { CssVarError } from "./CssVarError.ts";
+import { InvalidCssVarError } from "./InvalidCssVarError.ts";
 
 /**
  * Removes the specified CSS variable `name` from the optionally specified
@@ -19,7 +19,7 @@ import { CssVarError } from "./CssVarError.ts";
  *
  * @returns The Element representation of the specified `target`.
  *
- * @throws {CssVarError} If the CSS variable could not be removed from `target`.
+ * @throws {InvalidCssVarError} If the CSS variable could not be removed from `target`.
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function removeCssVar<E extends Element = HTMLElement>(
@@ -30,7 +30,7 @@ export function removeCssVar<E extends Element = HTMLElement>(
 
   removeSingleCssVar(elem, name);
 
-  return asElem<E>(elem);
+  return cast<E>(elem);
 }
 
 /**
@@ -46,7 +46,7 @@ export function removeCssVar<E extends Element = HTMLElement>(
  *
  * @returns The Element representation of the specified `target`.
  *
- * @throws {CssVarError} If a CSS variable could not be removed from `target`.
+ * @throws {InvalidCssVarError} If a CSS variable could not be removed from `target`.
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function removeCssVars<E extends Element = HTMLElement>(
@@ -60,14 +60,15 @@ export function removeCssVars<E extends Element = HTMLElement>(
     removeSingleCssVar(elem, name);
   }
 
-  return asElem<E>(elem);
+  return cast<E>(elem);
 }
 
 function removeSingleCssVar(element: HTMLElement, name: CssVarName): void {
   try {
     element.style.removeProperty(name);
   } catch (err: any) {
+    /* istanbul ignore next -- @preserve: This will probably never get hit, but I'm hedging my bets. */
     // prettier-ignore
-    throw new CssVarError(`Unable to remove CSS variable ${name}: ${err.message}`);
+    throw new InvalidCssVarError(`Unable to remove CSS variable ${name}: ${err.message}`);
   }
 }

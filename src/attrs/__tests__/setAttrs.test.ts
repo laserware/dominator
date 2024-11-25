@@ -40,7 +40,9 @@ describe("within setAttrs", () => {
     it("throws an error if the target does not exist", () => {
       render(`<div>Test</div>`);
 
-      expect(() => setAttr(selectorForNonExistent, "name", "parent")).toThrow(/Unable to set/);
+      expect(() => {
+        setAttr(selectorForNonExistent, "name", "parent");
+      }).toThrow(/Unable to set/);
     });
   });
 

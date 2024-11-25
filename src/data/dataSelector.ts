@@ -39,7 +39,7 @@ import type {
  */
 export function dataEntrySelector(
   key: DataKey,
-  value: DataValue | null | undefined,
+  value?: DataValue | null | undefined,
   tag?: AnyElementTagName,
 ): CssSelector {
   return selectorWithTag(singleDataSelector(key, value), tag);

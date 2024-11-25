@@ -10,9 +10,31 @@ import { isPlainObject } from "@laserware/arcade";
 export type OneOrManyOf<T> = T | T[];
 
 /**
- * Returns the keys of the specified object as an array.
+ * Extracts the keys of the specified object as an array.
+ *
+ * @template T Object to extract keys from.
  */
-export type KeysOf<V extends Record<any, any>> = Extract<keyof V, string>[];
+export type KeysOf<T extends Record<any, any>> = Extract<keyof T, string>[];
+
+/**
+ * Indicates that values of the specified object could be their value or
+ * `undefined`.
+ *
+ * @template T Type of object to add `undefined` to fields.
+ */
+export type WithUndefinedValues<T extends Record<any, any>> = {
+  [K in keyof T]: T[K] | undefined;
+};
+
+/**
+ * Indicates that values of the specified object could be their value or
+ * `null`.
+ *
+ * @template T Type of object to add `null` to fields.
+ */
+export type WithNullValues<T extends Record<any, any>> = {
+  [K in keyof T]: T[K] | null;
+};
 
 /**
  * Represents primitive values that can be used to set certain attributes and
@@ -271,7 +293,7 @@ export type DOMPropertyFilterValue =
 export type DOMPropertyFilter<
   K extends DOMPropertyKey,
   V extends DOMPropertyFilterValue,
-> = Record<K, V>;
+> = { [key in K]?: V };
 
 /**
  * Search criteria that can be used to determine if a DOM property is present

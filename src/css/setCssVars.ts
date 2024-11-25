@@ -1,6 +1,6 @@
 import { isNotNil } from "@laserware/arcade";
 
-import { asElem } from "../elem/asElem.ts";
+import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -11,7 +11,7 @@ import {
   type ElemOrCssSelector,
 } from "../types.ts";
 
-import { CssVarError } from "./CssVarError.ts";
+import { InvalidCssVarError } from "./InvalidCssVarError.ts";
 
 /**
  * Sets the specified CSS variable `name` to the specified `value` in the
@@ -28,7 +28,7 @@ import { CssVarError } from "./CssVarError.ts";
  *
  * @returns The Element representation of the specified `target`.
  *
- * @throws {CssVarError} If the specified `name` is not a valid {@linkcode CssVarName}.
+ * @throws {InvalidCssVarError} If the specified `name` is not a valid {@linkcode CssVarName}.
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function setCssVar<E extends Element = HTMLElement>(
@@ -40,7 +40,7 @@ export function setCssVar<E extends Element = HTMLElement>(
 
   setSingleCssVar(elem, name, value);
 
-  return asElem<E>(elem);
+  return cast<E>(elem);
 }
 
 /**
@@ -61,7 +61,7 @@ export function setCssVar<E extends Element = HTMLElement>(
  *
  * @returns The Element representation of the specified `target`.
  *
- * @throws {CssVarError} If a specified name in `vars` is not a valid {@linkcode CssVarName}.
+ * @throws {InvalidCssVarError} If a specified name in `vars` is not a valid {@linkcode CssVarName}.
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function setCssVars<E extends Element = HTMLElement>(
@@ -75,7 +75,7 @@ export function setCssVars<E extends Element = HTMLElement>(
     setSingleCssVar(elem, key, vars[key as keyof typeof vars]);
   }
 
-  return asElem<E>(elem);
+  return cast<E>(elem);
 }
 
 function setSingleCssVar(
@@ -85,7 +85,7 @@ function setSingleCssVar(
 ): void {
   if (!CssVarName.is(name)) {
     // prettier-ignore
-    throw new CssVarError(`CSS variable ${name} must be a string that starts with "--"`);
+    throw new InvalidCssVarError(`CSS variable ${name} must be a string that starts with "--"`);
   }
 
   const attrValue = stringifyDOMValue(value);

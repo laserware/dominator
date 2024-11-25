@@ -1,4 +1,4 @@
-export { CssVarError } from "./CssVarError.ts";
+export { InvalidCssVarError } from "./InvalidCssVarError.ts";
 export { getCssVar, getCssVars } from "./getCssVars.ts";
 export {
   hasAllCssVars,

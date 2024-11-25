@@ -1,4 +1,4 @@
-import { asElem } from "../elem/asElem.ts";
+import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -32,7 +32,7 @@ export function setAttr<E extends Element = HTMLElement>(
 
   setSingleAttr(elem, name, value);
 
-  return asElem<E>(elem);
+  return cast<E>(elem);
 }
 
 /**
@@ -60,7 +60,7 @@ export function setAttrs<E extends Element = HTMLElement>(
     setSingleAttr(elem, name, attrs[name]);
   }
 
-  return asElem<E>(elem);
+  return cast<E>(elem);
 }
 
 function setSingleAttr(

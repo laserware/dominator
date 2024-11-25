@@ -9,7 +9,7 @@ import {
   type KeysOf,
 } from "../types.ts";
 
-import { CssVarError } from "./CssVarError.ts";
+import { InvalidCssVarError } from "./InvalidCssVarError.ts";
 
 /**
  * Attempts to get the value associated with the specified CSS variable `name`
@@ -34,7 +34,7 @@ import { CssVarError } from "./CssVarError.ts";
  *
  * @returns Value associated with the specified `name` or `undefined` if it doesn't exist.
  *
- * @throws {CssVarError} If the specified `name` is invalid.
+ * @throws {InvalidCssVarError} If the specified `name` is invalid.
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
 export function getCssVar<T extends CssVarValue>(
@@ -103,7 +103,7 @@ function getSingleCssVar<T extends CssVarValue = string>(
 ): T | undefined {
   if (!CssVarName.is(name)) {
     // prettier-ignore
-    throw new CssVarError(`CSS variable ${name} must be a string that starts with "--"`);
+    throw new InvalidCssVarError(`CSS variable ${name} must be a string that starts with "--"`);
   }
 
   const value = window.getComputedStyle(element).getPropertyValue(name);

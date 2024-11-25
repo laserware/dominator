@@ -22,18 +22,24 @@ export type StylesSearch = DOMPropertySearch<StyleKey, StyleValue | null>;
 
 /**
  * Checks if the specified `target` has the specified style property with name `key`.
+ *  If a `value` is specified, checks that the values match.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Name of the style property to check for.
+ * @param [value] Optional style property value to check for.
  *
  * @returns `true` if the specified style is present.
  *
  * @throws {InvalidElemError} If the specified `target` does not exist.
  */
-export function hasStyle(target: ElemOrCssSelector, key: StyleKey): boolean {
+export function hasStyle(
+  target: ElemOrCssSelector,
+  key: StyleKey,
+  value?: StyleValue,
+): boolean {
   const elem = elemOrThrow(target, `Unable to check for style ${key}`);
 
-  return hasSingleStyle(elem, key);
+  return hasSingleStyle(elem, key, value);
 }
 
 /**

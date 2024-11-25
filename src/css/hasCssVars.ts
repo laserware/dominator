@@ -102,6 +102,14 @@ function hasSingleCssVar(
 
   if (isNil(value)) {
     return propertyValue !== "";
+  }
+
+  // If the user specified an empty string in the search object, we want to
+  // ensure it doesn't accidentally get marked as existent on the specified
+  // element. The return value of `getPropertyValue` is an empty string if the
+  // property doesn't exist:
+  if (propertyValue === "") {
+    return false;
   } else {
     return propertyValue === stringifyDOMValue(value);
   }

@@ -38,7 +38,9 @@ describe("within hasAttrs", () => {
     it("throws an error if the target does not exist", () => {
       render(`<span>Test</span>`);
 
-      expect(() => hasAttr("button", "name")).toThrow(/Unable to check/);
+      expect(() => {
+        hasAttr("button", "name");
+      }).toThrow(/Unable to check/);
     });
   });
 

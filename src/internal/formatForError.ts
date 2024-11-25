@@ -2,7 +2,7 @@ import { isPlainObject } from "@laserware/arcade";
 
 const formatter = new Intl.ListFormat("en", {
   style: "short",
-  type: "conjunction",
+  type: "unit",
 });
 
 type FormattableValue = string | number;

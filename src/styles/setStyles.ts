@@ -1,8 +1,6 @@
-import { isNil } from "@laserware/arcade";
-
-import { asElem } from "../elem/asElem.ts";
 import { InvalidElemError } from "../elem/InvalidElemError.ts";
 import { toElem } from "../elem/toElem.ts";
+import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import {
   CssVarName,
@@ -35,11 +33,9 @@ export function setStyle<E extends Element = HTMLElement>(
     throw new InvalidElemError("Unable to set style");
   }
 
-  if (StyleValue.is(value)) {
-    setSingleStyle(elem, key, value);
-  }
+  setSingleStyle(elem, key, value);
 
-  return asElem<E>(elem);
+  return cast<E>(elem);
 }
 
 /**
@@ -54,7 +50,8 @@ export function setStyle<E extends Element = HTMLElement>(
  *
  * @returns The Element representation of the specified `target`.
  *
- * @throws {InvalidElemError} If the `target` could not be found or doesn't have a {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style|style} property.
+ * @throws {InvalidElemError} If the `target` could not be found or doesn't have a
+ *                            {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style|style} property.
  */
 export function setStyles<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
@@ -66,10 +63,10 @@ export function setStyles<E extends Element = HTMLElement>(
   }
 
   for (const key of Object.keys(styles)) {
-    setSingleStyle(elem, key, styles[key as keyof typeof styles]);
+    setSingleStyle(elem, key, styles[key as StyleKey] as StyleValue);
   }
 
-  return asElem<E>(elem);
+  return cast<E>(elem);
 }
 
 function setSingleStyle(
@@ -77,15 +74,12 @@ function setSingleStyle(
   key: string,
   value: StyleValue,
 ): void {
-  const attributeValue = stringifyDOMValue(value);
-  if (isNil(attributeValue)) {
-    throw new Error(`Unable to stringify ${key} value of ${value}`);
-  }
+  const styleValue = stringifyDOMValue(value) ?? "";
 
   if (CssVarName.is(key)) {
-    element.style.setProperty(key, attributeValue);
+    element.style.setProperty(key, styleValue);
   } else {
     // @ts-ignore
-    element.style[key] = attributeValue;
+    element.style[key] = styleValue;
   }
 }

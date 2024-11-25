@@ -17,12 +17,12 @@ export {
 
 // CSS
 export {
-  CssVarError,
   getCssVar,
   getCssVars,
   hasAllCssVars,
   hasCssVar,
   hasSomeCssVars,
+  InvalidCssVarError,
   removeCssVar,
   removeCssVars,
   setCssVar,
@@ -40,7 +40,7 @@ export {
   removeData,
   removeDataEntry,
   setData,
-  setDataValue,
+  setDataEntry,
   type DataSearch,
 } from "./data/index.ts";
 

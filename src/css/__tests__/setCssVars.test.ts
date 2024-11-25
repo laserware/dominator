@@ -1,5 +1,5 @@
 import { render, selectorForNonExistent } from "../../testing.ts";
-import { CssVarError } from "../CssVarError.ts";
+import { InvalidCssVarError } from "../InvalidCssVarError.ts";
 import { setCssVar, setCssVars } from "../setCssVars.ts";
 
 const getCssVarNative = (name: string, target = document.documentElement): unknown =>
@@ -42,15 +42,17 @@ describe("within setCssVars", () => {
 
     it("throws an error if the target does not exist", () => {
       expect(() => {
-        return setCssVar("--button-color", "red", selectorForNonExistent);
+        setCssVar("--button-color", "red", selectorForNonExistent);
       }).toThrow(/Unable to set/);
     });
 
     it("throws an error if an invalid name is specified", () => {
       const element = render(`<button style="--button-color: blue;">Click</button>`);
 
-      // @ts-ignore
-      expect(() => setCssVar("button-color", "red", element)).toThrow(CssVarError);
+      expect(() => {
+        // @ts-ignore
+        setCssVar("button-color", "red", element);
+      }).toThrow(InvalidCssVarError);
     });
   });
 
@@ -75,15 +77,17 @@ describe("within setCssVars", () => {
 
     it("throws an error if the target does not exist", () => {
       expect(() => {
-        return setCssVars({ "--button-color": "red" }, selectorForNonExistent);
+        setCssVars({ "--button-color": "red" }, selectorForNonExistent);
       }).toThrow(/Unable to set/);
     });
 
     it("throws an error if an invalid name is specified", () => {
       const element = render(`<button style="--button-color: blue;">Click</button>`);
 
-      // @ts-ignore
-      expect(() => setCssVars({ "button-color": "red" }, element)).toThrow(CssVarError);
+      expect(() => {
+        // @ts-ignore
+        setCssVars({ "button-color": "red" }, element);
+      }).toThrow(InvalidCssVarError);
     });
   });
 });

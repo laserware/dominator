@@ -21,7 +21,9 @@ describe("within getInputValue", () => {
     it("throws an error if the specified target is not a valid input element", () => {
       const element = render(`<button>Button</button>`);
 
-      expect(() => getInputValueRaw(element)).toThrow(/Cannot get value/);
+      expect(() => {
+        getInputValueRaw(element);
+      }).toThrow(/Cannot get value/);
     });
   });
 
@@ -85,7 +87,9 @@ describe("within getInputValue", () => {
     it("throws an error if the specified target is not a valid input element", () => {
       const element = render(`<button>Button</button>`);
 
-      expect(() => getInputValue(element)).toThrow(/Cannot get value/);
+      expect(() => {
+        getInputValue(element);
+      }).toThrow(/Cannot get value/);
     });
   });
 });

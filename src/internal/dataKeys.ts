@@ -1,4 +1,4 @@
-import { capitalize, kebabCase } from "@laserware/arcade";
+import { capitalize, kebabCase, toEntries } from "@laserware/arcade";
 
 import type { DataAttrName, DataKey, DataPropertyName } from "../types.ts";
 
@@ -46,5 +46,29 @@ export function asDataPropertyName(key: DataKey): DataPropertyName {
     return [startWord, ...capitalizedWords].join("");
   } else {
     return key;
+  }
+}
+
+/**
+ * Iterates through the specified object or array of keys and adds the `data-`
+ * prefix (and kebab-cases the value).
+ *
+ * @internal
+ *
+ * @param values Object or array of values to add `data-` prefix to.
+ */
+export function withDataPrefix<T extends Record<string, any> | any[]>(
+  values: T,
+): T {
+  if (Array.isArray(values)) {
+    return values.map((value) => asDataAttrName(value)) as T;
+  } else {
+    const withData: Record<string, any> = {};
+
+    for (const [key, value] of toEntries(values)) {
+      withData[asDataAttrName(key)] = value;
+    }
+
+    return withData as T;
   }
 }

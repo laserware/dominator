@@ -8,6 +8,7 @@ import type {
   AttrValue,
   ElemOrCssSelector,
   KeysOf,
+  WithNullValues,
 } from "../types.ts";
 
 /**
@@ -64,7 +65,7 @@ export function getAttr<T extends AttrValue = string>(
  * the value equal to the corresponding attribute value in the specified `target`.
  * If the value is found it is coerced to a boolean if "true" or "false", a
  * number if numeric, or the string value if a string. If not found, the value
- * is excluded from the return value.
+ * is `null`.
  *
  * @template T Shape of attributes object to return.
  *
@@ -72,8 +73,8 @@ export function getAttr<T extends AttrValue = string>(
  * @param names Names of the attributes for which to find values.
  *
  * @returns Object with specified names as keys and corresponding attribute values.
- *          Note that you will need to perform checks for the presence of a value in the
- *          returned object because it's a `Partial` of the specified `T`.
+ *          Note that you will need to perform checks for whether a value is
+ *          `undefined` in the returned object if some of the entries weren't present.
  *
  * @throws {InvalidElemError} If the specified `target` does not exist.
  *
@@ -88,31 +89,31 @@ export function getAttr<T extends AttrValue = string>(
  * elem.setAttribute("a", "a");
  * elem.setAttribute("b", "b");
  *
- * // Note that `c` doesn't exist on the element, so it's not returned in the result:
+ * // Note that `c` doesn't exist on the element, so it's `undefined`:
  * const result = getAttrs<Shape>(elem, ["a", "b", "c"]);
- * // { a: "a", b: "b" }
+ * // { a: "a", b: "b", c: undefined }
  */
 export function getAttrs<T extends Attrs = Attrs>(
   target: ElemOrCssSelector,
   names: KeysOf<T>,
-): Partial<T> {
+): WithNullValues<T> {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to get attributes ${formatForError(names)}`);
 
-  const attrs: Record<string, AttrValue | undefined> = {};
+  const attrs: Record<string, AttrValue | null> = {};
 
   for (const name of names) {
     attrs[name] = getSingleAttr(elem, name);
   }
 
-  return cast<Partial<T>>(attrs);
+  return cast<WithNullValues<T>>(attrs);
 }
 
 function getSingleAttr<T extends AttrValue = string>(
   element: HTMLElement,
   name: AttrName,
-): T | undefined {
+): T | null {
   const attrValue = element.getAttribute(name);
 
-  return parseDOMValue<T>(attrValue);
+  return parseDOMValue<T>(attrValue) ?? null;
 }

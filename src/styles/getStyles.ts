@@ -32,7 +32,7 @@ export function getStyle<T extends StyleValue>(
 ): T | undefined {
   const elem = toElem(target);
   if (elem === null || !("style" in elem)) {
-    throw new InvalidElemError(`Unable to get style value for ${key}`);
+    throw new InvalidElemError(`Unable to get style for ${key}`);
   }
 
   return getSingleStyle<T>(elem, key);
@@ -63,7 +63,7 @@ export function getStyles<T extends Styles = Styles>(
   const elem = toElem(target);
   if (elem === null || !("style" in elem)) {
     // prettier-ignore
-    throw new InvalidElemError(`Unable to get style values for ${formatForError(keys)}`);
+    throw new InvalidElemError(`Unable to get styles for ${formatForError(keys)}`);
   }
 
   const styles: Partial<T> = {};
@@ -87,13 +87,17 @@ function getSingleStyle<T extends StyleValue>(
   // @ts-ignore I know `key` is a valid key for styles. If it wasn't we return `undefined`.
   const styleEntry = element.style[key];
 
-  if (styleEntry !== undefined) {
-    return parseDOMValue<T>(styleEntry) ?? undefined;
+  if (styleEntry !== undefined && styleEntry !== "") {
+    return parseDOMValue<T>(styleEntry);
   }
 
   const styleProperty = element.style.getPropertyValue(key);
+
+  // Apparently the `kebab-case` version of a style property name is accessible
+  // from the element's `style` property, so style["font-size"] works.
+  // This is a fallback in case someone passes in a CSS variable.
   if (styleProperty !== "") {
-    return parseDOMValue<T>(styleProperty) ?? undefined;
+    return parseDOMValue<T>(styleProperty);
   }
 
   return undefined;

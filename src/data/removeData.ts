@@ -1,5 +1,5 @@
 import { removeAttr } from "../attrs/removeAttrs.ts";
-import { asElem } from "../elem/asElem.ts";
+import { cast } from "../internal/cast.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -27,7 +27,7 @@ export function removeDataEntry<E extends Element = HTMLElement>(
 
   removeSingleDataEntry(elem, key);
 
-  return asElem<E>(elem);
+  return cast<E>(elem);
 }
 
 /**
@@ -54,7 +54,7 @@ export function removeData<E extends Element = HTMLElement>(
     removeSingleDataEntry(elem, key);
   }
 
-  return asElem<E>(elem);
+  return cast<E>(elem);
 }
 
 function removeSingleDataEntry(element: HTMLElement, key: string): void {

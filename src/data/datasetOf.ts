@@ -73,18 +73,16 @@ export class Dataset<DS extends AnyDatasetShape> {
    * @returns Object with dataset entries that exist.
    */
   public all(): Partial<DS> {
-    if ("dataset" in this.#element) {
-      const entries: Record<string, AttrValue> = {};
+    const dataset = this.#dataset;
 
-      for (const name of Object.keys(this.#element.dataset)) {
-        // @ts-ignore Expects a `Stringifiable`, but can be `null` or `undefined`.
-        entries[name] = parseDOMValue(this.#element.dataset[name]);
-      }
+    const entries: Record<string, AttrValue> = {};
 
-      return entries as Partial<DS>;
-    } else {
-      return {};
+    for (const name of Object.keys(dataset)) {
+      // @ts-ignore Expects a `Stringifiable`, but can be `null` or `undefined`.
+      entries[name] = parseDOMValue(dataset[name]);
     }
+
+    return entries as Partial<DS>;
   }
 
   /**
@@ -139,6 +137,7 @@ export class Dataset<DS extends AnyDatasetShape> {
   }
 
   get #dataset(): DOMStringMap {
+    /* istanbul ignore else -- @preserve: I'm pretty sure this is impossible, but the check can't hurt. */
     if ("dataset" in this.#element) {
       return this.#element.dataset;
     } else {

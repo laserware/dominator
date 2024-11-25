@@ -6,4 +6,4 @@ export {
   type DataSearch,
 } from "./hasData.ts";
 export { removeData, removeDataEntry } from "./removeData.ts";
-export { setData, setDataValue } from "./setData.ts";
+export { setData, setDataEntry } from "./setData.ts";
