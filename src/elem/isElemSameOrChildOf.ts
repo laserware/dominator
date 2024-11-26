@@ -13,21 +13,18 @@ import { isElemChildOf } from "./isElemChildOf.ts";
  *
  * @param child Element, EventTarget, or CSS selector.
  * @param parent Element, EventTarget, or CSS selector for parent (or same) element.
- * @param [options] Options for checking for parent.
- * @prop [options.maxDepth=10] Maximum depth to perform search.
  *
  * @returns `true` if the specified `child` is a child of or the same as the specified `parent`.
  */
 export function isElemSameOrChildOf(
   child: ElemOrCssSelector,
   parent: ElemOrCssSelector,
-  options?: { maxDepth: number },
 ): boolean {
   // Return immediately if the is same check passes, so we don't have to
   // iterate through the DOM if we don't need to:
   if (areElemsSame(child, parent)) {
     return true;
   } else {
-    return isElemChildOf(child, parent, options);
+    return isElemChildOf(child, parent);
   }
 }

@@ -1,4 +1,4 @@
-import { getCssVar } from "../../css";
+import { getCssVar } from "../../css/getCssVars.ts";
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { setStyle, setStyles } from "../setStyles.ts";
 
