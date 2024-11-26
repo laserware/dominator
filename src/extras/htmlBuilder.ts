@@ -3,12 +3,12 @@
 
 import { isNotNil, isPlainObject } from "@laserware/arcade";
 
-import { setAttrs } from "../attr/setAttrs.ts";
+import { setAttrs } from "../attrs/setAttrs.ts";
 import { setCssVars } from "../css/setCssVars.ts";
 import { setData } from "../data/setData.ts";
 import type { AnyElement, AriaAttributes, ElementWithTagName } from "../dom.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import { setStyles } from "../style/setStyles.ts";
+import { setStyles } from "../styles/setStyles.ts";
 import {
   AttrValue,
   type Attrs,

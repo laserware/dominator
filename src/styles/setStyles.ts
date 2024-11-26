@@ -1,5 +1,5 @@
-import { InvalidElemError } from "../elem/InvalidElemError.ts";
-import { toElem } from "../elem/toElem.ts";
+import { InvalidElemError } from "../elems/InvalidElemError.ts";
+import { toElem } from "../elems/toElem.ts";
 import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import {

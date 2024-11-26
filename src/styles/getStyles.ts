@@ -1,5 +1,5 @@
-import { InvalidElemError } from "../elem/InvalidElemError.ts";
-import { toElem } from "../elem/toElem.ts";
+import { InvalidElemError } from "../elems/InvalidElemError.ts";
+import { toElem } from "../elems/toElem.ts";
 
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";

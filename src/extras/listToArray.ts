@@ -1,6 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
-import { asElem } from "../elem/asElem.ts";
+import { asElem } from "../elems/asElem.ts";
 
 /**
  * Converts the specified {@link https://developer.mozilla.org/en-US/docs/Web/API/NodeList|NodeList}

@@ -1,6 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
-import { selectAttr } from "../attr/selectAttrs.ts";
+import { selectAttr } from "../attrs/selectAttrs.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
 import type {

@@ -1,8 +1,8 @@
 import { isNotNil } from "@laserware/arcade";
 
-import { selectAttrs } from "../attr/selectAttrs.ts";
+import { selectAttrs } from "../attrs/selectAttrs.ts";
 import { selectData } from "../data/selectData.ts";
-import { toElem } from "../elem/toElem.ts";
+import { toElem } from "../elems/toElem.ts";
 import type {
   Attrs,
   CssSelector,

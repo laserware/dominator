@@ -1,6 +1,6 @@
 // noinspection CssRedundantUnit
 
-import { isElemOfType } from "../../elem/isElemOfType.ts";
+import { isElemOfType } from "../../elems/isElemOfType.ts";
 import { render, userEvent } from "../../testing.ts";
 import { html } from "../htmlBuilder.ts";
 
