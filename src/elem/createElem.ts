@@ -1,10 +1,10 @@
 import { isNotNil } from "@laserware/arcade";
 
-import { setAttrs } from "../attrs/setAttrs.ts";
+import { setAttrs } from "../attr/setAttrs.ts";
 import { setCssVars } from "../css/setCssVars.ts";
 import { setData } from "../data/setData.ts";
 import { cast } from "../internal/cast.ts";
-import { setStyles } from "../styles/setStyles.ts";
+import { setStyles } from "../style/setStyles.ts";
 import type { Attrs, CssVars, Data, Styles } from "../types.ts";
 
 import { toElem } from "./toElem.ts";

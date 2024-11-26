@@ -1,6 +1,6 @@
 import { isNotNil, isPlainObject } from "@laserware/arcade";
 
-import { attrsSelector } from "../attrs/attrsSelector.ts";
+import { attrsSelector } from "../attr/attrsSelector.ts";
 import { dataSelector } from "../data/dataSelector.ts";
 import { toElem } from "../elem/toElem.ts";
 import type {

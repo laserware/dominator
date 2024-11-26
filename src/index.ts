@@ -1,15 +1,15 @@
 // Attributes
-export { attrSelector, attrsSelector } from "./attrs/attrsSelector.ts";
-export { InvalidAttrError } from "./attrs/InvalidAttrError.ts";
-export { getAttr, getAttrs } from "./attrs/getAttrs.ts";
+export { attrSelector, attrsSelector } from "./attr/attrsSelector.ts";
+export { InvalidAttrError } from "./attr/InvalidAttrError.ts";
+export { getAttr, getAttrs } from "./attr/getAttrs.ts";
 export {
   hasAllAttrs,
   hasAttr,
   hasSomeAttrs,
   type AttrsSearch,
-} from "./attrs/hasAttrs.ts";
-export { removeAttr, removeAttrs } from "./attrs/removeAttrs.ts";
-export { setAttr, setAttrs } from "./attrs/setAttrs.ts";
+} from "./attr/hasAttrs.ts";
+export { removeAttr, removeAttrs } from "./attr/removeAttrs.ts";
+export { setAttr, setAttrs } from "./attr/setAttrs.ts";
 
 // CSS
 export { InvalidCssVarError } from "./css/InvalidCssVarError.ts";
@@ -70,15 +70,15 @@ export {
 export { listToArray } from "./extras/listToArray.ts";
 
 // Styles
-export { getStyle, getStyles } from "./styles/getStyles.ts";
+export { getStyle, getStyles } from "./style/getStyles.ts";
 export {
   hasAllStyles,
   hasSomeStyles,
   hasStyle,
   type StylesSearch,
-} from "./styles/hasStyles.ts";
-export { removeStyle, removeStyles } from "./styles/removeStyles.ts";
-export { setStyle, setStyles } from "./styles/setStyles.ts";
+} from "./style/hasStyles.ts";
+export { removeStyle, removeStyles } from "./style/removeStyles.ts";
+export { setStyle, setStyles } from "./style/setStyles.ts";
 
 // Types
 export type { AriaAttrs } from "./aria.ts";

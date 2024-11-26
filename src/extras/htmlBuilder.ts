@@ -3,10 +3,10 @@
 import { isNotNil } from "@laserware/arcade";
 
 import type { AriaAttrs } from "../aria.ts";
-import { setAttr } from "../attrs/setAttrs.ts";
+import { setAttr } from "../attr/setAttrs.ts";
 import { setData } from "../data/setData.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import { setStyles } from "../styles/setStyles.ts";
+import { setStyles } from "../style/setStyles.ts";
 import {
   AttrValue,
   type AnyElement,

@@ -1,4 +1,4 @@
-import { removeAttr } from "../attrs/removeAttrs.ts";
+import { removeAttr } from "../attr/removeAttrs.ts";
 import { cast } from "../internal/cast.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
