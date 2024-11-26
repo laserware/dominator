@@ -3,7 +3,7 @@ import { InvalidElemError } from "../../elem/InvalidElemError.ts";
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { removeStyle, removeStyles } from "../removeStyles.ts";
 
-describe("within removeAttrs", () => {
+describe("within removeStyles", () => {
   describe("the removeStyle function", () => {
     it("removes the the specified style property from the target", () => {
       const element = render(`<span style="color: red;">Hello</span>`);

@@ -1,7 +1,7 @@
 import { render } from "../../testing.ts";
 import { hasAllStyles, hasSomeStyles, hasStyle } from "../hasStyles.ts";
 
-describe("within hasAttrs", () => {
+describe("within hasStyles", () => {
   describe("the hasStyle function", () => {
     it("returns true if the specified style exists on the target", () => {
       const element = render(`<button style="color: red;">Test</button>`);

@@ -2,7 +2,7 @@ import { render, selectorForNonExistent } from "../../testing.ts";
 import { findElem } from "../findElem.ts";
 import { isElemChildOf } from "../isElemChildOf.ts";
 
-describe("isElemChildOf", () => {
+describe("the isElemChildOf function", () => {
   beforeEach(() => {
     render(`
       <div id="parent">

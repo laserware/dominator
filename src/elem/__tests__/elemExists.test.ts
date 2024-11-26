@@ -1,7 +1,7 @@
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { elemExists } from "../elemExists.ts";
 
-describe("elemExists", () => {
+describe("the elemExists function", () => {
   it("returns false when target is null", () => {
     expect(elemExists(null)).toBeFalsy();
   });
