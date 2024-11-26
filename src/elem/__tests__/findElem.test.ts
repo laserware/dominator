@@ -153,6 +153,14 @@ describe("the findElem function", () => {
 
     expect(() => {
       findElem("29c8aeb1-6519-4a5e-8f67-4505d9b46d9c");
+    }).toThrow(/is not a valid selector/);
+  });
+
+  it("throws an error if invalid options are specified", () => {
+    render(`<div aria-hidden="true" data-value="test">Child</div>`);
+
+    expect(() => {
+      findElem({});
     }).toThrow();
   });
 });

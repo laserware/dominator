@@ -28,7 +28,7 @@ export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
  * @param key Property (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
  * @param [value] Optional dataset value to check for.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function hasDataEntry(
   target: ElemOrCssSelector,
@@ -49,7 +49,7 @@ export function hasDataEntry(
  *
  * @returns `true` if the specified `target` matches all search criteria.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function hasAllData(
   target: ElemOrCssSelector,
@@ -70,7 +70,7 @@ export function hasAllData(
  *
  * @returns `true` if the specified `target` matches some search criteria.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function hasSomeData(
   target: ElemOrCssSelector,

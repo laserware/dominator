@@ -13,7 +13,7 @@ import type { AttrName, ElemOrCssSelector } from "../types.ts";
  *
  * @returns The Element representation of the specified `target`.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function removeAttr<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
@@ -36,7 +36,7 @@ export function removeAttr<E extends Element = HTMLElement>(
  *
  * @returns The Element representation of the specified `target`.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function removeAttrs<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,

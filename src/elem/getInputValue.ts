@@ -30,7 +30,7 @@ type GetInputValueAsReturn<T extends InputValueType> = T extends "boolean"
  *
  * @returns Value of the specified `target` as type `T`.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  * @throws {Error} If the `target` specified is not of type `HTMLInputElement`.
  */
 export function getInputValue<T extends InputValueType>(
@@ -71,7 +71,7 @@ export function getInputValue<T extends InputValueType>(
  *
  * @returns String value of the specified `target`.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  * @throws {Error} If the `target` specified is not of type `HTMLInputElement`.
  */
 export function getInputValueRaw(target: ElemOrCssSelector): string {

@@ -1,11 +1,14 @@
+import { isPlainObject } from "@laserware/arcade";
+
 import { cast } from "../internal/cast.ts";
-import { FindOptions } from "../internal/findOptions.ts";
+import { parseFindOptions, type FindOptions } from "../internal/findOptions.ts";
 import type { CssSelector, Elem } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
 
 /**
- * Query the DOM for an Element matching the specified `selector`.
+ * Query the DOM for an Element matching the specified CSS `selector` in the
+ * optionally specified `parent`.
  *
  * @template E Type of Element to return.
  *
@@ -14,7 +17,7 @@ import { toElem } from "./toElem.ts";
  *
  * @returns Element of type `E` if found, otherwise `null`.
  *
- * @throws {SyntaxError} If the specified selector is invalid.
+ * @throws {SyntaxError} If the specified `selector` is invalid.
  */
 export function findElem<E extends Element = HTMLElement>(
   selector: CssSelector,
@@ -22,7 +25,8 @@ export function findElem<E extends Element = HTMLElement>(
 ): E | null;
 
 /**
- * Query the DOM to find the Element using one of the specified `options`.
+ * Query the DOM to find the Element using one of the specified `options` in the
+ * optionally specified `parent`.
  *
  * @template E Type of Element to return.
  *
@@ -30,7 +34,8 @@ export function findElem<E extends Element = HTMLElement>(
  *
  * @returns Element of type `E` if found, otherwise `null`.
  *
- * @throws {SyntaxError} If the specified selector is invalid.
+ * @throws {SyntaxError} If `withSelector` in the specified `options` is invalid.
+ * @throws {TypeError} If the specified `options` are invalid.
  */
 export function findElem<E extends Element = HTMLElement>(
   options: FindOptions,
@@ -43,11 +48,15 @@ export function findElem<E extends Element = HTMLElement>(
   let selector: string;
   let validParent: Elem = parent ?? document;
 
-  if (FindOptions.is(selectorOrOptions)) {
-    const parsed = FindOptions.parse(selectorOrOptions);
+  if (isPlainObject(selectorOrOptions)) {
+    const parsed = parseFindOptions(selectorOrOptions);
 
     selector = parsed.selector;
     validParent = parsed.parent;
+
+    if (selector === "") {
+      throw new TypeError("Invalid options passed to findElem");
+    }
   } else {
     selector = selectorOrOptions;
   }

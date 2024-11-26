@@ -12,7 +12,7 @@ import type { ElemOrCssSelector } from "../types.ts";
  *
  * @returns `true` if the `target` has the specified `id`.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function idMatches(target: ElemOrCssSelector, id: string): boolean {
   const elem = elemOrThrow(target, "Unable to check for ID match");

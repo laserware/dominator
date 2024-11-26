@@ -15,12 +15,9 @@ export function isElemInViewport(target: ElemOrCssSelector): boolean {
 
   const { top, left, bottom, right } = elem.getBoundingClientRect();
 
-  const { documentElement } = document;
+  const viewWidth = window.innerWidth || document.documentElement.clientWidth;
+  // prettier-ignore
+  const viewHeight = window.innerHeight || document.documentElement.clientHeight;
 
-  const viewportHeight = window.innerHeight || documentElement.clientHeight;
-  const viewportWidth = window.innerWidth || documentElement.clientWidth;
-
-  return (
-    top >= 0 && left >= 0 && bottom <= viewportHeight && right <= viewportWidth
-  );
+  return top >= 0 && left >= 0 && bottom <= viewHeight && right <= viewWidth;
 }

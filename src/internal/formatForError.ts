@@ -1,3 +1,5 @@
+/* istanbul ignore file -- @preserve: Cannot test because of Intl.ListFormat. */
+
 import { isPlainObject } from "@laserware/arcade";
 
 const formatter = new Intl.ListFormat("en", {
@@ -12,6 +14,8 @@ type FormattableValue = string | number;
  * specified `valueOrValues`. For object and array types, uses the
  * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat|Intl.ListFormat}
  * API to get the result.
+ *
+ * @internal
  *
  * @remarks
  * - If the specified value is an object, returns a list of the object's keys.

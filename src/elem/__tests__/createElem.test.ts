@@ -1,17 +1,45 @@
 import { createElem } from "../createElem.ts";
 
 describe("the createElem function", () => {
-  it("creates an element", () => {
-    const result = createElem("<span>Test</span>", {
-      attrs: { inert: null },
-      cssVars: { "--color-bg": "blue" },
-      data: { itemCount: 24 },
-      styles: { margin: 0 },
+  it("creates an element from a simple HTML string", () => {
+    const result = createElem(`<div>Test</div>`);
+
+    expect(result).toBeInstanceOf(HTMLDivElement);
+  });
+
+  it("assigns provided attributes to the created element", () => {
+    const result = createElem(`<div>Test</div>`, {
+      attrs: {
+        id: "test-id",
+        class: "test-class",
+      },
     });
 
-    expect(result).toHaveAttribute("inert", "");
-    expect(result).toHaveAttribute("data-item-count", "24");
-    expect(result).toHaveStyle("--color-bg: blue; margin: 0px;");
-    expect(result).toHaveTextContent("Test");
+    expect(result).toHaveAttribute("id", "test-id");
+    expect(result).toHaveAttribute("class", "test-class");
+  });
+
+  it("assigns provided CSS variables to the created element", () => {
+    const result = createElem(`<div>Test</div>`, { cssVars: { "--test-var": "test-value" } });
+
+    expect(result.style.getPropertyValue("--test-var")).toBe("test-value");
+  });
+
+  it("assigns provided dataset entries to the created element", () => {
+    const result = createElem(`<div>Test</div>`, { data: { test: "test-data" } });
+
+    expect(result.dataset.test).toBe("test-data");
+  });
+
+  it("assigns provided styles to the created element", () => {
+    const results = createElem(`<div>Test</div>`, { styles: { color: "red" } });
+
+    expect(results.style.color).toBe("red");
+  });
+
+  it("throws an error for invalid markup", () => {
+    expect(() => {
+      createElem("<div");
+    }).toThrow(/Unable to create element/);
   });
 });

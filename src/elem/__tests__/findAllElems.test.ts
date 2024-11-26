@@ -94,4 +94,18 @@ describe("the findAllElems function", () => {
 
     expect(result).toHaveLength(3);
   });
+
+  it("throws an error if an invalid selector is specified", () => {
+    render(`<div aria-hidden="true" data-value="test">Child</div>`);
+
+    expect(() => {
+      findAllElems("29c8aeb1-6519-4a5e-8f67-4505d9b46d9c");
+    }).toThrow(/is not a valid selector/);
+  });
+
+  it("throws an error if invalid options are specified", () => {
+    expect(() => {
+      findAllElems({});
+    }).toThrow();
+  });
 });

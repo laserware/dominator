@@ -23,7 +23,7 @@ import type {
  *
  * @returns Value of the dataset property associated with `key`, otherwise `undefined`.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function getDataValue<T extends DataValue = string>(
   target: ElemOrCssSelector,
@@ -48,7 +48,7 @@ export function getDataValue<T extends DataValue = string>(
  *          Note that you will need to perform checks for whether a value is
  *          `undefined` in the returned object if some of the entries weren't present.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function getData<T extends Data = Data>(
   target: ElemOrCssSelector,

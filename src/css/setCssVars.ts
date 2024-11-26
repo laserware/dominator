@@ -29,7 +29,7 @@ import { InvalidCssVarError } from "./InvalidCssVarError.ts";
  * @returns The Element representation of the specified `target`.
  *
  * @throws {InvalidCssVarError} If the specified `name` is not a valid {@linkcode CssVarName}.
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function setCssVar<E extends Element = HTMLElement>(
   name: CssVarName,
@@ -62,7 +62,7 @@ export function setCssVar<E extends Element = HTMLElement>(
  * @returns The Element representation of the specified `target`.
  *
  * @throws {InvalidCssVarError} If a specified name in `vars` is not a valid {@linkcode CssVarName}.
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function setCssVars<E extends Element = HTMLElement>(
   vars: CssVars,

@@ -19,7 +19,7 @@ import type { Data, DataKey, DataValue, ElemOrCssSelector } from "../types.ts";
  *
  * @returns The Element representation of the specified `target`.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function setDataEntry<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
@@ -42,7 +42,7 @@ export function setDataEntry<E extends Element = HTMLElement>(
  * @param target Element, EventTarget, or CSS selector.
  * @param data Object with key of dataset key and value of entry value.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function setData<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,

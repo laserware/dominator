@@ -32,7 +32,7 @@ export type CssVarsSearch = DOMPropertySearch<CssVarName, CssVarValue | null>;
  *
  * @returns `true` if the specified CSS variable is present.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function hasCssVar(
   name: CssVarName,
@@ -57,7 +57,7 @@ export function hasCssVar(
  *
  * @returns `true` if the specified `target` matches all search criteria.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function hasAllCssVars(
   search: CssVarsSearch,
@@ -81,7 +81,7 @@ export function hasAllCssVars(
  *
  * @returns `true` if the specified `target` has *some* of the specified CSS variables.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function hasSomeCssVars(
   search: CssVarsSearch,

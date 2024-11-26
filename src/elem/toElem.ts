@@ -1,6 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
-import type { ElemOrCssSelector } from "../types.ts";
+import { Elem, type ElemOrCssSelector } from "../types.ts";
 
 import { findElem } from "./findElem.ts";
 
@@ -50,7 +50,7 @@ export function toElem<E extends Element = HTMLElement>(
     return null;
   }
 
-  if (isElementLike(target)) {
+  if (Elem.is(target)) {
     return target as unknown as E;
   }
 
@@ -64,24 +64,5 @@ export function toElem<E extends Element = HTMLElement>(
     validParent = document;
   }
 
-  if (typeof target === "string") {
-    return findElem(target, validParent);
-  }
-
-  return null;
-}
-
-/**
- * Returns true if the specified value is an Element, Document, or EventTarget
- * that can be represented as an `HTMLElement`.
- */
-function isElementLike(
-  value: unknown,
-): value is Element | HTMLElement | Document {
-  return (
-    value instanceof Document ||
-    value instanceof Element ||
-    value instanceof EventTarget ||
-    value instanceof HTMLElement
-  );
+  return findElem(target, validParent);
 }

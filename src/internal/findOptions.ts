@@ -1,4 +1,4 @@
-import { isNotNil, isPlainObject } from "@laserware/arcade";
+import { isNotNil } from "@laserware/arcade";
 
 import { attrsSelector } from "../attr/attrsSelector.ts";
 import { dataSelector } from "../data/dataSelector.ts";
@@ -20,6 +20,8 @@ import { selectorWithTag } from "./selectorWithTag.ts";
  *
  * To search for the existence of an attribute or dataset property (not the
  * value), set the value to `null`.
+ *
+ * @internal
  */
 export interface FindOptions {
   /** CSS selector search string. */
@@ -38,52 +40,33 @@ export interface FindOptions {
   tag?: AnyElementTagName;
 }
 
-export interface FindOptionsParseResult {
+/**
+ * Parses the specified `options` and returns the corresponding `selector`
+ * and `parent` based on which type of `options` were specified.
+ *
+ * @internal
+ *
+ * @param options {@linkcode FindOptions} instance to parse.
+ */
+export function parseFindOptions(options: FindOptions): {
   selector: string;
   parent: Elem;
-}
+} {
+  let selector: string = "";
 
-export namespace FindOptions {
-  /**
-   * Returns true if the specified `value` is an object of type {@linkcode FindOptions}.
-   */
-  export function is(value: any): value is FindOptions {
-    if (!isPlainObject(value)) {
-      return false;
-    }
-
-    return (
-      "withAttrs" in value || "withData" in value || "withSelector" in value
-    );
+  if (isNotNil(options.withSelector)) {
+    selector += options.withSelector;
   }
 
-  /**
-   * Parses the specified `options` and returns the corresponding `selector`
-   * and `parent` based on which type of `options` were specified.
-   *
-   * @param options {@linkcode FindOptions} instance to parse.
-   */
-  export function parse(options: FindOptions): FindOptionsParseResult {
-    let selector: string = "";
-
-    if (isNotNil(options.withSelector)) {
-      selector += options.withSelector;
-    }
-
-    if (isNotNil(options.withAttrs)) {
-      selector += attrsSelector(options.withAttrs);
-    }
-
-    if (isNotNil(options.withData)) {
-      selector += dataSelector(options.withData);
-    }
-
-    if (selector === "") {
-      throw new Error("Unable to parse find options");
-    }
-
-    const parent = toElem(options.parent) ?? document;
-
-    return { selector: selectorWithTag(selector, options.tag), parent };
+  if (isNotNil(options.withAttrs)) {
+    selector += attrsSelector(options.withAttrs);
   }
+
+  if (isNotNil(options.withData)) {
+    selector += dataSelector(options.withData);
+  }
+
+  const parent = toElem(options.parent) ?? document;
+
+  return { selector: selectorWithTag(selector, options.tag), parent };
 }

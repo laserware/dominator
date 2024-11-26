@@ -1,3 +1,5 @@
+/* istanbul ignore file -- @preserve: It's impossible to test this because of JSDOM. */
+
 import { elemOrThrow } from "../internal/elemOr.ts";
 import type { ElemOrCssSelector } from "../types.ts";
 

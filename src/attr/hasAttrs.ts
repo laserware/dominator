@@ -30,7 +30,7 @@ export type AttrsSearch = DOMPropertySearch<AttrName, AttrValue | null>;
  *
  * @returns `true` if the specified attribute `name` is present and `value` matches (if specified).
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
  * const elem = createElem(`<div aria-hidden="true" name="test">Test</div>`);
@@ -60,7 +60,7 @@ export function hasAttr(
  *
  * @returns `true` if the specified `target` matches all search criteria.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
  * const elem = createElem(`<div aria-hidden="true" name="test" inert>Test</div>`);
@@ -97,7 +97,7 @@ export function hasAllAttrs(
  *
  * @returns `true` if the specified `target` matches some search criteria.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
  * const elem = createElem(`<div aria-hidden="true" name="test" inert>Test</div>`);

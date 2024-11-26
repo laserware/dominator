@@ -35,7 +35,7 @@ import { InvalidCssVarError } from "./InvalidCssVarError.ts";
  * @returns Value associated with the specified `name` or `undefined` if it doesn't exist.
  *
  * @throws {InvalidCssVarError} If the specified `name` is invalid.
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function getCssVar<T extends CssVarValue>(
   name: CssVarName,
@@ -66,7 +66,7 @@ export function getCssVar<T extends CssVarValue>(
  *          Note that you will need to perform checks for the presence of a value in the
  *          returned object because it's a `Partial` of the specified `T`.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
  * type CssVarsShape = {

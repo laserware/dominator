@@ -20,7 +20,7 @@ import { InvalidCssVarError } from "./InvalidCssVarError.ts";
  * @returns The Element representation of the specified `target`.
  *
  * @throws {InvalidCssVarError} If the CSS variable could not be removed from `target`.
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function removeCssVar<E extends Element = HTMLElement>(
   name: CssVarName,
@@ -47,7 +47,7 @@ export function removeCssVar<E extends Element = HTMLElement>(
  * @returns The Element representation of the specified `target`.
  *
  * @throws {InvalidCssVarError} If a CSS variable could not be removed from `target`.
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function removeCssVars<E extends Element = HTMLElement>(
   names: CssVarName[],

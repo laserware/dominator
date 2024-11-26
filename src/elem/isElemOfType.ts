@@ -3,7 +3,8 @@ import type { AnyElementTagName, ElemOrCssSelector } from "../types.ts";
 import { toElem } from "./toElem.ts";
 
 /**
- * Checks if the specified `target` matches the specified `tag`.
+ * Checks if the specified `target` matches the specified `tag`. If the specified
+ * `target` doesn't exist or is invalid, returns `false`.
  *
  * @remarks
  * You can't `UPPERCASE` the tag name without getting a type error. That's because
@@ -18,11 +19,7 @@ export function isElemOfType(
   target: ElemOrCssSelector,
   tag: AnyElementTagName,
 ): boolean {
-  try {
-    const elem = toElem(target);
+  const elem = toElem(target);
 
-    return elem?.tagName?.toLowerCase() === tag.toLowerCase();
-  } catch {
-    return false;
-  }
+  return elem?.tagName?.toLowerCase() === tag.toLowerCase();
 }

@@ -1,4 +1,4 @@
-import { capitalize, kebabCase, toEntries } from "@laserware/arcade";
+import { camelCase, kebabCase, toEntries } from "@laserware/arcade";
 
 import type { DataAttrName, DataKey, DataPropertyName } from "../types.ts";
 
@@ -34,16 +34,7 @@ export function asDataAttrName(key: DataKey): DataAttrName {
  */
 export function asDataPropertyName(key: DataKey): DataPropertyName {
   if (key.startsWith("data-")) {
-    // Split the words on the `-`. Exclude the first word (`data`), because
-    // that's the attribute prefix. The word immediately after `data` should
-    // be lowercase (since this is a camelCase word):
-    const [, startWord, ...words] = key.split("-");
-
-    // Capitalize all but the first word:
-    const capitalizedWords = words.map((word) => capitalize(word));
-
-    // Combine all the words and return:
-    return [startWord, ...capitalizedWords].join("");
+    return camelCase(key.replace("data-", ""));
   } else {
     return key;
   }

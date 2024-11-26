@@ -14,6 +14,7 @@ export default defineConfig({
       provider: "istanbul",
       reporter: ["lcov"],
       include: ["src/**/*.ts"],
+      clean: false,
     },
   },
 });

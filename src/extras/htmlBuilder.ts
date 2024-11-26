@@ -1,9 +1,10 @@
 // noinspection SpellCheckingInspection
 
-import { isNotNil } from "@laserware/arcade";
+import { isNotNil, isPlainObject } from "@laserware/arcade";
 
 import type { AriaAttrs } from "../aria.ts";
-import { setAttr } from "../attr/setAttrs.ts";
+import { setAttrs } from "../attr/setAttrs.ts";
+import { setCssVars } from "../css/setCssVars.ts";
 import { setData } from "../data/setData.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { setStyles } from "../style/setStyles.ts";
@@ -11,8 +12,9 @@ import {
   AttrValue,
   type AnyElement,
   type AnyElementTagName,
-  type AttrsDefined,
+  type Attrs,
   type CssVars,
+  type Data,
   type ElementWithTagName,
   type Styles,
 } from "../types.ts";
@@ -73,6 +75,20 @@ interface ElementEventDescriptor<EN extends ElementEventName> {
   options: Omit<AddEventListenerOptions, "signal">;
 }
 
+namespace ElementEventDescriptor {
+  export function is(value: unknown): value is ElementEventDescriptor<any> {
+    if (value === null) {
+      return false;
+    }
+
+    if (isPlainObject(value)) {
+      return "listener" in value;
+    }
+
+    return false;
+  }
+}
+
 type ElementEventListenerOrDescriptor<EN extends ElementEventName> =
   | ElementEventListener<EN>
   | ElementEventDescriptor<EN>;
@@ -81,18 +97,16 @@ type ElementEventListenersOrDescriptors = {
   [EN in ElementEventName]?: ElementEventListenerOrDescriptor<EN>;
 };
 
-type CustomProperties = {
+type AllowedProperties<TN extends AnyElementTagName> = {
+  id?: string;
   class?: string;
-  dataset?: DOMStringMap;
-  style?: Styles | CssVars;
-  [key: `data-${string}`]: AttrValue;
+  attrs?: Attrs | Partial<AriaAttrs>;
+  cssVars?: CssVars;
+  data?: Data;
+  on?: ElementEventListenersOrDescriptors;
+  props?: Partial<Omit<ElementProperties<TN>, "id" | "style" | "click">>;
+  styles?: Styles;
 };
-
-type AllowedProperties<TN extends AnyElementTagName> =
-  | Partial<AriaAttrs>
-  | Omit<ElementProperties<TN>, "style" | "click">
-  | { on: ElementEventListenersOrDescriptors }
-  | CustomProperties;
 
 const identifier = Symbol("identifier");
 
@@ -118,12 +132,8 @@ export interface ElementBuilder<
 
 namespace ElementBuilder {
   export function is(value: unknown): value is ElementBuilder {
-    try {
-      // @ts-ignore
-      return value?.[identifier] === "ElementBuilder";
-    } catch {
-      return false;
-    }
+    // @ts-ignore
+    return value?.[identifier] === "ElementBuilder";
   }
 }
 
@@ -155,6 +165,8 @@ type ChildFunction = () => NonFunctionalChild;
  * @param children Child elements, element builders, primitives, callbacks, or null.
  *                 If null, the element is not added. This is useful for conditional rendering.
  *                 See {@linkcode ElementBuilderChild} for additional details.
+ *
+ * @returns An object with a `build` function that returns the built Element.
  */
 export function html<TN extends AnyElementTagName>(
   tagName: TN,
@@ -192,6 +204,7 @@ export function html<TN extends AnyElementTagName>(
       if (AttrValue.is(child)) {
         const stringValue = stringifyDOMValue(child);
 
+        /* istanbul ignore next -- @preserve: The nullish coalescing is here to make TS happy. */
         return document.createTextNode(stringValue ?? "");
       }
 
@@ -234,29 +247,39 @@ function setElementProperties<TN extends AnyElementTagName>(
   properties: Partial<AllowedProperties<TN>> = {},
   controller?: AbortController | undefined,
 ): void {
-  const setObjectProperties = (
-    name: "dataset" | "style",
-    attrsObject: AttrsDefined,
-  ): void => {
-    if (name === "style") {
-      setStyles(element, attrsObject as Styles);
-    } else {
-      setData(element, attrsObject);
-    }
-  };
+  if (isNotNil(properties.id)) {
+    element.id = properties.id;
+  }
 
-  for (const [name, value] of Object.entries(properties)) {
-    if (name === "on") {
-      addEventListeners(element, value, controller);
-      continue;
-    }
+  if (isNotNil(properties.class)) {
+    element.classList.add(properties.class);
+  }
 
-    if (name === "dataset" || name === "style") {
-      setObjectProperties(name, value);
-      continue;
+  if (isNotNil(properties.props)) {
+    for (const name of Object.keys(properties.props)) {
+      // @ts-ignore
+      element[name] = properties.props[name];
     }
+  }
 
-    setAttr(element, name, value);
+  if (isNotNil(properties.attrs)) {
+    setAttrs(element, properties.attrs);
+  }
+
+  if (isNotNil(properties.data)) {
+    setData(element, properties.data);
+  }
+
+  if (isNotNil(properties.cssVars)) {
+    setCssVars(properties.cssVars, element);
+  }
+
+  if (isNotNil(properties.styles)) {
+    setStyles(element, properties.styles);
+  }
+
+  if (isNotNil(properties.on)) {
+    addEventListeners(element, properties.on, controller);
   }
 }
 
@@ -268,13 +291,15 @@ function setElementProperties<TN extends AnyElementTagName>(
  * @param element Element to attach events to.
  * @param eventsDict Object with key of event name and value of event listener.
  * @param controller AbortController to clean up event listeners.
+ *
+ * @throws {Error} If the `controller` is undefined.
  */
 function addEventListeners<TN extends AnyElementTagName>(
   element: ElementWithTagName<TN>,
   eventsDict: ElementEventListenersOrDescriptors,
   controller?: AbortController | undefined,
 ): void {
-  if (controller === undefined) {
+  if (!(controller instanceof AbortController)) {
     // prettier-ignore
     throw new Error("You must pass in an AbortController when specifying event listeners");
   }
@@ -282,20 +307,19 @@ function addEventListeners<TN extends AnyElementTagName>(
   const eventNames = Object.keys(eventsDict) as ElementEventName[];
 
   for (const eventName of eventNames) {
-    // prettier-ignore
-    const eventListenerOrDescriptor = eventsDict[eventName]!;
+    const listenerOrDescriptor = eventsDict[eventName]!;
 
     let eventListener: ElementEventListener<typeof eventName>;
 
     let options: AddEventListenerOptions = {};
 
-    if (isElementEventDescriptor(eventListenerOrDescriptor)) {
-      eventListener = eventListenerOrDescriptor.listener;
-      options = eventListenerOrDescriptor.options;
+    if (ElementEventDescriptor.is(listenerOrDescriptor)) {
+      eventListener = listenerOrDescriptor.listener;
+
+      options = listenerOrDescriptor.options;
     } else {
-      eventListener = eventListenerOrDescriptor as ElementEventListener<
-        typeof eventName
-      >;
+      // prettier-ignore
+      eventListener = listenerOrDescriptor as ElementEventListener<typeof eventName>;
     }
 
     element.addEventListener(eventName, eventListener, {
@@ -303,18 +327,4 @@ function addEventListeners<TN extends AnyElementTagName>(
       signal: controller.signal,
     });
   }
-}
-
-function isElementEventDescriptor(
-  value: unknown,
-): value is ElementEventDescriptor<any> {
-  if (typeof value !== "object") {
-    return false;
-  }
-
-  if (value === null) {
-    return false;
-  }
-
-  return "listener" in value;
 }

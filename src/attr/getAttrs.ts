@@ -28,7 +28,7 @@ import type {
  *
  * @returns Value of type `T` or `null` if not found.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  *
  * @example With Existent String Attribute
  * const elem = findElem("button")!;
@@ -76,7 +76,7 @@ export function getAttr<T extends AttrValue = string>(
  *          Note that you will need to perform checks for whether a value is
  *          `undefined` in the returned object if some of the entries weren't present.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
  * interface Shape {

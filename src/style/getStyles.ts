@@ -24,7 +24,7 @@ import type {
  *
  * @returns Value of type `T` or `null` if not found.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function getStyle<T extends StyleValue>(
   target: ElemOrCssSelector,
@@ -54,7 +54,7 @@ export function getStyle<T extends StyleValue>(
  *          Note that you will need to perform checks for the presence of a value in the
  *          returned object because it's a `Partial` of the specified `T`.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function getStyles<T extends Styles = Styles>(
   target: ElemOrCssSelector,

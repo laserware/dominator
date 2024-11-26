@@ -30,7 +30,7 @@ export type StylesSearch = DOMPropertySearch<StyleKey, StyleValue | null>;
  *
  * @returns `true` if the specified style is present.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function hasStyle(
   target: ElemOrCssSelector,
@@ -51,7 +51,7 @@ export function hasStyle(
  *
  * @returns `true` if the specified `target` has *all* specified styles.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function hasAllStyles(
   target: ElemOrCssSelector,
@@ -72,7 +72,7 @@ export function hasAllStyles(
  *
  * @returns `true` if the specified `target` has *some* specified styles.
  *
- * @throws {InvalidElemError} If the specified `target` does not exist.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
 export function hasSomeStyles(
   target: ElemOrCssSelector,

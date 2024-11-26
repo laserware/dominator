@@ -1,11 +1,14 @@
+import { isPlainObject } from "@laserware/arcade";
+
 import { listToArray } from "../extras/listToArray.ts";
-import { FindOptions } from "../internal/findOptions.ts";
+import { parseFindOptions, type FindOptions } from "../internal/findOptions.ts";
 import type { CssSelector, Elem } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
 
 /**
- * Query the DOM to find the Elements matching the specified CSS `selector`.
+ * Query the DOM to find the Elements matching the specified CSS `selector` in
+ * the optionally specified `parent`.
  *
  * @template E Type of Elements to return.
  *
@@ -23,7 +26,8 @@ export function findAllElems<E extends Element = HTMLElement>(
 
 /**
  * Query the DOM using one of the specified `options` and find the Elements
- * that match the criteria in the `options` object.
+ * that match the criteria in the `options` object in the optionally specified
+ * `parent`.
  *
  * @template E Type of Elements to return.
  *
@@ -31,7 +35,8 @@ export function findAllElems<E extends Element = HTMLElement>(
  *
  * @returns Array of Elements of type `T` if found, otherwise empty array.
  *
- * @throws {SyntaxError} If the specified selector is invalid.
+ * @throws {SyntaxError} If `withSelector` in the specified `options` is invalid.
+ * @throws {TypeError} If the specified `options` are invalid.
  */
 export function findAllElems<E extends Element = HTMLElement>(
   options: FindOptions,
@@ -44,11 +49,15 @@ export function findAllElems<E extends Element = HTMLElement>(
   let selector: string;
   let validParent: Elem = parent ?? document;
 
-  if (FindOptions.is(selectorOrOptions)) {
-    const parsed = FindOptions.parse(selectorOrOptions);
+  if (isPlainObject(selectorOrOptions)) {
+    const parsed = parseFindOptions(selectorOrOptions);
 
     selector = parsed.selector;
     validParent = parsed.parent;
+
+    if (selector === "") {
+      throw new TypeError("Invalid options passed to findAllElems");
+    }
   } else {
     selector = selectorOrOptions;
   }
