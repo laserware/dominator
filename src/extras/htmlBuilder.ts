@@ -1,3 +1,4 @@
+// @ts-nocheck
 // noinspection SpellCheckingInspection
 
 import { isNotNil, isPlainObject } from "@laserware/arcade";
@@ -17,6 +18,8 @@ import {
   type Styles,
   type TagName,
 } from "../types.ts";
+
+// TODO: Try to improve performance of types here. TypeScript spends *a lot* of time checking this file.
 
 type NonMethodElemProperties<TN extends TagName> = ExcludeMethods<
   ElementWithTagName<TN>

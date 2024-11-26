@@ -24,13 +24,13 @@ import { InvalidElemError } from "./InvalidElemError.ts";
  * only available on an `HTMLButtonElement` when the Element or EventTarget you
  * passed in is an `HTMLDivElement`, you're going to get a runtime error.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element or EventTarget.
  *
  * @throws {InvalidElemError} If specified `target` is `null` or `undefined`.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @example Usage with Valid EventTarget
  * function handleButtonClick(event: MouseEvent): void {
@@ -49,8 +49,8 @@ import { InvalidElemError } from "./InvalidElemError.ts";
  *   console.log(elem.valueAsNumber);
  * }
  */
-export function asElem<E extends Element = HTMLElement>(
-  target: Elem | null | undefined,
+export function asElem<E extends HTMLElement = HTMLElement>(
+  target: Elem<E> | null | undefined,
 ): E {
   if (Elem.is(target)) {
     return target as E;

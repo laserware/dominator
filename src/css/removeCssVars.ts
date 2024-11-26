@@ -12,19 +12,19 @@ import { InvalidCssVarError } from "./InvalidCssVarError.ts";
  * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
  * (i.e. `:root`).
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param name Name of the CSS variable to remove.
  * @param [target] Optional Element, EventTarget, or CSS selector.
  *
- * @returns The Element representation of the specified `target`.
+ * @returns Element representation of the specified `target`.
  *
  * @throws {InvalidCssVarError} If the CSS variable could not be removed from `target`.
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function removeCssVar<E extends Element = HTMLElement>(
+export function removeCssVar<E extends HTMLElement = HTMLElement>(
   name: CssVarName,
-  target: ElemOrCssSelector = document.documentElement,
+  target: ElemOrCssSelector<E> = document.documentElement,
 ): E {
   const elem = elemOrThrow(target, `Unable to remove CSS variable ${name}`);
 
@@ -39,19 +39,19 @@ export function removeCssVar<E extends Element = HTMLElement>(
  * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
  * (i.e. `:root`).
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param names Array of CSS variable names to remove.
  * @param [target] Optional Element, EventTarget, or CSS selector.
  *
- * @returns The Element representation of the specified `target`.
+ * @returns Element representation of the specified `target`.
  *
  * @throws {InvalidCssVarError} If a CSS variable could not be removed from `target`.
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function removeCssVars<E extends Element = HTMLElement>(
+export function removeCssVars<E extends HTMLElement = HTMLElement>(
   names: CssVarName[],
-  target: ElemOrCssSelector = document.documentElement,
+  target: ElemOrCssSelector<E> = document.documentElement,
 ): E {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to remove CSS variables ${formatForError(names)}`);

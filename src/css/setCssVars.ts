@@ -20,21 +20,21 @@ import { InvalidCssVarError } from "./InvalidCssVarError.ts";
  * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
  * (i.e. `:root`).
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param name Name of the CSS variable to set or update.
  * @param value Value of the CSS variable.
  * @param [target] Optional Element, EventTarget, or CSS selector.
  *
- * @returns The Element representation of the specified `target`.
+ * @returns Element representation of the specified `target`.
  *
  * @throws {InvalidCssVarError} If the specified `name` is not a valid {@linkcode CssVarName}.
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function setCssVar<E extends Element = HTMLElement>(
+export function setCssVar<E extends HTMLElement = HTMLElement>(
   name: CssVarName,
   value: CssVarValue,
-  target: ElemOrCssSelector = document.documentElement,
+  target: ElemOrCssSelector<E> = document.documentElement,
 ): E {
   const elem = elemOrThrow(target, `Unable to set CSS variable ${name}`);
 
@@ -54,25 +54,27 @@ export function setCssVar<E extends Element = HTMLElement>(
  * because the key (i.e. CSS variable name) is checked prior to setting it on the
  * property.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param vars Object with key of CSS variable name and value of value to set for name.
  * @param [target] Optional Element, EventTarget, or CSS selector.
  *
- * @returns The Element representation of the specified `target`.
+ * @returns Element representation of the specified `target`.
  *
  * @throws {InvalidCssVarError} If a specified name in `vars` is not a valid {@linkcode CssVarName}.
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function setCssVars<E extends Element = HTMLElement>(
+export function setCssVars<E extends HTMLElement = HTMLElement>(
   vars: CssVars,
-  target: ElemOrCssSelector = document.documentElement,
+  target: ElemOrCssSelector<E> = document.documentElement,
 ): E {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to set CSS variables ${formatForError(vars)}`);
 
   for (const key of Object.keys(vars)) {
-    setSingleCssVar(elem, key, vars[key as keyof typeof vars]);
+    const varName = cast<keyof typeof vars>(key);
+
+    setSingleCssVar(elem, varName, vars[varName]);
   }
 
   return cast<E>(elem);

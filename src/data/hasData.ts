@@ -24,14 +24,16 @@ export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
  * Returns true if the specified `target` has a dataset entry with the specified
  * `key` and optionally, the matching `value`.
  *
+ * @template E Element type of specified `target`.
+ *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Property (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
  * @param [value] Optional dataset value to check for.
  *
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function hasDataEntry(
-  target: ElemOrCssSelector,
+export function hasDataEntry<E extends HTMLElement = HTMLElement>(
+  target: ElemOrCssSelector<E>,
   key: DataKey,
   value?: DataValue,
 ): boolean {
@@ -44,6 +46,8 @@ export function hasDataEntry(
  * Checks if the specified `target` has *all* of the dataset entries that match
  * the specified `search` criteria.
  *
+ * @template E Element type of specified `target`.
+ *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of dataset keys or dataset filter object to check for.
  *
@@ -51,8 +55,8 @@ export function hasDataEntry(
  *
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function hasAllData(
-  target: ElemOrCssSelector,
+export function hasAllData<E extends HTMLElement = HTMLElement>(
+  target: ElemOrCssSelector<E>,
   search: DataSearch,
 ): boolean {
   // prettier-ignore
@@ -65,6 +69,8 @@ export function hasAllData(
  * Checks if the specified `target` has *some* of the dataset entries that match
  * the specified `search` criteria.
  *
+ * @template E Element type of specified `target`.
+ *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of dataset keys or dataset filter object to check for.
  *
@@ -72,8 +78,8 @@ export function hasAllData(
  *
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function hasSomeData(
-  target: ElemOrCssSelector,
+export function hasSomeData<E extends HTMLElement = HTMLElement>(
+  target: ElemOrCssSelector<E>,
   search: DataSearch,
 ): boolean {
   // prettier-ignore

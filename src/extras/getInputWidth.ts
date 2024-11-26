@@ -12,7 +12,7 @@ let context: CanvasRenderingContext2D | null = null;
  *
  * @param input The `HTMLInputElement` for which to get width.
  *
- * @returns The ideal width for the `input`.
+ * @returns ideal width for the `input`.
  */
 export function getInputWidth(input: HTMLInputElement): number {
   if (canvas === null) {

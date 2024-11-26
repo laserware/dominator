@@ -22,6 +22,7 @@ import type {
  * {@link https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute|Element.getAttribute} API.
  *
  * @template T Type of value to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to get.
@@ -51,13 +52,13 @@ import type {
  * const result = getAttr(elem, "checked");
  * // true
  */
-export function getAttr<T extends AttrValue = string>(
-  target: ElemOrCssSelector,
-  name: AttrName,
-): T | null {
+export function getAttr<
+  T extends AttrValue = AttrValue,
+  E extends HTMLElement = HTMLElement,
+>(target: ElemOrCssSelector<E>, name: AttrName<E>): T | null {
   const elem = elemOrThrow(target, `Unable to get attribute ${name}`);
 
-  return getSingleAttr<T>(elem, name) ?? null;
+  return getSingleAttr<T, E>(elem, name) ?? null;
 }
 
 /**
@@ -68,6 +69,7 @@ export function getAttr<T extends AttrValue = string>(
  * is `null`.
  *
  * @template T Shape of attributes object to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param names Names of the attributes for which to find values.
@@ -93,26 +95,26 @@ export function getAttr<T extends AttrValue = string>(
  * const result = getAttrs<Shape>(elem, ["a", "b", "c"]);
  * // { a: "a", b: "b", c: undefined }
  */
-export function getAttrs<T extends Attrs = Attrs>(
-  target: ElemOrCssSelector,
-  names: KeysOf<T>,
-): WithNullValues<T> {
+export function getAttrs<
+  T extends Attrs = Attrs,
+  E extends HTMLElement = HTMLElement,
+>(target: ElemOrCssSelector<E>, names: KeysOf<T>): WithNullValues<T> {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to get attributes ${formatForError(names)}`);
 
   const attrs: Record<string, AttrValue | null> = {};
 
   for (const name of names) {
-    attrs[name] = getSingleAttr(elem, name);
+    attrs[name] = getSingleAttr(elem, cast<AttrName>(name));
   }
 
   return cast<WithNullValues<T>>(attrs);
 }
 
-function getSingleAttr<T extends AttrValue = string>(
-  element: HTMLElement,
-  name: AttrName,
-): T | null {
+function getSingleAttr<
+  T extends AttrValue = AttrValue,
+  E extends HTMLElement = HTMLElement,
+>(element: HTMLElement, name: AttrName<E>): T | null {
   const attrValue = element.getAttribute(name);
 
   return parseDOMValue<T>(attrValue) ?? null;

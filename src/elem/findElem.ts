@@ -10,7 +10,7 @@ import { toElem } from "./toElem.ts";
  * Query the DOM for an Element matching the specified CSS `selector` in the
  * optionally specified `parent`.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param selector CSS selector string to find the element.
  * @param [parent] Optional Element or EventTarget for parent.
@@ -19,7 +19,7 @@ import { toElem } from "./toElem.ts";
  *
  * @throws {SyntaxError} If the specified `selector` is invalid.
  */
-export function findElem<E extends Element = HTMLElement>(
+export function findElem<E extends HTMLElement = HTMLElement>(
   selector: CssSelector,
   parent?: Elem | null,
 ): E | null;
@@ -28,7 +28,7 @@ export function findElem<E extends Element = HTMLElement>(
  * Query the DOM to find the Element using one of the specified `options` in the
  * optionally specified `parent`.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param options Options for finding the element. See {@linkcode FindOptions}.
  *
@@ -37,11 +37,11 @@ export function findElem<E extends Element = HTMLElement>(
  * @throws {SyntaxError} If `withSelector` in the specified `options` is invalid.
  * @throws {TypeError} If the specified `options` are invalid.
  */
-export function findElem<E extends Element = HTMLElement>(
+export function findElem<E extends HTMLElement = HTMLElement>(
   options: FindOptions,
 ): E | null;
 
-export function findElem<E extends Element = HTMLElement>(
+export function findElem<E extends HTMLElement = HTMLElement>(
   selectorOrOptions: FindOptions | CssSelector,
   parent?: Elem | null,
 ): E | null {

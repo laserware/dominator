@@ -25,7 +25,7 @@ import type {
  *
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function getDataValue<T extends DataValue = string>(
+export function getDataValue<T extends DataValue = DataValue>(
   target: ElemOrCssSelector,
   key: DataKey,
 ): T | undefined {

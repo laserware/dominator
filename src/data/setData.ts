@@ -11,18 +11,18 @@ import type { Data, DataKey, DataValue, ElemOrCssSelector } from "../types.ts";
  * Assigns the specified `value` to the specified dataset `key` in the specified
  * `target`.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Key or property name for the dataset entry.
  * @param value Value to set for associated property or attribute name.
  *
- * @returns The Element representation of the specified `target`.
+ * @returns Element representation of the specified `target`.
  *
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function setDataEntry<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector,
+export function setDataEntry<E extends HTMLElement = HTMLElement>(
+  target: ElemOrCssSelector<E>,
   key: DataKey,
   value: DataValue | null,
 ): E {
@@ -37,15 +37,15 @@ export function setDataEntry<E extends Element = HTMLElement>(
  * Assigns the specified `data` key/value pairs to the specified `target`.
  * Returns the Element representation of the specified `target`.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param data Object with key of dataset key and value of entry value.
  *
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function setData<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector,
+export function setData<E extends HTMLElement = HTMLElement>(
+  target: ElemOrCssSelector<E>,
   data: Data,
 ): E {
   // prettier-ignore

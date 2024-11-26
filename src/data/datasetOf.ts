@@ -1,5 +1,6 @@
 import { isNotNil } from "@laserware/arcade";
 
+import { cast } from "../internal/cast.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { parseDOMValue, stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
@@ -34,8 +35,11 @@ type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
  *
  * @class
  */
-export class Dataset<DS extends AnyDatasetShape> {
-  readonly #element: HTMLElement;
+export class Dataset<
+  DS extends AnyDatasetShape,
+  E extends HTMLElement = HTMLElement,
+> {
+  readonly #element: E;
 
   /**
    * Creates a new instance of a {@linkcode Dataset} class to manage the dataset
@@ -49,8 +53,8 @@ export class Dataset<DS extends AnyDatasetShape> {
    *
    * @throws {InvalidElemError} If the specified `target` wasn't found.
    */
-  constructor(target: ElemOrCssSelector, initialData?: Partial<DS>) {
-    this.#element = elemOrThrow(target, "Unable to initialize Dataset");
+  constructor(target: ElemOrCssSelector<E>, initialData?: Partial<DS>) {
+    this.#element = elemOrThrow<E>(target, "Unable to initialize Dataset");
 
     if (isNotNil(initialData)) {
       this.update(initialData);
@@ -60,7 +64,7 @@ export class Dataset<DS extends AnyDatasetShape> {
   /**
    * Element containing the dataset property being managed.
    */
-  public get element(): HTMLElement {
+  public get element(): E {
     return this.#element;
   }
 
@@ -82,7 +86,7 @@ export class Dataset<DS extends AnyDatasetShape> {
       entries[name] = parseDOMValue(dataset[name]);
     }
 
-    return entries as Partial<DS>;
+    return cast<Partial<DS>>(entries);
   }
 
   /**
@@ -159,9 +163,12 @@ export class Dataset<DS extends AnyDatasetShape> {
  *
  * @returns Dataset instance associated with `target`.
  */
-export function datasetOf<DS extends AnyDatasetShape>(
+export function datasetOf<
+  DS extends AnyDatasetShape,
+  E extends HTMLElement = HTMLElement,
+>(
   target: Element | ElemOrCssSelector,
   initialData?: Partial<DS>,
-): Dataset<DS> {
-  return new Dataset<DS>(target, initialData);
+): Dataset<DS, E> {
+  return new Dataset<DS, E>(target, initialData);
 }

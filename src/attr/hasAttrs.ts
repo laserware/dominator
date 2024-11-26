@@ -17,12 +17,17 @@ import { getAttr } from "./getAttrs.ts";
  * You can use an array of attribute names to check only if the attributes are
  * present, or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of an attribute.
+ *
+ * @template E Type of Element with corresponding attributes to search.
  */
-export type AttrsSearch = DOMPropertySearch<AttrName, AttrValue | null>;
+export type AttrsSearch<E extends HTMLElement = HTMLElement> =
+  DOMPropertySearch<AttrName<E>, AttrValue | null>;
 
 /**
  * Checks if the specified `target` has the specified attribute `name`. If a
  * `value` is specified, checks that the values match.
+ *
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to check for.
@@ -41,9 +46,9 @@ export type AttrsSearch = DOMPropertySearch<AttrName, AttrValue | null>;
  * const hasNameAndValue = hasAttr(elem, "name", "test");
  * // true
  */
-export function hasAttr(
+export function hasAttr<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector,
-  name: AttrName,
+  name: AttrName<E>,
   value?: AttrValue,
 ): boolean {
   const elem = elemOrThrow(target, `Unable to check for attribute ${name}`);
@@ -54,6 +59,8 @@ export function hasAttr(
 /**
  * Checks if the specified `target` has *all* of the attributes that match the
  * specified `search` criteria.
+ *
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of attribute names or attributes filter object to check for.
@@ -78,9 +85,9 @@ export function hasAttr(
  * });
  * // true
  */
-export function hasAllAttrs(
-  target: ElemOrCssSelector,
-  search: AttrsSearch,
+export function hasAllAttrs<E extends HTMLElement = HTMLElement>(
+  target: ElemOrCssSelector<E>,
+  search: AttrsSearch<E>,
 ): boolean {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to check for attributes ${formatForError(search)}`);
@@ -91,6 +98,8 @@ export function hasAllAttrs(
 /**
  * Checks if the specified `target` has *some* of the attributes that match
  * the specified `search` criteria.
+ *
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of attribute names or attributes filter object to check for.
@@ -113,9 +122,9 @@ export function hasAllAttrs(
  * });
  * // true
  */
-export function hasSomeAttrs(
-  target: ElemOrCssSelector,
-  search: AttrsSearch,
+export function hasSomeAttrs<E extends HTMLElement = HTMLElement>(
+  target: ElemOrCssSelector<E>,
+  search: AttrsSearch<E>,
 ): boolean {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to check for attributes ${formatForError(search)}`);

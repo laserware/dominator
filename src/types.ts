@@ -3,7 +3,11 @@
 
 import { isPlainObject } from "@laserware/arcade";
 
-import type { HTMLElementTagName, SVGElementTagName } from "./dom.ts";
+import type {
+  HTMLElementAttributes,
+  HTMLElementTagName,
+  SVGElementTagName,
+} from "./dom.ts";
 
 /**
  * Type is either a single item or array of items of type `T`.
@@ -85,8 +89,11 @@ export namespace DOMPropertyValue {
 
 /**
  * Element or EventTarget that can be passed into functions.
+ *
+ * @template E Type of Element.
  */
-export type Elem =
+export type Elem<E extends HTMLElement = HTMLElement> =
+  | E
   | Document
   | Element
   | EventTarget
@@ -132,13 +139,21 @@ export namespace CssSelector {
  *
  * This type allows for flexibility in functions or methods that can accept
  * either an {@linkcode Elem} type object or a string representing a CSS selector.
+ *
+ * @template E Type of element if `Elem`.
  */
-export type ElemOrCssSelector = Elem | CssSelector;
+export type ElemOrCssSelector<E extends HTMLElement = HTMLElement> =
+  | Elem<E>
+  | CssSelector;
 
 /**
  * Valid type for HTML/SVG attribute name.
+ *
+ * @template E Type of element with corresponding attribute names.
  */
-export type AttrName = string;
+export type AttrName<E extends HTMLElement = HTMLElement> =
+  | Extract<keyof HTMLElementAttributes<E>, string>
+  | string;
 
 /**
  * Value type that can be specified as the value for an HTML/SVG attribute.
@@ -158,8 +173,13 @@ export namespace AttrValue {
 /**
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
  * Some of the values may be `null` or `undefined`.
+ *
+ * @template E Type of Element for corresponding attributes.
  */
-export type Attrs = Record<AttrName, AttrValue | null | undefined>;
+export type Attrs<E extends HTMLElement = HTMLElement> = Record<
+  AttrName<E>,
+  AttrValue | null | undefined
+>;
 
 /**
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
@@ -327,20 +347,20 @@ export type ExcludeMethods<T> = Pick<T, NeverMethods<T>>;
  *
  * @template E Type of Element with properties.
  */
-export type PropValue<E extends Element = HTMLElement> = ExcludeMethods<E>;
+export type PropValue<E extends HTMLElement = HTMLElement> = ExcludeMethods<E>;
 
 /**
  * Possible names for element properties (*not* attributes).
  *
  * @template E Type of Element with properties.
  */
-export type PropName<E extends Element = HTMLElement> = keyof PropValue<E>;
+export type PropName<E extends HTMLElement = HTMLElement> = keyof PropValue<E>;
 
 /**
  * Object with Element properties.
  *
  * @template E Type of Element with properties.
  */
-export type Props<E extends Element = HTMLElement> = Partial<
+export type Props<E extends HTMLElement = HTMLElement> = Partial<
   Record<PropName<E>, PropValue<E>>
 >;

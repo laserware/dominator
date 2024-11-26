@@ -12,7 +12,7 @@ import type { DOMPropertyValue } from "../types.ts";
  *
  * @param value Value to convert to a valid attribute value.
  *
- * @returns The string representation of tha value if defined, otherwise `undefined`.
+ * @returns string representation of tha value if defined, otherwise `undefined`.
  */
 export function stringifyDOMValue(value: unknown): string | undefined {
   if (value === undefined) {

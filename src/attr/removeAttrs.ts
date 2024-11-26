@@ -6,18 +6,18 @@ import type { AttrName, ElemOrCssSelector } from "../types.ts";
 /**
  * Removes the specified attribute `name` from the specified `target`.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to remove.
  *
- * @returns The Element representation of the specified `target`.
+ * @returns Element representation of the specified `target`.
  *
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function removeAttr<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector,
-  name: AttrName,
+export function removeAttr<E extends HTMLElement = HTMLElement>(
+  target: ElemOrCssSelector<E>,
+  name: AttrName<E>,
 ): E {
   const elem = elemOrThrow(target, `Unable to remove attribute ${name}`);
 
@@ -29,18 +29,18 @@ export function removeAttr<E extends Element = HTMLElement>(
 /**
  * Removes the attributes with `names` from specified `target`.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param names Array of attribute names to remove.
  *
- * @returns The Element representation of the specified `target`.
+ * @returns Element representation of the specified `target`.
  *
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function removeAttrs<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector,
-  names: AttrName[],
+export function removeAttrs<E extends HTMLElement = HTMLElement>(
+  target: ElemOrCssSelector<E>,
+  names: AttrName<E>[],
 ): E {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to remove attributes ${formatForError(names)}`);

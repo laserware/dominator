@@ -19,7 +19,7 @@ import { findElem } from "./findElem.ts";
  * `target` is a CSS selector and we want to limit the search to the specified
  * parent.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param parent Optional Element, EventTarget, or CSS selector for parent.
@@ -42,7 +42,7 @@ import { findElem } from "./findElem.ts";
  *   buttonElem?.focus?.();
  * }
  */
-export function toElem<E extends Element = HTMLElement>(
+export function toElem<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector | null | undefined,
   parent?: ElemOrCssSelector | null | undefined,
 ): E | null {

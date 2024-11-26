@@ -11,10 +11,12 @@ import { toElem } from "./toElem.ts";
 
 /**
  * Options for creating an element using {@linkcode createElem}.
+ *
+ * @template E Element type for attributes.
  */
-interface CreateElemOptions {
+interface CreateElemOptions<E extends HTMLElement = HTMLElement> {
   /** Attributes to set on element. */
-  attrs?: Attrs;
+  attrs?: Attrs<E>;
 
   /** CSS variables to set on element. */
   cssVars?: CssVars;
@@ -36,7 +38,7 @@ interface CreateElemOptions {
  * just need a one-off element or you want to define the element structure
  * mostly in markup.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param markup HTML string that represents the element.
  * @param [options] Optional attributes, CSS variables, dataset entries, and styles
@@ -44,9 +46,9 @@ interface CreateElemOptions {
  *
  * @returns Element of type `E` with the specified `markup` and `options`.
  */
-export function createElem<E extends Element = HTMLElement>(
+export function createElem<E extends HTMLElement = HTMLElement>(
   markup: string,
-  options: CreateElemOptions = {},
+  options: CreateElemOptions<E> = {},
 ): E {
   const parent = document.createElement("div");
 

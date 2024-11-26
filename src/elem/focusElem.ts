@@ -6,7 +6,7 @@ import { toElem } from "./toElem.ts";
 /**
  * Options for setting focus to an element in {@linkcode focusElem}.
  */
-export interface FocusOptions<E extends Element> {
+export interface FocusOptions<E extends HTMLElement> {
   /** Delay (in milliseconds) to wait until attempting to set focus. */
   delay?: number;
 
@@ -35,7 +35,7 @@ export interface FocusOptions<E extends Element> {
  * @param target Element, EventTarget, or CSS selector.
  * @param [options] Options for setting focus. See {@linkcode FocusOptions}.
  */
-export function focusElem<E extends Element = HTMLElement>(
+export function focusElem<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector | null,
   options?: FocusOptions<E>,
 ): void {

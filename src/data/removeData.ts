@@ -9,17 +9,17 @@ import type { DataKey, DataPropertyName, ElemOrCssSelector } from "../types.ts";
  * Removes the dataset entry with the specified `key` from the specified
  * `target`.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Dataset property or attribute name for the dataset entry to remove.
  *
- * @returns The Element representation of the specified `target`.
+ * @returns Element representation of the specified `target`.
  *
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function removeDataEntry<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector,
+export function removeDataEntry<E extends HTMLElement = HTMLElement>(
+  target: ElemOrCssSelector<E>,
   key: DataPropertyName,
 ): E {
   // prettier-ignore
@@ -34,17 +34,17 @@ export function removeDataEntry<E extends Element = HTMLElement>(
  * Removes the specified dataset entries with the specified `keys` from the
  * specified `target`.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Array of dataset properties or attribute names to remove.
  *
- * @returns The Element representation of the specified `target`.
+ * @returns Element representation of the specified `target`.
  *
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function removeData<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector,
+export function removeData<E extends HTMLElement = HTMLElement>(
+  target: ElemOrCssSelector<E>,
   keys: DataKey[],
 ): E {
   // prettier-ignore

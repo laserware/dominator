@@ -1,3 +1,4 @@
+import type { ElementWithTagName } from "../dom.ts";
 import type { ElemOrCssSelector, TagName } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
@@ -10,12 +11,17 @@ import { toElem } from "./toElem.ts";
  * You can't `UPPERCASE` the tag name without getting a type error. That's because
  * this function converts it to lowercase before checking.
  *
+ * @template TN Tag name of Element to check for.
+ *
  * @param target Element, EventTarget, or CSS selector.
  * @param tag Tag name to check for (e.g. `div`, `span`, etc.).
  *
  * @returns `true` if the specified `target` is of type `tag`.
  */
-export function isElemOfType(target: ElemOrCssSelector, tag: TagName): boolean {
+export function isElemOfType<TN extends TagName>(
+  target: ElemOrCssSelector,
+  tag: TN,
+): target is ElementWithTagName<TN> {
   const elem = toElem(target);
 
   return elem?.tagName?.toLowerCase() === tag.toLowerCase();

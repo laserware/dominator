@@ -18,12 +18,12 @@ import {
  * @param key Name of the style property.
  * @param value Value to set for the style property.
  *
- * @returns The Element representation of the specified `target`.
+ * @returns Element representation of the specified `target`.
  *
  * @throws {InvalidElemError} If the `target` could not be found or doesn't have a
  *                           {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style|style} property.
  */
-export function setStyle<E extends Element = HTMLElement>(
+export function setStyle<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector,
   key: StyleKey,
   value: StyleValue,
@@ -43,17 +43,17 @@ export function setStyle<E extends Element = HTMLElement>(
  * object with key of style property name and value of the corresponding property
  * value.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param styles Object with style property values keyed by name.
  *
- * @returns The Element representation of the specified `target`.
+ * @returns Element representation of the specified `target`.
  *
  * @throws {InvalidElemError} If the `target` could not be found or doesn't have a
  *                            {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style|style} property.
  */
-export function setStyles<E extends Element = HTMLElement>(
+export function setStyles<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector,
   styles: Styles,
 ): E {

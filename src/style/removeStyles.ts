@@ -6,16 +6,16 @@ import { CssVarName, type ElemOrCssSelector, type StyleKey } from "../types.ts";
 /**
  * Removes the specified style `key` from the specified `target`.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Key of the style property to remove.
  *
- * @returns The Element representation of the specified `target`.
+ * @returns Element representation of the specified `target`.
  *
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function removeStyle<E extends Element = HTMLElement>(
+export function removeStyle<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector,
   key: StyleKey,
 ): E {
@@ -30,16 +30,16 @@ export function removeStyle<E extends Element = HTMLElement>(
  * Removes the style properties with names matching the specified `keys` from
  * the specified `target`.
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Array of style property names to remove.
  *
- * @returns The Element representation of the specified `target`.
+ * @returns Element representation of the specified `target`.
  *
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  */
-export function removeStyles<E extends Element = HTMLElement>(
+export function removeStyles<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector,
   keys: StyleKey[],
 ): E {

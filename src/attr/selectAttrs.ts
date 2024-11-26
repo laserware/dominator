@@ -17,6 +17,8 @@ import { InvalidAttrError } from "./InvalidAttrError.ts";
  * that the `value` is coerced to a string and `null` excludes a value but only
  * includes a name. If `tag` is specified, it is included in the resulting selector.
  *
+ * @template E Element type to select attribute from.
+ *
  * @param name Attribute name to include in the selector.
  * @param [value=undefined] Optional attribute value to include in the selector.
  * @param [tag] Optional tag name to include in the selector.
@@ -41,8 +43,8 @@ import { InvalidAttrError } from "./InvalidAttrError.ts";
  * const selector = selectAttr("disabled", null, "button");
  * // `button[disabled]`
  */
-export function selectAttr(
-  name: AttrName,
+export function selectAttr<E extends HTMLElement = HTMLElement>(
+  name: AttrName<E>,
   value: AttrValue | null | undefined = undefined,
   tag?: TagName,
 ): CssSelector {
@@ -56,6 +58,8 @@ export function selectAttr(
  * that the values of the `attrs` object are coerced to a string and `null` excludes
  * a value but only includes a name. If `tag` is specified, it is included in the
  * resulting selector.
+ *
+ * @template E Element type to select attributes from.
  *
  * @param attrs Object with key of attribute name and value of attribute value.
  * @param [tag] Optional tag name to include in the selector.
@@ -80,7 +84,10 @@ export function selectAttr(
  * const selector = selectAttrs({ disabled: true, inert: null });
  * // `[disabled="true"][inert]`
  */
-export function selectAttrs(attrs: Attrs, tag?: TagName): CssSelector {
+export function selectAttrs<E extends HTMLElement = HTMLElement>(
+  attrs: Attrs<E>,
+  tag?: TagName,
+): CssSelector {
   let selector = "";
 
   for (const name of Object.keys(attrs)) {
@@ -90,8 +97,8 @@ export function selectAttrs(attrs: Attrs, tag?: TagName): CssSelector {
   return selectorWithTag(selector, tag);
 }
 
-function selectSingleAttr(
-  name: AttrName,
+function selectSingleAttr<E extends HTMLElement = HTMLElement>(
+  name: AttrName<E>,
   value: AttrValue | null | undefined,
 ): CssSelector {
   const validName = kebabCase(name);

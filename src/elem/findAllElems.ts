@@ -19,7 +19,7 @@ import { toElem } from "./toElem.ts";
  *
  * @throws {SyntaxError} If the specified selector is invalid.
  */
-export function findAllElems<E extends Element = HTMLElement>(
+export function findAllElems<E extends HTMLElement = HTMLElement>(
   selector: CssSelector,
   parent?: Elem | null,
 ): E[];
@@ -38,11 +38,11 @@ export function findAllElems<E extends Element = HTMLElement>(
  * @throws {SyntaxError} If `withSelector` in the specified `options` is invalid.
  * @throws {TypeError} If the specified `options` are invalid.
  */
-export function findAllElems<E extends Element = HTMLElement>(
+export function findAllElems<E extends HTMLElement = HTMLElement>(
   options: FindOptions,
 ): E[];
 
-export function findAllElems<E extends Element = HTMLElement>(
+export function findAllElems<E extends HTMLElement = HTMLElement>(
   selectorOrOptions: FindOptions | CssSelector,
   parent?: Elem | null,
 ): E[] {
