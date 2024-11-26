@@ -70,6 +70,17 @@ export {
 } from "./extras/htmlBuilder.ts";
 export { listToArray } from "./extras/listToArray.ts";
 
+// Properties
+export { getProp, getProps } from "./props/getProps.ts";
+export {
+  hasAllProps,
+  hasProp,
+  hasSomeProps,
+  type PropsSearch,
+} from "./props/hasProps.ts";
+export { removeProp, removeProps } from "./props/removeProps.ts";
+export { setProp, setProps } from "./props/setProps.ts";
+
 // Styles
 export { getStyle, getStyles } from "./styles/getStyles.ts";
 export {
@@ -106,7 +117,14 @@ export {
   type DataKey,
   type DataPropertyName,
   type DataValue,
+  type DOMPropertyFilter,
+  type DOMPropertyFilterValue,
+  type DOMPropertyKey,
+  type DOMPropertySearch,
   type ElemOrCssSelector,
+  type PropName,
+  type Props,
+  type PropValue,
   type StyleKey,
   type Styles,
   type TagName,

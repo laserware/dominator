@@ -82,18 +82,18 @@ export function getAttr<
  *
  * @example
  * interface Shape {
- *   a: string;
- *   b: string;
- *   c: string;
+ *   "aria-label": string;
+ *   "aria-colcount": number;
+ *   invalid: string;
  * }
  *
  * const elem = findElem("button")!;
- * elem.setAttribute("a", "a");
- * elem.setAttribute("b", "b");
+ * elem.setAttribute("aria-label", "Test");
+ * elem.setAttribute("aria-rowcount", "20");
  *
- * // Note that `c` doesn't exist on the element, so it's `undefined`:
- * const result = getAttrs<Shape>(elem, ["a", "b", "c"]);
- * // { a: "a", b: "b", c: undefined }
+ * // Note that `invalid` doesn't exist on the element, so it's `undefined`:
+ * const result = getAttrs<Shape>(elem, ["aria-label", "aria-rowcount", "invalid"]);
+ * // { "aria-label": "Test", "aria-rowcount": 20, invalid: undefined }
  */
 export function getAttrs<
   T extends Attrs = Attrs,
@@ -114,7 +114,7 @@ export function getAttrs<
 function getSingleAttr<
   T extends AttrValue = AttrValue,
   E extends HTMLElement = HTMLElement,
->(element: HTMLElement, name: AttrName<E>): T | null {
+>(element: E, name: AttrName<E>): T | null {
   const attrValue = element.getAttribute(name);
 
   return parseDOMValue<T>(attrValue) ?? null;

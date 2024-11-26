@@ -297,16 +297,22 @@ export type Styles = Partial<Record<StyleKey, StyleValue>>;
  * Key representing any type of DOM property (i.e. attributes, CSS variables,
  * dataset attribute/property names and style keys).
  */
-export type DOMPropertyKey = AttrName | CssVarName | DataKey | StyleKey;
+export type DOMPropertyKey<E extends HTMLElement = HTMLElement> =
+  | AttrName<E>
+  | CssVarName
+  | DataKey
+  | PropName<E>
+  | StyleKey;
 
 /**
  * Filter value for performing DOM property searches. Use `null` to check if
- * the attribute exists only (skip checking if values match).
+ * an entry exists only (skip checking if values match).
  */
-export type DOMPropertyFilterValue =
+export type DOMPropertyFilterValue<E extends HTMLElement = HTMLElement> =
   | AttrValue
   | DataValue
   | CssVarValue
+  | PropValue<E>
   | StyleValue
   | null;
 
@@ -343,18 +349,22 @@ type NeverMethods<T> = {
 export type ExcludeMethods<T> = Pick<T, NeverMethods<T>>;
 
 /**
- * Possible values for element properties (*not* attributes).
- *
- * @template E Type of Element with properties.
- */
-export type PropValue<E extends HTMLElement = HTMLElement> = ExcludeMethods<E>;
-
-/**
  * Possible names for element properties (*not* attributes).
  *
  * @template E Type of Element with properties.
  */
-export type PropName<E extends HTMLElement = HTMLElement> = keyof PropValue<E>;
+export type PropName<E extends HTMLElement = HTMLElement> = Extract<
+  keyof E,
+  string
+>;
+
+/**
+ * Possible values for element properties (*not* attributes).
+ */
+export type PropValue<
+  E extends HTMLElement = HTMLElement,
+  N extends PropName<E> = PropName<E>,
+> = E[N];
 
 /**
  * Object with Element properties.

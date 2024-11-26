@@ -47,7 +47,7 @@ export type AttrsSearch<E extends HTMLElement = HTMLElement> =
  * // true
  */
 export function hasAttr<E extends HTMLElement = HTMLElement>(
-  target: ElemOrCssSelector,
+  target: ElemOrCssSelector<E>,
   name: AttrName<E>,
   value?: AttrValue,
 ): boolean {
