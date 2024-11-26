@@ -1,98 +1,84 @@
 // Attributes
+export { attrSelector, attrsSelector } from "./attrs/attrsSelector.ts";
+export { InvalidAttrError } from "./attrs/InvalidAttrError.ts";
+export { getAttr, getAttrs } from "./attrs/getAttrs.ts";
 export {
-  attrSelector,
-  attrsSelector,
-  getAttr,
-  getAttrs,
   hasAllAttrs,
   hasAttr,
   hasSomeAttrs,
-  InvalidAttrError,
-  removeAttr,
-  removeAttrs,
-  setAttr,
-  setAttrs,
   type AttrsSearch,
-} from "./attrs/index.ts";
+} from "./attrs/hasAttrs.ts";
+export { removeAttr, removeAttrs } from "./attrs/removeAttrs.ts";
+export { setAttr, setAttrs } from "./attrs/setAttrs.ts";
 
 // CSS
+export { InvalidCssVarError } from "./css/InvalidCssVarError.ts";
+export { getCssVar, getCssVars } from "./css/getCssVars.ts";
 export {
-  getCssVar,
-  getCssVars,
   hasAllCssVars,
   hasCssVar,
   hasSomeCssVars,
-  InvalidCssVarError,
-  removeCssVar,
-  removeCssVars,
-  setCssVar,
-  setCssVars,
   type CssVarsSearch,
-} from "./css/index.ts";
+} from "./css/hasCssVars.ts";
+export { removeCssVar, removeCssVars } from "./css/removeCssVars.ts";
+export { setCssVar, setCssVars } from "./css/setCssVars.ts";
 
 // Dataset
+export { getData, getDataValue } from "./data/getData.ts";
 export {
-  getData,
-  getDataValue,
   hasAllData,
   hasDataEntry,
   hasSomeData,
-  removeData,
-  removeDataEntry,
-  setData,
-  setDataEntry,
   type DataSearch,
-} from "./data/index.ts";
+} from "./data/hasData.ts";
+export { removeData, removeDataEntry } from "./data/removeData.ts";
+export { setData, setDataEntry } from "./data/setData.ts";
 
 // Elements
-export {
-  areElemsDifferent,
-  areElemsSame,
-  asElem,
-  elemExists,
-  findAllElems,
-  findAllFocusable,
-  findElem,
-  focusElem,
-  getInputValue,
-  getInputValueRaw,
-  idMatches,
-  InvalidElemError,
-  isElemChildOf,
-  isElemInViewport,
-  isElemOfType,
-  isElemSameOrChildOf,
-  isElemScrollable,
-  keepElemVisibleIn,
-  toElem,
-} from "./elem/index.ts";
+export { areElemsDifferent } from "./elem/areElemsDifferent.ts";
+export { areElemsSame } from "./elem/areElemsSame.ts";
+export { asElem } from "./elem/asElem.ts";
+export { elemExists } from "./elem/elemExists.ts";
+export { findAllElems } from "./elem/findAllElems.ts";
+export { findAllFocusable } from "./elem/findAllFocusable.ts";
+export { findElem } from "./elem/findElem.ts";
+export { focusElem } from "./elem/focusElem.ts";
+export { getInputValue, getInputValueRaw } from "./elem/getInputValue.ts";
+export { idMatches } from "./elem/idMatches.ts";
+export { InvalidElemError } from "./elem/InvalidElemError.ts";
+export { isElemChildOf } from "./elem/isElemChildOf.ts";
+export { isElemInViewport } from "./elem/isElemInViewport.ts";
+export { isElemOfType } from "./elem/isElemOfType.ts";
+export { isElemSameOrChildOf } from "./elem/isElemSameOrChildOf.ts";
+export { isElemScrollable } from "./elem/isElemScrollable.ts";
+export { keepElemVisibleIn } from "./elem/keepElemVisibleIn.ts";
+export { toElem } from "./elem/toElem.ts";
 
 // Miscellaneous Extras and Handy Utilities
 export {
   clsx,
-  getInputWidth,
-  html,
-  listToArray,
   type ClassArray,
   type ClassDict,
   type ClassValue,
+} from "./extras/clsx.ts";
+export { getInputWidth } from "./extras/getInputWidth.ts";
+export {
+  html,
   type ElementBuilder,
   type ElementBuilderChild,
-} from "./extras/index.ts";
+} from "./extras/htmlBuilder.ts";
+export { listToArray } from "./extras/listToArray.ts";
 
 // Styles
+export { getStyle, getStyles } from "./styles/getStyles.ts";
 export {
-  getStyle,
-  getStyles,
   hasAllStyles,
   hasSomeStyles,
   hasStyle,
-  removeStyle,
-  removeStyles,
-  setStyle,
-  setStyles,
   type StylesSearch,
-} from "./styles/index.ts";
+} from "./styles/hasStyles.ts";
+export { removeStyle, removeStyles } from "./styles/removeStyles.ts";
+export { setStyle, setStyles } from "./styles/setStyles.ts";
 
 // Types
 export type { AriaAttrs } from "./aria.ts";
