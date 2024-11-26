@@ -1,6 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
-import { attrSelector } from "../attr/attrsSelector.ts";
+import { selectAttr } from "../attr/selectAttrs.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
 import type {
@@ -22,27 +22,27 @@ import type {
  * @returns CSS selector based on the specified `key` and optional `value`.
  *
  * @example Dataset Key Without Value
- * const selector = dataSelector("someThing");
+ * const selector = selectDataEntry("someThing");
  * // `[data-some-thing]`
  *
  * @example `data-` Attribute Name Without Value
- * const selector = dataSelector("data-some-thing");
+ * const selector = selectDataEntry("data-some-thing");
  * // `[data-some-thing]`
  *
  * @example Dataset Key With Value
- * const selector = dataSelector("someThing", "stuff");
+ * const selector = selectDataEntry("someThing", "stuff");
  * // `[data-some-thing="stuff"]`
  *
  * @example `data-` Attribute Name With Value and Tag
- * const selector = dataSelector("data-some-thing", "stuff", "a");
+ * const selector = selectDataEntry("data-some-thing", "stuff", "a");
  * // `a[data-some-thing="stuff"]`
  */
-export function dataEntrySelector(
+export function selectDataEntry(
   key: DataKey,
   value?: DataValue | null | undefined,
   tag?: TagName,
 ): CssSelector {
-  return selectorWithTag(singleDataSelector(key, value), tag);
+  return selectorWithTag(selectSingleDataEntry(key, value), tag);
 }
 
 /**
@@ -57,28 +57,28 @@ export function dataEntrySelector(
  * @returns CSS selector based on the specified `data`.
  *
  * @example Dataset Object With `null` Value
- * const selector = dataSelector({ someThing: null });
+ * const selector = selectData({ someThing: null });
  * // `[data-some-thing]`
  *
  * @example Data Object With Value
- * const selector = dataSelector({ someThing: "stuff" });
+ * const selector = selectData({ someThing: "stuff" });
  * // `[data-some-thing="stuff"]`
  *
  * @example Data Object With Value and Tag
- * const selector = dataSelector({ someThing: "stuff", otherThing: "doodles" }, "a");
+ * const selector = selectData({ someThing: "stuff", otherThing: "doodles" }, "a");
  * // `a[data-some-thing="stuff"][data-other-thing="doodles"]`
  */
-export function dataSelector(data: Data, tag?: TagName): CssSelector {
+export function selectData(data: Data, tag?: TagName): CssSelector {
   let selector = "";
 
   for (const key of Object.keys(data)) {
-    selector += singleDataSelector(key, data[key]);
+    selector += selectSingleDataEntry(key, data[key]);
   }
 
   return selectorWithTag(selector, tag);
 }
 
-function singleDataSelector(
+function selectSingleDataEntry(
   key: string,
   value: DataValue | null | undefined,
 ): CssSelector {
@@ -90,6 +90,6 @@ function singleDataSelector(
   if (isNil(value)) {
     return `[${attrName}]`;
   } else {
-    return attrSelector(attrName, value);
+    return selectAttr(attrName, value);
   }
 }

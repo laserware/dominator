@@ -26,27 +26,27 @@ import { InvalidAttrError } from "./InvalidAttrError.ts";
  * @throws {InvalidAttrError} If the specified `value` could not be stringified.
  *
  * @example Name Only
- * const selector = attrSelector("disabled");
+ * const selector = selectAttr("disabled");
  * // `[disabled]`
 
  * @example Name and Value
- * const selector = attrSelector("disabled", true);
+ * const selector = selectAttr("disabled", true);
  * // `[disabled="true"]`
  *
  * @example Name, Value, and Tag
- * const selector = attrSelector("disabled", true, "button");
+ * const selector = selectAttr("disabled", true, "button");
  * // `button[disabled="true"]`
  *
  * @example Name and Tag (No Value)
- * const selector = attrSelector("disabled", null, "button");
+ * const selector = selectAttr("disabled", null, "button");
  * // `button[disabled]`
  */
-export function attrSelector(
+export function selectAttr(
   name: AttrName,
   value: AttrValue | null | undefined = undefined,
   tag?: TagName,
 ): CssSelector {
-  const selector = singleAttrSelector(name, value);
+  const selector = selectSingleAttr(name, value);
 
   return selectorWithTag(selector, tag);
 }
@@ -65,32 +65,32 @@ export function attrSelector(
  * @throws {InvalidAttrError} If a value in the specified `attrs` could not be stringified.
  *
  * @example Single Entry With Value
- * const selector = attrsSelector({ disabled: true });
+ * const selector = selectAttrs({ disabled: true });
  * // `[disabled="true"]`
  *
  * @example Single Entry With Value and Tag
- * const selector = attrsSelector({ disabled: true }, "button");
+ * const selector = selectAttrs({ disabled: true }, "button");
  * // `button[disabled="true"]`
 
  * @example Single Entry Without Value
- * const selector = attrsSelector({ inert: null });
+ * const selector = selectAttrs({ inert: null });
  * // `[inert]`
  *
  * @example Multiple Entries
- * const selector = attrsSelector({ disabled: true, inert: null });
+ * const selector = selectAttrs({ disabled: true, inert: null });
  * // `[disabled="true"][inert]`
  */
-export function attrsSelector(attrs: Attrs, tag?: TagName): CssSelector {
+export function selectAttrs(attrs: Attrs, tag?: TagName): CssSelector {
   let selector = "";
 
   for (const name of Object.keys(attrs)) {
-    selector += singleAttrSelector(name, attrs[name]);
+    selector += selectSingleAttr(name, attrs[name]);
   }
 
   return selectorWithTag(selector, tag);
 }
 
-function singleAttrSelector(
+function selectSingleAttr(
   name: AttrName,
   value: AttrValue | null | undefined,
 ): CssSelector {

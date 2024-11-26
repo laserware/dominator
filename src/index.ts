@@ -1,6 +1,4 @@
 // Attributes
-export { attrSelector, attrsSelector } from "./attr/attrsSelector.ts";
-export { InvalidAttrError } from "./attr/InvalidAttrError.ts";
 export { getAttr, getAttrs } from "./attr/getAttrs.ts";
 export {
   hasAllAttrs,
@@ -8,11 +6,12 @@ export {
   hasSomeAttrs,
   type AttrsSearch,
 } from "./attr/hasAttrs.ts";
+export { InvalidAttrError } from "./attr/InvalidAttrError.ts";
 export { removeAttr, removeAttrs } from "./attr/removeAttrs.ts";
+export { selectAttr, selectAttrs } from "./attr/selectAttrs.ts";
 export { setAttr, setAttrs } from "./attr/setAttrs.ts";
 
 // CSS
-export { InvalidCssVarError } from "./css/InvalidCssVarError.ts";
 export { getCssVar, getCssVars } from "./css/getCssVars.ts";
 export {
   hasAllCssVars,
@@ -20,6 +19,7 @@ export {
   hasSomeCssVars,
   type CssVarsSearch,
 } from "./css/hasCssVars.ts";
+export { InvalidCssVarError } from "./css/InvalidCssVarError.ts";
 export { removeCssVar, removeCssVars } from "./css/removeCssVars.ts";
 export { setCssVar, setCssVars } from "./css/setCssVars.ts";
 
@@ -32,6 +32,7 @@ export {
   type DataSearch,
 } from "./data/hasData.ts";
 export { removeData, removeDataEntry } from "./data/removeData.ts";
+export { selectData, selectDataEntry } from "./data/selectData.ts";
 export { setData, setDataEntry } from "./data/setData.ts";
 
 // Elements

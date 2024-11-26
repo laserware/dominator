@@ -1,7 +1,7 @@
 import { isNotNil } from "@laserware/arcade";
 
-import { attrsSelector } from "../attr/attrsSelector.ts";
-import { dataSelector } from "../data/dataSelector.ts";
+import { selectAttrs } from "../attr/selectAttrs.ts";
+import { selectData } from "../data/selectData.ts";
 import { toElem } from "../elem/toElem.ts";
 import type {
   Attrs,
@@ -59,11 +59,11 @@ export function parseFindOptions(options: FindOptions): {
   }
 
   if (isNotNil(options.withAttrs)) {
-    selector += attrsSelector(options.withAttrs);
+    selector += selectAttrs(options.withAttrs);
   }
 
   if (isNotNil(options.withData)) {
-    selector += dataSelector(options.withData);
+    selector += selectData(options.withData);
   }
 
   const parent = toElem(options.parent) ?? document;
