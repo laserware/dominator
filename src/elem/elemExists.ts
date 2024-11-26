@@ -20,7 +20,12 @@ export function elemExists(
 ): boolean {
   if (isNil(target)) {
     return false;
-  } else {
-    return toElem(target) !== null;
   }
+
+  const elem = toElem(target);
+  if (elem === null) {
+    return false;
+  }
+
+  return document.contains(elem);
 }

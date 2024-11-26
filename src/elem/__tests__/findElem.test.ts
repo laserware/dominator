@@ -21,10 +21,10 @@ describe("the findElem function", () => {
     expect(result).not.toBeNull();
   });
 
-  it("finds an element with a matching attribute (key/value pair)", () => {
+  it("finds an element with a matching attribute in an options object", () => {
     render(`<div aria-hidden="true" data-value="test">Child</div>`);
 
-    const result = findElem("aria-hidden", true);
+    const result = findElem({ withAttrs: { "aria-hidden": true } });
 
     expect(result).not.toBeNull();
   });
@@ -39,17 +39,7 @@ describe("the findElem function", () => {
     expect(result!.innerHTML).toBe("Child");
   });
 
-  it("finds an element with key/value pair in an options object", () => {
-    render(`<div id="parent"><div aria-hidden="true" data-value="test">Child</div></div>`);
-
-    const parent = findElem("#parent");
-
-    const result = findElem({ withName: "data-value", withValue: "test", parent });
-
-    expect(result!.innerHTML).toBe("Child");
-  });
-
-  it("finds an element with attrs", () => {
+  it("finds an element with several attributes in an options object", () => {
     const element = render(`
       <button 
         id="button"
@@ -66,18 +56,20 @@ describe("the findElem function", () => {
     `);
 
     const result = findElem({
-      name: "button",
-      disabled: null,
-      "aria-disabled": true,
-      "aria-expanded": true,
-      draggable: true,
-      inert: null,
+      withAttrs: {
+        name: "button",
+        disabled: null,
+        "aria-disabled": true,
+        "aria-expanded": true,
+        draggable: true,
+        inert: null,
+      },
     });
 
     expect(result!).toEqual(element);
   });
 
-  it("finds an element with attrs and tag in an options object", () => {
+  it("finds an element with several attributes and tag in an options object", () => {
     const element = render(`
       <button 
         id="button"
@@ -117,5 +109,50 @@ describe("the findElem function", () => {
     });
 
     expect(result!).toEqual(element);
+  });
+
+  it("finds an element with selector, attributes, dataset, and tag in an options object", () => {
+    const element = render(`
+      <button 
+        id="button"
+        class="test"
+        name="button"
+        disabled
+        aria-disabled="true"
+        aria-expanded="true"
+        draggable="true"
+        inert
+        data-some-property="thing"
+      >
+        Button
+      </button>
+      <div class="test">Test</div>
+    `);
+
+    const result = findElem({
+      withSelector: ".test",
+      withAttrs: {
+        name: "button",
+        disabled: null,
+        "aria-disabled": true,
+        "aria-expanded": true,
+        draggable: true,
+        inert: null,
+      },
+      withData: {
+        someProperty: "thing",
+      },
+      tag: "button",
+    });
+
+    expect(result!).toEqual(element);
+  });
+
+  it("throws an error if an invalid selector is specified", () => {
+    render(`<div aria-hidden="true" data-value="test">Child</div>`);
+
+    expect(() => {
+      findElem("29c8aeb1-6519-4a5e-8f67-4505d9b46d9c");
+    }).toThrow();
   });
 });

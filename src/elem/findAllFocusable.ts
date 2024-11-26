@@ -23,5 +23,6 @@ const focusableElementsSelector = [
 export function findAllFocusable(
   parent: Elem | null | undefined = document,
 ): HTMLElement[] {
-  return findAllElems<HTMLElement>(focusableElementsSelector, parent);
+  // prettier-ignore
+  return findAllElems<HTMLElement>(focusableElementsSelector, parent ?? document);
 }

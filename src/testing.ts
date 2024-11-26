@@ -1,17 +1,17 @@
 /* istanbul ignore file -- @preserve: These are testing utilities, so we don't care about coverage. */
 
-import { dedent, isNotNil } from "@laserware/arcade";
+import { dedent } from "@laserware/arcade";
 
-export { screen } from "@testing-library/dom";
+import { cast } from "./internal/cast.ts";
+
+export { screen, waitFor } from "@testing-library/dom";
 
 export { default as userEvent } from "@testing-library/user-event";
 
 /**
  * Selector for an element that will never exist in the test DOM.
  */
-export const selectorForNonExistent = "!missing!";
-
-const ROOT_ELEM_ID = "test-root-element";
+export const selectorForNonExistent = "#never-going-to-exist";
 
 /**
  * Renders the specified markup and returns the element with the corresponding
@@ -20,32 +20,13 @@ const ROOT_ELEM_ID = "test-root-element";
  * @param markup HTML markup to render.
  */
 export function render<E extends HTMLElement = HTMLElement>(markup: string): E {
-  const existingMainElement = document.querySelector(`#${ROOT_ELEM_ID}`);
-  if (existingMainElement !== null) {
-    document.body.removeChild(existingMainElement);
-  }
+  const parent = document.createElement("div");
 
-  const mainElement = createMainElement(markup);
+  parent.innerHTML = dedent(markup);
 
-  return getTargetElement(mainElement) as E;
-}
+  const child = parent.firstElementChild!;
 
-function createMainElement(markup: string): HTMLElement {
-  const mainElement = document.createElement("main");
+  document.body.appendChild(child);
 
-  mainElement.setAttribute("id", ROOT_ELEM_ID);
-
-  mainElement.innerHTML = dedent(markup);
-
-  document.body.appendChild(mainElement);
-
-  return mainElement;
-}
-
-function getTargetElement(mainElement: HTMLElement): HTMLElement {
-  if (isNotNil(mainElement.firstElementChild)) {
-    return mainElement.firstElementChild as HTMLElement;
-  } else {
-    return mainElement as HTMLElement;
-  }
+  return cast<E>(child);
 }
