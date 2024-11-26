@@ -81,7 +81,7 @@ export { removeStyle, removeStyles } from "./style/removeStyles.ts";
 export { setStyle, setStyles } from "./style/setStyles.ts";
 
 // Types
-export type { AriaAttrs } from "./aria.ts";
+export type { AriaAttributes as AriaAttrs } from "./dom.ts";
 export type { FindOptions } from "./internal/findOptions.ts";
 export {
   AttrValue,

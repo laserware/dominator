@@ -1,4 +1,5 @@
 /* istanbul ignore file -- @preserve: These are just type definitions, no need to enforce coverage. */
+// noinspection SpellCheckingInspection
 
 import { isPlainObject } from "@laserware/arcade";
 
@@ -339,3 +340,32 @@ export type ElementWithTagName<TN extends AnyElementTagName> =
 export type AnyElement =
   | ElementWithTagName<HTMLElementTagName>
   | ElementWithTagName<SVGElementTagName>;
+
+type NeverMethods<T> = {
+  [K in keyof T]: T[K] extends (...args: any[]) => any ? never : K;
+}[keyof T];
+
+export type ExcludeMethods<T> = Pick<T, NeverMethods<T>>;
+
+/**
+ * Possible values for element properties (*not* attributes).
+ *
+ * @template E Type of Element with properties.
+ */
+export type PropValue<E extends Element = HTMLElement> = ExcludeMethods<E>;
+
+/**
+ * Possible names for element properties (*not* attributes).
+ *
+ * @template E Type of Element with properties.
+ */
+export type PropName<E extends Element = HTMLElement> = keyof PropValue<E>;
+
+/**
+ * Object with Element properties.
+ *
+ * @template E Type of Element with properties.
+ */
+export type Props<E extends Element = HTMLElement> = Partial<
+  Record<PropName<E>, PropValue<E>>
+>;
