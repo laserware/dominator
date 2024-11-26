@@ -5,45 +5,41 @@ import { isNotNil, isPlainObject } from "@laserware/arcade";
 import { setAttrs } from "../attr/setAttrs.ts";
 import { setCssVars } from "../css/setCssVars.ts";
 import { setData } from "../data/setData.ts";
-import type { AriaAttributes } from "../dom.ts";
+import type { AnyElement, AriaAttributes, ElementWithTagName } from "../dom.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { setStyles } from "../style/setStyles.ts";
 import {
   AttrValue,
-  type AnyElement,
-  type AnyElementTagName,
   type Attrs,
   type CssVars,
   type Data,
-  type ElementWithTagName,
   type ExcludeMethods,
   type Styles,
+  type TagName,
 } from "../types.ts";
 
-type GlobalEventHandler = keyof GlobalEventHandlers;
-
-type NonMethodElementProperties<TN extends AnyElementTagName> = ExcludeMethods<
+type NonMethodElemProperties<TN extends TagName> = ExcludeMethods<
   ElementWithTagName<TN>
 >;
 
-type ElementProperties<TN extends AnyElementTagName> = Omit<
-  NonMethodElementProperties<TN>,
-  GlobalEventHandler
+type ElemProperties<TN extends TagName> = Omit<
+  NonMethodElemProperties<TN>,
+  keyof GlobalEventHandlers
 >;
 
-type ElementEventName = keyof GlobalEventHandlersEventMap;
+type EventName = keyof GlobalEventHandlersEventMap;
 
-type ElementEventListener<EN extends ElementEventName> = (
+type Listener<EN extends EventName> = (
   event: GlobalEventHandlersEventMap[EN],
 ) => void;
 
-interface ElementEventDescriptor<EN extends ElementEventName> {
-  listener: ElementEventListener<EN>;
+interface EventDescriptor<EN extends EventName> {
+  listener: Listener<EN>;
   options: Omit<AddEventListenerOptions, "signal">;
 }
 
-namespace ElementEventDescriptor {
-  export function is(value: unknown): value is ElementEventDescriptor<any> {
+namespace EventDescriptor {
+  export function is(value: unknown): value is EventDescriptor<any> {
     if (value === null) {
       return false;
     }
@@ -56,22 +52,22 @@ namespace ElementEventDescriptor {
   }
 }
 
-type ElementEventListenerOrDescriptor<EN extends ElementEventName> =
-  | ElementEventListener<EN>
-  | ElementEventDescriptor<EN>;
+type ListenerOrDescriptor<EN extends EventName> =
+  | Listener<EN>
+  | EventDescriptor<EN>;
 
-type ElementEventListenersOrDescriptors = {
-  [EN in ElementEventName]?: ElementEventListenerOrDescriptor<EN>;
+type ListenersOrDescriptors = {
+  [EN in EventName]?: ListenerOrDescriptor<EN>;
 };
 
-type AllowedProperties<TN extends AnyElementTagName> = {
+type AllowedProperties<TN extends TagName> = {
   id?: string;
   class?: string;
   attrs?: Attrs | Partial<AriaAttributes>;
   cssVars?: CssVars;
   data?: Data;
-  on?: ElementEventListenersOrDescriptors;
-  props?: Partial<Omit<ElementProperties<TN>, "id" | "style" | "click">>;
+  on?: ListenersOrDescriptors;
+  props?: Partial<Omit<ElemProperties<TN>, "id" | "style" | "click">>;
   styles?: Styles;
 };
 
@@ -87,24 +83,22 @@ const identifier = Symbol("identifier");
  * @property build Function that takes in a parent element and optional AbortController
  *                 and returns an HTML element.
  */
-export interface ElementBuilder<
-  TN extends AnyElementTagName = AnyElementTagName,
-> {
-  [identifier]: "ElementBuilder";
+export interface ElemBuilder<TN extends TagName = TagName> {
+  [identifier]: "ElemBuilder";
   build(
     parentElement?: AnyElement | undefined,
     controller?: AbortController | undefined,
   ): ElementWithTagName<TN>;
 }
 
-namespace ElementBuilder {
-  export function is(value: unknown): value is ElementBuilder {
+namespace ElemBuilder {
+  export function is(value: unknown): value is ElemBuilder {
     // @ts-ignore
-    return value?.[identifier] === "ElementBuilder";
+    return value?.[identifier] === "ElemBuilder";
   }
 }
 
-type NonFunctionalChild = ElementBuilder | AnyElement | AttrValue | null;
+type NonFunctionalChild = ElemBuilder | AnyElement | AttrValue | null;
 
 /**
  * Child item passed to the `html` function. A child item can be any one of the
@@ -115,7 +109,7 @@ type NonFunctionalChild = ElementBuilder | AnyElement | AttrValue | null;
  * - Function that returns any one of the above child items
  * - null, which indicates that nothing should be built/rendered
  */
-export type ElementBuilderChild = NonFunctionalChild | ChildFunction;
+export type ElemBuilderChild = NonFunctionalChild | ChildFunction;
 
 /**
  * Callback that returns a builder child. Note that you cannot return another
@@ -131,31 +125,31 @@ type ChildFunction = () => NonFunctionalChild;
  * @param properties Attributes, properties, and event listeners to attach to the element.
  * @param children Child elements, element builders, primitives, callbacks, or null.
  *                 If null, the element is not added. This is useful for conditional rendering.
- *                 See {@linkcode ElementBuilderChild} for additional details.
+ *                 See {@linkcode ElemBuilderChild} for additional details.
  *
  * @returns An object with a `build` function that returns the built Element.
  */
-export function html<TN extends AnyElementTagName>(
+export function html<TN extends TagName>(
   tagName: TN,
   properties: Partial<AllowedProperties<TN>>,
-  ...children: ElementBuilderChild[]
-): ElementBuilder<TN> {
+  ...children: ElemBuilderChild[]
+): ElemBuilder<TN> {
   const build = (
     parentElement?: AnyElement | undefined,
     controller?: AbortController | undefined,
   ): ElementWithTagName<TN> => {
     const element = document.createElement(tagName) as ElementWithTagName<TN>;
 
-    setElementProperties(element, properties, controller);
+    setElemProperties(element, properties, controller);
 
     const getChildElement = (
-      child: ElementBuilderChild,
+      child: ElemBuilderChild,
     ): AnyElement | Text | null => {
       if (child === null) {
         return null;
       }
 
-      if (ElementBuilder.is(child)) {
+      if (ElemBuilder.is(child)) {
         return child.build(element, controller);
       }
 
@@ -196,7 +190,7 @@ export function html<TN extends AnyElementTagName>(
   };
 
   return {
-    [identifier]: "ElementBuilder",
+    [identifier]: "ElemBuilder",
     build,
   };
 }
@@ -209,7 +203,7 @@ export function html<TN extends AnyElementTagName>(
  * @param properties Attributes and event listeners to set on element.
  * @param controller AbortController to clean up event listeners.
  */
-function setElementProperties<TN extends AnyElementTagName>(
+function setElemProperties<TN extends TagName>(
   element: ElementWithTagName<TN>,
   properties: Partial<AllowedProperties<TN>> = {},
   controller?: AbortController | undefined,
@@ -261,9 +255,9 @@ function setElementProperties<TN extends AnyElementTagName>(
  *
  * @throws {Error} If the `controller` is undefined.
  */
-function addEventListeners<TN extends AnyElementTagName>(
+function addEventListeners<TN extends TagName>(
   element: ElementWithTagName<TN>,
-  eventsDict: ElementEventListenersOrDescriptors,
+  eventsDict: ListenersOrDescriptors,
   controller?: AbortController | undefined,
 ): void {
   if (!(controller instanceof AbortController)) {
@@ -271,22 +265,22 @@ function addEventListeners<TN extends AnyElementTagName>(
     throw new Error("You must pass in an AbortController when specifying event listeners");
   }
 
-  const eventNames = Object.keys(eventsDict) as ElementEventName[];
+  const eventNames = Object.keys(eventsDict) as EventName[];
 
   for (const eventName of eventNames) {
     const listenerOrDescriptor = eventsDict[eventName]!;
 
-    let eventListener: ElementEventListener<typeof eventName>;
+    let eventListener: Listener<typeof eventName>;
 
     let options: AddEventListenerOptions = {};
 
-    if (ElementEventDescriptor.is(listenerOrDescriptor)) {
+    if (EventDescriptor.is(listenerOrDescriptor)) {
       eventListener = listenerOrDescriptor.listener;
 
       options = listenerOrDescriptor.options;
     } else {
       // prettier-ignore
-      eventListener = listenerOrDescriptor as ElementEventListener<typeof eventName>;
+      eventListener = listenerOrDescriptor as Listener<typeof eventName>;
     }
 
     element.addEventListener(eventName, eventListener, {

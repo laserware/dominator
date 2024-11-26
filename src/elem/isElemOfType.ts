@@ -1,4 +1,4 @@
-import type { AnyElementTagName, ElemOrCssSelector } from "../types.ts";
+import type { ElemOrCssSelector, TagName } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
 
@@ -15,10 +15,7 @@ import { toElem } from "./toElem.ts";
  *
  * @returns `true` if the specified `target` is of type `tag`.
  */
-export function isElemOfType(
-  target: ElemOrCssSelector,
-  tag: AnyElementTagName,
-): boolean {
+export function isElemOfType(target: ElemOrCssSelector, tag: TagName): boolean {
   const elem = toElem(target);
 
   return elem?.tagName?.toLowerCase() === tag.toLowerCase();

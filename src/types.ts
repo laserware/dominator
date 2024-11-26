@@ -3,6 +3,8 @@
 
 import { isPlainObject } from "@laserware/arcade";
 
+import type { HTMLElementTagName, SVGElementTagName } from "./dom.ts";
+
 /**
  * Type is either a single item or array of items of type `T`.
  *
@@ -310,36 +312,9 @@ export type DOMPropertySearch<
 > = K[] | DOMPropertyFilter<K, V>;
 
 /**
- * Tag name for HTML element.
- */
-export type HTMLElementTagName = keyof HTMLElementTagNameMap;
-
-/**
- * Tag name for SVG element.
- */
-export type SVGElementTagName = keyof SVGElementTagNameMap;
-
-/**
  * Tag name for any HTML or SVG element.
  */
-export type AnyElementTagName = HTMLElementTagName | SVGElementTagName;
-
-/**
- * Element type associated with the specified tag name.
- */
-export type ElementWithTagName<TN extends AnyElementTagName> =
-  TN extends HTMLElementTagName
-    ? HTMLElementTagNameMap[TN]
-    : TN extends SVGElementTagName
-      ? SVGElementTagNameMap[TN]
-      : never;
-
-/**
- * Any HTML or SVG element.
- */
-export type AnyElement =
-  | ElementWithTagName<HTMLElementTagName>
-  | ElementWithTagName<SVGElementTagName>;
+export type TagName = HTMLElementTagName | SVGElementTagName;
 
 type NeverMethods<T> = {
   [K in keyof T]: T[K] extends (...args: any[]) => any ? never : K;

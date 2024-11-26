@@ -3,11 +3,11 @@ import { isNil, kebabCase } from "@laserware/arcade";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
 import type {
-  AnyElementTagName,
   AttrName,
   Attrs,
   AttrValue,
   CssSelector,
+  TagName,
 } from "../types.ts";
 
 import { InvalidAttrError } from "./InvalidAttrError.ts";
@@ -44,7 +44,7 @@ import { InvalidAttrError } from "./InvalidAttrError.ts";
 export function attrSelector(
   name: AttrName,
   value: AttrValue | null | undefined = undefined,
-  tag?: AnyElementTagName,
+  tag?: TagName,
 ): CssSelector {
   const selector = singleAttrSelector(name, value);
 
@@ -80,10 +80,7 @@ export function attrSelector(
  * const selector = attrsSelector({ disabled: true, inert: null });
  * // `[disabled="true"][inert]`
  */
-export function attrsSelector(
-  attrs: Attrs,
-  tag?: AnyElementTagName,
-): CssSelector {
+export function attrsSelector(attrs: Attrs, tag?: TagName): CssSelector {
   let selector = "";
 
   for (const name of Object.keys(attrs)) {

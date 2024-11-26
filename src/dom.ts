@@ -63,13 +63,12 @@ export interface AriaAttributes {
   "aria-busy"?: Booleanish | undefined | null;
   /**
    * Indicates the current "checked" state of checkboxes, radio buttons, and
-   * other widgets.
-   * @see aria-pressed @see aria-selected.
+   * other widgets. See {@linkcode aria-pressed} and {@linkcode aria-selected}.
    */
   "aria-checked"?: boolean | "false" | "mixed" | "true" | undefined | null;
   /**
    * Defines the total number of columns in a table, grid, or treegrid.
-   * @see aria-colindex.
+   * See {@linkcode aria-colindex}.
    */
   "aria-colcount"?: number | undefined | null;
   /**
@@ -86,12 +85,13 @@ export interface AriaAttributes {
   "aria-colspan"?: number | undefined | null;
   /**
    * Identifies the element (or elements) whose contents or presence are
-   * controlled by the current element.
-   * @see aria-owns.
+   * controlled by the current element. See {@linkcode aria-owns}.
    */
   "aria-controls"?: string | undefined | null;
-  /** Indicates the element that represents the current item within a container
-   * or set of related elements. */
+  /**
+   * Indicates the element that represents the current item within a container
+   * or set of related elements.
+   */
   "aria-current"?:
     | Booleanish
     | "page"
@@ -103,21 +103,23 @@ export interface AriaAttributes {
     | null;
   /**
    * Identifies the element (or elements) that describes the object.
-   * @see aria-labelledby
+   * See {@linkcode aria-labelledby}.
    */
   "aria-describedby"?: string | undefined | null;
   /**
-   * Identifies the element that provides a detailed, extended description for the object.
-   * @see aria-describedby.
+   * Identifies the element that provides a detailed, extended description for
+   * the object. See {@linkcode aria-describedby}.
    */
   "aria-details"?: string | undefined | null;
   /**
-   * Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable.
-   * @see aria-hidden @see aria-readonly.
+   * Indicates that the element is perceivable but disabled, so it is not
+   * editable or otherwise operable. See {@linkcode aria-hidden} and
+   * {@linkcode aria-readonly}.
    */
   "aria-disabled"?: Booleanish | undefined | null;
   /**
-   * Indicates what functions can be performed when a dragged object is released on the drop target.
+   * Indicates what functions can be performed when a dragged object is released
+   * on the drop target.
    * @deprecated in ARIA 1.1
    */
   "aria-dropeffect"?:
@@ -158,67 +160,91 @@ export interface AriaAttributes {
     | null;
   /**
    * Indicates whether the element is exposed to an accessibility API.
-   * @see aria-disabled.
+   * See {@linkcode aria-disabled}.
    */
   "aria-hidden"?: Booleanish | undefined | null;
   /**
    * Indicates the entered value does not conform to the format expected by the application.
-   * @see aria-errormessage.
+   * See {@linkcode aria-errormessage}.
    */
   "aria-invalid"?: Booleanish | "grammar" | "spelling" | undefined | null;
-  /** Indicates keyboard shortcuts that an author has implemented to activate or give focus to an element. */
+  /**
+   * Indicates keyboard shortcuts that an author has implemented to activate
+   * or give focus to an element.
+   */
   "aria-keyshortcuts"?: string | undefined | null;
   /**
    * Defines a string value that labels the current element.
-   * @see aria-labelledby.
+   * See {@linkcode aria-labelledby}.
    */
   "aria-label"?: string | undefined | null;
   /**
    * Identifies the element (or elements) that labels the current element.
-   * @see aria-describedby.
+   * See {@linkcode aria-describedby}.
    */
   "aria-labelledby"?: string | undefined | null;
-  /** Defines the hierarchical level of an element within a structure. */
+  /**
+   * Defines the hierarchical level of an element within a structure.
+   */
   "aria-level"?: number | undefined | null;
-  /** Indicates that an element will be updated, and describes the types of updates the user agents, assistive technologies, and user can expect from the live region. */
+  /**
+   * Indicates that an element will be updated, and describes the types of
+   * updates the user agents, assistive technologies, and user can expect from
+   * the live region.
+   */
   "aria-live"?: "off" | "assertive" | "polite" | undefined | null;
-  /** Indicates whether an element is modal when displayed. */
+  /**
+   * Indicates whether an element is modal when displayed.
+   */
   "aria-modal"?: Booleanish | undefined | null;
-  /** Indicates whether a text box accepts multiple lines of input or only a single line. */
+  /**
+   * Indicates whether a text box accepts multiple lines of input or only a
+   * single line.
+   */
   "aria-multiline"?: Booleanish | undefined | null;
-  /** Indicates that the user may select more than one item from the current selectable descendants. */
+  /**
+   * Indicates that the user may select more than one item from the current
+   * selectable descendants.
+   */
   "aria-multiselectable"?: Booleanish | undefined | null;
-  /** Indicates whether the element's orientation is horizontal, vertical, or unknown/ambiguous. */
+  /**
+   * Indicates whether the element's orientation is horizontal, vertical, or
+   * unknown/ambiguous.
+   */
   "aria-orientation"?: "horizontal" | "vertical" | undefined | null;
   /**
-   * Identifies an element (or elements) in order to define a visual, functional, or contextual parent/child relationship
-   * between DOM elements where the DOM hierarchy cannot be used to represent the relationship.
-   * @see aria-controls.
+   * Identifies an element (or elements) in order to define a visual, functional,
+   * or contextual parent/child relationship between DOM elements where the DOM
+   * hierarchy cannot be used to represent the relationship.
+   * See {@linkcode aria-controls}.
    */
   "aria-owns"?: string | undefined | null;
   /**
-   * Defines a short hint (a word or short phrase) intended to aid the user with data entry when the control has no value.
-   * A hint could be a sample value or a brief description of the expected format.
+   * Defines a short hint (a word or short phrase) intended to aid the user with
+   * data entry when the control has no value. A hint could be a sample value or a
+   * brief description of the expected format.
    */
   "aria-placeholder"?: string | undefined | null;
   /**
-   * Defines an element's number or position in the current set of listitems or treeitems. Not required if all elements in the set are present in the DOM.
-   * @see aria-setsize.
+   * Defines an element's number or position in the current set of listitems or
+   * treeitems. Not required if all elements in the set are present in the DOM.
+   * See {@linkcode aria-setsize}.
    */
   "aria-posinset"?: number | undefined | null;
   /**
    * Indicates the current "pressed" state of toggle buttons.
-   * @see aria-checked @see aria-selected.
+   * See {@linkcode aria-checked} and {@linkcode aria-selected}.
    */
   "aria-pressed"?: boolean | "false" | "mixed" | "true" | undefined | null;
   /**
    * Indicates that the element is not editable, but is otherwise operable.
-   * @see aria-disabled.
+   * See {@linkcode aria-disabled}.
    */
   "aria-readonly"?: Booleanish | undefined | null;
   /**
-   * Indicates what notifications the user agent will trigger when the accessibility tree within a live region is modified.
-   * @see aria-atomic.
+   * Indicates what notifications the user agent will trigger when the
+   * accessibility tree within a live region is modified.
+   * See {@linkcode aria-atomic}.
    */
   "aria-relevant"?:
     | "additions"
@@ -233,36 +259,47 @@ export interface AriaAttributes {
     | "text removals"
     | undefined
     | null;
-  /** Indicates that user input is required on the element before a form may be submitted. */
+  /**
+   * Indicates that user input is required on the element before a form may
+   * be submitted.
+   */
   "aria-required"?: Booleanish | undefined | null;
-  /** Defines a human-readable, author-localized description for the role of an element. */
+  /**
+   * Defines a human-readable, author-localized description for the role of
+   * an element.
+   */
   "aria-roledescription"?: string | undefined | null;
   /**
    * Defines the total number of rows in a table, grid, or treegrid.
-   * @see aria-rowindex.
+   * See {@linkcode aria-rowindex}.
    */
   "aria-rowcount"?: number | undefined | null;
   /**
-   * Defines an element's row index or position with respect to the total number of rows within a table, grid, or treegrid.
-   * @see aria-rowcount @see aria-rowspan.
+   * Defines an element's row index or position with respect to the total number
+   * of rows within a table, grid, or treegrid. See {@linkcode aria-rowcount}
+   * and {@linkcode aria-rowspan}.
    */
   "aria-rowindex"?: number | undefined | null;
   /**
-   * Defines the number of rows spanned by a cell or gridcell within a table, grid, or treegrid.
-   * @see aria-rowindex @see aria-colspan.
+   * Defines the number of rows spanned by a cell or gridcell within a table,
+   * grid, or treegrid. See {@linkcode aria-rowindex} and {@linkcode aria-colspan}.
    */
   "aria-rowspan"?: number | undefined | null;
   /**
    * Indicates the current "selected" state of various widgets.
-   * @see aria-checked @see aria-pressed.
+   * See {@linkcode aria-checked} and {@linkcode aria-pressed}.
    */
   "aria-selected"?: Booleanish | undefined | null;
   /**
-   * Defines the number of items in the current set of listitems or treeitems. Not required if all elements in the set are present in the DOM.
-   * @see aria-posinset.
+   * Defines the number of items in the current set of listitems or treeitems.
+   * Not required if all elements in the set are present in the DOM.
+   * See {@linkcode aria-posinset}.
    */
   "aria-setsize"?: number | undefined | null;
-  /** Indicates if items in a table or grid are sorted in ascending or descending order. */
+  /**
+   * Indicates if items in a table or grid are sorted in ascending or
+   * descending order.
+   */
   "aria-sort"?:
     | "none"
     | "ascending"
@@ -270,16 +307,23 @@ export interface AriaAttributes {
     | "other"
     | undefined
     | null;
-  /** Defines the maximum allowed value for a range widget. */
+  /**
+   * Defines the maximum allowed value for a range widget.
+   */
   "aria-valuemax"?: number | undefined | null;
-  /** Defines the minimum allowed value for a range widget. */
+  /**
+   * Defines the minimum allowed value for a range widget.
+   */
   "aria-valuemin"?: number | undefined | null;
   /**
    * Defines the current value for a range widget.
-   * @see aria-valuetext.
+   * See {@linkcode aria-valuetext}.
    */
   "aria-valuenow"?: number | undefined | null;
-  /** Defines the human readable text alternative of aria-valuenow for a range widget. */
+  /**
+   * Defines the human readable text alternative of aria-valuenow for a range
+   * widget.
+   */
   "aria-valuetext"?: string | undefined | null;
 }
 
@@ -448,7 +492,8 @@ export interface HTMLAttributes
 
   // Living Standard
   /**
-   * Hints at the type of data that might be entered by the user while editing the element or its contents
+   * Hints at the type of data that might be entered by the user while editing
+   * the element or its contents.
    * @see https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-inputmode-attribute
    */
   inputmode?:
@@ -463,7 +508,8 @@ export interface HTMLAttributes
     | undefined
     | null;
   /**
-   * Specify that a standard HTML element should behave like a defined custom built-in element
+   * Specify that a standard HTML element should behave like a defined custom
+   * built-in element.
    * @see https://html.spec.whatwg.org/multipage/custom-elements.html#attr-is
    */
   is?: string | undefined | null;
@@ -1348,15 +1394,19 @@ export interface HTMLWebViewAttributes extends HTMLAttributes {
   nodeintegration?: boolean | undefined | null;
   partition?: string | undefined | null;
   plugins?: boolean | undefined | null;
-  preload?: string | undefined | null; // in the DOM it's only 'auto' | 'none' | 'metadata' | '', but electron allows arbitrary values
+  /**
+   * In the DOM it's only `"auto"` | `"none"` | `"metadata"` | `""`, but Electron
+   * allows arbitrary values.
+   */
+  preload?: string | undefined | null;
   src?: string | undefined | null;
   useragent?: string | undefined | null;
   webpreferences?: string | undefined | null;
 }
 
-//
-// DOM Elements
-// ----------------------------------------------------------------------
+/*
+ * DOM Elements
+ */
 export interface HTMLElements {
   a: HTMLAnchorAttributes;
   abbr: HTMLAttributes;
@@ -1626,3 +1676,38 @@ export type HTMLElementAttributes<E extends HTMLElement> =
   : E extends HTMLVideoElement
   ? HTMLVideoAttributes
   : HTMLAttributes;
+
+/*
+ * Convenience exports from TypeScript's DOM types.
+ */
+/**
+ * Tag name for HTML element.
+ */
+export type HTMLElementTagName = keyof HTMLElementTagNameMap;
+
+/**
+ * Tag name for SVG element.
+ */
+export type SVGElementTagName = keyof SVGElementTagNameMap;
+
+/**
+ * Tag name for any HTML or SVG element.
+ */
+export type ElementTagName = HTMLElementTagName | SVGElementTagName;
+
+/**
+ * Element type associated with the specified tag name.
+ */
+export type ElementWithTagName<TN extends ElementTagName> =
+  TN extends HTMLElementTagName
+    ? HTMLElementTagNameMap[TN]
+    : TN extends SVGElementTagName
+      ? SVGElementTagNameMap[TN]
+      : never;
+
+/**
+ * Any HTML or SVG element.
+ */
+export type AnyElement =
+  | ElementWithTagName<HTMLElementTagName>
+  | ElementWithTagName<SVGElementTagName>;

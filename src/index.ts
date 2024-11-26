@@ -64,8 +64,8 @@ export {
 export { getInputWidth } from "./extras/getInputWidth.ts";
 export {
   html,
-  type ElementBuilder,
-  type ElementBuilderChild,
+  type ElemBuilder,
+  type ElemBuilderChild,
 } from "./extras/htmlBuilder.ts";
 export { listToArray } from "./extras/listToArray.ts";
 
@@ -91,8 +91,6 @@ export {
   Elem,
   Primitive,
   StyleValue,
-  type AnyElement,
-  type AnyElementTagName,
   type AttrName,
   type Attrs,
   type AttrsDefined,
@@ -103,10 +101,8 @@ export {
   type DataKey,
   type DataPropertyName,
   type DataValue,
-  type ElementWithTagName,
   type ElemOrCssSelector,
-  type HTMLElementTagName,
   type StyleKey,
   type Styles,
-  type SVGElementTagName,
+  type TagName,
 } from "./types.ts";

@@ -4,11 +4,11 @@ import { attrSelector } from "../attr/attrsSelector.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
 import type {
-  AnyElementTagName,
   CssSelector,
   Data,
   DataKey,
   DataValue,
+  TagName,
 } from "../types.ts";
 
 /**
@@ -40,7 +40,7 @@ import type {
 export function dataEntrySelector(
   key: DataKey,
   value?: DataValue | null | undefined,
-  tag?: AnyElementTagName,
+  tag?: TagName,
 ): CssSelector {
   return selectorWithTag(singleDataSelector(key, value), tag);
 }
@@ -68,7 +68,7 @@ export function dataEntrySelector(
  * const selector = dataSelector({ someThing: "stuff", otherThing: "doodles" }, "a");
  * // `a[data-some-thing="stuff"][data-other-thing="doodles"]`
  */
-export function dataSelector(data: Data, tag?: AnyElementTagName): CssSelector {
+export function dataSelector(data: Data, tag?: TagName): CssSelector {
   let selector = "";
 
   for (const key of Object.keys(data)) {

@@ -4,12 +4,12 @@ import { attrsSelector } from "../attr/attrsSelector.ts";
 import { dataSelector } from "../data/dataSelector.ts";
 import { toElem } from "../elem/toElem.ts";
 import type {
-  AnyElementTagName,
   Attrs,
   CssSelector,
   Data,
   Elem,
   ElemOrCssSelector,
+  TagName,
 } from "../types.ts";
 
 import { selectorWithTag } from "./selectorWithTag.ts";
@@ -37,7 +37,7 @@ export interface FindOptions {
   parent?: ElemOrCssSelector | null | undefined;
 
   /** Optional Element tag to limit search. */
-  tag?: AnyElementTagName;
+  tag?: TagName;
 }
 
 /**

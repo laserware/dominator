@@ -1,6 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
-import type { AnyElementTagName, CssSelector } from "../types.ts";
+import type { CssSelector, TagName } from "../types.ts";
 
 /**
  * Builds a {@linkcode CssSelector} from the specified `selector` that includes
@@ -20,7 +20,7 @@ import type { AnyElementTagName, CssSelector } from "../types.ts";
  */
 export function selectorWithTag(
   selector: CssSelector,
-  tag?: AnyElementTagName,
+  tag?: TagName,
 ): CssSelector {
   if (isNil(tag)) {
     return selector;
