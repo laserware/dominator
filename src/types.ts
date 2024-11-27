@@ -301,18 +301,16 @@ export type DOMPropertyKey<E extends HTMLElement = HTMLElement> =
   | AttrName<E>
   | CssVarName
   | DataKey
-  | PropName<E>
   | StyleKey;
 
 /**
  * Filter value for performing DOM property searches. Use `null` to check if
  * an entry exists only (skip checking if values match).
  */
-export type DOMPropertyFilterValue<E extends HTMLElement = HTMLElement> =
+export type DOMPropertyFilterValue =
   | AttrValue
   | DataValue
   | CssVarValue
-  | PropValue<E>
   | StyleValue
   | null;
 
@@ -341,36 +339,3 @@ export type DOMPropertySearch<
  * Tag name for any HTML or SVG element.
  */
 export type TagName = HTMLElementTagName | SVGElementTagName;
-
-type NeverMethods<T> = {
-  [K in keyof T]: T[K] extends (...args: any[]) => any ? never : K;
-}[keyof T];
-
-export type ExcludeMethods<T> = Pick<T, NeverMethods<T>>;
-
-/**
- * Possible names for element properties (*not* attributes).
- *
- * @template E Type of Element with properties.
- */
-export type PropName<E extends HTMLElement = HTMLElement> = Extract<
-  keyof E,
-  string
->;
-
-/**
- * Possible values for element properties (*not* attributes).
- */
-export type PropValue<
-  E extends HTMLElement = HTMLElement,
-  N extends PropName<E> = PropName<E>,
-> = E[N];
-
-/**
- * Object with Element properties.
- *
- * @template E Type of Element with properties.
- */
-export type Props<E extends HTMLElement = HTMLElement> = Partial<
-  Record<PropName<E>, PropValue<E>>
->;

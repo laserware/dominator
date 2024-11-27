@@ -14,12 +14,17 @@ import {
   type Attrs,
   type CssVars,
   type Data,
-  type ExcludeMethods,
   type Styles,
   type TagName,
 } from "../types.ts";
 
 // TODO: Try to improve performance of types here. TypeScript spends *a lot* of time checking this file.
+
+type NeverMethods<T> = {
+  [K in keyof T]: T[K] extends (...args: any[]) => any ? never : K;
+}[keyof T];
+
+export type ExcludeMethods<T> = Pick<T, NeverMethods<T>>;
 
 type NonMethodElemProperties<TN extends TagName> = ExcludeMethods<
   ElementWithTagName<TN>
