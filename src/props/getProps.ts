@@ -1,14 +1,7 @@
 import { cast } from "../internal/cast.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type {
-  ElemOrCssSelector,
-  KeysOf,
-  PropName,
-  Props,
-  PropValue,
-  WithUndefinedValues,
-} from "../types.ts";
+import type { ElemOrCssSelector, PropName, PropValue } from "../types.ts";
 
 /**
  * Attempts to get the specified property `name` from the specified `target`.
@@ -44,65 +37,70 @@ import type {
  * const result = getProp(elem, "formNoValidate");
  * // true
  */
-export function getProp<E extends HTMLElement = HTMLElement>(
+export function getProp<E extends HTMLElement>(
   target: ElemOrCssSelector<E>,
   name: PropName<E>,
-): PropValue<E> | undefined {
+): E[keyof E] | null {
   const elem = elemOrThrow(target, `Unable to get property ${name}`);
 
   return getSingleProp(elem, name);
 }
 
+type ElementProps<E extends HTMLElement, K extends keyof E> = {
+  [P in K]: NonNullable<E[P]>;
+};
+
 /**
  * Builds an object with the keys equal to the specified property `names` and
  * the value equal to the corresponding property value in the specified `target`.
  *
- * @template T Shape of properties object to return.
+ * @remarks
+ * The function returns `null` rather than `undefined` for missing values because
+ * that's how the properties are typed in the HTML Elements.
+ *
  * @template E Element type of specified `target`.
+ * @template NS Property names that map to valid properties for Element `E`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param names Names of the properties for which to find values.
  *
  * @returns Object with specified names as keys and corresponding property values.
  *          Note that you will need to perform checks for whether a value is
- *          `undefined` in the returned object if some of the entries weren't present.
+ *          `null` in the returned object if some of the entries weren't present.
  *
  * @throws {InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
- * interface Shape {
- *   formMethod: string;
- *   formNoValidate: boolean;
- * }
- *
  * const elem = findElem("button")!;
  * elem.formMethod = "post";
  * elem.formNoValidate = true;
  *
- * // Note that `invalid` doesn't exist on the element, so it's `undefined`:
- * const result = getProps<Shape>(elem, ["formMethod", "formNoValidate", "invalid"]);
- * // { formMethod: "post", formNoValidate: true, invalid: undefined }
+ * // Note that `ariaDisabled` doesn't exist on the element, so it's `null`:
+ * const result = getProps(elem, ["formMethod", "formNoValidate", "ariaDisabled"]);
+ * // { formMethod: "post", formNoValidate: true, ariaDisabled: null }
  */
-export function getProps<
-  T extends Props = Props,
-  E extends HTMLElement = HTMLElement,
->(target: ElemOrCssSelector<E>, names: KeysOf<T>): WithUndefinedValues<T> {
+export function getProps<E extends HTMLElement, NS extends (keyof E)[]>(
+  target: ElemOrCssSelector<E>,
+  names: NS,
+): ElementProps<E, NS[number]> {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to get properties ${formatForError(names)}`);
 
-  const props: Record<string, PropValue<E> | undefined> = {};
+  type Props = Record<keyof E, PropValue<E> | null>;
+
+  const props: Props = {} as Props;
 
   for (const name of names) {
     props[name] = getSingleProp(elem, cast<PropName<E>>(name));
   }
 
-  return cast<WithUndefinedValues<T>>(props);
+  return cast<ElementProps<E, NS[number]>>(props);
 }
 
 function getSingleProp<E extends HTMLElement = HTMLElement>(
   element: E,
   name: PropName<E>,
-): PropValue<E> | undefined {
+): PropValue<E> | null {
   // @ts-ignore I know this is right, but I couldn't get TS to shut up.
   return element[name];
 }

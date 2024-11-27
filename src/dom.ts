@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-// noinspection SpellCheckingInspection
+// noinspection SpellCheckingInspection,JSDeprecatedSymbols,JSUnusedGlobalSymbols
 
 // Type definitions for HTML attributes, based on JSX React 18 typings
 // Original Project/Authors:
@@ -36,7 +36,9 @@
 
 type Booleanish = boolean | "true" | "false";
 
-// All the WAI-ARIA 1.1 attributes from https://www.w3.org/TR/wai-aria-1.1/
+/**
+ * All the WAI-ARIA 1.1 attributes from the {@link https://www.w3.org/TR/wai-aria-1.1/|specification}.
+ */
 export interface AriaAttributes {
   /**
    * Identifies the currently active element when DOM focus is on a composite
@@ -321,8 +323,8 @@ export interface AriaAttributes {
    */
   "aria-valuenow"?: number | undefined | null;
   /**
-   * Defines the human readable text alternative of aria-valuenow for a range
-   * widget.
+   * Defines the human-readable text alternative of {@linkcode aria-valuenow}
+   * for a range widget.
    */
   "aria-valuetext"?: string | undefined | null;
 }

@@ -1,10 +1,11 @@
 import { isNil, isNotNil } from "@laserware/arcade";
 
+import { cast } from "../internal/cast.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type {
-  DOMPropertySearch,
+  DOMPropertyFilter,
   ElemOrCssSelector,
   PropName,
   PropValue,
@@ -14,14 +15,14 @@ import { getProp } from "./getProps.ts";
 
 /**
  * Search criteria for checking if properties are present in an element.
- * You can use an array of property names to check only if the properties are
- * present, or an object to search for specific values. Use `null` for the value
- * if you only care about the presence of a property.
+ * For properties, you can only use an object to determine search criteria
+ * because the element has a corresponding value for all properties that
+ * might not necessarily be `null` or `undefined`.
  *
  * @template E Type of Element with corresponding properties to search.
  */
 export type PropsSearch<E extends HTMLElement = HTMLElement> =
-  DOMPropertySearch<PropName<E>, PropValue | null>;
+  DOMPropertyFilter<PropName<E>, PropValue | null>;
 
 /**
  * Checks if the specified `target` has the specified property `name`. If a
@@ -49,12 +50,12 @@ export type PropsSearch<E extends HTMLElement = HTMLElement> =
  */
 export function hasProp<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
-  name: PropName<E>,
+  name: PropName<E> | string,
   value?: PropValue<E>,
 ): boolean {
   const elem = elemOrThrow(target, `Unable to check for property ${name}`);
 
-  return hasSingleProp(elem, name, value);
+  return hasSingleProp(elem, cast<PropName<E>>(name), value);
 }
 
 /**
@@ -64,7 +65,7 @@ export function hasProp<E extends HTMLElement = HTMLElement>(
  * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
- * @param search Array of property names or properties filter object to check for.
+ * @param search Properties filter object to check for.
  *
  * @returns `true` if the specified `target` matches all search criteria.
  *
@@ -104,7 +105,7 @@ export function hasAllProps<E extends HTMLElement = HTMLElement>(
  * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
- * @param search Array of property names or properties filter object to check for.
+ * @param search Properties filter object to check for.
  *
  * @returns `true` if the specified `target` matches some search criteria.
  *
