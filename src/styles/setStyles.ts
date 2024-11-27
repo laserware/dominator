@@ -1,13 +1,13 @@
-import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
+import { InvalidElemError } from "../errors.ts";
 import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import {
-  CssVarName,
+import { isCssVarName } from "../typeGuards.ts";
+import type {
+  ElemOrCssSelector,
+  StyleKey,
+  Styles,
   StyleValue,
-  type ElemOrCssSelector,
-  type StyleKey,
-  type Styles,
 } from "../types.ts";
 
 /**
@@ -20,8 +20,10 @@ import {
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {InvalidElemError} If the `target` could not be found or doesn't have a
+ * @throws {@link InvalidElemError} If the `target` could not be found or doesn't have a
  *                           {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style|style} property.
+ *
+ * @group Styles
  */
 export function setStyle<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector,
@@ -50,8 +52,10 @@ export function setStyle<E extends HTMLElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {InvalidElemError} If the `target` could not be found or doesn't have a
+ * @throws {@link InvalidElemError} If the `target` could not be found or doesn't have a
  *                            {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style|style} property.
+ *
+ * @group Styles
  */
 export function setStyles<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector,
@@ -76,7 +80,7 @@ function setSingleStyle(
 ): void {
   const styleValue = stringifyDOMValue(value) ?? "";
 
-  if (CssVarName.is(key)) {
+  if (isCssVarName(key)) {
     element.style.setProperty(key, styleValue);
   } else {
     // @ts-ignore

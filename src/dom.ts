@@ -1409,7 +1409,7 @@ export interface HTMLWebViewAttributes extends HTMLAttributes {
 /*
  * DOM Elements
  */
-export interface HTMLElements {
+export interface HTMLAttributesTagNameMap {
   a: HTMLAnchorAttributes;
   abbr: HTMLAttributes;
   address: HTMLAttributes;
@@ -1678,38 +1678,3 @@ export type HTMLElementAttributes<E extends HTMLElement> =
   : E extends HTMLVideoElement
   ? HTMLVideoAttributes
   : HTMLAttributes;
-
-/*
- * Convenience exports from TypeScript's DOM types.
- */
-/**
- * Tag name for HTML element.
- */
-export type HTMLElementTagName = keyof HTMLElementTagNameMap;
-
-/**
- * Tag name for SVG element.
- */
-export type SVGElementTagName = keyof SVGElementTagNameMap;
-
-/**
- * Tag name for any HTML or SVG element.
- */
-export type ElementTagName = HTMLElementTagName | SVGElementTagName;
-
-/**
- * Element type associated with the specified tag name.
- */
-export type ElementWithTagName<TN extends ElementTagName> =
-  TN extends HTMLElementTagName
-    ? HTMLElementTagNameMap[TN]
-    : TN extends SVGElementTagName
-      ? SVGElementTagNameMap[TN]
-      : never;
-
-/**
- * Any HTML or SVG element.
- */
-export type AnyElement =
-  | ElementWithTagName<HTMLElementTagName>
-  | ElementWithTagName<SVGElementTagName>;

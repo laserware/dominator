@@ -1,5 +1,5 @@
+import { InvalidCssVarError } from "../../errors.ts";
 import { render, selectorForNonExistent } from "../../testing.ts";
-import { InvalidCssVarError } from "../InvalidCssVarError.ts";
 import { setCssVar, setCssVars } from "../setCssVars.ts";
 
 const getCssVarNative = (name: string, target = document.documentElement): unknown =>

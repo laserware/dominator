@@ -19,6 +19,8 @@ import { getAttr } from "./getAttrs.ts";
  * if you only care about the presence of an attribute.
  *
  * @template E Type of Element with corresponding attributes to search.
+ *
+ * @group Attributes
  */
 export type AttrsSearch<E extends HTMLElement = HTMLElement> =
   DOMPropertySearch<AttrName<E>, AttrValue | null>;
@@ -35,16 +37,28 @@ export type AttrsSearch<E extends HTMLElement = HTMLElement> =
  *
  * @returns `true` if the specified attribute `name` is present and `value` matches (if specified).
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
- * const elem = createElem(`<div aria-hidden="true" name="test">Test</div>`);
+ * **HTML**
+ *
+ * ```html
+ * <div id="example" aria-hidden="true" aria-label="Example">Example</div>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
  *
  * const hasNameOnly = hasAttr(elem, "aria-hidden");
  * // true
  *
- * const hasNameAndValue = hasAttr(elem, "name", "test");
+ * const hasNameAndValue = hasAttr(elem, "aria-label", "Example");
  * // true
+ * ```
+ *
+ * @group Attributes
  */
 export function hasAttr<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -67,16 +81,25 @@ export function hasAttr<E extends HTMLElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches all search criteria.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
- * const elem = createElem(`<div aria-hidden="true" name="test" inert>Test</div>`);
+ * **HTML**
+ *
+ * ```html
+ * <div id="example" aria-hidden="true" inert>Example</div>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
  *
  * const hasAllArray = hasAllAttrs(elem, ["aria-hidden"]);
  * // true
  *
  * const notHasAllArray = hasAllAttrs(elem, ["aria-hidden", "missing"]);
- * // false (missing does not exist)
+ * // false ("missing" does not exist)
  *
  * const hasAllSearch = hasAllAttrs(elem, {
  *   "aria-hidden": true,
@@ -84,6 +107,9 @@ export function hasAttr<E extends HTMLElement = HTMLElement>(
  *   inert: null,
  * });
  * // true
+ * ```
+ *
+ * @group Attributes
  */
 export function hasAllAttrs<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -106,10 +132,19 @@ export function hasAllAttrs<E extends HTMLElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches some search criteria.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
- * const elem = createElem(`<div aria-hidden="true" name="test" inert>Test</div>`);
+ * **HTML**
+ *
+ * ```html
+ * <div id="example" aria-hidden="true" inert>Example</div>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
  *
  * const hasSomeArray = hasSomeAttrs(elem, ["aria-hidden", "missing"]);
  * // true
@@ -121,6 +156,9 @@ export function hasAllAttrs<E extends HTMLElement = HTMLElement>(
  *   missing: null,
  * });
  * // true
+ * ```
+ *
+ * @group Attributes
  */
 export function hasSomeAttrs<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

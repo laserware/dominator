@@ -17,6 +17,8 @@ import { getStyle } from "./getStyles.ts";
  * You can use an array of style property names to check only if the styles are
  * present, or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of a style property.
+ *
+ * @group Styles
  */
 export type StylesSearch = DOMPropertySearch<StyleKey, StyleValue | null>;
 
@@ -30,7 +32,9 @@ export type StylesSearch = DOMPropertySearch<StyleKey, StyleValue | null>;
  *
  * @returns `true` if the specified style is present.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group Styles
  */
 export function hasStyle(
   target: ElemOrCssSelector,
@@ -51,7 +55,9 @@ export function hasStyle(
  *
  * @returns `true` if the specified `target` has *all* specified styles.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group Styles
  */
 export function hasAllStyles(
   target: ElemOrCssSelector,
@@ -72,7 +78,9 @@ export function hasAllStyles(
  *
  * @returns `true` if the specified `target` has *some* specified styles.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group Styles
  */
 export function hasSomeStyles(
   target: ElemOrCssSelector,

@@ -1,5 +1,6 @@
 import { isNil, kebabCase } from "@laserware/arcade";
 
+import { InvalidAttrError } from "../errors.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
 import type {
@@ -9,8 +10,6 @@ import type {
   CssSelector,
   TagName,
 } from "../types.ts";
-
-import { InvalidAttrError } from "./InvalidAttrError.ts";
 
 /**
  * Attempts to build a CSS selector string from the specified `name` and `value`. Note
@@ -25,7 +24,7 @@ import { InvalidAttrError } from "./InvalidAttrError.ts";
  *
  * @returns CSS selector based on the specified attribute `name` and optional `value` and `tag`.
  *
- * @throws {InvalidAttrError} If the specified `value` could not be stringified.
+ * @throws {@link InvalidAttrError} If the specified `value` could not be stringified.
  *
  * @example Name Only
  * const selector = selectAttr("disabled");
@@ -42,6 +41,8 @@ import { InvalidAttrError } from "./InvalidAttrError.ts";
  * @example Name and Tag (No Value)
  * const selector = selectAttr("disabled", null, "button");
  * // `button[disabled]`
+ *
+ * @group Attributes
  */
 export function selectAttr<E extends HTMLElement = HTMLElement>(
   name: AttrName<E>,
@@ -66,7 +67,7 @@ export function selectAttr<E extends HTMLElement = HTMLElement>(
  *
  * @returns CSS selector based on the specified `attrs`.
  *
- * @throws {InvalidAttrError} If a value in the specified `attrs` could not be stringified.
+ * @throws {@link InvalidAttrError} If a value in the specified `attrs` could not be stringified.
  *
  * @example Single Entry With Value
  * const selector = selectAttrs({ disabled: true });
@@ -83,6 +84,8 @@ export function selectAttr<E extends HTMLElement = HTMLElement>(
  * @example Multiple Entries
  * const selector = selectAttrs({ disabled: true, inert: null });
  * // `[disabled="true"][inert]`
+ *
+ * @group Attributes
  */
 export function selectAttrs<E extends HTMLElement = HTMLElement>(
   attrs: Attrs<E>,

@@ -1,13 +1,7 @@
 /* istanbul ignore file -- @preserve: These are just type definitions, no need to enforce coverage. */
 // noinspection SpellCheckingInspection
 
-import { isPlainObject } from "@laserware/arcade";
-
-import type {
-  HTMLElementAttributes,
-  HTMLElementTagName,
-  SVGElementTagName,
-} from "./dom.ts";
+import type { HTMLElementAttributes } from "./dom.ts";
 
 /**
  * Type is either a single item or array of items of type `T`.
@@ -49,48 +43,12 @@ export type WithNullValues<T extends Record<any, any>> = {
  */
 export type Primitive = boolean | number | string;
 
-export namespace Primitive {
-  /**
-   * Returns true if the specified value is a {@linkcode Primitive}.
-   */
-  export function is(value: unknown): value is Primitive {
-    return (
-      typeof value === "boolean" ||
-      typeof value === "number" ||
-      typeof value === "string"
-    );
-  }
-}
-
-/**
- * Represents a value that can be assigned to a DOM property after stringification.
- *
- * @remarks
- * Objects and arrays are stringified via {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify|JSON.stringify}.
- */
-export type DOMPropertyValue = Primitive | any[] | Record<number | string, any>;
-
-export namespace DOMPropertyValue {
-  /**
-   * Returns true if the specified value is a valid {@linkcode DOMPropertyValue}.
-   */
-  export function is(value: unknown): value is DOMPropertyValue {
-    if (Primitive.is(value)) {
-      return true;
-    }
-
-    if (Array.isArray(value)) {
-      return true;
-    }
-
-    return isPlainObject(value);
-  }
-}
-
 /**
  * Element or EventTarget that can be passed into functions.
  *
  * @template E Type of Element.
+ *
+ * @group Elements
  */
 export type Elem<E extends HTMLElement = HTMLElement> =
   | E
@@ -102,36 +60,14 @@ export type Elem<E extends HTMLElement = HTMLElement> =
   | Node
   | ParentNode;
 
-export namespace Elem {
-  /**
-   * Returns true if the specified value is an {@linkcode Elem} instance.
-   */
-  export function is(value: unknown): value is Elem {
-    return (
-      value instanceof Document ||
-      value instanceof Element ||
-      value instanceof EventTarget ||
-      value instanceof HTMLElement ||
-      value instanceof Node
-    );
-  }
-}
-
 /**
  * CSS selector string. Note that no validation is performed on the selector,
  * so this could represent any string value (even if it is not a valid CSS
  * selector).
+ *
+ * @group CSS
  */
 export type CssSelector = string;
-
-export namespace CssSelector {
-  /**
-   * Returns true if the specified `value` is a {@linkcode CssSelector}.
-   */
-  export function is(value: unknown): value is CssSelector {
-    return typeof value === "string";
-  }
-}
 
 /**
  * Represents a type that can be either an Element, EventTarget, or a CSS
@@ -141,6 +77,8 @@ export namespace CssSelector {
  * either an {@linkcode Elem} type object or a string representing a CSS selector.
  *
  * @template E Type of element if `Elem`.
+ *
+ * @group Elements
  */
 export type ElemOrCssSelector<E extends HTMLElement = HTMLElement> =
   | Elem<E>
@@ -150,6 +88,8 @@ export type ElemOrCssSelector<E extends HTMLElement = HTMLElement> =
  * Valid type for HTML/SVG attribute name.
  *
  * @template E Type of element with corresponding attribute names.
+ *
+ * @group Attributes
  */
 export type AttrName<E extends HTMLElement = HTMLElement> =
   | Extract<keyof HTMLElementAttributes<E>, string>
@@ -158,23 +98,18 @@ export type AttrName<E extends HTMLElement = HTMLElement> =
 /**
  * Value type that can be specified as the value for an HTML/SVG attribute.
  * Before actually setting the attribute on an element, the value is stringified.
+ *
+ * @group Attributes
  */
 export type AttrValue = DOMPropertyValue;
-
-export namespace AttrValue {
-  /**
-   * Returns true if the specified value is a valid {@linkcode AttrValue}.
-   */
-  export function is(value: unknown): value is AttrValue {
-    return DOMPropertyValue.is(value);
-  }
-}
 
 /**
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
  * Some of the values may be `null` or `undefined`.
  *
  * @template E Type of Element for corresponding attributes.
+ *
+ * @group Attributes
  */
 export type Attrs<E extends HTMLElement = HTMLElement> = Record<
   AttrName<E>,
@@ -184,6 +119,8 @@ export type Attrs<E extends HTMLElement = HTMLElement> = Record<
 /**
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
  * All the values must be defined.
+ *
+ * @group Attributes
  */
 export type AttrsDefined = Record<string, AttrValue>;
 
@@ -191,38 +128,39 @@ export type AttrsDefined = Record<string, AttrValue>;
  * Valid name for a {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties|CSS variable}.
  *
  * CSS variables *must* start with `--`.
+ *
+ * @group CSS
  */
 export type CssVarName = `--${string}`;
 
-export namespace CssVarName {
-  /**
-   * Returns true if the specified `name` is a valid {@linkcode CssVarName}.
-   */
-  export function is(name: string): name is CssVarName {
-    return name.startsWith("--");
-  }
-}
-
 /**
  * Valid value for a CSS variable.
+ *
+ * @group CSS
  */
 export type CssVarValue = Primitive;
 
 /**
  * Represents an object with key of {@linkcode CssVarName} and value
  * of {@linkcode CssVarValue}.
+ *
+ * @group CSS
  */
 export type CssVars = Record<CssVarName, CssVarValue>;
 
 /**
  * Valid type for the key of {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset|HTMLElement.dataset}
  * property entries in HTML/SVG elements.
+ *
+ * @group Dataset
  */
 export type DataPropertyName = string;
 
 /**
  * Valid name for dataset {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*|data-* attribute}
  * on HTML/SVG elements (e.g. `data-some-value`).
+ *
+ * @group Dataset
  */
 export type DataAttrName = `data-${string}`;
 
@@ -230,11 +168,15 @@ export type DataAttrName = `data-${string}`;
  * Valid name for {@linkcode Data} entries. Represents either a key for the
  * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset|HTMLElement.dataset} property
  * or a name for the {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*|data-* attribute}.
+ *
+ * @group Dataset
  */
 export type DataKey = DataPropertyName | DataAttrName;
 
 /**
  * Valid dataset values (prior to stringifying).
+ *
+ * @group Dataset
  */
 export type DataValue = DOMPropertyValue;
 
@@ -246,11 +188,15 @@ export type DataValue = DOMPropertyValue;
  *
  * Note that the `HTMLElement.dataset` property is a
  * {@link https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap|DOMStringMap}.
+ *
+ * @group Dataset
  */
 export type Data = Record<string, DataValue | null | undefined>;
 
 /**
  * Valid style keys (i.e. non-methods) that can be set on an element.
+ *
+ * @group Styles
  */
 export type StyleKey =
   | Exclude<
@@ -275,21 +221,16 @@ export type StyleKey =
 /**
  * Value that can be set for an element style. The value is stringified prior
  * to being set on the element.
+ *
+ * @group Styles
  */
 export type StyleValue = Primitive;
-
-export namespace StyleValue {
-  /**
-   * Returns true if the specified value is a valid {@linkcode StyleValue}.
-   */
-  export function is(value: unknown): value is StyleValue {
-    return Primitive.is(value);
-  }
-}
 
 /**
  * Object representing element styles with a key of {@linkcode StyleKey} and a
  * value of {@linkcode StyleValue}.
+ *
+ * @group Styles
  */
 export type Styles = Partial<Record<StyleKey, StyleValue>>;
 
@@ -302,6 +243,13 @@ export type DOMPropertyKey<E extends HTMLElement = HTMLElement> =
   | CssVarName
   | DataKey
   | StyleKey;
+
+/**
+ * Represents a value that can be assigned to a DOM property after stringification.
+ *
+ * Objects and arrays are stringified via [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
+ */
+export type DOMPropertyValue = Primitive | any[] | Record<number | string, any>;
 
 /**
  * Filter value for performing DOM property searches. Use `null` to check if
@@ -337,5 +285,55 @@ export type DOMPropertySearch<
 
 /**
  * Tag name for any HTML or SVG element.
+ *
+ * @group Elements
  */
 export type TagName = HTMLElementTagName | SVGElementTagName;
+
+/**
+ * Use to specify search criteria for finding Element(s). You can find elements
+ * by selector, dataset entries, or attributes.
+ *
+ * To search for the existence of an attribute or dataset property (not the
+ * value), set the value to `null`.
+ *
+ * @expand
+ *
+ * @group Elements
+ */
+export interface FindOptions {
+  /** CSS selector search string. */
+  withSelector?: CssSelector;
+
+  /** Key/value pairs of attributes to search for. */
+  withAttrs?: Attrs;
+
+  /** Key/value pairs of dataset entries to search for. */
+  withData?: Data;
+
+  /** Optional parent Element, EventTarget, or CSS selector. */
+  parent?: ElemOrCssSelector | null | undefined;
+
+  /** Optional Element tag to limit search. */
+  tag?: TagName;
+}
+
+/**
+ * Tag name for HTML element.
+ */
+export type HTMLElementTagName = keyof HTMLElementTagNameMap;
+
+/**
+ * Tag name for SVG element.
+ */
+export type SVGElementTagName = keyof SVGElementTagNameMap;
+
+/**
+ * Element type associated with the specified tag name.
+ */
+export type ElementWithTagName<TN extends TagName> =
+  TN extends HTMLElementTagName
+    ? HTMLElementTagNameMap[TN]
+    : TN extends SVGElementTagName
+      ? SVGElementTagNameMap[TN]
+      : never;

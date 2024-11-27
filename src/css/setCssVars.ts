@@ -1,17 +1,17 @@
 import { isNotNil } from "@laserware/arcade";
 
+import { InvalidCssVarError } from "../errors.ts";
 import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import {
+import { isCssVarName } from "../typeGuards.ts";
+import type {
   CssVarName,
-  type CssVars,
-  type CssVarValue,
-  type ElemOrCssSelector,
+  CssVars,
+  CssVarValue,
+  ElemOrCssSelector,
 } from "../types.ts";
-
-import { InvalidCssVarError } from "./InvalidCssVarError.ts";
 
 /**
  * Sets the specified CSS variable `name` to the specified `value` in the
@@ -28,8 +28,10 @@ import { InvalidCssVarError } from "./InvalidCssVarError.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {InvalidCssVarError} If the specified `name` is not a valid {@linkcode CssVarName}.
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidCssVarError} If the specified `name` is not a valid {@linkcode CssVarName}.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group CSS
  */
 export function setCssVar<E extends HTMLElement = HTMLElement>(
   name: CssVarName,
@@ -61,8 +63,10 @@ export function setCssVar<E extends HTMLElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {InvalidCssVarError} If a specified name in `vars` is not a valid {@linkcode CssVarName}.
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidCssVarError} If a specified name in `vars` is not a valid {@linkcode CssVarName}.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group CSS
  */
 export function setCssVars<E extends HTMLElement = HTMLElement>(
   vars: CssVars,
@@ -85,7 +89,7 @@ function setSingleCssVar(
   name: string,
   value: CssVarValue,
 ): void {
-  if (!CssVarName.is(name)) {
+  if (!isCssVarName(name)) {
     // prettier-ignore
     throw new InvalidCssVarError(`CSS variable ${name} must be a string that starts with "--"`);
   }

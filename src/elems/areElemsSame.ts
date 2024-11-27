@@ -7,14 +7,16 @@ import { toElem } from "./toElem.ts";
  * as `left` and the Element, EventTarget, or CSS selector specified as
  * `right` do *not* match.
  *
- * @remarks
  * This function doesn't throw if the specified `left` and/or `right` elements
  * don't exist. Rather, it just returns `false`. This was a deliberate choice.
+ *
  *
  * @param left One or many Element, EventTarget, or CSS selectors to check; if
  *             an array, returns true if *one* of the elements matches the
  *             target element input.
  * @param right Element, EventTarget, or CSS selector to compare against.
+ *
+ * @group Elements
  */
 export function areElemsSame(
   left: OneOrManyOf<ElemOrCssSelector>,

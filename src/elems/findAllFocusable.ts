@@ -14,11 +14,17 @@ const focusableElementsSelector = [
 ].join(",");
 
 /**
- * Returns an array of all {@link https://zellwk.com/blog/keyboard-focusable-elements/|focusable}
- * elements in either the Document (if no `parent` specified) or the specified
- * `parent`.
+ * Searches for all focusable Elements in either the Document (if no `parent`
+ * specified) or the specified `parent`.
+ *
+ * See [this article](https://zellwk.com/blog/keyboard-focusable-elements/) for
+ * how focusable elements are determined.
  *
  * @param [parent=document] Optional Element or EventTarget for parent.
+ *
+ * @returns Array of focusable Elements in the optionally specified `parent`.
+ *
+ * @group Elements
  */
 export function findAllFocusable(
   parent: Elem | null | undefined = document,

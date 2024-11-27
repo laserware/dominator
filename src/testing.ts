@@ -6,7 +6,7 @@ import { cast } from "./internal/cast.ts";
 
 export { screen, waitFor } from "@testing-library/dom";
 
-export { default as userEvent } from "@testing-library/user-event";
+export { userEvent } from "@testing-library/user-event";
 
 /**
  * Selector for an element that will never exist in the test DOM.

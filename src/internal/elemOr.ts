@@ -1,5 +1,5 @@
-import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
+import { InvalidElemError } from "../errors.ts";
 import type { ElemOrCssSelector } from "../types.ts";
 
 import { cast } from "./cast.ts";

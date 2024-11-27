@@ -9,6 +9,7 @@ import { setData } from "../data/setData.ts";
 import type { AnyElement, AriaAttributes, ElementWithTagName } from "../dom.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { setStyles } from "../styles/setStyles.ts";
+import { isAttrValue } from "../typeGuards.ts";
 import {
   AttrValue,
   type Attrs,
@@ -46,18 +47,16 @@ interface EventDescriptor<EN extends EventName> {
   options: Omit<AddEventListenerOptions, "signal">;
 }
 
-namespace EventDescriptor {
-  export function is(value: unknown): value is EventDescriptor<any> {
-    if (value === null) {
-      return false;
-    }
-
-    if (isPlainObject(value)) {
-      return "listener" in value;
-    }
-
+function isEventDescriptor(value: unknown): value is EventDescriptor<any> {
+  if (value === null) {
     return false;
   }
+
+  if (isPlainObject(value)) {
+    return "listener" in value;
+  }
+
+  return false;
 }
 
 type ListenerOrDescriptor<EN extends EventName> =
@@ -90,6 +89,8 @@ const identifier = Symbol("identifier");
  *
  * @property build Function that takes in a parent element and optional AbortController
  *                 and returns an HTML element.
+ *
+ * @group Elements
  */
 export interface ElemBuilder<TN extends TagName = TagName> {
   [identifier]: "ElemBuilder";
@@ -99,11 +100,9 @@ export interface ElemBuilder<TN extends TagName = TagName> {
   ): ElementWithTagName<TN>;
 }
 
-namespace ElemBuilder {
-  export function is(value: unknown): value is ElemBuilder {
-    // @ts-ignore
-    return value?.[identifier] === "ElemBuilder";
-  }
+function isElemBuilder(value: unknown): value is ElemBuilder {
+  // @ts-ignore
+  return value?.[identifier] === "ElemBuilder";
 }
 
 type NonFunctionalChild = ElemBuilder | AnyElement | AttrValue | null;
@@ -116,6 +115,8 @@ type NonFunctionalChild = ElemBuilder | AnyElement | AttrValue | null;
  * - Boolean, number, or string (which all get converted to text nodes)
  * - Function that returns any one of the above child items
  * - null, which indicates that nothing should be built/rendered
+ *
+ * @group Elements
  */
 export type ElemBuilderChild = NonFunctionalChild | ChildFunction;
 
@@ -136,6 +137,8 @@ type ChildFunction = () => NonFunctionalChild;
  *                 See {@linkcode ElemBuilderChild} for additional details.
  *
  * @returns An object with a `build` function that returns the built Element.
+ *
+ * @group Elements
  */
 export function html<TN extends TagName>(
   tagName: TN,
@@ -157,7 +160,7 @@ export function html<TN extends TagName>(
         return null;
       }
 
-      if (ElemBuilder.is(child)) {
+      if (isElemBuilder(child)) {
         return child.build(element, controller);
       }
 
@@ -170,7 +173,7 @@ export function html<TN extends TagName>(
         return child;
       }
 
-      if (AttrValue.is(child)) {
+      if (isAttrValue(child)) {
         const stringValue = stringifyDOMValue(child);
 
         /* istanbul ignore next -- @preserve: The nullish coalescing is here to make TS happy. */
@@ -261,7 +264,7 @@ function setElemProperties<TN extends TagName>(
  * @param eventsDict Object with key of event name and value of event listener.
  * @param controller AbortController to clean up event listeners.
  *
- * @throws {Error} If the `controller` is undefined.
+ * @throws {@link Error} If the `controller` is undefined.
  */
 function addEventListeners<TN extends TagName>(
   element: ElementWithTagName<TN>,
@@ -282,7 +285,7 @@ function addEventListeners<TN extends TagName>(
 
     let options: AddEventListenerOptions = {};
 
-    if (EventDescriptor.is(listenerOrDescriptor)) {
+    if (isEventDescriptor(listenerOrDescriptor)) {
       eventListener = listenerOrDescriptor.listener;
 
       options = listenerOrDescriptor.options;

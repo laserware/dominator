@@ -1,6 +1,6 @@
-import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
 
+import { InvalidElemError } from "../errors.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import type {
@@ -24,7 +24,9 @@ import type {
  *
  * @returns Value of type `T` or `null` if not found.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group Styles
  */
 export function getStyle<T extends StyleValue>(
   target: ElemOrCssSelector,
@@ -54,7 +56,9 @@ export function getStyle<T extends StyleValue>(
  *          Note that you will need to perform checks for the presence of a value in the
  *          returned object because it's a `Partial` of the specified `T`.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group Styles
  */
 export function getStyles<T extends Styles = Styles>(
   target: ElemOrCssSelector,

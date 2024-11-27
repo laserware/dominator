@@ -1,7 +1,8 @@
 import { cast } from "../internal/cast.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import { CssVarName, type ElemOrCssSelector, type StyleKey } from "../types.ts";
+import { isCssVarName } from "../typeGuards.ts";
+import type { ElemOrCssSelector, StyleKey } from "../types.ts";
 
 /**
  * Removes the specified style `key` from the specified `target`.
@@ -13,7 +14,9 @@ import { CssVarName, type ElemOrCssSelector, type StyleKey } from "../types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group Styles
  */
 export function removeStyle<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector,
@@ -37,7 +40,9 @@ export function removeStyle<E extends HTMLElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group Styles
  */
 export function removeStyles<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector,
@@ -54,7 +59,7 @@ export function removeStyles<E extends HTMLElement = HTMLElement>(
 }
 
 function removeSingleStyle(element: HTMLElement, key: StyleKey): void {
-  if (CssVarName.is(key)) {
+  if (isCssVarName(key)) {
     element.style.removeProperty(key);
   } else {
     // Setting a style value to an empty string removes it:

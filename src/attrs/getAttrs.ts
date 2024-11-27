@@ -19,7 +19,7 @@ import type {
  *
  * @remarks
  * We're returning `null`, rather than `undefined` to match the
- * {@link https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute|Element.getAttribute} API.
+ * [Element.getAttribute](https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute) API.
  *
  * @template T Type of value to return.
  * @template E Element type of specified `target`.
@@ -29,28 +29,37 @@ import type {
  *
  * @returns Value of type `T` or `null` if not found.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
  *
- * @example With Existent String Attribute
- * const elem = findElem("button")!;
- * elem.setAttribute("aria-label", "Label");
+ * @example
+ * #### String Attribute
+ *
+ * ```ts
+ * const elem = findElem("button")!.setAttribute("aria-label", "Label");
  *
  * const result = getAttr(elem, "aria-label");
  * // "Label"
-
- * @example With Existent Number Attribute
- * const elem = findElem("button")!;
- * elem.setAttribute("aria-colcount", "20");
+ * ```
+ *
+ * #### Number Attribute
+ *
+ * ```ts
+ * const elem = findElem("button")!.setAttribute("aria-colcount", "20");
  *
  * const result = getAttr(elem, "aria-colcount");
  * // 20
-
- * @example With Existent Boolean Attribute
- * const elem = findElem("button")!;
- * elem.setAttribute("checked", "");
+ * ```
+ *
+ * #### Boolean Attribute
+ *
+ * ```ts
+ * const elem = findElem("button")!.setAttribute("checked", "");
  *
  * const result = getAttr(elem, "checked");
  * // true
+ * ```
+ *
+ * @group Attributes
  */
 export function getAttr<
   T extends AttrValue = AttrValue,
@@ -78,7 +87,7 @@ export function getAttr<
  *          Note that you will need to perform checks for whether a value is
  *          `undefined` in the returned object if some of the entries weren't present.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
  * interface Shape {
@@ -87,13 +96,15 @@ export function getAttr<
  *   invalid: string;
  * }
  *
- * const elem = findElem("button")!;
- * elem.setAttribute("aria-label", "Test");
- * elem.setAttribute("aria-rowcount", "20");
+ * const elem = findElem("button")!
+ *   .setAttribute("aria-label", "Test")
+ *   .setAttribute("aria-rowcount", "20");
  *
  * // Note that `invalid` doesn't exist on the element, so it's `undefined`:
  * const result = getAttrs<Shape>(elem, ["aria-label", "aria-rowcount", "invalid"]);
  * // { "aria-label": "Test", "aria-rowcount": 20, invalid: undefined }
+ *
+ * @group Attributes
  */
 export function getAttrs<
   T extends Attrs = Attrs,

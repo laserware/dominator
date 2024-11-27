@@ -12,6 +12,15 @@ const baseConfigs = getBaseConfigs({
 export default [
   ...baseConfigs,
   {
+    files: filePatterns.typescript,
+    rules: {
+      // Need to turn this off because we're using NodeNext in TypeScript,
+      // so we're importing files with a `.js` extension even though they're
+      // technically TS files:
+      "import/extensions": "off",
+    },
+  },
+  {
     files: filePatterns.tests,
     rules: {
       "no-console": "off",

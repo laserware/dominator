@@ -2,12 +2,25 @@ import { elemOrThrow } from "../internal/elemOr.ts";
 import type { ElemOrCssSelector } from "../types.ts";
 
 /**
- * Type of value that can be returned from the {@linkcode getInputValue}
- * function.
+ * Name of the value type associated with an input.
+ *
+ * @group Elements
  */
-export type InputValueType = "boolean" | "date" | "number" | "string";
+export type InputValueTypeName = "boolean" | "date" | "number" | "string";
 
-type GetInputValueAsReturn<T extends InputValueType> = T extends "boolean"
+/**
+ * Type that corresponds to the {@linkcode InputValueTypeName}. This is a
+ * convenience type for coercing a type name specified as a string to the
+ * actual type (e.g. `InputValueTypeName` of `"string"` would indicate that
+ * the return value will be of type `string`).
+ *
+ * See {@linkcode getInputValue} to understand how this is used in practice.
+ *
+ * @template T Name of the input value type.
+ *
+ * @group Elements
+ */
+export type InputValueAsType<T extends InputValueTypeName> = T extends "boolean"
   ? boolean
   : T extends "date"
     ? Date
@@ -19,9 +32,9 @@ type GetInputValueAsReturn<T extends InputValueType> = T extends "boolean"
 
 /**
  * Returns the value of the specified `target` with the specified type. The
- * value is returned as a number if the {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/valueAsNumber|valueAsNumber}
- * property returns a valid number, a Date if {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/valueAsDate|valueAsDate}
- * is a valid {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date|Date} (not `null`),
+ * value is returned as a number if the [`valueAsNumber` property](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/valueAsNumber)
+ * returns a valid number, a Date if the [`valueAsDate` property](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/valueAsDate)
+ * is a valid [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) (not `null`),
  * a boolean if the input is a `checkbox` or `radio` type, otherwise is returned as a `string`.
  *
  * @template T Type of the value that gets returned.
@@ -30,12 +43,14 @@ type GetInputValueAsReturn<T extends InputValueType> = T extends "boolean"
  *
  * @returns Value of the specified `target` as type `T`.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
- * @throws {Error} If the `target` specified is not of type `HTMLInputElement`.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws Error if the `target` specified is not of type `HTMLInputElement`.
+ *
+ * @group Elements
  */
-export function getInputValue<T extends InputValueType>(
+export function getInputValue<T extends InputValueTypeName>(
   target: ElemOrCssSelector,
-): GetInputValueAsReturn<T> {
+): InputValueAsType<T> {
   const elem = elemOrThrow(target, "Could not get value for element");
 
   if (!isInputElement(elem)) {
@@ -71,8 +86,10 @@ export function getInputValue<T extends InputValueType>(
  *
  * @returns String value of the specified `target`.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
- * @throws {Error} If the `target` specified is not of type `HTMLInputElement`.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws Error if the `target` specified is not of type `HTMLInputElement`.
+ *
+ * @group Elements
  */
 export function getInputValueRaw(target: ElemOrCssSelector): string {
   const elem = elemOrThrow(target, "Could not get value for element");
@@ -88,8 +105,8 @@ function isInputElement(elem: HTMLElement): elem is HTMLInputElement {
   return elem instanceof HTMLInputElement;
 }
 
-function asInputReturnValue<T extends InputValueType>(
+function asInputReturnValue<T extends InputValueTypeName>(
   value: any,
-): GetInputValueAsReturn<T> {
-  return value as unknown as GetInputValueAsReturn<T>;
+): InputValueAsType<T> {
+  return value as unknown as InputValueAsType<T>;
 }

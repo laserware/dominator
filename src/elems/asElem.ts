@@ -1,6 +1,6 @@
-import { Elem } from "../types.ts";
-
-import { InvalidElemError } from "./InvalidElemError.ts";
+import { InvalidElemError } from "../errors.ts";
+import { isElem } from "../typeGuards.ts";
+import type { Elem } from "../types.ts";
 
 /**
  * Returns an element of type `E` for the specified target.
@@ -12,12 +12,12 @@ import { InvalidElemError } from "./InvalidElemError.ts";
  * If you specify a `null` or `undefined` input, the function throws rather than
  * returns `null`.
  *
- * This function is useful for getting the {@link https://developer.mozilla.org/en-US/docs/Web/API/EventTarget|EventTarget}
+ * This function is useful for getting the [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
  * from an Event as a specific Element type without needing to use a non-null
  * assertion. In some cases, you know *exactly* what type of Element will be
  * associated with an Event and you want to assert it as such.
  *
- * **Important Note**
+ * ### Important Note
  *
  * With this function, you are telling TypeScript what the Element is, even if
  * the type you pass into the generic is incorrect. If you try to access properties
@@ -28,18 +28,24 @@ import { InvalidElemError } from "./InvalidElemError.ts";
  *
  * @param target Element or EventTarget.
  *
- * @throws {InvalidElemError} If specified `target` is `null` or `undefined`.
+ * @throws {@link InvalidElemError} If specified `target` is `null` or `undefined`.
  *
  * @template E Element type of specified `target`.
  *
- * @example Usage with Valid EventTarget
+ * @example
+ * #### Valid EventTarget
+ *
+ * ```ts
  * function handleButtonClick(event: MouseEvent): void {
  *   // We know this is an HTMLButtonElement because the event listener was
  *   // attached to a `<button>` and `currentTarget` is therefore a button:
  *   const buttonElem = asElem<HTMLButtonElement>(event.currentTarget);
  * }
+ * ```
  *
- * @example Usage with Invalid EventTarget
+ * #### Invalid EventTarget
+ *
+ * ```ts
  * function handleButtonClick(event: MouseEvent): void {
  *   // We're telling TypeScript this is an `<input>` when it's actually a
  *   // button:
@@ -48,11 +54,14 @@ import { InvalidElemError } from "./InvalidElemError.ts";
  *   // TypeScript will *not* complain about this, but you'll get an error:
  *   console.log(elem.valueAsNumber);
  * }
+ * ```
+ *
+ * @group Elements
  */
 export function asElem<E extends HTMLElement = HTMLElement>(
   target: Elem<E> | null | undefined,
 ): E {
-  if (Elem.is(target)) {
+  if (isElem(target)) {
     return target as E;
   } else {
     throw new InvalidElemError("Cannot assert as elem");

@@ -33,8 +33,7 @@ interface CreateElemOptions<E extends HTMLElement = HTMLElement> {
  * The attributes, CSS variables, dataset entries, and styles specified in
  * `options` are applied to the root element in the markup.
  *
- * @remarks
- * This is an alternative for the {@linkcode html} builder function for when you
+ * This is an alternative for the {@link html} builder function for when you
  * just need a one-off element or you want to define the element structure
  * mostly in markup.
  *
@@ -45,6 +44,8 @@ interface CreateElemOptions<E extends HTMLElement = HTMLElement> {
  *                  to set on element.
  *
  * @returns Element of type `E` with the specified `markup` and `options`.
+ *
+ * @group Elements
  */
 export function createElem<E extends HTMLElement = HTMLElement>(
   markup: string,

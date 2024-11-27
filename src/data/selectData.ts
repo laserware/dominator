@@ -36,6 +36,8 @@ import type {
  * @example `data-` Attribute Name With Value and Tag
  * const selector = selectDataEntry("data-some-thing", "stuff", "a");
  * // `a[data-some-thing="stuff"]`
+ *
+ * @group Dataset
  */
 export function selectDataEntry(
   key: DataKey,
@@ -67,6 +69,8 @@ export function selectDataEntry(
  * @example Data Object With Value and Tag
  * const selector = selectData({ someThing: "stuff", otherThing: "doodles" }, "a");
  * // `a[data-some-thing="stuff"][data-other-thing="doodles"]`
+ *
+ * @group Dataset
  */
 export function selectData(data: Data, tag?: TagName): CssSelector {
   let selector = "";

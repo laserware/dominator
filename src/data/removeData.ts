@@ -16,7 +16,9 @@ import type { DataKey, DataPropertyName, ElemOrCssSelector } from "../types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group Dataset
  */
 export function removeDataEntry<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -41,7 +43,9 @@ export function removeDataEntry<E extends HTMLElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group Dataset
  */
 export function removeData<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

@@ -1,8 +1,8 @@
 // noinspection CssRedundantUnit
 
-import { isElemOfType } from "../../elems/isElemOfType.ts";
 import { render, userEvent } from "../../testing.ts";
 import { html } from "../htmlBuilder.ts";
+import { isElemOfType } from "../isElemOfType.ts";
 
 describe("html function", () => {
   it("builds an element with no children or properties", () => {

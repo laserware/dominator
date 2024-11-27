@@ -1,6 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
-import { asElem } from "../elems/asElem.ts";
+import { asElem } from "./asElem.ts";
 
 /**
  * Converts the specified {@link https://developer.mozilla.org/en-US/docs/Web/API/NodeList|NodeList}
@@ -12,6 +12,8 @@ import { asElem } from "../elems/asElem.ts";
  * @param items NodeList or HTMLCollection to convert to array.
  *
  * @returns Array of Elements of type `E`.
+ *
+ * @group Elements
  */
 export function listToArray<E extends HTMLElement = HTMLElement>(
   items: NodeListOf<E> | NodeList | HTMLCollection | null,

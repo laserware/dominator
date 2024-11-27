@@ -1,10 +1,16 @@
 import { isPlainObject } from "@laserware/arcade";
 
 import { cast } from "../internal/cast.ts";
-import { parseFindOptions, type FindOptions } from "../internal/findOptions.ts";
-import type { CssSelector, Elem } from "../types.ts";
+import { parseFindOptions } from "../internal/findOptions.ts";
+import type { CssSelector, Elem, FindOptions } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
+
+/**
+ * This is the doc comment for file1.ts
+ *
+ * @packageDocumentation
+ */
 
 /**
  * Query the DOM for an Element matching the specified CSS `selector` in the
@@ -17,7 +23,9 @@ import { toElem } from "./toElem.ts";
  *
  * @returns Element of type `E` if found, otherwise `null`.
  *
- * @throws {SyntaxError} If the specified `selector` is invalid.
+ * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if the specified `selector` is invalid.
+ *
+ * @group Elements
  */
 export function findElem<E extends HTMLElement = HTMLElement>(
   selector: CssSelector,
@@ -30,12 +38,14 @@ export function findElem<E extends HTMLElement = HTMLElement>(
  *
  * @template E Element type of specified `target`.
  *
- * @param options Options for finding the element. See {@linkcode FindOptions}.
+ * @param options Options for finding the element.
  *
  * @returns Element of type `E` if found, otherwise `null`.
  *
- * @throws {SyntaxError} If `withSelector` in the specified `options` is invalid.
- * @throws {TypeError} If the specified `options` are invalid.
+ * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if `withSelector` in the specified `options` is invalid.
+ * @throws {TypeError} [TypeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError) if the specified `options` are invalid.
+ *
+ * @group Elements
  */
 export function findElem<E extends HTMLElement = HTMLElement>(
   options: FindOptions,

@@ -17,6 +17,8 @@ import type {
  * You can use an array of dataset property/attribute names to check only if the
  * dataset entries are present, or an object to search for specific values.
  * Use `null` for the value if you only care about the presence of a dataset entry.
+ *
+ * @group Dataset
  */
 export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
 
@@ -30,7 +32,9 @@ export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
  * @param key Property (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
  * @param [value] Optional dataset value to check for.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group Dataset
  */
 export function hasDataEntry<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -53,7 +57,9 @@ export function hasDataEntry<E extends HTMLElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches all search criteria.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group Dataset
  */
 export function hasAllData<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -76,7 +82,9 @@ export function hasAllData<E extends HTMLElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches some search criteria.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group Dataset
  */
 export function hasSomeData<E extends HTMLElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

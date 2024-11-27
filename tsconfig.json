@@ -18,6 +18,7 @@
     "skipLibCheck": true,
     "sourceMap": false,
     "strict": true,
+    "stripInternal": true,
     "target": "ESNext",
     "verbatimModuleSyntax": true
   },

@@ -14,6 +14,8 @@ import { toElem } from "./toElem.ts";
  * @param target Element, EventTarget, or CSS selector.
  *
  * @returns `true` if the specified `target` exists.
+ *
+ * @group Elements
  */
 export function elemExists(
   target: ElemOrCssSelector | null | undefined,

@@ -6,12 +6,17 @@ export {
   hasSomeAttrs,
   type AttrsSearch,
 } from "./attrs/hasAttrs.ts";
-export { InvalidAttrError } from "./attrs/InvalidAttrError.ts";
 export { removeAttr, removeAttrs } from "./attrs/removeAttrs.ts";
 export { selectAttr, selectAttrs } from "./attrs/selectAttrs.ts";
 export { setAttr, setAttrs } from "./attrs/setAttrs.ts";
 
 // CSS
+export {
+  clsx,
+  type ClassArray,
+  type ClassDict,
+  type ClassValue,
+} from "./css/clsx.ts";
 export { getCssVar, getCssVars } from "./css/getCssVars.ts";
 export {
   hasAllCssVars,
@@ -19,11 +24,11 @@ export {
   hasSomeCssVars,
   type CssVarsSearch,
 } from "./css/hasCssVars.ts";
-export { InvalidCssVarError } from "./css/InvalidCssVarError.ts";
 export { removeCssVar, removeCssVars } from "./css/removeCssVars.ts";
 export { setCssVar, setCssVars } from "./css/setCssVars.ts";
 
 // Dataset
+export { Dataset, datasetOf } from "./data/datasetOf.ts";
 export { getData, getDataValue } from "./data/getData.ts";
 export {
   hasAllData,
@@ -43,32 +48,28 @@ export { elemExists } from "./elems/elemExists.ts";
 export { findAllElems } from "./elems/findAllElems.ts";
 export { findAllFocusable } from "./elems/findAllFocusable.ts";
 export { findElem } from "./elems/findElem.ts";
-export { focusElem } from "./elems/focusElem.ts";
-export { getInputValue, getInputValueRaw } from "./elems/getInputValue.ts";
+export { focusElem, type FocusOptions } from "./elems/focusElem.ts";
+export {
+  getInputValue,
+  getInputValueRaw,
+  type InputValueAsType,
+  type InputValueTypeName,
+} from "./elems/getInputValue.ts";
+export {
+  html,
+  type ElemBuilder,
+  type ElemBuilderChild,
+} from "./elems/htmlBuilder.ts";
+export { getInputWidth } from "./elems/getInputWidth.ts";
 export { idMatches } from "./elems/idMatches.ts";
-export { InvalidElemError } from "./elems/InvalidElemError.ts";
 export { isElemChildOf } from "./elems/isElemChildOf.ts";
 export { isElemInViewport } from "./elems/isElemInViewport.ts";
 export { isElemOfType } from "./elems/isElemOfType.ts";
 export { isElemSameOrChildOf } from "./elems/isElemSameOrChildOf.ts";
 export { isElemScrollable } from "./elems/isElemScrollable.ts";
 export { keepElemVisibleIn } from "./elems/keepElemVisibleIn.ts";
+export { listToArray } from "./elems/listToArray.ts";
 export { toElem } from "./elems/toElem.ts";
-
-// Miscellaneous Extras and Handy Utilities
-export {
-  clsx,
-  type ClassArray,
-  type ClassDict,
-  type ClassValue,
-} from "./extras/clsx.ts";
-export { getInputWidth } from "./extras/getInputWidth.ts";
-export {
-  html,
-  type ElemBuilder,
-  type ElemBuilderChild,
-} from "./extras/htmlBuilder.ts";
-export { listToArray } from "./extras/listToArray.ts";
 
 // Styles
 export { getStyle, getStyles } from "./styles/getStyles.ts";
@@ -84,34 +85,38 @@ export { setStyle, setStyles } from "./styles/setStyles.ts";
 // Types
 export type {
   AriaAttributes,
+  HTMLAttributesTagNameMap,
   HTMLElementAttributes,
-  HTMLElements,
 } from "./dom.ts";
-export type { FindOptions } from "./internal/findOptions.ts";
-export {
+export type {
+  AttrName,
+  Attrs,
+  AttrsDefined,
   AttrValue,
   CssSelector,
   CssVarName,
+  CssVars,
+  CssVarValue,
+  Data,
+  DataAttrName,
+  DataKey,
+  DataPropertyName,
+  DataValue,
+  DOMPropertyFilter,
+  DOMPropertyFilterValue,
+  DOMPropertyKey,
+  DOMPropertySearch,
   DOMPropertyValue,
   Elem,
+  ElemOrCssSelector,
+  FindOptions,
   Primitive,
+  StyleKey,
+  Styles,
   StyleValue,
-  type AttrName,
-  type Attrs,
-  type AttrsDefined,
-  type CssVars,
-  type CssVarValue,
-  type Data,
-  type DataAttrName,
-  type DataKey,
-  type DataPropertyName,
-  type DataValue,
-  type DOMPropertyFilter,
-  type DOMPropertyFilterValue,
-  type DOMPropertyKey,
-  type DOMPropertySearch,
-  type ElemOrCssSelector,
-  type StyleKey,
-  type Styles,
-  type TagName,
+  TagName,
+  WithNullValues,
 } from "./types.ts";
+export { InvalidCssVarError } from "./errors.ts";
+export { InvalidElemError } from "./errors.ts";
+export { InvalidAttrError } from "./errors.ts";

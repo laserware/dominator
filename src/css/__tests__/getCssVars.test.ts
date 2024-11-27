@@ -1,6 +1,6 @@
+import { InvalidCssVarError } from "../../errors.ts";
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { getCssVar, getCssVars } from "../getCssVars.ts";
-import { InvalidCssVarError } from "../InvalidCssVarError.ts";
 
 describe("within getCssVars", () => {
   describe("the getCssVar function", () => {

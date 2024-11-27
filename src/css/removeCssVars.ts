@@ -1,9 +1,8 @@
+import { InvalidCssVarError } from "../errors.ts";
 import { cast } from "../internal/cast.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import type { CssVarName, ElemOrCssSelector } from "../types.ts";
-
-import { InvalidCssVarError } from "./InvalidCssVarError.ts";
 
 /**
  * Removes the specified CSS variable `name` from the optionally specified
@@ -19,8 +18,10 @@ import { InvalidCssVarError } from "./InvalidCssVarError.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {InvalidCssVarError} If the CSS variable could not be removed from `target`.
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidCssVarError} If the CSS variable could not be removed from `target`.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group CSS
  */
 export function removeCssVar<E extends HTMLElement = HTMLElement>(
   name: CssVarName,
@@ -46,8 +47,10 @@ export function removeCssVar<E extends HTMLElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {InvalidCssVarError} If a CSS variable could not be removed from `target`.
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidCssVarError} If a CSS variable could not be removed from `target`.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group CSS
  */
 export function removeCssVars<E extends HTMLElement = HTMLElement>(
   names: CssVarName[],

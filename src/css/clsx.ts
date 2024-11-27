@@ -47,6 +47,8 @@ export type ClassArray = ClassValue[];
  * @param inputs Variable array of inputs to map to class names.
  *
  * @returns A string representing a valid CSS selector.
+ *
+ * @group CSS
  */
 export function clsx(...inputs: ClassValue[]): string {
   const inputCount = inputs.length;

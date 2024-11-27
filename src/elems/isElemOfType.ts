@@ -1,5 +1,8 @@
-import type { ElementWithTagName } from "../dom.ts";
-import type { ElemOrCssSelector, TagName } from "../types.ts";
+import type {
+  ElementWithTagName,
+  ElemOrCssSelector,
+  TagName,
+} from "../types.ts";
 
 import { toElem } from "./toElem.ts";
 
@@ -17,6 +20,8 @@ import { toElem } from "./toElem.ts";
  * @param tag Tag name to check for (e.g. `div`, `span`, etc.).
  *
  * @returns `true` if the specified `target` is of type `tag`.
+ *
+ * @group Elements
  */
 export function isElemOfType<TN extends TagName>(
   target: ElemOrCssSelector,

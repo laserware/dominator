@@ -33,6 +33,7 @@
     "preversion": "npm run eslint && npm run typecheck",
     "version": "npm run prettier && git add -A src",
     "postversion": "git push && git push --tags",
+    "docs": "typedoc  --options typedoc.config.mjs",
     "eslint": "eslint --cache --cache-location \"./node_modules/.cache/.eslintcache\" --no-warn-ignored src **/*.ts",
     "prettier": "prettier --cache --write src",
     "prettier:ci": "prettier --check src",
@@ -54,6 +55,7 @@
     "prettier": "^3.3.3",
     "tslib": "^2.8.1",
     "tsup": "^8.3.5",
+    "typedoc": "^0.27.0",
     "typescript": "^5.6.3",
     "vitest": "^2.1.5"
   },

@@ -3,42 +3,9 @@ import { isNotNil } from "@laserware/arcade";
 import { selectAttrs } from "../attrs/selectAttrs.ts";
 import { selectData } from "../data/selectData.ts";
 import { toElem } from "../elems/toElem.ts";
-import type {
-  Attrs,
-  CssSelector,
-  Data,
-  Elem,
-  ElemOrCssSelector,
-  TagName,
-} from "../types.ts";
+import type { Elem, FindOptions } from "../types.ts";
 
 import { selectorWithTag } from "./selectorWithTag.ts";
-
-/**
- * Options for finding Element(s). You can find elements by selector, dataset
- * entries, or attributes.
- *
- * To search for the existence of an attribute or dataset property (not the
- * value), set the value to `null`.
- *
- * @internal
- */
-export interface FindOptions {
-  /** CSS selector search string. */
-  withSelector?: CssSelector;
-
-  /** Key/value pairs of attributes to search for. */
-  withAttrs?: Attrs;
-
-  /** Key/value pairs of dataset entries to search for. */
-  withData?: Data;
-
-  /** Optional parent Element, EventTarget, or CSS selector. */
-  parent?: ElemOrCssSelector | null | undefined;
-
-  /** Optional Element tag to limit search. */
-  tag?: TagName;
-}
 
 /**
  * Parses the specified `options` and returns the corresponding `selector`

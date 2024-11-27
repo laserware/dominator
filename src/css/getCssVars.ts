@@ -1,15 +1,15 @@
+import { InvalidCssVarError } from "../errors.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import {
+import { isCssVarName } from "../typeGuards.ts";
+import type {
   CssVarName,
-  type CssVars,
-  type CssVarValue,
-  type ElemOrCssSelector,
-  type KeysOf,
+  CssVars,
+  CssVarValue,
+  ElemOrCssSelector,
+  KeysOf,
 } from "../types.ts";
-
-import { InvalidCssVarError } from "./InvalidCssVarError.ts";
 
 /**
  * Attempts to get the value associated with the specified CSS variable `name`
@@ -34,8 +34,10 @@ import { InvalidCssVarError } from "./InvalidCssVarError.ts";
  *
  * @returns Value associated with the specified `name` or `undefined` if it doesn't exist.
  *
- * @throws {InvalidCssVarError} If the specified `name` is invalid.
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidCssVarError} If the specified `name` is invalid.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group CSS
  */
 export function getCssVar<T extends CssVarValue>(
   name: CssVarName,
@@ -66,7 +68,7 @@ export function getCssVar<T extends CssVarValue>(
  *          Note that you will need to perform checks for the presence of a value in the
  *          returned object because it's a `Partial` of the specified `T`.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
  * type CssVarsShape = {
@@ -78,6 +80,8 @@ export function getCssVar<T extends CssVarValue>(
  *
  * const result = getCssVars<CssVarsShape>(["--color-bg", "--gap"], undefined, element);
  * // { "--color-bg": "blue", "--gap": 24 }
+ *
+ * @group CSS
  */
 export function getCssVars<T extends CssVars = CssVars>(
   names: KeysOf<T>,
@@ -101,7 +105,7 @@ function getSingleCssVar<T extends CssVarValue = string>(
   element: HTMLElement,
   name: string,
 ): T | undefined {
-  if (!CssVarName.is(name)) {
+  if (!isCssVarName(name)) {
     // prettier-ignore
     throw new InvalidCssVarError(`CSS variable ${name} must be a string that starts with "--"`);
   }

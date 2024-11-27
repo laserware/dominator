@@ -23,7 +23,9 @@ import type {
  *
  * @returns Value of the dataset property associated with `key`, otherwise `undefined`.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group Dataset
  */
 export function getDataValue<T extends DataValue = DataValue>(
   target: ElemOrCssSelector,
@@ -48,7 +50,9 @@ export function getDataValue<T extends DataValue = DataValue>(
  *          Note that you will need to perform checks for whether a value is
  *          `undefined` in the returned object if some of the entries weren't present.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @group Dataset
  */
 export function getData<T extends Data = Data>(
   target: ElemOrCssSelector,

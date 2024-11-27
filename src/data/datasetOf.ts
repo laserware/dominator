@@ -32,8 +32,11 @@ type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
  * stringified while retaining type safety via the generic passed in.
  *
  * @template DS The shape of the dataset data.
+ * @template E Type of Element associated with the dataset.
  *
  * @class
+ *
+ * @group Dataset
  */
 export class Dataset<
   DS extends AnyDatasetShape,
@@ -51,7 +54,7 @@ export class Dataset<
    * @param target Element, EventTarget, or CSS selector.
    * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
    *
-   * @throws {InvalidElemError} If the specified `target` wasn't found.
+   * @throws {@link InvalidElemError} If the specified `target` wasn't found.
    */
   constructor(target: ElemOrCssSelector<E>, initialData?: Partial<DS>) {
     this.#element = elemOrThrow<E>(target, "Unable to initialize Dataset");
@@ -162,6 +165,8 @@ export class Dataset<
  * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
  *
  * @returns Dataset instance associated with `target`.
+ *
+ * @group Dataset
  */
 export function datasetOf<
   DS extends AnyDatasetShape,

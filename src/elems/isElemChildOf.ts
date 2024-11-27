@@ -4,7 +4,9 @@ import { toElem } from "./toElem.ts";
 
 /**
  * Determines if the specified `child` is a child of the specified `parent`
- * in the DOM. Note that it returns `false` if the `parent` and `child` match.
+ * in the DOM.
+ *
+ * Note that it returns `false` if the `parent` and `child` match.
  * If you want to check if an element is a descendent or the same as a parent,
  * use {@linkcode isElemSameOrChildOf}.
  *
@@ -16,6 +18,8 @@ import { toElem } from "./toElem.ts";
  * @param parent Element, EventTarget, or CSS selector for parent.
  *
  * @returns `true` if the specified `child` is a child of the specified `parent`.
+ *
+ * @group Elements
  */
 export function isElemChildOf(
   child: ElemOrCssSelector,
