@@ -8,7 +8,7 @@ import type { ElemOrCssSelector } from "../types.ts";
  *
  * @returns `true` if the specified `target` is in the viewport.
  *
- * @throws {@link InvalidElemError} If the `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the `target` wasn't found.
  *
  * @group Elements
  */

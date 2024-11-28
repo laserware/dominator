@@ -3,6 +3,7 @@ import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import type {
+  AnyElement,
   AttrName,
   Attrs,
   AttrValue,
@@ -21,11 +22,18 @@ import type {
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML (Before)**
+ *
+ * ```html
+ * <div id="example" role="slider">...</div>
+ * ```
  *
  * @group Attributes
  */
-export function setAttr<E extends HTMLElement = HTMLElement>(
+export function setAttr<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
   name: AttrName<E>,
   value: AttrValue | null | undefined,
@@ -49,11 +57,11 @@ export function setAttr<E extends HTMLElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group Attributes
  */
-export function setAttrs<E extends HTMLElement = HTMLElement>(
+export function setAttrs<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
   attrs: Attrs<E>,
 ): E {
@@ -67,7 +75,7 @@ export function setAttrs<E extends HTMLElement = HTMLElement>(
   return cast<E>(elem);
 }
 
-function setSingleAttr<E extends HTMLElement = HTMLElement>(
+function setSingleAttr<E extends AnyElement = HTMLElement>(
   element: E,
   name: string,
   value: AttrValue | null | undefined,

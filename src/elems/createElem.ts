@@ -5,7 +5,7 @@ import { setCssVars } from "../css/setCssVars.ts";
 import { setData } from "../data/setData.ts";
 import { cast } from "../internal/cast.ts";
 import { setStyles } from "../styles/setStyles.ts";
-import type { Attrs, CssVars, Data, Styles } from "../types.ts";
+import type { AnyElement, Attrs, CssVars, Data, Styles } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
 
@@ -14,7 +14,7 @@ import { toElem } from "./toElem.ts";
  *
  * @template E Element type for attributes.
  */
-interface CreateElemOptions<E extends HTMLElement = HTMLElement> {
+interface CreateElemOptions<E extends AnyElement = HTMLElement> {
   /** Attributes to set on element. */
   attrs?: Attrs<E>;
 
@@ -33,7 +33,7 @@ interface CreateElemOptions<E extends HTMLElement = HTMLElement> {
  * The attributes, CSS variables, dataset entries, and styles specified in
  * `options` are applied to the root element in the markup.
  *
- * This is an alternative for the {@link html} builder function for when you
+ * This is an alternative for the {@linkcode html} builder function for when you
  * just need a one-off element or you want to define the element structure
  * mostly in markup.
  *
@@ -47,7 +47,7 @@ interface CreateElemOptions<E extends HTMLElement = HTMLElement> {
  *
  * @group Elements
  */
-export function createElem<E extends HTMLElement = HTMLElement>(
+export function createElem<E extends AnyElement = HTMLElement>(
   markup: string,
   options: CreateElemOptions<E> = {},
 ): E {

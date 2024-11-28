@@ -3,7 +3,12 @@ import { cast } from "../internal/cast.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type { DataKey, DataPropertyName, ElemOrCssSelector } from "../types.ts";
+import type {
+  AnyElement,
+  DataKey,
+  DataPropertyName,
+  ElemOrCssSelector,
+} from "../types.ts";
 
 /**
  * Removes the dataset entry with the specified `key` from the specified
@@ -16,11 +21,11 @@ import type { DataKey, DataPropertyName, ElemOrCssSelector } from "../types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group Dataset
  */
-export function removeDataEntry<E extends HTMLElement = HTMLElement>(
+export function removeDataEntry<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
   key: DataPropertyName,
 ): E {
@@ -43,11 +48,11 @@ export function removeDataEntry<E extends HTMLElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group Dataset
  */
-export function removeData<E extends HTMLElement = HTMLElement>(
+export function removeData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
   keys: DataKey[],
 ): E {
@@ -61,7 +66,7 @@ export function removeData<E extends HTMLElement = HTMLElement>(
   return cast<E>(elem);
 }
 
-function removeSingleDataEntry(element: HTMLElement, key: string): void {
+function removeSingleDataEntry(element: AnyElement, key: string): void {
   const validAttrName = asDataAttrName(key);
 
   // We remove the _attribute_ rather than deleting the entry from the elements

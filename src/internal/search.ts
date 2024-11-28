@@ -1,4 +1,4 @@
-import type { DOMPropertySearch, KeysOf } from "../types.ts";
+import type { AnyElement, DOMPropertySearch, KeysOf } from "../types.ts";
 
 /**
  * Returns true if *all* properties in the specified `element` match the
@@ -6,14 +6,14 @@ import type { DOMPropertySearch, KeysOf } from "../types.ts";
  *
  * @internal
  *
- * @param element HTMLElement to search for all properties.
+ * @param element Element to search for all properties.
  * @param search Search criteria for finding all properties.
  * @param predicate Callback that returns true if the property *does not* match.
  */
 export function hasAllProperties(
-  element: HTMLElement,
+  element: AnyElement,
   search: DOMPropertySearch,
-  predicate: (element: HTMLElement, key: any, value?: any) => boolean,
+  predicate: (element: AnyElement, key: any, value?: any) => boolean,
 ): boolean {
   if (Array.isArray(search)) {
     for (const name of search) {
@@ -41,14 +41,14 @@ export function hasAllProperties(
  *
  * @internal
  *
- * @param element HTMLElement to search for some properties.
+ * @param element Element to search for some properties.
  * @param search Search criteria for finding some properties.
  * @param predicate Callback that returns true if the property *does* match.
  */
 export function hasSomeProperties(
-  element: HTMLElement,
+  element: AnyElement,
   search: DOMPropertySearch,
-  predicate: (element: HTMLElement, key: any, value?: any) => boolean,
+  predicate: (element: AnyElement, key: any, value?: any) => boolean,
 ): boolean {
   if (Array.isArray(search)) {
     for (const name of search) {

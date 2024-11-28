@@ -5,7 +5,13 @@ import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type { Data, DataKey, DataValue, ElemOrCssSelector } from "../types.ts";
+import type {
+  AnyElement,
+  Data,
+  DataKey,
+  DataValue,
+  ElemOrCssSelector,
+} from "../types.ts";
 
 /**
  * Assigns the specified `value` to the specified dataset `key` in the specified
@@ -19,11 +25,11 @@ import type { Data, DataKey, DataValue, ElemOrCssSelector } from "../types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group Dataset
  */
-export function setDataEntry<E extends HTMLElement = HTMLElement>(
+export function setDataEntry<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
   key: DataKey,
   value: DataValue | null,
@@ -44,11 +50,11 @@ export function setDataEntry<E extends HTMLElement = HTMLElement>(
  * @param target Element, EventTarget, or CSS selector.
  * @param data Object with key of dataset key and value of entry value.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group Dataset
  */
-export function setData<E extends HTMLElement = HTMLElement>(
+export function setData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
   data: Data,
 ): E {
@@ -63,7 +69,7 @@ export function setData<E extends HTMLElement = HTMLElement>(
 }
 
 function setSingleDataEntry(
-  elem: HTMLElement,
+  elem: AnyElement,
   key: DataKey,
   value?: DataValue | null | undefined,
 ): void {

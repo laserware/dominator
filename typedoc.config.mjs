@@ -9,7 +9,7 @@ const config = {
     "src/internal/**",
     "src/testing.ts",
     "src/declarations.d.ts",
-    "src/dom.ts",
+    // "src/dom.ts",
   ],
   excludeInternal: true,
   excludeNotDocumented: true,

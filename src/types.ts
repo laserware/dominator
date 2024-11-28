@@ -1,7 +1,16 @@
 /* istanbul ignore file -- @preserve: These are just type definitions, no need to enforce coverage. */
 // noinspection SpellCheckingInspection
 
-import type { HTMLElementAttributes } from "./dom.ts";
+import type { AnyElement, HTMLElementAttributes, TagName } from "./dom.ts";
+
+export type {
+  AnyElement,
+  ElementWithTagName,
+  HTMLElementAttributes,
+  HTMLElementTagName,
+  SVGElementTagName,
+  TagName,
+} from "./dom.ts";
 
 /**
  * Type is either a single item or array of items of type `T`.
@@ -18,8 +27,7 @@ export type OneOrManyOf<T> = T | T[];
 export type KeysOf<T extends Record<any, any>> = Extract<keyof T, string>[];
 
 /**
- * Indicates that values of the specified object could be their value or
- * `undefined`.
+ * Adds `undefined` as the possible type for the fields in the specified type.
  *
  * @template T Type of object to add `undefined` to fields.
  */
@@ -28,8 +36,7 @@ export type WithUndefinedValues<T extends Record<any, any>> = {
 };
 
 /**
- * Indicates that values of the specified object could be their value or
- * `null`.
+ * Adds `null` as the possible type for the fields in the specified type.
  *
  * @template T Type of object to add `null` to fields.
  */
@@ -39,7 +46,7 @@ export type WithNullValues<T extends Record<any, any>> = {
 
 /**
  * Represents primitive values that can be used to set certain attributes and
- * properties on elements.
+ * properties on Elements.
  */
 export type Primitive = boolean | number | string;
 
@@ -50,12 +57,13 @@ export type Primitive = boolean | number | string;
  *
  * @group Elements
  */
-export type Elem<E extends HTMLElement = HTMLElement> =
+export type Elem<E extends AnyElement = HTMLElement> =
   | E
   | Document
   | Element
   | EventTarget
   | HTMLElement
+  | SVGElement
   | ChildNode
   | Node
   | ParentNode;
@@ -76,22 +84,22 @@ export type CssSelector = string;
  * This type allows for flexibility in functions or methods that can accept
  * either an {@linkcode Elem} type object or a string representing a CSS selector.
  *
- * @template E Type of element if `Elem`.
+ * @template E Type of Element if `Elem`.
  *
  * @group Elements
  */
-export type ElemOrCssSelector<E extends HTMLElement = HTMLElement> =
+export type ElemOrCssSelector<E extends AnyElement = HTMLElement> =
   | Elem<E>
   | CssSelector;
 
 /**
  * Valid type for HTML/SVG attribute name.
  *
- * @template E Type of element with corresponding attribute names.
+ * @template E Type of Element with corresponding attribute names.
  *
  * @group Attributes
  */
-export type AttrName<E extends HTMLElement = HTMLElement> =
+export type AttrName<E extends AnyElement = HTMLElement> =
   | Extract<keyof HTMLElementAttributes<E>, string>
   | string;
 
@@ -111,7 +119,7 @@ export type AttrValue = DOMPropertyValue;
  *
  * @group Attributes
  */
-export type Attrs<E extends HTMLElement = HTMLElement> = Record<
+export type Attrs<E extends AnyElement = HTMLElement> = Record<
   AttrName<E>,
   AttrValue | null | undefined
 >;
@@ -125,7 +133,7 @@ export type Attrs<E extends HTMLElement = HTMLElement> = Record<
 export type AttrsDefined = Record<string, AttrValue>;
 
 /**
- * Valid name for a {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties|CSS variable}.
+ * Valid name for a [CSS variable](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties).
  *
  * CSS variables *must* start with `--`.
  *
@@ -134,7 +142,7 @@ export type AttrsDefined = Record<string, AttrValue>;
 export type CssVarName = `--${string}`;
 
 /**
- * Valid value for a CSS variable.
+ * Valid value for a [CSS variable](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties).
  *
  * @group CSS
  */
@@ -149,16 +157,16 @@ export type CssVarValue = Primitive;
 export type CssVars = Record<CssVarName, CssVarValue>;
 
 /**
- * Valid type for the key of {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset|HTMLElement.dataset}
- * property entries in HTML/SVG elements.
+ * Valid type for the key of [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
+ * property entries in HTML/SVG Elements.
  *
  * @group Dataset
  */
 export type DataPropertyName = string;
 
 /**
- * Valid name for dataset {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*|data-* attribute}
- * on HTML/SVG elements (e.g. `data-some-value`).
+ * Valid name for dataset [data-* attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*)
+ * on HTML/SVG Element (e.g. `data-some-value`).
  *
  * @group Dataset
  */
@@ -166,8 +174,8 @@ export type DataAttrName = `data-${string}`;
 
 /**
  * Valid name for {@linkcode Data} entries. Represents either a key for the
- * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset|HTMLElement.dataset} property
- * or a name for the {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*|data-* attribute}.
+ * [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset) property
+ * or a name for the [data-* attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*).
  *
  * @group Dataset
  */
@@ -187,14 +195,14 @@ export type DataValue = DOMPropertyValue;
  * {@linkcode DataValue}. Some of the values may be `null` or `undefined`.
  *
  * Note that the `HTMLElement.dataset` property is a
- * {@link https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap|DOMStringMap}.
+ * [DOMStringMap](https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap).
  *
  * @group Dataset
  */
 export type Data = Record<string, DataValue | null | undefined>;
 
 /**
- * Valid style keys (i.e. non-methods) that can be set on an element.
+ * Valid style keys (i.e. non-methods) that can be set on an Element.
  *
  * @group Styles
  */
@@ -219,8 +227,8 @@ export type StyleKey =
   | CssVarName;
 
 /**
- * Value that can be set for an element style. The value is stringified prior
- * to being set on the element.
+ * Value that can be set for an Element style. The value is stringified prior
+ * to being set on the Element.
  *
  * @group Styles
  */
@@ -237,8 +245,12 @@ export type Styles = Partial<Record<StyleKey, StyleValue>>;
 /**
  * Key representing any type of DOM property (i.e. attributes, CSS variables,
  * dataset attribute/property names and style keys).
+ *
+ * @template E Type of Element associated with the underlying DOM properties.
+ *
+ * @group DOM Properties
  */
-export type DOMPropertyKey<E extends HTMLElement = HTMLElement> =
+export type DOMPropertyKey<E extends AnyElement = HTMLElement> =
   | AttrName<E>
   | CssVarName
   | DataKey
@@ -247,13 +259,17 @@ export type DOMPropertyKey<E extends HTMLElement = HTMLElement> =
 /**
  * Represents a value that can be assigned to a DOM property after stringification.
  *
- * Objects and arrays are stringified via [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
+ * Objects and arrays are stringified via [JSON.stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
+ *
+ * @group DOM Properties
  */
 export type DOMPropertyValue = Primitive | any[] | Record<number | string, any>;
 
 /**
  * Filter value for performing DOM property searches. Use `null` to check if
  * an entry exists only (skip checking if values match).
+ *
+ * @group DOM Properties
  */
 export type DOMPropertyFilterValue =
   | AttrValue
@@ -264,6 +280,11 @@ export type DOMPropertyFilterValue =
 
 /**
  * Filter criteria for determining if a DOM property has the specified value.
+ *
+ * @template K Key of the property to filter.
+ * @template V Value of the property to filter. If not checking for a value, use `null`.
+ *
+ * @group DOM Properties
  */
 export type DOMPropertyFilter<
   K extends DOMPropertyKey,
@@ -272,11 +293,36 @@ export type DOMPropertyFilter<
 
 /**
  * Search criteria that can be used to determine if a DOM property is present
- * on an element. If an array, only the presence of the property *names* are
- * checked. If an object, the property name *and* value are checked.
+ * on an Element. If an array, only the presence of the property **names** are
+ * checked. If an object, the property name **and** value are checked.
  *
- * @template K The type of {@linkcode DOMPropertyKey}.
- * @template V The type of {@linkcode DOMPropertyFilterValue} (only needed if using {@linkcode DOMPropertyFilter}).
+ * To check for the existence of a property only (i.e. you don't care what the
+ * value is), use `null` for the field.
+ *
+ * @template K Key of the property to search.
+ * @template V Type of the value to search for (only needed if using {@linkcode DOMPropertyFilter}).
+ *
+ * @example
+ * **HTML**
+ *
+ * ```html
+ * <button id="example" aria-hidden="true" aria-label="Example">Example</button>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * const result = hasAllAttrs(elem, {
+ *   "aria-hidden": true,
+ *   // Setting to null means "only check if property exists"
+ *   "aria-label": null,
+ * });
+ * // true
+ * ```
+ *
+ * @group DOM Properties
  */
 export type DOMPropertySearch<
   K extends DOMPropertyKey = DOMPropertyKey,
@@ -284,14 +330,7 @@ export type DOMPropertySearch<
 > = K[] | DOMPropertyFilter<K, V>;
 
 /**
- * Tag name for any HTML or SVG element.
- *
- * @group Elements
- */
-export type TagName = HTMLElementTagName | SVGElementTagName;
-
-/**
- * Use to specify search criteria for finding Element(s). You can find elements
+ * Use to specify search criteria for finding Element(s). You can find Elements
  * by selector, dataset entries, or attributes.
  *
  * To search for the existence of an attribute or dataset property (not the
@@ -317,23 +356,3 @@ export interface FindOptions {
   /** Optional Element tag to limit search. */
   tag?: TagName;
 }
-
-/**
- * Tag name for HTML element.
- */
-export type HTMLElementTagName = keyof HTMLElementTagNameMap;
-
-/**
- * Tag name for SVG element.
- */
-export type SVGElementTagName = keyof SVGElementTagNameMap;
-
-/**
- * Element type associated with the specified tag name.
- */
-export type ElementWithTagName<TN extends TagName> =
-  TN extends HTMLElementTagName
-    ? HTMLElementTagNameMap[TN]
-    : TN extends SVGElementTagName
-      ? SVGElementTagNameMap[TN]
-      : never;

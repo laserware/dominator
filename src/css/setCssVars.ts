@@ -7,6 +7,7 @@ import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { isCssVarName } from "../typeGuards.ts";
 import type {
+  AnyElement,
   CssVarName,
   CssVars,
   CssVarValue,
@@ -17,23 +18,23 @@ import type {
  * Sets the specified CSS variable `name` to the specified `value` in the
  * optionally specified `target`.
  *
- * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
+ * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
  * @template E Element type of specified `target`.
  *
  * @param name Name of the CSS variable to set or update.
  * @param value Value of the CSS variable.
- * @param [target] Optional Element, EventTarget, or CSS selector.
+ * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@link InvalidCssVarError} If the specified `name` is not a valid {@linkcode CssVarName}.
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidCssVarError} If the specified `name` is not a valid {@linkcode CssVarName}.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group CSS
  */
-export function setCssVar<E extends HTMLElement = HTMLElement>(
+export function setCssVar<E extends AnyElement = HTMLElement>(
   name: CssVarName,
   value: CssVarValue,
   target: ElemOrCssSelector<E> = document.documentElement,
@@ -48,7 +49,7 @@ export function setCssVar<E extends HTMLElement = HTMLElement>(
 /**
  * Sets the specified CSS `vars` on the optionally specified `target`.
  *
- * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
+ * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
  * @remarks
@@ -59,16 +60,16 @@ export function setCssVar<E extends HTMLElement = HTMLElement>(
  * @template E Element type of specified `target`.
  *
  * @param vars Object with key of CSS variable name and value of value to set for name.
- * @param [target] Optional Element, EventTarget, or CSS selector.
+ * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@link InvalidCssVarError} If a specified name in `vars` is not a valid {@linkcode CssVarName}.
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidCssVarError} If a specified name in `vars` is not a valid {@linkcode CssVarName}.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group CSS
  */
-export function setCssVars<E extends HTMLElement = HTMLElement>(
+export function setCssVars<E extends AnyElement = HTMLElement>(
   vars: CssVars,
   target: ElemOrCssSelector<E> = document.documentElement,
 ): E {
@@ -85,7 +86,7 @@ export function setCssVars<E extends HTMLElement = HTMLElement>(
 }
 
 function setSingleCssVar(
-  element: HTMLElement,
+  element: AnyElement,
   name: string,
   value: CssVarValue,
 ): void {

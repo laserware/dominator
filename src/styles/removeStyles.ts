@@ -2,7 +2,7 @@ import { cast } from "../internal/cast.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { isCssVarName } from "../typeGuards.ts";
-import type { ElemOrCssSelector, StyleKey } from "../types.ts";
+import type { AnyElement, ElemOrCssSelector, StyleKey } from "../types.ts";
 
 /**
  * Removes the specified style `key` from the specified `target`.
@@ -14,11 +14,11 @@ import type { ElemOrCssSelector, StyleKey } from "../types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group Styles
  */
-export function removeStyle<E extends HTMLElement = HTMLElement>(
+export function removeStyle<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector,
   key: StyleKey,
 ): E {
@@ -40,11 +40,11 @@ export function removeStyle<E extends HTMLElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group Styles
  */
-export function removeStyles<E extends HTMLElement = HTMLElement>(
+export function removeStyles<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector,
   keys: StyleKey[],
 ): E {
@@ -58,7 +58,7 @@ export function removeStyles<E extends HTMLElement = HTMLElement>(
   return cast<E>(elem);
 }
 
-function removeSingleStyle(element: HTMLElement, key: StyleKey): void {
+function removeSingleStyle(element: AnyElement, key: StyleKey): void {
   if (isCssVarName(key)) {
     element.style.removeProperty(key);
   } else {

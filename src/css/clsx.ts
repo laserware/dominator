@@ -20,6 +20,12 @@
  * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
+/**
+ * Possible values for input to the {@linkcode clsx} function.
+ *
+ * @group CSS
+ */
 export type ClassValue =
   | ClassArray
   | ClassDict
@@ -30,17 +36,28 @@ export type ClassValue =
   | boolean
   | undefined;
 
+/**
+ * Object with key of class name and value of truthy/falsy condition.
+ * The object is passed into the {@linkcode clsx} function.
+ *
+ * @group CSS
+ */
 export type ClassDict = Record<string, any>;
 
+/**
+ * Array of class names that can be used as {@linkcode clsx} inputs.
+ *
+ * @group CSS
+ */
 export type ClassArray = ClassValue[];
 
 /**
  * A tiny (239B) utility for constructing `className` strings conditionally.
  * Also serves as a faster & smaller drop-in replacement for the
- * {@link https://www.npmjs.com/package/classnames|classnames} package.
+ * [classnames](https://www.npmjs.com/package/classnames) package.
  *
- * @privateRemarks
- * This code was taken directly from the {@link https://github.com/lukeed/clsx|clsx}
+ * @remarks
+ * This code was taken directly from the [clsx](https://github.com/lukeed/clsx)
  * library. 99% of the time, I'm using the clsx library alongside dominator,
  * so I decided to just vendor it.
  *

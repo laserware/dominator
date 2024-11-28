@@ -1,6 +1,6 @@
 import { InvalidElemError } from "../errors.ts";
 import { isElem } from "../typeGuards.ts";
-import type { Elem } from "../types.ts";
+import type { AnyElement, Elem } from "../types.ts";
 
 /**
  * Returns an element of type `E` for the specified target.
@@ -28,12 +28,12 @@ import type { Elem } from "../types.ts";
  *
  * @param target Element or EventTarget.
  *
- * @throws {@link InvalidElemError} If specified `target` is `null` or `undefined`.
+ * @throws {@linkcode InvalidElemError} If specified `target` is `null` or `undefined`.
  *
  * @template E Element type of specified `target`.
  *
  * @example
- * #### Valid EventTarget
+ * **Valid EventTarget**
  *
  * ```ts
  * function handleButtonClick(event: MouseEvent): void {
@@ -43,7 +43,7 @@ import type { Elem } from "../types.ts";
  * }
  * ```
  *
- * #### Invalid EventTarget
+ * **Invalid EventTarget**
  *
  * ```ts
  * function handleButtonClick(event: MouseEvent): void {
@@ -58,7 +58,7 @@ import type { Elem } from "../types.ts";
  *
  * @group Elements
  */
-export function asElem<E extends HTMLElement = HTMLElement>(
+export function asElem<E extends AnyElement = HTMLElement>(
   target: Elem<E> | null | undefined,
 ): E {
   if (isElem(target)) {

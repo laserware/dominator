@@ -1,7 +1,7 @@
 import { isNil } from "@laserware/arcade";
 
 import { isElem } from "../typeGuards.ts";
-import type { ElemOrCssSelector } from "../types.ts";
+import type { AnyElement, ElemOrCssSelector } from "../types.ts";
 
 import { findElem } from "./findElem.ts";
 
@@ -28,7 +28,7 @@ import { findElem } from "./findElem.ts";
  * @returns Element of type `E` if it exists, otherwise returns `null`.
  *
  * @example
- * #### Usage with CSS Selector
+ * **Usage with CSS Selector**
  *
  * ```ts
  * const elemThatExists = toElem<HTMLInputElement>("#test");
@@ -38,7 +38,7 @@ import { findElem } from "./findElem.ts";
  * // Returns null
  * ```
  *
- * #### Usage with Element
+ * **Usage with Element**
  * ```ts
  * function handleButtonClick(event: MouseEvent): void {
  *   const buttonElem = toElem<HTMLButtonElement>(event.currentTarget);
@@ -51,7 +51,7 @@ import { findElem } from "./findElem.ts";
  *
  * @group Elements
  */
-export function toElem<E extends HTMLElement = HTMLElement>(
+export function toElem<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector | null | undefined,
   parent?: ElemOrCssSelector | null | undefined,
 ): E | null {

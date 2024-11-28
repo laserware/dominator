@@ -2,6 +2,7 @@
 
 import { dedent } from "@laserware/arcade";
 
+import type { AnyElement } from "./dom.ts";
 import { cast } from "./internal/cast.ts";
 
 export { screen, waitFor } from "@testing-library/dom";
@@ -21,7 +22,7 @@ export const selectorForNonExistent = "#never-going-to-exist";
  * @param [options] Optional overrides for element attributes and properties (useful for mocking).
  * @param [children] Optional children to add to element.
  */
-export function render<E extends HTMLElement = HTMLElement>(
+export function render<E extends AnyElement = HTMLElement>(
   markup: string,
   options: Record<string, any> = {},
   ...children: HTMLElement[]

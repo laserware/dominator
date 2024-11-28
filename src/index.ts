@@ -28,7 +28,11 @@ export { removeCssVar, removeCssVars } from "./css/removeCssVars.ts";
 export { setCssVar, setCssVars } from "./css/setCssVars.ts";
 
 // Dataset
-export { Dataset, datasetOf } from "./data/datasetOf.ts";
+export {
+  datasetOf,
+  type AnyDatasetShape,
+  type Dataset,
+} from "./data/datasetOf.ts";
 export { getData, getDataValue } from "./data/getData.ts";
 export {
   hasAllData,
@@ -59,6 +63,7 @@ export {
   html,
   type ElemBuilder,
   type ElemBuilderChild,
+  type ElemBuilderOptions,
 } from "./elems/htmlBuilder.ts";
 export { getInputWidth } from "./elems/getInputWidth.ts";
 export { idMatches } from "./elems/idMatches.ts";
@@ -83,12 +88,9 @@ export { removeStyle, removeStyles } from "./styles/removeStyles.ts";
 export { setStyle, setStyles } from "./styles/setStyles.ts";
 
 // Types
+export type * from "./dom.ts";
 export type {
-  AriaAttributes,
-  HTMLAttributesTagNameMap,
-  HTMLElementAttributes,
-} from "./dom.ts";
-export type {
+  AnyElement,
   AttrName,
   Attrs,
   AttrsDefined,
@@ -108,14 +110,20 @@ export type {
   DOMPropertySearch,
   DOMPropertyValue,
   Elem,
+  ElementWithTagName,
   ElemOrCssSelector,
   FindOptions,
+  HTMLElementTagName,
+  KeysOf,
+  OneOrManyOf,
   Primitive,
   StyleKey,
   Styles,
   StyleValue,
+  SVGElementTagName,
   TagName,
   WithNullValues,
+  WithUndefinedValues,
 } from "./types.ts";
 export { InvalidCssVarError } from "./errors.ts";
 export { InvalidElemError } from "./errors.ts";

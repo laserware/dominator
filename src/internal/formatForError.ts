@@ -12,7 +12,7 @@ type FormattableValue = string | number;
 /**
  * Returns a formatted display value for an error message contingent on the
  * specified `valueOrValues`. For object and array types, uses the
- * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat|Intl.ListFormat}
+ * [Intl.ListFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat)
  * API to get the result.
  *
  * @internal

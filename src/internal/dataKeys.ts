@@ -7,8 +7,10 @@ import type { DataAttrName, DataKey, DataPropertyName } from "../types.ts";
  * returns the result. Useful for accessing the element attribute associated
  * with a dataset entry.
  *
- * See {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset#name_conversion|name conversion}
+ * See [name conversion](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset#name_conversion)
  * for why this is needed.
+ *
+ * @internal
  *
  * @param key Key for the dataset entry that is either camelCase or already in
  *            the `data-` name form.
@@ -26,8 +28,10 @@ export function asDataAttrName(key: DataKey): DataAttrName {
  * the result. Useful for ensuring the specified `key` can be used to access
  * an entry in the `HTMLElement.dataset` property.
  *
- * See {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset#name_conversion|name conversion}
+ * See [name conversion](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset#name_conversion)
  * for why this is needed.
+ *
+ * @internal
  *
  * @param key Key for the dataset entry that is either camelCase or already in
  *            the `data-` name form.

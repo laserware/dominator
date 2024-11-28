@@ -13,7 +13,7 @@ import type { ElemOrCssSelector } from "../types.ts";
  *
  * @returns `true` if the `target` has the specified `id`.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
  * **HTML**

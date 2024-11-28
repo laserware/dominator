@@ -34,10 +34,56 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.8
 
-type Booleanish = boolean | "true" | "false";
+/**
+ * Value type for boolean attributes. Some boolean attributes can either be
+ * `true` or `false` *or* the string `"true"` or `"false"`.
+ */
+export type Booleanish = boolean | "true" | "false";
 
 /**
- * All the WAI-ARIA 1.1 attributes from the {@link https://www.w3.org/TR/wai-aria-1.1/|specification}.
+ * Tag name for HTML element.
+ *
+ * @group Elements
+ */
+export type HTMLElementTagName = keyof HTMLElementTagNameMap;
+
+/**
+ * Tag name for SVG element.
+ *
+ * @group Elements
+ */
+export type SVGElementTagName = keyof SVGElementTagNameMap;
+
+/**
+ * Tag name for any HTML or SVG element.
+ *
+ * @group Elements
+ */
+export type TagName = HTMLElementTagName | SVGElementTagName;
+
+/**
+ * Element type associated with the specified tag name.
+ *
+ * @group Elements
+ */
+export type ElementWithTagName<TN extends TagName> =
+  TN extends HTMLElementTagName
+    ? HTMLElementTagNameMap[TN]
+    : TN extends SVGElementTagName
+      ? SVGElementTagNameMap[TN]
+      : never;
+
+/**
+ * Any HTML or SVG element.
+ *
+ * @group Elements
+ */
+export type AnyElement = HTMLElement | SVGElement;
+
+/**
+ * All the attributes from the [WAI-ARIA 1.1 Specification](https://www.w3.org/TR/wai-aria-1.1/).
+ *
+ * These were taken directly from the Svelte codebase.
  */
 export interface AriaAttributes {
   /**
@@ -150,7 +196,10 @@ export interface AriaAttributes {
    * @deprecated in ARIA 1.1
    */
   "aria-grabbed"?: Booleanish | undefined | null;
-  /** Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element. */
+  /**
+   * Indicates the availability and type of interactive popup element, such as
+   * menu or dialog, that can be triggered by an element.
+   */
   "aria-haspopup"?:
     | Booleanish
     | "menu"
@@ -166,8 +215,8 @@ export interface AriaAttributes {
    */
   "aria-hidden"?: Booleanish | undefined | null;
   /**
-   * Indicates the entered value does not conform to the format expected by the application.
-   * See {@linkcode aria-errormessage}.
+   * Indicates the entered value does not conform to the format expected by
+   * the application. See {@linkcode aria-errormessage}.
    */
   "aria-invalid"?: Booleanish | "grammar" | "spelling" | undefined | null;
   /**
@@ -329,7 +378,9 @@ export interface AriaAttributes {
   "aria-valuetext"?: string | undefined | null;
 }
 
-// All the WAI-ARIA 1.1 role attribute values from https://www.w3.org/TR/wai-aria-1.1/#role_definitions
+/**
+ * All the `role` attribute values from the [WAI-ARIA 1.1 Specification](https://www.w3.org/TR/wai-aria-1.1/#role_definitions).
+ */
 export type AriaRole =
   | "alert"
   | "alertdialog"
@@ -402,6 +453,9 @@ export type AriaRole =
   | "treeitem"
   | (string & {});
 
+/**
+ * All options for the [`autocomplete`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/autocomplete) attribute.
+ */
 export type FullAutoFill =
   | AutoFill
   | "bday"
@@ -413,6 +467,9 @@ export type FullAutoFill =
   | "sex"
   | "url";
 
+/**
+ * Common attributes for all HTMLElements.
+ */
 export interface HTMLAttributes
   extends AriaAttributes,
     Partial<GlobalEventHandlers> {
@@ -495,8 +552,7 @@ export interface HTMLAttributes
   // Living Standard
   /**
    * Hints at the type of data that might be entered by the user while editing
-   * the element or its contents.
-   * @see https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-inputmode-attribute
+   * the element or its contents. See the [specification for `inputmode`](https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-inputmode-attribute).
    */
   inputmode?:
     | "none"
@@ -511,8 +567,7 @@ export interface HTMLAttributes
     | null;
   /**
    * Specify that a standard HTML element should behave like a defined custom
-   * built-in element.
-   * @see https://html.spec.whatwg.org/multipage/custom-elements.html#attr-is
+   * built-in element. See the [specification for `is`](https://html.spec.whatwg.org/multipage/custom-elements.html#attr-is).
    */
   is?: string | undefined | null;
 
@@ -520,6 +575,10 @@ export interface HTMLAttributes
   [key: `data-${string}`]: any;
 }
 
+/**
+ * Options for the [`target` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)
+ * in an [HTMLAnchorElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAnchorElement).
+ */
 export type HTMLAttributeAnchorTarget =
   | "_self"
   | "_blank"
@@ -527,6 +586,9 @@ export type HTMLAttributeAnchorTarget =
   | "_top"
   | (string & {});
 
+/**
+ * Attributes for a [HTMLAnchorElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAnchorElement).
+ */
 export interface HTMLAnchorAttributes extends HTMLAttributes {
   download?: any;
   href?: string | undefined | null;
@@ -539,8 +601,14 @@ export interface HTMLAnchorAttributes extends HTMLAttributes {
   referrerpolicy?: ReferrerPolicy | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLAudioElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement).
+ */
 export interface HTMLAudioAttributes extends HTMLMediaAttributes {}
 
+/**
+ * Attributes for a [HTMLAreaElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAreaElement).
+ */
 export interface HTMLAreaAttributes extends HTMLAttributes {
   alt?: string | undefined | null;
   coords?: string | undefined | null;
@@ -555,15 +623,17 @@ export interface HTMLAreaAttributes extends HTMLAttributes {
   ping?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLBaseElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLBaseElement).
+ */
 export interface HTMLBaseAttributes extends HTMLAttributes {
   href?: string | undefined | null;
   target?: string | undefined | null;
 }
 
-export interface HTMLBlockquoteAttributes extends HTMLAttributes {
-  cite?: string | undefined | null;
-}
-
+/**
+ * Attributes for a [HTMLButtonElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement).
+ */
 export interface HTMLButtonAttributes extends HTMLAttributes {
   disabled?: boolean | undefined | null;
   form?: string | undefined | null;
@@ -592,38 +662,62 @@ export interface HTMLButtonAttributes extends HTMLAttributes {
   popovertargetaction?: "toggle" | "show" | "hide" | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLCanvasElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement).
+ */
 export interface HTMLCanvasAttributes extends HTMLAttributes {
   height?: number | string | undefined | null;
   width?: number | string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLTableColElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableColElement).
+ */
 export interface HTMLTableColAttributes extends HTMLAttributes {
   span?: number | undefined | null;
   width?: number | string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLColgroupElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLColgroupElement).
+ */
 export interface HTMLColgroupAttributes extends HTMLAttributes {
   span?: number | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLDataElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDataElement).
+ */
 export interface HTMLDataAttributes extends HTMLAttributes {
   value?: string | string[] | number | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLDetailsElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDetailsElement).
+ */
 export interface HTMLDetailsAttributes extends HTMLAttributes {
   open?: boolean | undefined | null;
   name?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLDelElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDelElement).
+ */
 export interface HTMLDelAttributes extends HTMLAttributes {
   cite?: string | undefined | null;
   datetime?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLDialogElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement).
+ */
 export interface HTMLDialogAttributes extends HTMLAttributes {
   open?: boolean | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLEmbedElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLEmbedElement).
+ */
 export interface HTMLEmbedAttributes extends HTMLAttributes {
   height?: number | string | undefined | null;
   src?: string | undefined | null;
@@ -631,12 +725,18 @@ export interface HTMLEmbedAttributes extends HTMLAttributes {
   width?: number | string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLFieldSetElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFieldSetElement).
+ */
 export interface HTMLFieldSetAttributes extends HTMLAttributes {
   disabled?: boolean | undefined | null;
   form?: string | undefined | null;
   name?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLFormElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement).
+ */
 export interface HTMLFormAttributes extends HTMLAttributes {
   acceptcharset?: string | undefined | null;
   action?: string | undefined | null;
@@ -662,10 +762,16 @@ export interface HTMLFormAttributes extends HTMLAttributes {
   rel?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLHtmlElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLHtmlElement).
+ */
 export interface HTMLHtmlAttributes extends HTMLAttributes {
   manifest?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLIFrameElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLIFrameElement).
+ */
 export interface HTMLIFrameAttributes extends HTMLAttributes {
   allow?: string | undefined | null;
   allowfullscreen?: boolean | undefined | null;
@@ -689,6 +795,9 @@ export interface HTMLIFrameAttributes extends HTMLAttributes {
   width?: number | string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLImageElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement).
+ */
 export interface HTMLImageAttributes extends HTMLAttributes {
   alt?: string | undefined | null;
   crossorigin?: "anonymous" | "use-credentials" | "" | undefined | null;
@@ -705,6 +814,9 @@ export interface HTMLImageAttributes extends HTMLAttributes {
   width?: number | string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLInsElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInsElement).
+ */
 export interface HTMLInsAttributes extends HTMLAttributes {
   cite?: string | undefined | null;
   datetime?: string | undefined | null;
@@ -735,6 +847,9 @@ export type HTMLInputTypeAttribute =
   | "week"
   | (string & {});
 
+/**
+ * Attributes for a [HTMLInputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement).
+ */
 export interface HTMLInputAttributes extends HTMLAttributes {
   accept?: string | undefined | null;
   alt?: string | undefined | null;
@@ -786,6 +901,9 @@ export interface HTMLInputAttributes extends HTMLAttributes {
   webkitdirectory?: boolean | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLKeygenElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLKeygenElement).
+ */
 export interface HTMLKeygenAttributes extends HTMLAttributes {
   challenge?: string | undefined | null;
   disabled?: boolean | undefined | null;
@@ -795,15 +913,24 @@ export interface HTMLKeygenAttributes extends HTMLAttributes {
   name?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLLabelElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLLabelElement).
+ */
 export interface HTMLLabelAttributes extends HTMLAttributes {
   form?: string | undefined | null;
   for?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLLIElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLLIElement).
+ */
 export interface HTMLLIAttributes extends HTMLAttributes {
   value?: string | string[] | number | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLLinkElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLLinkElement).
+ */
 export interface HTMLLinkAttributes extends HTMLAttributes {
   as?:
     | "fetch"
@@ -847,14 +974,23 @@ export interface HTMLLinkAttributes extends HTMLAttributes {
   fetchpriority?: "auto" | "high" | "low" | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLMapElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMapElement).
+ */
 export interface HTMLMapAttributes extends HTMLAttributes {
   name?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLMenuElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMenuElement).
+ */
 export interface HTMLMenuAttributes extends HTMLAttributes {
   type?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLMediaElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement).
+ */
 export interface HTMLMediaAttributes extends HTMLAttributes {
   autoplay?: boolean | undefined | null;
   controls?: boolean | undefined | null;
@@ -880,6 +1016,9 @@ export interface HTMLMediaAttributes extends HTMLAttributes {
   volume?: number | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLMetaElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMetaElement).
+ */
 export interface HTMLMetaAttributes extends HTMLAttributes {
   charset?: string | undefined | null;
   content?: string | undefined | null;
@@ -895,6 +1034,9 @@ export interface HTMLMetaAttributes extends HTMLAttributes {
   media?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLMeterElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMeterElement).
+ */
 export interface HTMLMeterAttributes extends HTMLAttributes {
   form?: string | undefined | null;
   high?: number | undefined | null;
@@ -905,10 +1047,16 @@ export interface HTMLMeterAttributes extends HTMLAttributes {
   value?: string | string[] | number | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLQuoteElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLQuoteElement).
+ */
 export interface HTMLQuoteAttributes extends HTMLAttributes {
   cite?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLObjectElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement).
+ */
 export interface HTMLObjectAttributes extends HTMLAttributes {
   classid?: string | undefined | null;
   data?: string | undefined | null;
@@ -921,17 +1069,26 @@ export interface HTMLObjectAttributes extends HTMLAttributes {
   wmode?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLOListElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLOListElement).
+ */
 export interface HTMLOListAttributes extends HTMLAttributes {
   reversed?: boolean | undefined | null;
   start?: number | undefined | null;
   type?: "1" | "a" | "A" | "i" | "I" | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLOptGroupElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLOptGroupElement).
+ */
 export interface HTMLOptGroupAttributes extends HTMLAttributes {
   disabled?: boolean | undefined | null;
   label?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLOptionElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLOptionElement).
+ */
 export interface HTMLOptionAttributes extends HTMLAttributes {
   disabled?: boolean | undefined | null;
   label?: string | undefined | null;
@@ -939,27 +1096,43 @@ export interface HTMLOptionAttributes extends HTMLAttributes {
   value?: any;
 }
 
+/**
+ * Attributes for a [HTMLOutputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLOutputElement).
+ */
 export interface HTMLOutputAttributes extends HTMLAttributes {
   form?: string | undefined | null;
   for?: string | undefined | null;
   name?: string | undefined | null;
 }
 
-/** @deprecated */
+/**
+ * Attributes for a [HTMLParamElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLParamElement).
+ *
+ * @deprecated This feature is no longer recommended.
+ */
 export interface HTMLParamAttributes extends HTMLAttributes {
   name?: string | undefined | null;
   value?: string | string[] | number | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLProgressElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLProgressElement).
+ */
 export interface HTMLProgressAttributes extends HTMLAttributes {
   max?: number | string | undefined | null;
   value?: string | string[] | number | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLSlotElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLSlotElement).
+ */
 export interface HTMLSlotAttributes extends HTMLAttributes {
   name?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLScriptElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLScriptElement).
+ */
 export interface HTMLScriptAttributes extends HTMLAttributes {
   async?: boolean | undefined | null;
   /** @deprecated */
@@ -975,6 +1148,9 @@ export interface HTMLScriptAttributes extends HTMLAttributes {
   type?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLSelectElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement).
+ */
 export interface HTMLSelectAttributes extends HTMLAttributes {
   autocomplete?: FullAutoFill | undefined | null;
   disabled?: boolean | undefined | null;
@@ -986,6 +1162,9 @@ export interface HTMLSelectAttributes extends HTMLAttributes {
   value?: any;
 }
 
+/**
+ * Attributes for a [HTMLSourceElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLSourceElement).
+ */
 export interface HTMLSourceAttributes extends HTMLAttributes {
   height?: number | string | undefined | null;
   media?: string | undefined | null;
@@ -996,6 +1175,9 @@ export interface HTMLSourceAttributes extends HTMLAttributes {
   width?: number | string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLStyleElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLStyleElement).
+ */
 export interface HTMLStyleAttributes extends HTMLAttributes {
   media?: string | undefined | null;
   nonce?: string | undefined | null;
@@ -1003,6 +1185,9 @@ export interface HTMLStyleAttributes extends HTMLAttributes {
   type?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLTableElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableElement).
+ */
 export interface HTMLTableAttributes extends HTMLAttributes {
   align?: "left" | "center" | "right" | undefined | null;
   bgcolor?: string | undefined | null;
@@ -1015,7 +1200,10 @@ export interface HTMLTableAttributes extends HTMLAttributes {
   width?: number | string | undefined | null;
 }
 
-export interface HTMLTextareaAttributes extends HTMLAttributes {
+/**
+ * Attributes for a [HTMLTextAreaElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement).
+ */
+export interface HTMLTextAreaAttributes extends HTMLAttributes {
   autocomplete?: FullAutoFill | undefined | null;
   cols?: number | undefined | null;
   dirname?: string | undefined | null;
@@ -1032,6 +1220,9 @@ export interface HTMLTextareaAttributes extends HTMLAttributes {
   wrap?: "hard" | "soft" | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLTableCellElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableCellElement).
+ */
 export interface HTMLTableCellAttributes extends HTMLAttributes {
   align?: "left" | "center" | "right" | "justify" | "char" | undefined | null;
   colspan?: number | undefined | null;
@@ -1044,10 +1235,16 @@ export interface HTMLTableCellAttributes extends HTMLAttributes {
   valign?: "top" | "middle" | "bottom" | "baseline" | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLTimeElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTimeElement).
+ */
 export interface HTMLTimeAttributes extends HTMLAttributes {
   datetime?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLTrackElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTrackElement).
+ */
 export interface HTMLTrackAttributes extends HTMLAttributes {
   default?: boolean | undefined | null;
   kind?:
@@ -1063,6 +1260,9 @@ export interface HTMLTrackAttributes extends HTMLAttributes {
   srclang?: string | undefined | null;
 }
 
+/**
+ * Attributes for a [HTMLVideoElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLVideoElement).
+ */
 export interface HTMLVideoAttributes extends HTMLMediaAttributes {
   height?: number | string | undefined | null;
   playsinline?: boolean | undefined | null;
@@ -1379,11 +1579,19 @@ export interface SVGAttributes extends AriaAttributes, HTMLAttributes {
   [key: `data-${string}`]: any;
 }
 
+/**
+ * Attributes for a [HTMLTemplateElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTemplateElement).
+ */
 export interface HTMLTemplateAttributes extends HTMLAttributes {
   shadowrootmode?: "open" | "closed" | undefined | null;
 }
 
-export interface HTMLWebViewAttributes extends HTMLAttributes {
+/**
+ * Attributes for a `webview` element. This Element is available when using
+ * Electron. See [the Electron documentation](https://www.electronjs.org/docs/latest/glossary#webview)
+ * for additional details.
+ */
+export interface HTMLWebviewAttributes extends HTMLAttributes {
   allowfullscreen?: boolean | undefined | null;
   allowpopups?: boolean | undefined | null;
   autosize?: boolean | undefined | null;
@@ -1406,8 +1614,8 @@ export interface HTMLWebViewAttributes extends HTMLAttributes {
   webpreferences?: string | undefined | null;
 }
 
-/*
- * DOM Elements
+/**
+ * Attributes for HTMLElement by the corresponding tag name.
  */
 export interface HTMLAttributesTagNameMap {
   a: HTMLAnchorAttributes;
@@ -1422,7 +1630,7 @@ export interface HTMLAttributesTagNameMap {
   bdi: HTMLAttributes;
   bdo: HTMLAttributes;
   big: HTMLAttributes;
-  blockquote: HTMLBlockquoteAttributes;
+  blockquote: HTMLQuoteAttributes;
   body: HTMLAttributes;
   br: HTMLAttributes;
   button: HTMLButtonAttributes;
@@ -1513,7 +1721,7 @@ export interface HTMLAttributesTagNameMap {
   template: HTMLTemplateAttributes;
   tbody: HTMLAttributes;
   td: HTMLTableCellAttributes;
-  textarea: HTMLTextareaAttributes;
+  textarea: HTMLTextAreaAttributes;
   tfoot: HTMLAttributes;
   th: HTMLTableCellAttributes;
   thead: HTMLAttributes;
@@ -1526,8 +1734,14 @@ export interface HTMLAttributesTagNameMap {
   var: HTMLAttributes;
   video: HTMLVideoAttributes;
   wbr: HTMLAttributes;
-  webview: HTMLWebViewAttributes;
-  // SVG
+  webview: HTMLWebviewAttributes;
+}
+
+/**
+ * Attributes for [SVGElement](https://developer.mozilla.org/en-US/docs/Web/API/SVGElement)
+ * by the corresponding tag name.
+ */
+export interface SVGAttributesTagNameMap {
   svg: SVGAttributes;
   animate: SVGAttributes;
   animateMotion: SVGAttributes;
@@ -1589,10 +1803,22 @@ export interface HTMLAttributesTagNameMap {
   [name: string]: { [name: string]: any };
 }
 
+/**
+ * Attributes for any [SVGElement](https://developer.mozilla.org/en-US/docs/Web/API/SVGElement).
+ *
+ * @group Attributes
+ */
 export type SVGElementAttributes = SVGAttributes;
 
 // prettier-ignore
-export type HTMLElementAttributes<E extends HTMLElement> =
+/**
+ * Attributes for the [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) of type `E`.
+ *
+ * @type E Type of HTMLElement for associated attributes.
+ *
+ * @group Attributes
+ */
+export type HTMLElementAttributes<E extends AnyElement> =
   E extends HTMLAnchorElement
   ? HTMLAnchorAttributes
   : E extends HTMLAreaElement

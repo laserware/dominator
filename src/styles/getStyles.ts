@@ -4,6 +4,7 @@ import { InvalidElemError } from "../errors.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import type {
+  AnyElement,
   ElemOrCssSelector,
   KeysOf,
   StyleKey,
@@ -24,7 +25,7 @@ import type {
  *
  * @returns Value of type `T` or `null` if not found.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group Styles
  */
@@ -56,7 +57,7 @@ export function getStyle<T extends StyleValue>(
  *          Note that you will need to perform checks for the presence of a value in the
  *          returned object because it's a `Partial` of the specified `T`.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group Styles
  */
@@ -81,7 +82,7 @@ export function getStyles<T extends Styles = Styles>(
 }
 
 function getSingleStyle<T extends StyleValue>(
-  element: HTMLElement,
+  element: AnyElement,
   key: StyleKey,
 ): T | undefined {
   // Note that we're using nullish coalescing for the return value of

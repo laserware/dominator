@@ -4,6 +4,7 @@ import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { isCssVarName } from "../typeGuards.ts";
 import type {
+  AnyElement,
   ElemOrCssSelector,
   StyleKey,
   Styles,
@@ -20,12 +21,11 @@ import type {
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@link InvalidElemError} If the `target` could not be found or doesn't have a
- *                           {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style|style} property.
+ * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have a [`style`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  *
  * @group Styles
  */
-export function setStyle<E extends HTMLElement = HTMLElement>(
+export function setStyle<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector,
   key: StyleKey,
   value: StyleValue,
@@ -52,12 +52,11 @@ export function setStyle<E extends HTMLElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@link InvalidElemError} If the `target` could not be found or doesn't have a
- *                            {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style|style} property.
+ * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have a [`style`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  *
  * @group Styles
  */
-export function setStyles<E extends HTMLElement = HTMLElement>(
+export function setStyles<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector,
   styles: Styles,
 ): E {
@@ -74,7 +73,7 @@ export function setStyles<E extends HTMLElement = HTMLElement>(
 }
 
 function setSingleStyle(
-  element: HTMLElement,
+  element: AnyElement,
   key: string,
   value: StyleValue,
 ): void {

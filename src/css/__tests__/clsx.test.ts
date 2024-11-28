@@ -4,7 +4,7 @@
 import { clsx } from "../clsx.ts";
 
 /**
- * @file These tests were taken from the {@link https://github.com/lukeed/clsx|clsx}
+ * @file These tests were taken from the [clsx](https://github.com/lukeed/clsx)
  *       codebase and updated to use Vitest (instead of uvu).
  */
 

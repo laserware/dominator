@@ -4,6 +4,7 @@ import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type {
+  AnyElement,
   AttrName,
   AttrValue,
   DOMPropertySearch,
@@ -22,8 +23,10 @@ import { getAttr } from "./getAttrs.ts";
  *
  * @group Attributes
  */
-export type AttrsSearch<E extends HTMLElement = HTMLElement> =
-  DOMPropertySearch<AttrName<E>, AttrValue | null>;
+export type AttrsSearch<E extends AnyElement = HTMLElement> = DOMPropertySearch<
+  AttrName<E>,
+  AttrValue | null
+>;
 
 /**
  * Checks if the specified `target` has the specified attribute `name`. If a
@@ -37,13 +40,13 @@ export type AttrsSearch<E extends HTMLElement = HTMLElement> =
  *
  * @returns `true` if the specified attribute `name` is present and `value` matches (if specified).
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
  * **HTML**
  *
  * ```html
- * <div id="example" aria-hidden="true" aria-label="Example">Example</div>
+ * <button id="example" aria-pressed="true" aria-label="Example">Example</button>
  * ```
  *
  * **Code**
@@ -51,16 +54,19 @@ export type AttrsSearch<E extends HTMLElement = HTMLElement> =
  * ```ts
  * const elem = findElem("#example")!;
  *
- * const hasNameOnly = hasAttr(elem, "aria-hidden");
+ * hasAttr(elem, "aria-pressed");
  * // true
  *
- * const hasNameAndValue = hasAttr(elem, "aria-label", "Example");
+ * hasAttr(elem, "aria-pressed", "true");
+ * // false ("true" cannot be a string, must be the boolean value `true`)
+ *
+ * hasAttr(elem, "aria-label", "Example");
  * // true
  * ```
  *
  * @group Attributes
  */
-export function hasAttr<E extends HTMLElement = HTMLElement>(
+export function hasAttr<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
   name: AttrName<E>,
   value?: AttrValue,
@@ -81,7 +87,7 @@ export function hasAttr<E extends HTMLElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches all search criteria.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -95,28 +101,24 @@ export function hasAttr<E extends HTMLElement = HTMLElement>(
  * ```ts
  * const elem = findElem("#example")!;
  *
- * const hasAllArray = hasAllAttrs(elem, ["aria-hidden"]);
+ * hasAllAttrs(elem, ["aria-hidden"]);
  * // true
  *
- * const notHasAllArray = hasAllAttrs(elem, ["aria-hidden", "missing"]);
+ * hasAllAttrs(elem, ["aria-hidden", "missing"]);
  * // false ("missing" does not exist)
  *
- * const hasAllSearch = hasAllAttrs(elem, {
- *   "aria-hidden": true,
- *   name: "test",
- *   inert: null,
- * });
+ * hasAllAttrs(elem, { "aria-hidden": true, name: "test", inert: null });
  * // true
  * ```
  *
  * @group Attributes
  */
-export function hasAllAttrs<E extends HTMLElement = HTMLElement>(
+export function hasAllAttrs<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
   search: AttrsSearch<E>,
 ): boolean {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to check for attributes ${formatForError(search)}`);
+  const elem = elemOrThrow(target, `Unable to check for all attributes ${formatForError(search)}`);
 
   return hasAllProperties(elem, search, hasSingleAttr);
 }
@@ -132,7 +134,7 @@ export function hasAllAttrs<E extends HTMLElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches some search criteria.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -146,32 +148,27 @@ export function hasAllAttrs<E extends HTMLElement = HTMLElement>(
  * ```ts
  * const elem = findElem("#example")!;
  *
- * const hasSomeArray = hasSomeAttrs(elem, ["aria-hidden", "missing"]);
+ * hasSomeAttrs(elem, ["aria-hidden", "missing"]);
  * // true
  *
- * const hasSomeSearch = hasSomeAttrs(elem, {
- *   "aria-hidden": true,
- *   name: "test",
- *   inert: null,
- *   missing: null,
- * });
+ * hasSomeAttrs(elem, { "aria-hidden": true, name: "test", inert: null, missing: null });
  * // true
  * ```
  *
  * @group Attributes
  */
-export function hasSomeAttrs<E extends HTMLElement = HTMLElement>(
+export function hasSomeAttrs<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
   search: AttrsSearch<E>,
 ): boolean {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to check for attributes ${formatForError(search)}`);
+  const elem = elemOrThrow(target, `Unable to check for some attributes ${formatForError(search)}`);
 
   return hasSomeProperties(elem, search, hasSingleAttr);
 }
 
 function hasSingleAttr(
-  element: HTMLElement,
+  element: AnyElement,
   name: AttrName,
   value?: AttrValue | null,
 ): boolean {

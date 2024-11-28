@@ -3,6 +3,7 @@ import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import type {
+  AnyElement,
   AttrName,
   Attrs,
   AttrValue,
@@ -29,41 +30,53 @@ import type {
  *
  * @returns Value of type `T` or `null` if not found.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
- * #### String Attribute
+ * **HTML**
  *
- * ```ts
- * const elem = findElem("button")!.setAttribute("aria-label", "Label");
- *
- * const result = getAttr(elem, "aria-label");
- * // "Label"
+ * ```html
+ * <div
+ *   id="example"
+ *   role="slider"
+ *   aria-valuemax="30"
+ *   aria-label="Example"
+ *   aria-disabled="false"
+ * >...</div>
  * ```
  *
- * #### Number Attribute
+ * **String Attribute**
  *
  * ```ts
- * const elem = findElem("button")!.setAttribute("aria-colcount", "20");
+ * const elem = findElem("#example")!;
  *
- * const result = getAttr(elem, "aria-colcount");
- * // 20
+ * getAttr(elem, "aria-label");
+ * // "Example"
  * ```
  *
- * #### Boolean Attribute
+ * **Number Attribute**
  *
  * ```ts
- * const elem = findElem("button")!.setAttribute("checked", "");
+ * const elem = findElem("#example")!;
  *
- * const result = getAttr(elem, "checked");
- * // true
+ * getAttr(elem, "aria-valuemax");
+ * // 30
+ * ```
+ *
+ * **Boolean Attribute**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * getAttr(elem, "aria-disabled");
+ * // false
  * ```
  *
  * @group Attributes
  */
 export function getAttr<
   T extends AttrValue = AttrValue,
-  E extends HTMLElement = HTMLElement,
+  E extends AnyElement = HTMLElement,
 >(target: ElemOrCssSelector<E>, name: AttrName<E>): T | null {
   const elem = elemOrThrow(target, `Unable to get attribute ${name}`);
 
@@ -85,30 +98,44 @@ export function getAttr<
  *
  * @returns Object with specified names as keys and corresponding attribute values.
  *          Note that you will need to perform checks for whether a value is
- *          `undefined` in the returned object if some of the entries weren't present.
+ *          `null` in the returned object if some of the entries weren't present.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
+ * **HTML**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   role="slider"
+ *   aria-valuemax="30"
+ *   aria-label="Example"
+ *   aria-disabled="false"
+ * ></div>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
  * interface Shape {
  *   "aria-label": string;
- *   "aria-colcount": number;
+ *   "aria-valuemax": number;
  *   invalid: string;
  * }
  *
- * const elem = findElem("button")!
- *   .setAttribute("aria-label", "Test")
- *   .setAttribute("aria-rowcount", "20");
+ * const elem = findElem("#example")!;
  *
- * // Note that `invalid` doesn't exist on the element, so it's `undefined`:
- * const result = getAttrs<Shape>(elem, ["aria-label", "aria-rowcount", "invalid"]);
- * // { "aria-label": "Test", "aria-rowcount": 20, invalid: undefined }
+ * // Note that `invalid` doesn't exist on the element, so it's `null`:
+ * getAttrs<Shape>(elem, ["aria-label", "aria-valuemax", "invalid"]);
+ * // { "aria-label": "Example", "aria-valuemax": 30, invalid: null }
+ * ```
  *
  * @group Attributes
  */
 export function getAttrs<
   T extends Attrs = Attrs,
-  E extends HTMLElement = HTMLElement,
+  E extends AnyElement = HTMLElement,
 >(target: ElemOrCssSelector<E>, names: KeysOf<T>): WithNullValues<T> {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to get attributes ${formatForError(names)}`);
@@ -124,7 +151,7 @@ export function getAttrs<
 
 function getSingleAttr<
   T extends AttrValue = AttrValue,
-  E extends HTMLElement = HTMLElement,
+  E extends AnyElement = HTMLElement,
 >(element: E, name: AttrName<E>): T | null {
   const attrValue = element.getAttribute(name);
 

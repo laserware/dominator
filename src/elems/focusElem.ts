@@ -1,4 +1,4 @@
-import type { ElemOrCssSelector } from "../types.ts";
+import type { AnyElement, ElemOrCssSelector } from "../types.ts";
 
 import { asElem } from "./asElem.ts";
 import { toElem } from "./toElem.ts";
@@ -10,7 +10,7 @@ import { toElem } from "./toElem.ts";
  *
  * @group Elements
  */
-export interface FocusOptions<E extends HTMLElement> {
+export interface FocusOptions<E extends AnyElement> {
   /** Delay (in milliseconds) to wait until attempting to set focus. */
   delay?: number;
 
@@ -40,7 +40,7 @@ export interface FocusOptions<E extends HTMLElement> {
  *
  * @group Elements
  */
-export function focusElem<E extends HTMLElement = HTMLElement>(
+export function focusElem<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector | null,
   options?: FocusOptions<E>,
 ): void {

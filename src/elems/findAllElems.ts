@@ -1,7 +1,7 @@
 import { isPlainObject } from "@laserware/arcade";
 
 import { parseFindOptions } from "../internal/findOptions.ts";
-import type { CssSelector, Elem, FindOptions } from "../types.ts";
+import type { AnyElement, CssSelector, Elem, FindOptions } from "../types.ts";
 
 import { listToArray } from "./listToArray.ts";
 
@@ -22,7 +22,7 @@ import { toElem } from "./toElem.ts";
  *
  * @group Elements
  */
-export function findAllElems<E extends HTMLElement = HTMLElement>(
+export function findAllElems<E extends AnyElement = HTMLElement>(
   selector: CssSelector,
   parent?: Elem | null,
 ): E[];
@@ -43,11 +43,11 @@ export function findAllElems<E extends HTMLElement = HTMLElement>(
  *
  * @group Elements
  */
-export function findAllElems<E extends HTMLElement = HTMLElement>(
+export function findAllElems<E extends AnyElement = HTMLElement>(
   options: FindOptions,
 ): E[];
 
-export function findAllElems<E extends HTMLElement = HTMLElement>(
+export function findAllElems<E extends AnyElement = HTMLElement>(
   selectorOrOptions: FindOptions | CssSelector,
   parent?: Elem | null,
 ): E[] {

@@ -1,7 +1,7 @@
 import { cast } from "../internal/cast.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type { AttrName, ElemOrCssSelector } from "../types.ts";
+import type { AnyElement, AttrName, ElemOrCssSelector } from "../types.ts";
 
 /**
  * Removes the specified attribute `name` from the specified `target`.
@@ -13,11 +13,32 @@ import type { AttrName, ElemOrCssSelector } from "../types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML (Before)**
+ *
+ * ```html
+ * <button id="example" aria-disabled="true">Example</button>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * removeAttr(elem, "aria-disabled");
+ * ```
+ *
+ * **HTML (After)**
+ *
+ * ```html
+ * <button id="example">Example</button>
+ * ```
  *
  * @group Attributes
  */
-export function removeAttr<E extends HTMLElement = HTMLElement>(
+export function removeAttr<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
   name: AttrName<E>,
 ): E {
@@ -38,11 +59,41 @@ export function removeAttr<E extends HTMLElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML (Before)**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   role="slider"
+ *   aria-valuemax="30"
+ *   aria-label="Example"
+ *   aria-disabled="false"
+ * ></div>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * removeAttrs(elem, ["role", "aria-valuemax", "aria-disabled"]);
+ * ```
+ *
+ * **HTML (After)**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   aria-label="Example"
+ * ></div>
+ * ```
  *
  * @group Attributes
  */
-export function removeAttrs<E extends HTMLElement = HTMLElement>(
+export function removeAttrs<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
   names: AttrName<E>[],
 ): E {

@@ -1,4 +1,3 @@
-// @ts-nocheck
 // noinspection SpellCheckingInspection
 
 import { isNotNil, isPlainObject } from "@laserware/arcade";
@@ -6,17 +5,19 @@ import { isNotNil, isPlainObject } from "@laserware/arcade";
 import { setAttrs } from "../attrs/setAttrs.ts";
 import { setCssVars } from "../css/setCssVars.ts";
 import { setData } from "../data/setData.ts";
-import type { AnyElement, AriaAttributes, ElementWithTagName } from "../dom.ts";
+import type { AriaAttributes } from "../dom.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { setStyles } from "../styles/setStyles.ts";
 import { isAttrValue } from "../typeGuards.ts";
-import {
+import type {
+  AnyElement,
+  Attrs,
   AttrValue,
-  type Attrs,
-  type CssVars,
-  type Data,
-  type Styles,
-  type TagName,
+  CssVars,
+  Data,
+  ElementWithTagName,
+  Styles,
+  TagName,
 } from "../types.ts";
 
 // TODO: Try to improve performance of types here. TypeScript spends *a lot* of time checking this file.
@@ -67,33 +68,42 @@ type ListenersOrDescriptors = {
   [EN in EventName]?: ListenerOrDescriptor<EN>;
 };
 
-type AllowedProperties<TN extends TagName> = {
+/**
+ * Options for an Element built with {@linkcode html}.
+ *
+ * @group Elements
+ */
+export interface ElemBuilderOptions<TN extends TagName> {
   id?: string;
   class?: string;
-  attrs?: Attrs | Partial<AriaAttributes>;
+  attrs?: Attrs<any> | Partial<AriaAttributes>;
   cssVars?: CssVars;
   data?: Data;
   on?: ListenersOrDescriptors;
   props?: Partial<Omit<ElemProperties<TN>, "id" | "style" | "click">>;
   styles?: Styles;
-};
+}
 
 const identifier = Symbol("identifier");
 
 /**
- * Interface for the HTML element builder.
- *
- * The AbortController (`controller` argument in the `build` callback) is required
- * if you attach any event listeners to the element. The `parentElement` is
- * optional for the root element.
- *
- * @property build Function that takes in a parent element and optional AbortController
- *                 and returns an HTML element.
+ * Interface for the HTML element builder returned from the {@linkcode html}
+ * function.
  *
  * @group Elements
  */
 export interface ElemBuilder<TN extends TagName = TagName> {
   [identifier]: "ElemBuilder";
+
+  /**
+   * Function that takes in a parent element and optional AbortController
+   * and returns an HTML element.
+   *
+   * @param [parentElement] Optional parent element to attach built Element to.
+   * @param [controller] Optional AbortController to clean up event listeners.
+   *                     This is required if you specify any event listeners
+   *                     in properties.
+   */
   build(
     parentElement?: AnyElement | undefined,
     controller?: AbortController | undefined,
@@ -104,8 +114,6 @@ function isElemBuilder(value: unknown): value is ElemBuilder {
   // @ts-ignore
   return value?.[identifier] === "ElemBuilder";
 }
-
-type NonFunctionalChild = ElemBuilder | AnyElement | AttrValue | null;
 
 /**
  * Child item passed to the `html` function. A child item can be any one of the
@@ -118,20 +126,21 @@ type NonFunctionalChild = ElemBuilder | AnyElement | AttrValue | null;
  *
  * @group Elements
  */
-export type ElemBuilderChild = NonFunctionalChild | ChildFunction;
-
-/**
- * Callback that returns a builder child. Note that you cannot return another
- * function that returns a builder child.
- */
-type ChildFunction = () => NonFunctionalChild;
+export type ElemBuilderChild =
+  | ElemBuilder
+  | AnyElement
+  | AttrValue
+  | null
+  | (() => ElemBuilder | AnyElement | AttrValue | null);
 
 /**
  * Utility function that wraps the DOM APIs to make it easier to create an
  * HTML or SVG element with less code. It mimics React's `createElement` API.
  *
+ * @template TN Tag name of the built Element.
+ *
  * @param tagName Tag name of the HTML/SVG element to build (e.g. `div`, `svg`, etc.).
- * @param properties Attributes, properties, and event listeners to attach to the element.
+ * @param options Attributes, properties, and event listeners to attach to the element.
  * @param children Child elements, element builders, primitives, callbacks, or null.
  *                 If null, the element is not added. This is useful for conditional rendering.
  *                 See {@linkcode ElemBuilderChild} for additional details.
@@ -142,7 +151,7 @@ type ChildFunction = () => NonFunctionalChild;
  */
 export function html<TN extends TagName>(
   tagName: TN,
-  properties: Partial<AllowedProperties<TN>>,
+  options: Partial<ElemBuilderOptions<TN>>,
   ...children: ElemBuilderChild[]
 ): ElemBuilder<TN> {
   const build = (
@@ -151,7 +160,7 @@ export function html<TN extends TagName>(
   ): ElementWithTagName<TN> => {
     const element = document.createElement(tagName) as ElementWithTagName<TN>;
 
-    setElemProperties(element, properties, controller);
+    updateElemFromOptions(element, options, controller);
 
     const getChildElement = (
       child: ElemBuilderChild,
@@ -207,56 +216,58 @@ export function html<TN extends TagName>(
 }
 
 /**
- * Iterates through the specified properties (passed into the builder function)
- * and assigns them to the specified element.
+ * Iterates through the specified `options` (passed into the builder function)
+ * and assigns them to the specified Element.
  *
  * @param element Element to be updated with specified properties.
- * @param properties Attributes and event listeners to set on element.
+ * @param options Attributes and event listeners to set on Element.
  * @param controller AbortController to clean up event listeners.
+ *
+ * @template TN Tag name for the built Element.
  */
-function setElemProperties<TN extends TagName>(
+function updateElemFromOptions<TN extends TagName>(
   element: ElementWithTagName<TN>,
-  properties: Partial<AllowedProperties<TN>> = {},
+  options: Partial<ElemBuilderOptions<TN>> = {},
   controller?: AbortController | undefined,
 ): void {
-  if (isNotNil(properties.id)) {
-    element.id = properties.id;
+  if (isNotNil(options.id)) {
+    element.id = options.id;
   }
 
-  if (isNotNil(properties.class)) {
-    element.classList.add(properties.class);
+  if (isNotNil(options.class)) {
+    element.classList.add(options.class);
   }
 
-  if (isNotNil(properties.props)) {
-    for (const name of Object.keys(properties.props)) {
+  if (isNotNil(options.props)) {
+    for (const name of Object.keys(options.props)) {
       // @ts-ignore
-      element[name] = properties.props[name];
+      element[name] = options.props[name];
     }
   }
 
-  if (isNotNil(properties.attrs)) {
-    setAttrs(element, properties.attrs);
+  if (isNotNil(options.attrs)) {
+    setAttrs(element, options.attrs);
   }
 
-  if (isNotNil(properties.data)) {
-    setData(element, properties.data);
+  if (isNotNil(options.data)) {
+    setData(element, options.data);
   }
 
-  if (isNotNil(properties.cssVars)) {
-    setCssVars(properties.cssVars, element);
+  if (isNotNil(options.cssVars)) {
+    setCssVars(options.cssVars, element);
   }
 
-  if (isNotNil(properties.styles)) {
-    setStyles(element, properties.styles);
+  if (isNotNil(options.styles)) {
+    setStyles(element, options.styles);
   }
 
-  if (isNotNil(properties.on)) {
-    addEventListeners(element, properties.on, controller);
+  if (isNotNil(options.on)) {
+    addEventListeners(element, options.on, controller);
   }
 }
 
 /**
- * Adds specified event listeners to the specified element. If the specified
+ * Adds specified event listeners to the specified Element. If the specified
  * AbortController is `undefined`, an error is thrown. Otherwise, the events
  * won't get cleaned up when `controller.abort` is called.
  *
@@ -264,7 +275,7 @@ function setElemProperties<TN extends TagName>(
  * @param eventsDict Object with key of event name and value of event listener.
  * @param controller AbortController to clean up event listeners.
  *
- * @throws {@link Error} If the `controller` is undefined.
+ * @throws {Error} If the `controller` is undefined.
  */
 function addEventListeners<TN extends TagName>(
   element: ElementWithTagName<TN>,

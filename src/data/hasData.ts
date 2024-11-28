@@ -6,6 +6,7 @@ import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type {
+  AnyElement,
   DataKey,
   DataValue,
   DOMPropertySearch,
@@ -32,11 +33,11 @@ export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
  * @param key Property (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
  * @param [value] Optional dataset value to check for.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group Dataset
  */
-export function hasDataEntry<E extends HTMLElement = HTMLElement>(
+export function hasDataEntry<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
   key: DataKey,
   value?: DataValue,
@@ -57,11 +58,11 @@ export function hasDataEntry<E extends HTMLElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches all search criteria.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group Dataset
  */
-export function hasAllData<E extends HTMLElement = HTMLElement>(
+export function hasAllData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
   search: DataSearch,
 ): boolean {
@@ -82,11 +83,11 @@ export function hasAllData<E extends HTMLElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches some search criteria.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group Dataset
  */
-export function hasSomeData<E extends HTMLElement = HTMLElement>(
+export function hasSomeData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
   search: DataSearch,
 ): boolean {
@@ -97,7 +98,7 @@ export function hasSomeData<E extends HTMLElement = HTMLElement>(
 }
 
 function hasSingleDataEntry(
-  element: HTMLElement,
+  element: AnyElement,
   key: DataKey,
   value?: DataValue,
 ): boolean {

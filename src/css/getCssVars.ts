@@ -1,4 +1,5 @@
 import { InvalidCssVarError } from "../errors.ts";
+import { cast } from "../internal/cast.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -9,13 +10,14 @@ import type {
   CssVarValue,
   ElemOrCssSelector,
   KeysOf,
+  WithUndefinedValues,
 } from "../types.ts";
 
 /**
  * Attempts to get the value associated with the specified CSS variable `name`
  * from the specified `target`.
  *
- * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
+ * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
  * If found, the value is coerced to a numeric value if number-like, or a boolean
@@ -30,12 +32,31 @@ import type {
  * @template T Type of value to return.
  *
  * @param name Name of the variable to get value for.
- * @param [target] Optional Element, EventTarget, or CSS selector.
+ * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
  * @returns Value associated with the specified `name` or `undefined` if it doesn't exist.
  *
- * @throws {@link InvalidCssVarError} If the specified `name` is invalid.
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidCssVarError} If the specified `name` is invalid.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML**
+ *
+ * ```html
+ * <button id="example" style="--color-bg: blue; --gap: 24;">Example</button>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * getCssVar("--color-bg", elem);
+ * // "blue"
+ *
+ * getCssVar("--gap", elem);
+ * // 24
+ * ```
  *
  * @group CSS
  */
@@ -52,45 +73,52 @@ export function getCssVar<T extends CssVarValue>(
  * Builds an object with the keys equal to the specified CSS variable `names` and
  * the value equal to the corresponding variable value in the specified `target`.
  *
- * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
+ * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
- * If the value is found it is coerced to a boolean if "true" or "false", a
+ * If the value is found it is coerced to a boolean if `"true"` or `"false"`, a
  * number if numeric, or the string value if a string. If not found, the value
  * is excluded from the return value.
  *
  * @template T Shape of CSS variables object to return.
  *
  * @param names Names of the variable to get value for.
- * @param [target] Optional Element, EventTarget, or CSS selector.
+ * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
  * @returns Object with specified names as keys and corresponding CSS variable values.
- *          Note that you will need to perform checks for the presence of a value in the
- *          returned object because it's a `Partial` of the specified `T`.
+ *         Note that you will need to perform checks for whether a value is
+ *          `undefined` in the returned object if some of the entries weren't present.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
- * type CssVarsShape = {
- *   "--color-bg": string;
- *   "--gap": number;
- * }
+ * **HTML**
  *
- * const element = setCssVars({ "--color-bg": "blue", "--gap": 24 });
+ * ```html
+ * <button id="example" style="--color-bg: blue; --gap: 24;">Example</button>
+ * ```
  *
- * const result = getCssVars<CssVarsShape>(["--color-bg", "--gap"], undefined, element);
- * // { "--color-bg": "blue", "--gap": 24 }
+ * **Code**
+ *
+ * ```ts
+ * type CssVarsShape = { "--color-bg": string; "--gap": number; };
+ *
+ * const elem = findElem("#example")!;
+ *
+ * getCssVars<CssVarsShape>(["--color-bg", "--gap"], elem);
+ *  // { "--color-bg": "blue", "--gap": 24 }
+ * ```
  *
  * @group CSS
  */
 export function getCssVars<T extends CssVars = CssVars>(
   names: KeysOf<T>,
   target: ElemOrCssSelector = document.documentElement,
-): Partial<T> {
+): WithUndefinedValues<T> {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to get CSS variables ${formatForError(names)}`);
 
-  const cssVars: Partial<T> = {};
+  const cssVars: Record<string, CssVarValue | undefined> = {};
 
   for (const name of names) {
     // @ts-ignore TypeScript is complaining that the `name` isn't a valid `CssVarName`,
@@ -98,7 +126,7 @@ export function getCssVars<T extends CssVars = CssVars>(
     cssVars[name] = getSingleCssVar(elem, name);
   }
 
-  return cssVars;
+  return cast<WithUndefinedValues<T>>(cssVars);
 }
 
 function getSingleCssVar<T extends CssVarValue = string>(

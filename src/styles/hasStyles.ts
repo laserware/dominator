@@ -4,6 +4,7 @@ import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type {
+  AnyElement,
   DOMPropertySearch,
   ElemOrCssSelector,
   StyleKey,
@@ -32,7 +33,7 @@ export type StylesSearch = DOMPropertySearch<StyleKey, StyleValue | null>;
  *
  * @returns `true` if the specified style is present.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group Styles
  */
@@ -55,7 +56,7 @@ export function hasStyle(
  *
  * @returns `true` if the specified `target` has *all* specified styles.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group Styles
  */
@@ -78,7 +79,7 @@ export function hasAllStyles(
  *
  * @returns `true` if the specified `target` has *some* specified styles.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group Styles
  */
@@ -93,7 +94,7 @@ export function hasSomeStyles(
 }
 
 function hasSingleStyle(
-  element: HTMLElement,
+  element: AnyElement,
   key: string,
   value?: StyleValue | null,
 ): boolean {

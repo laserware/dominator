@@ -5,6 +5,7 @@ import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type {
+  AnyElement,
   CssVarName,
   CssVarValue,
   DOMPropertySearch,
@@ -25,16 +26,16 @@ export type CssVarsSearch = DOMPropertySearch<CssVarName, CssVarValue | null>;
  * Checks if the specified `target` has the specified CSS variable with `name`.
  * If a `value` is specified, checks that the values match.
  *
- * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
+ * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
  * @param name Name of the CSS variable to check for.
  * @param value Optional value of the CSS variable to check for.
- * @param [target] Optional Element, EventTarget, or CSS selector.
+ * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
  * @returns `true` if the specified CSS variable is present.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group CSS
  */
@@ -43,7 +44,6 @@ export function hasCssVar(
   value: CssVarValue | undefined = undefined,
   target: ElemOrCssSelector = document.documentElement,
 ): boolean {
-  // prettier-ignore
   const elem = elemOrThrow(target, `Unable to check for CSS variable ${name}`);
 
   return hasSingleCssVar(elem, name, value);
@@ -53,15 +53,15 @@ export function hasCssVar(
  * Checks if *all* of the CSS variables match the specified `search` criteria
  * in the `target`.
  *
- * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
+ * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
  * @param search Array of CSS variable names or CSS variables filter to check for.
- * @param [target] Optional Element, EventTarget, or CSS selector.
+ * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
  * @returns `true` if the specified `target` matches all search criteria.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group CSS
  */
@@ -79,15 +79,15 @@ export function hasAllCssVars(
  * Checks if *some* of the CSS variables match the specified `search` criteria
  * in the `target`.
  *
- * If no `target` is specified, uses {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement|documentElement}
+ * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
  * @param search Array of CSS variable names or CSS variables filter to check for.
- * @param [target] Optional Element, EventTarget, or CSS selector.
+ * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
  * @returns `true` if the specified `target` has *some* of the specified CSS variables.
  *
- * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
  * @group CSS
  */
@@ -102,7 +102,7 @@ export function hasSomeCssVars(
 }
 
 function hasSingleCssVar(
-  element: HTMLElement,
+  element: AnyElement,
   name: string,
   value?: CssVarValue | null,
 ): boolean {

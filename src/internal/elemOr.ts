@@ -1,6 +1,6 @@
 import { toElem } from "../elems/toElem.ts";
 import { InvalidElemError } from "../errors.ts";
-import type { ElemOrCssSelector } from "../types.ts";
+import type { AnyElement, ElemOrCssSelector } from "../types.ts";
 
 import { cast } from "./cast.ts";
 
@@ -17,7 +17,7 @@ import { cast } from "./cast.ts";
  *
  * @returns Element representation of the specified `target`.
  */
-export function elemOrThrow<E extends HTMLElement = HTMLElement>(
+export function elemOrThrow<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
   error: string,
 ): E {

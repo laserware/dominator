@@ -5,6 +5,7 @@ import { asDataAttrName } from "../internal/dataKeys.ts";
 import { parseDOMValue, stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import type {
+  AnyElement,
   AttrValue,
   DOMPropertyValue,
   ElemOrCssSelector,
@@ -13,11 +14,13 @@ import type {
 /**
  * Valid shape for dataset property. The values can be any type that can be
  * stringified.
+ *
+ * @group Dataset
  */
-type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
+export type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
 
 /**
- * Wrapper for managing the {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset|dataset}
+ * Wrapper for managing the [dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
  * property on an element.
  *
  * Trying to work with the `dataset` property using TypeScript is not great. You
@@ -26,8 +29,7 @@ type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
  * set properties of the `dataset` (which map to the corresponding `data-*`
  * attributes on an element).
  *
- * The `dataset` property is a (very barebones)
- * {@link https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap|DOMStringMap}.
+ * The `dataset` property is a (very barebones) [DOMStringMap](https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap).
  * This wrapper class enables you to get and set values of any type that can be
  * stringified while retaining type safety via the generic passed in.
  *
@@ -40,7 +42,7 @@ type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
  */
 export class Dataset<
   DS extends AnyDatasetShape,
-  E extends HTMLElement = HTMLElement,
+  E extends AnyElement = HTMLElement,
 > {
   readonly #element: E;
 
@@ -54,7 +56,7 @@ export class Dataset<
    * @param target Element, EventTarget, or CSS selector.
    * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
    *
-   * @throws {@link InvalidElemError} If the specified `target` wasn't found.
+   * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
    */
   constructor(target: ElemOrCssSelector<E>, initialData?: Partial<DS>) {
     this.#element = elemOrThrow<E>(target, "Unable to initialize Dataset");
@@ -155,11 +157,12 @@ export class Dataset<
 
 /**
  * Creates a new {@linkcode Dataset} instance for managing the
- * {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset|dataset}
+ * [dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
  * property on the specified `target`. Optionally pass in `initialData`
  * that can fully or partially match the shape specified in the `DS` generic.
  *
  * @template DS The shape of the dataset data.
+ * @template E Type of Element containing the `dataset` property.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
@@ -170,7 +173,7 @@ export class Dataset<
  */
 export function datasetOf<
   DS extends AnyDatasetShape,
-  E extends HTMLElement = HTMLElement,
+  E extends AnyElement = HTMLElement,
 >(
   target: Element | ElemOrCssSelector,
   initialData?: Partial<DS>,

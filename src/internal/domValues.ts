@@ -8,7 +8,7 @@ import type { DOMPropertyValue } from "../types.ts";
  * @internal
  *
  * Any non-primitive value (e.g. an object or array), is stringified via
- * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify|JSON.stringify}.
+ * [JSON.stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
  *
  * @param value Value to convert to a valid attribute value.
  *

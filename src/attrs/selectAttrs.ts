@@ -4,6 +4,7 @@ import { InvalidAttrError } from "../errors.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
 import type {
+  AnyElement,
   AttrName,
   Attrs,
   AttrValue,
@@ -24,27 +25,40 @@ import type {
  *
  * @returns CSS selector based on the specified attribute `name` and optional `value` and `tag`.
  *
- * @throws {@link InvalidAttrError} If the specified `value` could not be stringified.
+ * @throws {@linkcode InvalidAttrError} If the specified `value` could not be stringified.
  *
- * @example Name Only
- * const selector = selectAttr("disabled");
- * // `[disabled]`
-
- * @example Name and Value
- * const selector = selectAttr("disabled", true);
- * // `[disabled="true"]`
+ * @example
+ * **Name Only**
  *
- * @example Name, Value, and Tag
- * const selector = selectAttr("disabled", true, "button");
- * // `button[disabled="true"]`
+ * ```ts
+ * selectAttr("disabled");
+ * // [disabled]
+ * ```
  *
- * @example Name and Tag (No Value)
- * const selector = selectAttr("disabled", null, "button");
- * // `button[disabled]`
+ * **Name and Value**
+ *
+ * ```ts
+ * selectAttr("disabled", true);
+ * // [disabled="true"]
+ * ```
+ *
+ * **Name, Value, and Tag**
+ *
+ * ```ts
+ * selectAttr("disabled", true, "button");
+ * // button[disabled="true"]
+ * ```
+ *
+ * **Name and Tag (No Value)**
+ *
+ * ```ts
+ * selectAttr("disabled", null, "button");
+ * // button[disabled]
+ * ```
  *
  * @group Attributes
  */
-export function selectAttr<E extends HTMLElement = HTMLElement>(
+export function selectAttr<E extends AnyElement = HTMLElement>(
   name: AttrName<E>,
   value: AttrValue | null | undefined = undefined,
   tag?: TagName,
@@ -67,27 +81,40 @@ export function selectAttr<E extends HTMLElement = HTMLElement>(
  *
  * @returns CSS selector based on the specified `attrs`.
  *
- * @throws {@link InvalidAttrError} If a value in the specified `attrs` could not be stringified.
+ * @throws {@linkcode InvalidAttrError} If a value in the specified `attrs` could not be stringified.
  *
- * @example Single Entry With Value
- * const selector = selectAttrs({ disabled: true });
- * // `[disabled="true"]`
+ * @example
+ * **Single Entry With Value**
  *
- * @example Single Entry With Value and Tag
- * const selector = selectAttrs({ disabled: true }, "button");
- * // `button[disabled="true"]`
+ * ```ts
+ * selectAttrs({ disabled: true });
+ * // [disabled="true"]
+ * ```
+ *
+ * **Single Entry With Value and Tag**
+ *
+ * ```ts
+ * selectAttrs({ disabled: true }, "button");
+ * // button[disabled="true"]
+ * ```
 
- * @example Single Entry Without Value
- * const selector = selectAttrs({ inert: null });
- * // `[inert]`
+ * **Single Entry Without Value**
  *
- * @example Multiple Entries
- * const selector = selectAttrs({ disabled: true, inert: null });
- * // `[disabled="true"][inert]`
+ * ```ts
+ * selectAttrs({ inert: null });
+ * // [inert]
+ * ```
+ *
+ * **Multiple Entries**
+ *
+ * ```ts
+ * selectAttrs({ disabled: true, inert: null });
+ * // [disabled="true"][inert]
+ * ```
  *
  * @group Attributes
  */
-export function selectAttrs<E extends HTMLElement = HTMLElement>(
+export function selectAttrs<E extends AnyElement = HTMLElement>(
   attrs: Attrs<E>,
   tag?: TagName,
 ): CssSelector {
@@ -100,7 +127,7 @@ export function selectAttrs<E extends HTMLElement = HTMLElement>(
   return selectorWithTag(selector, tag);
 }
 
-function selectSingleAttr<E extends HTMLElement = HTMLElement>(
+function selectSingleAttr<E extends AnyElement = HTMLElement>(
   name: AttrName<E>,
   value: AttrValue | null | undefined,
 ): CssSelector {
