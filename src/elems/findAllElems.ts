@@ -11,7 +11,7 @@ import { toElem } from "./toElem.ts";
  * Query the DOM to find the Elements matching the specified CSS `selector` in
  * the optionally specified `parent`.
  *
- * @typeParam E Type of Elements to return.
+ * @template E Type of Elements to return.
  *
  * @param selector CSS selector string to find the elements.
  * @param [parent] Optional Element or EventTarget for parent.
@@ -32,7 +32,7 @@ export function findAllElems<E extends AnyElement = HTMLElement>(
  * that match the criteria in the `options` object in the optionally specified
  * `parent`.
  *
- * @typeParam E Type of Elements to return.
+ * @template E Type of Elements to return.
  *
  * @param options Options for finding the elements.
  *

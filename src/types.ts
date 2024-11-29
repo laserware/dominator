@@ -15,21 +15,21 @@ export type {
 /**
  * Type is either a single item or array of items of type `T`.
  *
- * @typeParam T Type of item or items.
+ * @template T Type of item or items.
  */
 export type OneOrManyOf<T> = T | T[];
 
 /**
  * Extracts the keys of the specified object as an array.
  *
- * @typeParam T Object to extract keys from.
+ * @template T Object to extract keys from.
  */
 export type KeysOf<T extends Record<any, any>> = Extract<keyof T, string>[];
 
 /**
  * Adds `null` as the possible type for the fields in the specified type.
  *
- * @typeParam T Type of object to add `null` to fields.
+ * @template T Type of object to add `null` to fields.
  */
 export type WithNullValues<T extends Record<any, any>> = {
   [K in keyof T]: T[K] | null;
@@ -38,7 +38,7 @@ export type WithNullValues<T extends Record<any, any>> = {
 /**
  * Adds `undefined` as the possible type for the fields in the specified type.
  *
- * @typeParam T Type of object to add `undefined` to fields.
+ * @template T Type of object to add `undefined` to fields.
  */
 export type WithUndefinedValues<T extends Record<any, any>> = {
   [K in keyof T]: T[K] | undefined;
@@ -52,7 +52,7 @@ export type Primitive = boolean | number | string;
 /**
  * Valid type for HTML/SVG attribute name.
  *
- * @typeParam E Type of Element with corresponding attribute names.
+ * @template E Type of Element with corresponding attribute names.
  *
  * @category Attrs
  */
@@ -76,7 +76,7 @@ export type AttrValue = Primitive | any[] | Record<number | string, any>;
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
  * Some of the values may be `null` or `undefined`.
  *
- * @typeParam E Type of Element for corresponding attributes.
+ * @template E Type of Element for corresponding attributes.
  *
  * @category Attrs
  */
@@ -175,7 +175,7 @@ export type Data = Record<string, DataValue | null | undefined>;
  * Key representing any type of DOM property (i.e. attributes, CSS variables,
  * dataset attribute/property names and style keys).
  *
- * @typeParam E Type of Element associated with the underlying DOM properties.
+ * @template E Type of Element associated with the underlying DOM properties.
  *
  * @category DOM
  */
@@ -210,8 +210,8 @@ export type DOMPropertyFilterValue =
 /**
  * Filter criteria for determining if a DOM property has the specified value.
  *
- * @typeParam K Key of the property to filter.
- * @typeParam V Value of the property to filter. If not checking for a value, use `null`.
+ * @template K Key of the property to filter.
+ * @template V Value of the property to filter. If not checking for a value, use `null`.
  *
  * @category DOM
  */
@@ -228,8 +228,8 @@ export type DOMPropertyFilter<
  * To check for the existence of a property only (i.e. you don't care what the
  * value is), use `null` for the field.
  *
- * @typeParam K Key of the property to search.
- * @typeParam V Type of the value to search for (only needed if using {@linkcode DOMPropertyFilter}).
+ * @template K Key of the property to search.
+ * @template V Type of the value to search for (only needed if using {@linkcode DOMPropertyFilter}).
  *
  * @example
  * **HTML**
@@ -261,7 +261,7 @@ export type DOMPropertySearch<
 /**
  * Element or EventTarget that can be passed into functions.
  *
- * @typeParam E Type of Element.
+ * @template E Type of Element.
  *
  * @category Elems
  */
@@ -283,7 +283,7 @@ export type Elem<E extends AnyElement = HTMLElement> =
  * This type allows for flexibility in functions or methods that can accept
  * either an {@linkcode Elem} type object or a string representing a CSS selector.
  *
- * @typeParam E Type of Element if {@linkcode Elem}.
+ * @template E Type of Element if {@linkcode Elem}.
  *
  * @category Elems
  */

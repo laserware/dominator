@@ -33,8 +33,8 @@ export type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
  * This wrapper class enables you to get and set values of any type that can be
  * stringified while retaining type safety via the `DS` generic passed in.
  *
- * @typeParam DS The shape of the dataset data.
- * @typeParam E Type of Element associated with the dataset.
+ * @template DS The shape of the dataset data.
+ * @template E Type of Element associated with the dataset.
  *
  * @class
  *
@@ -51,7 +51,7 @@ export class Dataset<
    * property of the corresponding `target`. Optionally pass in `initialData`
    * that can fully match the shape specified in the `DS` generic or partially.
    *
-   * @typeParam DS The shape of the dataset data.
+   * @template DS The shape of the dataset data.
    *
    * @param target Element, EventTarget, or CSS selector.
    * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
@@ -181,8 +181,8 @@ export class Dataset<
  * property on the specified `target`. Optionally pass in `initialData`
  * that can fully or partially match the shape specified in the `DS` generic.
  *
- * @typeParam DS The shape of the dataset data.
- * @typeParam E Type of Element containing the `dataset` property.
+ * @template DS The shape of the dataset data.
+ * @template E Type of Element containing the `dataset` property.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param [initialData] Optional full or partial data that corresponds to the dataset shape.

@@ -17,7 +17,7 @@ import type {
  * Assigns the specified `value` to the specified dataset `key` in the specified
  * `target`.
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Key or property name for the dataset entry.
@@ -78,7 +78,7 @@ export function setDataEntry<E extends AnyElement = HTMLElement>(
  * Assigns the specified `data` key/value pairs to the specified `target`.
  * Returns the Element representation of the specified `target`.
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param data Object with key of dataset key and value of entry value.

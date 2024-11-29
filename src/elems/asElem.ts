@@ -24,13 +24,13 @@ import type { AnyElement, Elem } from "../types.ts";
  * only available on an `HTMLButtonElement` when the Element or EventTarget you
  * passed in is an `HTMLDivElement`, you're going to get a runtime error.
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param target Element or EventTarget.
  *
  * @throws {@linkcode InvalidElemError} If specified `target` is `null` or `undefined`.
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @example
  * **Valid EventTarget**

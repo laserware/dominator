@@ -16,7 +16,7 @@ import type {
  * specified `target`. Returns `undefined` if no entry was found for the specified
  * `key`.
  *
- * @typeParam T Type of value to return for the corresponding key.
+ * @template T Type of value to return for the corresponding key.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Property (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
@@ -89,7 +89,7 @@ export function getDataValue<T extends DataValue = DataValue>(
  * on the specified `target`. If any of the specified `keys` don't exist, they
  * are set to `undefined` in the return value.
  *
- * @typeParam T Shape of value to return for the corresponding keys.
+ * @template T Shape of value to return for the corresponding keys.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Properties (e.g. `someProperty`) or attribute names (e.g. `data-some-property`) for the dataset entry.

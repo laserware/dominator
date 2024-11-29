@@ -7,7 +7,7 @@ import type { AnyElement, ElemOrCssSelector, StyleKey } from "../types.ts";
 /**
  * Removes the specified style `key` from the specified `target`.
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Key of the style property to remove.
@@ -34,7 +34,7 @@ export function removeStyle<E extends AnyElement = HTMLElement>(
  * Removes the style properties with names matching the specified `keys` from
  * the specified `target`.
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Array of style property names to remove.

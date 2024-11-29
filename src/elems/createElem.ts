@@ -12,7 +12,7 @@ import { toElem } from "./toElem.ts";
 /**
  * Options for creating an element using {@linkcode createElem}.
  *
- * @typeParam E Element type for attributes.
+ * @template E Element type for attributes.
  */
 interface CreateElemOptions<E extends AnyElement = HTMLElement> {
   /** Attributes to set on element. */
@@ -37,7 +37,7 @@ interface CreateElemOptions<E extends AnyElement = HTMLElement> {
  * just need a one-off element or you want to define the element structure
  * mostly in markup.
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param markup HTML string that represents the element.
  * @param [options] Optional attributes, CSS variables, dataset entries, and styles

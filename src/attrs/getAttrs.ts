@@ -22,8 +22,8 @@ import type {
  * We're returning `null`, rather than `undefined` to match the
  * [Element.getAttribute](https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute) API.
  *
- * @typeParam T Type of value to return.
- * @typeParam E Element type of specified `target`.
+ * @template T Type of value to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to get.
@@ -90,8 +90,8 @@ export function getAttr<
  * number if numeric, or the string value if a string. If not found, the value
  * is `null`.
  *
- * @typeParam T Shape of attributes object to return.
- * @typeParam E Element type of specified `target`.
+ * @template T Shape of attributes object to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param names Names of the attributes for which to find values.

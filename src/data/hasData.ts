@@ -27,7 +27,7 @@ export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
  * Returns true if the specified `target` has a dataset entry with the specified
  * `key` and optionally, the matching `value`.
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Property (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
@@ -78,7 +78,7 @@ export function hasDataEntry<E extends AnyElement = HTMLElement>(
  * Checks if the specified `target` has *all* of the dataset entries that match
  * the specified `search` criteria.
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of dataset keys or dataset filter object to check for.
@@ -130,7 +130,7 @@ export function hasAllData<E extends AnyElement = HTMLElement>(
  * Checks if the specified `target` has *some* of the dataset entries that match
  * the specified `search` criteria.
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of dataset keys or dataset filter object to check for.

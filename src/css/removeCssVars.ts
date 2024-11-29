@@ -11,7 +11,7 @@ import type { AnyElement, CssVarName, ElemOrCssSelector } from "../types.ts";
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param name Name of the CSS variable to remove.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
@@ -73,7 +73,7 @@ export function removeCssVar<E extends AnyElement = HTMLElement>(
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param names Array of CSS variable names to remove.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.

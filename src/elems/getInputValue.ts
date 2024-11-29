@@ -16,7 +16,7 @@ export type InputValueTypeName = "boolean" | "date" | "number" | "string";
  *
  * See {@linkcode getInputValue} to understand how this is used in practice.
  *
- * @typeParam T Name of the input value type.
+ * @template T Name of the input value type.
  *
  * @category Elems
  */
@@ -37,7 +37,7 @@ export type InputValueAsType<T extends InputValueTypeName> = T extends "boolean"
  * is a valid [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) (not `null`),
  * a boolean if the input is a `checkbox` or `radio` type, otherwise is returned as a `string`.
  *
- * @typeParam T Type of the value that gets returned.
+ * @template T Type of the value that gets returned.
  *
  * @param target Element, EventTarget, or CSS selector.
  *

@@ -47,7 +47,7 @@ export function setStyle<E extends AnyElement = HTMLElement>(
  * object with key of style property name and value of the corresponding property
  * value.
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param styles Object with style property values keyed by name.

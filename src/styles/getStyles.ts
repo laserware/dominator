@@ -20,7 +20,7 @@ import type {
  * `"true"` or `"false"`, a number if numeric, or the string value if a string.
  * If not found, returns `undefined`.
  *
- * @typeParam T Type of value to return.
+ * @template T Type of value to return.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Name of the style property to get.
@@ -51,7 +51,7 @@ export function getStyle<T extends StyleValue>(
  * `"false"`, a number if numeric, or the string value if a string. If not
  * found, the value is excluded from the return value.
  *
- * @typeParam T Shape of styles object to return.
+ * @template T Shape of styles object to return.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Names of the style properties to get values for.

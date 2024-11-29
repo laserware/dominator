@@ -17,7 +17,7 @@ import type {
  * that the `value` is coerced to a string and `null` excludes a value but only
  * includes a name. If `tag` is specified, it is included in the resulting selector.
  *
- * @typeParam E Element type to select attribute from.
+ * @template E Element type to select attribute from.
  *
  * @param name Attribute name to include in the selector.
  * @param [value=undefined] Optional attribute value to include in the selector.
@@ -74,7 +74,7 @@ export function selectAttr<E extends AnyElement = HTMLElement>(
  * a value but only includes a name. If `tag` is specified, it is included in the
  * resulting selector.
  *
- * @typeParam E Element type to select attributes from.
+ * @template E Element type to select attributes from.
  *
  * @param attrs Object with key of attribute name and value of attribute value.
  * @param [tag] Optional tag name to include in the selector.

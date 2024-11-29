@@ -55,7 +55,7 @@ export function stringifyDOMValue(value: unknown): string | undefined {
  * from `style` and `dataset`, which are `undefined` if they don't exist, we
  * want to ensure consistency across the board.
  *
- * @typeParam T Type of value to return.
+ * @template T Type of value to return.
  *
  * @param value Value to coerce to an {@linkcode AttrValue}.
  *

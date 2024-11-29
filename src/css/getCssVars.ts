@@ -29,7 +29,7 @@ import type {
  * back to the `:root` element. If you specify a `target`, you probably want to
  * get the CSS variable on that `target`.
  *
- * @typeParam T Type of value to return.
+ * @template T Type of value to return.
  *
  * @param name Name of the variable to get value for.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
@@ -89,7 +89,7 @@ export function getCssVar<T extends CssVarValue>(
  * number if numeric, or the string value if a string. If not found, the value
  * is excluded from the return value.
  *
- * @typeParam T Shape of CSS variables object to return.
+ * @template T Shape of CSS variables object to return.
  *
  * @param names Names of the variable to get value for.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.

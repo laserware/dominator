@@ -21,7 +21,7 @@ import type {
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param name Name of the CSS variable to set or update.
  * @param value Value of the CSS variable.
@@ -88,7 +88,7 @@ export function setCssVar<E extends AnyElement = HTMLElement>(
  * because the key (i.e. CSS variable name) is checked prior to setting it on the
  * property.
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param vars Object with key of CSS variable name and value of value to set for name.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.

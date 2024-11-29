@@ -14,7 +14,7 @@ import type {
  * Sets the specified attribute `target` of the specified `target` to the specified
  * `value`. The `value` is coerced to a string.
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to set.
@@ -68,7 +68,7 @@ export function setAttr<E extends AnyElement = HTMLElement>(
  * object, where the key of the object is the attribute name and the value of
  * the object is the attribute value.
  *
- * @typeParam E Element type of specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param attrs Object with key of attribute name and value of attribute value.

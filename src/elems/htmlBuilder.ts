@@ -137,7 +137,7 @@ export type ElemBuilderChild =
  * Utility function that wraps the DOM APIs to make it easier to create an
  * HTML or SVG element with less code. It mimics React's `createElement` API.
  *
- * @typeParam TN Tag name of the built Element.
+ * @template TN Tag name of the built Element.
  *
  * @param tagName Tag name of the HTML/SVG element to build (e.g. `div`, `svg`, etc.).
  * @param options Attributes, properties, and event listeners to attach to the element.
@@ -223,7 +223,7 @@ export function html<TN extends TagName>(
  * @param options Attributes and event listeners to set on Element.
  * @param controller AbortController to clean up event listeners.
  *
- * @typeParam TN Tag name for the built Element.
+ * @template TN Tag name for the built Element.
  */
 function updateElemFromOptions<TN extends TagName>(
   element: ElementWithTagName<TN>,
