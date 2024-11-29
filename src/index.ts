@@ -59,12 +59,6 @@ export {
   type InputValueAsType,
   type InputValueTypeName,
 } from "./elems/getInputValue.ts";
-export {
-  html,
-  type ElemBuilder,
-  type ElemBuilderChild,
-  type ElemBuilderOptions,
-} from "./elems/htmlBuilder.ts";
 export { getInputWidth } from "./elems/getInputWidth.ts";
 export { idMatches } from "./elems/idMatches.ts";
 export { isElemChildOf } from "./elems/isElemChildOf.ts";
