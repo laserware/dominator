@@ -1,3 +1,5 @@
+/* istanbul ignore file -- @preserve: These are just type guards, no need to enforce coverage. */
+
 import { isPlainObject } from "@laserware/arcade";
 
 import type {

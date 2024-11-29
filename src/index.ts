@@ -48,6 +48,16 @@ export { setData, setDataEntry } from "./data/setData.ts";
 export { areElemsDifferent } from "./elems/areElemsDifferent.ts";
 export { areElemsSame } from "./elems/areElemsSame.ts";
 export { asElem } from "./elems/asElem.ts";
+export {
+  createElem,
+  type CreateElemOptions,
+  type ElemChild,
+  type ElemProperties,
+  type EventDescriptor,
+  type EventHandlerName,
+  type ListenerOrDescriptor,
+  type ListenersOrDescriptors,
+} from "./elems/createElem.ts";
 export { elemExists } from "./elems/elemExists.ts";
 export { findAllElems } from "./elems/findAllElems.ts";
 export { findAllFocusable } from "./elems/findAllFocusable.ts";
@@ -80,6 +90,13 @@ export {
 } from "./styles/hasStyles.ts";
 export { removeStyle, removeStyles } from "./styles/removeStyles.ts";
 export { setStyle, setStyles } from "./styles/setStyles.ts";
+
+// Errors
+export {
+  InvalidAttrError,
+  InvalidCssVarError,
+  InvalidElemError,
+} from "./errors.ts";
 
 // Types
 export type * from "./dom.ts";
@@ -114,6 +131,3 @@ export type {
   WithNullValues,
   WithUndefinedValues,
 } from "./types.ts";
-export { InvalidCssVarError } from "./errors.ts";
-export { InvalidElemError } from "./errors.ts";
-export { InvalidAttrError } from "./errors.ts";

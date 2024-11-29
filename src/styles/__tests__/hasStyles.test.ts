@@ -89,6 +89,14 @@ describe("within hasStyles", () => {
 
       expect(result).toBeFalsy();
     });
+
+    it("throws an error if the target does not exist", () => {
+      render(`<span>Test</span>`);
+
+      expect(() => {
+        hasAllStyles("button", ["color"]);
+      }).toThrow(/Unable to check/);
+    });
   });
 
   describe("the hasSomeStyles function", () => {
@@ -130,6 +138,14 @@ describe("within hasStyles", () => {
       });
 
       expect(result).toBeFalsy();
+    });
+
+    it("throws an error if the target does not exist", () => {
+      render(`<span>Test</span>`);
+
+      expect(() => {
+        hasSomeStyles("button", ["color"]);
+      }).toThrow(/Unable to check/);
     });
   });
 });

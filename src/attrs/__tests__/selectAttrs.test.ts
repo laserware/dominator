@@ -1,3 +1,4 @@
+import { InvalidAttrError } from "../../errors.ts";
 import { selectAttr, selectAttrs } from "../selectAttrs.ts";
 
 describe("within selectAttrs", () => {
@@ -44,7 +45,7 @@ describe("within selectAttrs", () => {
       expect(() => {
         // @ts-ignore
         selectAttr("data-big-int", BigInt(20));
-      }).toThrow(/could not get selector/i);
+      }).toThrow(InvalidAttrError);
     });
   });
 

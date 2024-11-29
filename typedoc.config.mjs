@@ -10,10 +10,14 @@ const config = {
     "src/internal/**",
     "src/testing.ts",
     "src/declarations.d.ts",
-    // "src/dom.ts",
   ],
   excludeInternal: true,
   excludeNotDocumented: true,
+  headings: {
+    readme: false,
+    document: false,
+  },
+  hideGenerator: true,
   navigation: {
     compactFolders: true,
     excludeReferences: true,
@@ -21,7 +25,11 @@ const config = {
     includeFolders: false,
     includeGroups: true,
   },
+  navigationLinks: {
+    GitHub: "https://github.com/laserware/dominator",
+  },
   out: "site",
+  readme: "./README.md",
   useFirstParagraphOfCommentAsSummary: true,
 };
 
