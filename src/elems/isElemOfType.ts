@@ -14,7 +14,7 @@ import { toElem } from "./toElem.ts";
  * You can't `UPPERCASE` the tag name without getting a type error. That's because
  * this function converts it to lowercase before checking.
  *
- * @template TN Tag name of Element to check for.
+ * @typeParam TN Tag name of Element to check for.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param tag Tag name to check for (e.g. `div`, `span`, etc.).

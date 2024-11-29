@@ -6,7 +6,7 @@ import type { AnyElement, AttrName, ElemOrCssSelector } from "../types.ts";
 /**
  * Removes the specified attribute `name` from the specified `target`.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to remove.
@@ -50,9 +50,9 @@ export function removeAttr<E extends AnyElement = HTMLElement>(
 }
 
 /**
- * Removes the attributes with `names` from specified `target`.
+ * Removes the attributes with specified `names` from specified `target`.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param names Array of attribute names to remove.
@@ -71,7 +71,7 @@ export function removeAttr<E extends AnyElement = HTMLElement>(
  *   aria-valuemax="30"
  *   aria-label="Example"
  *   aria-disabled="false"
- * ></div>
+ * >...</div>
  * ```
  *
  * **Code**
@@ -88,7 +88,7 @@ export function removeAttr<E extends AnyElement = HTMLElement>(
  * <div
  *   id="example"
  *   aria-label="Example"
- * ></div>
+ * >...</div>
  * ```
  *
  * @category Attrs

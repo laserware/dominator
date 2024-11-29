@@ -20,7 +20,7 @@ import { findElem } from "./findElem.ts";
  * `target` is a CSS selector and we want to limit the search to the specified
  * parent.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param parent Optional Element, EventTarget, or CSS selector for parent.

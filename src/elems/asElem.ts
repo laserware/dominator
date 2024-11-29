@@ -3,7 +3,7 @@ import { isElem } from "../typeGuards.ts";
 import type { AnyElement, Elem } from "../types.ts";
 
 /**
- * Returns an element of type `E` for the specified target.
+ * Returns an element of type `E` for the specified `target`.
  *
  * This differs from {@linkcode toElem} in that it will never return `null`, only
  * the specified Element type, and it only accepts a Element or EventTarget
@@ -17,20 +17,20 @@ import type { AnyElement, Elem } from "../types.ts";
  * assertion. In some cases, you know *exactly* what type of Element will be
  * associated with an Event and you want to assert it as such.
  *
- * ### Important Note
+ * **Important Note**
  *
  * With this function, you are telling TypeScript what the Element is, even if
  * the type you pass into the generic is incorrect. If you try to access properties
  * only available on an `HTMLButtonElement` when the Element or EventTarget you
  * passed in is an `HTMLDivElement`, you're going to get a runtime error.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element or EventTarget.
  *
  * @throws {@linkcode InvalidElemError} If specified `target` is `null` or `undefined`.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @example
  * **Valid EventTarget**

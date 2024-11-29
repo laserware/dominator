@@ -14,7 +14,7 @@ import type {
  * Sets the specified attribute `target` of the specified `target` to the specified
  * `value`. The `value` is coerced to a string.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to set.
@@ -29,6 +29,24 @@ import type {
  *
  * ```html
  * <div id="example" role="slider">...</div>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * setAttr(elem, "aria-label", "Click me");
+ * ```
+ *
+ * **HTML (After)**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   role="slider"
+ *   aria-label="Click me"
+ * >...</div>
  * ```
  *
  * @category Attrs
@@ -50,7 +68,7 @@ export function setAttr<E extends AnyElement = HTMLElement>(
  * object, where the key of the object is the attribute name and the value of
  * the object is the attribute value.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param attrs Object with key of attribute name and value of attribute value.
@@ -58,6 +76,32 @@ export function setAttr<E extends AnyElement = HTMLElement>(
  * @returns Element representation of the specified `target`.
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML (Before)**
+ *
+ * ```html
+ * <div id="example" role="slider">...</div>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * setAttrs(elem, { "aria-label", "Click me", "aria-valuenow": 20 });
+ * ```
+ *
+ * **HTML (After)**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   role="slider"
+ *   aria-label="Click me"
+ *   aria-valuenow="20"
+ * >...</div>
+ * ```
  *
  * @category Attrs
  */

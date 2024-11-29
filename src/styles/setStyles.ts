@@ -2,6 +2,7 @@ import { toElem } from "../elems/toElem.ts";
 import { InvalidElemError } from "../errors.ts";
 import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
+import { formatForError } from "../internal/formatForError.ts";
 import { isCssVarName } from "../typeGuards.ts";
 import type {
   AnyElement,
@@ -21,7 +22,8 @@ import type {
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have a [`style`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
+ *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  *
  * @category Styles
  */
@@ -32,7 +34,7 @@ export function setStyle<E extends AnyElement = HTMLElement>(
 ): E {
   const elem = toElem(target);
   if (elem === null || !("style" in elem)) {
-    throw new InvalidElemError("Unable to set style");
+    throw new InvalidElemError(`Unable to set style for ${key}`);
   }
 
   setSingleStyle(elem, key, value);
@@ -45,14 +47,15 @@ export function setStyle<E extends AnyElement = HTMLElement>(
  * object with key of style property name and value of the corresponding property
  * value.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param styles Object with style property values keyed by name.
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have a [`style`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
+ *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  *
  * @category Styles
  */
@@ -62,7 +65,8 @@ export function setStyles<E extends AnyElement = HTMLElement>(
 ): E {
   const elem = toElem(target);
   if (elem === null || !("style" in elem)) {
-    throw new InvalidElemError("Unable to set styles");
+    // prettier-ignore
+    throw new InvalidElemError(`Unable to set styles for ${formatForError(styles)}`);
   }
 
   for (const key of Object.keys(styles)) {

@@ -90,7 +90,6 @@ export { setStyle, setStyles } from "./styles/setStyles.ts";
 // Types
 export type * from "./dom.ts";
 export type {
-  AnyElement,
   AttrName,
   Attrs,
   AttrsDefined,
@@ -110,18 +109,14 @@ export type {
   DOMPropertySearch,
   DOMPropertyValue,
   Elem,
-  ElementWithTagName,
   ElemOrCssSelector,
   FindOptions,
-  HTMLElementTagName,
   KeysOf,
   OneOrManyOf,
   Primitive,
   StyleKey,
   Styles,
   StyleValue,
-  SVGElementTagName,
-  TagName,
   WithNullValues,
   WithUndefinedValues,
 } from "./types.ts";

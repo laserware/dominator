@@ -27,13 +27,40 @@ export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
  * Returns true if the specified `target` has a dataset entry with the specified
  * `key` and optionally, the matching `value`.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Property (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
  * @param [value] Optional dataset value to check for.
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   data-is-active="false"
+ *   data-count="30"
+ *   data-label="Example"
+ * >...</div>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * hasDataEntry(elem, "data-is-active");
+ * // true
+ *
+ * hadDataEntry(elem, "isActive", "false");
+ * // false ("false" cannot be a string, must be the boolean value `false`)
+ *
+ * hadDataEntry(elem, "data-count", 30);
+ * // true
+ * ```
  *
  * @category Data
  */
@@ -51,7 +78,7 @@ export function hasDataEntry<E extends AnyElement = HTMLElement>(
  * Checks if the specified `target` has *all* of the dataset entries that match
  * the specified `search` criteria.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of dataset keys or dataset filter object to check for.
@@ -59,6 +86,33 @@ export function hasDataEntry<E extends AnyElement = HTMLElement>(
  * @returns `true` if the specified `target` matches all search criteria.
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   data-is-active="false"
+ *   data-count="30"
+ *   data-label="Example"
+ * >...</div>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * hasAllData(elem, ["data-is-active", "data-count"]);
+ * // true
+ *
+ * hasAllData(elem, ["isActive", "data-missing"]);
+ * // false
+ *
+ * hasAllData(elem, { "data-count", 30, "label": null });
+ * // true
+ * ```
  *
  * @category Data
  */
@@ -76,7 +130,7 @@ export function hasAllData<E extends AnyElement = HTMLElement>(
  * Checks if the specified `target` has *some* of the dataset entries that match
  * the specified `search` criteria.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of dataset keys or dataset filter object to check for.
@@ -84,6 +138,33 @@ export function hasAllData<E extends AnyElement = HTMLElement>(
  * @returns `true` if the specified `target` matches some search criteria.
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   data-is-active="false"
+ *   data-count="30"
+ *   data-label="Example"
+ * >...</div>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * hasSomeData(elem, ["data-is-active", "data-missing"]);
+ * // true
+ *
+ * hasSomeData(elem, ["data-missing"]);
+ * // false
+ *
+ * hasSomeData(elem, { "data-is-active": false, "count", 30, "missing": null });
+ * // true
+ * ```
  *
  * @category Data
  */

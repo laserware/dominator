@@ -13,7 +13,7 @@ import type {
 
 /**
  * Valid shape for dataset property. The values can be any type that can be
- * stringified.
+ * stringified. Used for defining the shape in the {@linkcode Dataset} class.
  *
  * @category Data
  */
@@ -31,10 +31,10 @@ export type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
  *
  * The `dataset` property is a (very barebones) [DOMStringMap](https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap).
  * This wrapper class enables you to get and set values of any type that can be
- * stringified while retaining type safety via the generic passed in.
+ * stringified while retaining type safety via the `DS` generic passed in.
  *
- * @template DS The shape of the dataset data.
- * @template E Type of Element associated with the dataset.
+ * @typeParam DS The shape of the dataset data.
+ * @typeParam E Type of Element associated with the dataset.
  *
  * @class
  *
@@ -51,7 +51,7 @@ export class Dataset<
    * property of the corresponding `target`. Optionally pass in `initialData`
    * that can fully match the shape specified in the `DS` generic or partially.
    *
-   * @template DS The shape of the dataset data.
+   * @typeParam DS The shape of the dataset data.
    *
    * @param target Element, EventTarget, or CSS selector.
    * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
@@ -62,7 +62,7 @@ export class Dataset<
     this.#element = elemOrThrow<E>(target, "Unable to initialize Dataset");
 
     if (isNotNil(initialData)) {
-      this.update(initialData);
+      this.setAll(initialData);
     }
   }
 
@@ -71,27 +71,6 @@ export class Dataset<
    */
   public get element(): E {
     return this.#element;
-  }
-
-  /**
-   * Builds an object with all *defined* dataset values. Note that the return value
-   * is a `Partial` because the expected shape of the dataset specified in the
-   * `DS` generic doesn't necessarily correspond to dataset properties that
-   * *exist* on the element.
-   *
-   * @returns Object with dataset entries that exist.
-   */
-  public all(): Partial<DS> {
-    const dataset = this.#dataset;
-
-    const entries: Record<string, AttrValue> = {};
-
-    for (const name of Object.keys(dataset)) {
-      // @ts-ignore Expects a `Stringifiable`, but can be `null` or `undefined`.
-      entries[name] = parseDOMValue(dataset[name]);
-    }
-
-    return cast<Partial<DS>>(entries);
   }
 
   /**
@@ -104,6 +83,47 @@ export class Dataset<
   public get<K extends keyof DS>(key: K): DS[K] | undefined {
     // @ts-ignore The return value type will match the valid values in the shape.
     return parseDOMValue(this.#dataset[key]);
+  }
+
+  /**
+   * Builds an object with all *defined* dataset attribute values. Note that the
+   * return value is a `Partial` because the expected shape of the dataset
+   * specified in the `DS` generic doesn't necessarily correspond to dataset
+   * properties that *exist* on the element.
+   *
+   * @returns Object with dataset entries that exist.
+   *
+   * @example
+   * **HTML**
+   *
+   * ```html
+   * <div id="example" data-count="20">Example</div>
+   * ```
+   *
+   * **Code**
+   *
+   * ```ts
+   * const elem = findElem("#example");
+   *
+   * const ds = datasetOf<{ count: number; label: string }>(elem);
+   *
+   * // Note that `label` is missing because there is no `data-label` attribute
+   * // on the specified element:
+   * const entries = ds.getAll();
+   * // { count: 20 }
+   * ```
+   */
+  public getAll(): Partial<DS> {
+    const dataset = this.#dataset;
+
+    const entries: Record<string, AttrValue> = {};
+
+    for (const name of Object.keys(dataset)) {
+      // @ts-ignore Expects a `Stringifiable`, but can be `null` or `undefined`.
+      entries[name] = parseDOMValue(dataset[name]);
+    }
+
+    return cast<Partial<DS>>(entries);
   }
 
   /**
@@ -125,7 +145,7 @@ export class Dataset<
    *
    * @param entries Data to update in the dataset.
    */
-  public update(entries: Partial<DS>): this {
+  public setAll(entries: Partial<DS>): this {
     for (const key of Object.keys(entries)) {
       this.#dataset[key] = stringifyDOMValue(entries[key]);
     }
@@ -161,8 +181,8 @@ export class Dataset<
  * property on the specified `target`. Optionally pass in `initialData`
  * that can fully or partially match the shape specified in the `DS` generic.
  *
- * @template DS The shape of the dataset data.
- * @template E Type of Element containing the `dataset` property.
+ * @typeParam DS The shape of the dataset data.
+ * @typeParam E Type of Element containing the `dataset` property.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param [initialData] Optional full or partial data that corresponds to the dataset shape.

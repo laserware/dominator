@@ -1,15 +1,7 @@
 /** @type {Partial<import("typedoc").TypeDocOptions>} */
 const config = {
   categorizeByGroup: false,
-  categoryOrder: [
-    "Attrs",
-    "CSS",
-    "Data",
-    "Elems",
-    "Styles",
-    "DOM Properties",
-    "Other",
-  ],
+  categoryOrder: ["Attrs", "CSS", "Data", "Elems", "Styles", "DOM", "Other"],
   cleanOutputDir: true,
   entryPoints: ["./src/index.ts"],
   entryPointStrategy: "expand",

@@ -21,21 +21,34 @@ import type {
  *
  * @returns CSS selector based on the specified `key` and optional `value`.
  *
- * @example Dataset Key Without Value
+ * @example
+ * **Dataset Key without Value**
+ *
+ * ```ts
  * const selector = selectDataEntry("someThing");
  * // `[data-some-thing]`
+ * ```
  *
- * @example `data-` Attribute Name Without Value
+ * **`data-` Attribute Name without Value**
+ *
+ * ```ts
  * const selector = selectDataEntry("data-some-thing");
  * // `[data-some-thing]`
+ * ```
  *
- * @example Dataset Key With Value
+ * **Dataset Key with Value**
+ *
+ * ```ts
  * const selector = selectDataEntry("someThing", "stuff");
  * // `[data-some-thing="stuff"]`
+ * ```
  *
- * @example `data-` Attribute Name With Value and Tag
+ * **`data-` Attribute Name with Value and Tag**
+ *
+ * ```ts
  * const selector = selectDataEntry("data-some-thing", "stuff", "a");
  * // `a[data-some-thing="stuff"]`
+ * ```
  *
  * @category Data
  */
@@ -58,17 +71,27 @@ export function selectDataEntry(
  *
  * @returns CSS selector based on the specified `data`.
  *
- * @example Dataset Object With `null` Value
+ * @example
+ * **Dataset Object With `null` Value**
+ *
+ * ```ts
  * const selector = selectData({ someThing: null });
  * // `[data-some-thing]`
+ * ```
  *
- * @example Data Object With Value
+ * **Data Object with Value**
+ *
+ * ```ts
  * const selector = selectData({ someThing: "stuff" });
  * // `[data-some-thing="stuff"]`
+ * ```
  *
- * @example Data Object With Value and Tag
+ * **Data Object with Value and Tag**
+ *
+ * ```ts
  * const selector = selectData({ someThing: "stuff", otherThing: "doodles" }, "a");
  * // `a[data-some-thing="stuff"][data-other-thing="doodles"]`
+ * ```
  *
  * @category Data
  */

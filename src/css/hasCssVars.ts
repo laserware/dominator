@@ -30,12 +30,49 @@ export type CssVarsSearch = DOMPropertySearch<CssVarName, CssVarValue | null>;
  * (i.e. `:root`).
  *
  * @param name Name of the CSS variable to check for.
- * @param value Optional value of the CSS variable to check for.
+ * @param [value=undefined] Optional value of the CSS variable to check for.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
  * @returns `true` if the specified CSS variable is present.
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML**
+ *
+ * ```html
+ * <style>:root { --color-fg: green; }</style>
+ *
+ * <button id="example" style="--color-bg: blue; --is-big: true;">Example</button>
+ * ```
+ *
+ * **Check Element**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * hasCssVar("--color-bg", undefined, elem);
+ * // true
+ *
+ * hasCssVar("--is-big", "true", elem);
+ * // false ("true" cannot be a string, must be the boolean value `true`)
+ *
+ * hasCssVar("--color-bg", "blue", elem);
+ * // true
+ * ```
+ *
+ * **Check `:root`**
+ *
+ * ```ts
+ * hasCssVar("--color-bg");
+ * // true
+ *
+ * hasCssVar("--is-big", "true");
+ * // false ("true" cannot be a string, must be the boolean value `true`)
+ *
+ * hasCssVar("--color-bg", "blue");
+ * // true
+ * ```
  *
  * @category CSS
  */
@@ -63,6 +100,49 @@ export function hasCssVar(
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
+ * @example
+ * **HTML**
+ *
+ * ```html
+ * <style>
+ *   :root {
+ *     --color-fg: green;
+ *     --padding-small: "24px";
+ *     --is-small: true;
+ *   }
+ * </style>
+ *
+ * <button id="example" style="--color-bg: blue; --is-big: true;">Example</button>
+ * ```
+ *
+ * **Check Element**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * hasAllCssVars(["--color-bg", "--is-big"] , elem);
+ * // true
+ *
+ * hasAllCssVars({ "--color-bg": "blue", "--is-big": true }, elem);
+ * // true
+ *
+ * hasAllCssVars({ "--color-bg": "blue", "--missing": true }, elem);
+ * // false
+ * ```
+ *
+ * **Check `:root`**
+ *
+ * ```ts
+ * hasAllCssVars(["--color-fg", "--padding-small"]);
+ * // true
+ *
+ * hasAllCssVars({ "--color-fg": "green", "--is-small": "true" });
+ * // false ("true" cannot be a string, must be the boolean value `true`)
+ *
+ * hasAllCssVars({ "--color-fg": "green", "--is-small": false });
+ * // false (`--is-small` is `true`)
+ * ```
+ *
  * @category CSS
  */
 export function hasAllCssVars(
@@ -88,6 +168,49 @@ export function hasAllCssVars(
  * @returns `true` if the specified `target` has *some* of the specified CSS variables.
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML**
+ *
+ * ```html
+ * <style>
+ *   :root {
+ *     --color-fg: green;
+ *     --padding-small: "24px";
+ *     --is-small: true;
+ *   }
+ * </style>
+ *
+ * <button id="example" style="--color-bg: blue; --is-big: true;">Example</button>
+ * ```
+ *
+ * **Check Element**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * hasSomeCssVars(["--color-bg"] , elem);
+ * // true
+ *
+ * hasSomeCssVars({ "--color-bg": "blue", "--missing": null }, elem);
+ * // true
+ *
+ * hasSomeCssVars({ "--color-bg": "blue", "--missing": true }, elem);
+ * // false
+ * ```
+ *
+ * **Check `:root`**
+ *
+ * ```ts
+ * hasSomeCssVars(["--color-fg", "--padding-small"]);
+ * // true
+ *
+ * hasSomeCssVars({ "--color-fg": "green", "--is-small": "true" });
+ * // false ("true" cannot be a string, must be the boolean value `true`)
+ *
+ * hasSomeCssVars({ "--color-fg": "green", "--is-small": false });
+ * // false (`--is-small` is `true`)
+ * ```
  *
  * @category CSS
  */

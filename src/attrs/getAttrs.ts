@@ -22,8 +22,8 @@ import type {
  * We're returning `null`, rather than `undefined` to match the
  * [Element.getAttribute](https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute) API.
  *
- * @template T Type of value to return.
- * @template E Element type of specified `target`.
+ * @typeParam T Type of value to return.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to get.
@@ -86,12 +86,12 @@ export function getAttr<
 /**
  * Builds an object with the keys equal to the specified attribute `names` and
  * the value equal to the corresponding attribute value in the specified `target`.
- * If the value is found it is coerced to a boolean if "true" or "false", a
+ * If the value is found it is coerced to a boolean if `"true"` or `"false"`, a
  * number if numeric, or the string value if a string. If not found, the value
  * is `null`.
  *
- * @template T Shape of attributes object to return.
- * @template E Element type of specified `target`.
+ * @typeParam T Shape of attributes object to return.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param names Names of the attributes for which to find values.
@@ -119,9 +119,9 @@ export function getAttr<
  *
  * ```ts
  * interface Shape {
- *   "aria-label": string;
- *   "aria-valuemax": number;
- *   invalid: string;
+ *   "aria-label": string | null;
+ *   "aria-valuemax": number | null;
+ *   invalid: string | null;
  * }
  *
  * const elem = findElem("#example")!;

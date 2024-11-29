@@ -17,7 +17,7 @@ import type {
  * Assigns the specified `value` to the specified dataset `key` in the specified
  * `target`.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Key or property name for the dataset entry.
@@ -26,6 +26,39 @@ import type {
  * @returns Element representation of the specified `target`.
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML (Before)**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   data-is-active="false"
+ *   data-count="30"
+ *   data-label="Example"
+ * >...</div>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * setDataEntry(elem, "data-is-active", true);
+ * setDataEntry(elem, "data-count", 50);
+ * setDataEntry(elem, "data-label", "Update");
+ * ```
+ *
+ * **HTML (After)**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   data-is-active="true"
+ *   data-count="50"
+ *   data-label="Update"
+ * >...</div>
+ * ```
  *
  * @category Data
  */
@@ -45,12 +78,47 @@ export function setDataEntry<E extends AnyElement = HTMLElement>(
  * Assigns the specified `data` key/value pairs to the specified `target`.
  * Returns the Element representation of the specified `target`.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param data Object with key of dataset key and value of entry value.
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML (Before)**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   data-is-active="false"
+ *   data-count="30"
+ *   data-label="Example"
+ * >...</div>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * setData(elem, {
+ *   "data-is-active", true,
+ *   count: 50,
+ *   "data-label": "Update",
+ * });
+ * ```
+ *
+ * **HTML (After)**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   data-is-active="true"
+ *   data-count="50"
+ *   data-label="Update"
+ * >...</div>
+ * ```
  *
  * @category Data
  */

@@ -14,7 +14,7 @@ import type {
  * Removes the dataset entry with the specified `key` from the specified
  * `target`.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Dataset property or attribute name for the dataset entry to remove.
@@ -41,7 +41,7 @@ export function removeDataEntry<E extends AnyElement = HTMLElement>(
  * Removes the specified dataset entries with the specified `keys` from the
  * specified `target`.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Array of dataset properties or attribute names to remove.

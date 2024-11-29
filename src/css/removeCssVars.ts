@@ -11,7 +11,7 @@ import type { AnyElement, CssVarName, ElemOrCssSelector } from "../types.ts";
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param name Name of the CSS variable to remove.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
@@ -20,6 +20,39 @@ import type { AnyElement, CssVarName, ElemOrCssSelector } from "../types.ts";
  *
  * @throws {@linkcode InvalidCssVarError} If the CSS variable could not be removed from `target`.
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML (Before)**
+ *
+ * ```html
+ * <style>:root { --color-fg: green; --is-small: false }</style>
+ *
+ * <button id="example" style="--color-bg: blue; font-size: 18px;">Example</button>
+ * ```
+ *
+ * **Remove from Element**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * removeCssVar("color-bg", elem);
+ * ```
+ *
+ * **Remove from `:root`**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * removeCssVar("color-fg");
+ * ```
+ *
+ * **HTML (After)**
+ *
+ * ```html
+ * <style>:root { --is-small: false }</style>
+ *
+ * <button id="example" style="font-size: 18px;">Example</button>
+ * ```
  *
  * @category CSS
  */
@@ -40,7 +73,7 @@ export function removeCssVar<E extends AnyElement = HTMLElement>(
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param names Array of CSS variable names to remove.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
@@ -49,6 +82,51 @@ export function removeCssVar<E extends AnyElement = HTMLElement>(
  *
  * @throws {@linkcode InvalidCssVarError} If a CSS variable could not be removed from `target`.
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML (Before)**
+ *
+ * ```html
+ * <style>
+ *   :root {
+ *     --color-fg: green;
+ *     --padding-small: "24px";
+ *     --is-small: true;
+ *   }
+ * </style>
+ *
+ * <button id="example" style="--color-bg: blue; --is-big: true; font-size: 18px;">
+ *   Example
+ * </button>
+ * ```
+ *
+ * **Remove from Element**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * removeCssVars(["--color-bg", "--is-big"] , elem);
+ * ```
+ *
+ * **Remove from `:root`**
+ *
+ * ```ts
+ * removeCssVars(["--color-fg", "--padding-small"]);
+ * ```
+ *
+ * **HTML (After)**
+ *
+ * ```html
+ * <style>
+ *   :root {
+ *     --is-small: true;
+ *   }
+ * </style>
+ *
+ * <button id="example" style="font-size: 18px;">
+ *   Example
+ * </button>
+ * ```
  *
  * @category CSS
  */

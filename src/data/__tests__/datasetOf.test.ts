@@ -35,13 +35,13 @@ describe("the datasetOf function", () => {
     expect(dataset.element.hasAttribute("data-count")).toBeFalsy();
   });
 
-  describe("the all method", () => {
+  describe("the getAll method", () => {
     it("returns all data when dataset entries exist on target", () => {
       const element = render(`<div>Test</div>`);
 
       const dataset = datasetOf<TestDatasetShape>(element, initialData);
 
-      expect(dataset.all()).toEqual(initialData);
+      expect(dataset.getAll()).toEqual(initialData);
     });
 
     it("returns an empty object when no dataset entries exist on target", () => {
@@ -49,7 +49,15 @@ describe("the datasetOf function", () => {
 
       const dataset = datasetOf(element);
 
-      expect(dataset.all()).toEqual({});
+      expect(dataset.getAll()).toEqual({});
+    });
+
+    it("returns object with with defined dataset properties", () => {
+      const element = render(`<div data-count="10">Test</div>`);
+
+      const dataset = datasetOf<{ count: number; color: string }>(element);
+
+      expect(dataset.getAll()).toEqual({ count: 10 });
     });
   });
 
@@ -85,6 +93,17 @@ describe("the datasetOf function", () => {
     dataset.set("count", expected);
 
     expect(dataset.get("count")).toBe(expected);
+  });
+
+  it("sets the dataset entries when the setAll method is called", () => {
+    const element = render(`<div>Test</div>`);
+
+    const dataset = datasetOf<TestDatasetShape>(element);
+
+    dataset.setAll({ count: 50, size: "small" });
+
+    expect(dataset.get("count")).toBe(50);
+    expect(dataset.get("size")).toBe("small");
   });
 
   it("returns the dataset attribute name when attrNameFor is called", () => {

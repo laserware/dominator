@@ -94,7 +94,7 @@ describe("within hasCssVars", () => {
         {
           "--color-bg": "blue",
           "--font-weight": 200,
-          "--is-big": true,
+          "--is-big": null,
         },
         element,
       );

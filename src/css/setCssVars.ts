@@ -21,7 +21,7 @@ import type {
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param name Name of the CSS variable to set or update.
  * @param value Value of the CSS variable.
@@ -31,6 +31,37 @@ import type {
  *
  * @throws {@linkcode InvalidCssVarError} If the specified `name` is not a valid {@linkcode CssVarName}.
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML (Before)**
+ *
+ * ```html
+ * <style>:root { --color-fg: green; }</style>
+ *
+ * <button id="example" style="--color-bg: blue;">Example</button>
+ * ```
+ *
+ * **Set in Element**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * setCssVar("--color-bg", "red", elem);
+ * ```
+ *
+ * **Set in `:root`**
+ *
+ * ```ts
+ * setCssVar("--color-fg", "blue");
+ * ```
+ *
+ * **HTML (After)**
+ *
+ * ```html
+ * <style>:root { --color-fg: blue; }</style>
+ *
+ * <button id="example" style="--color-bg: red;">Example</button>
+ * ```
  *
  * @category CSS
  */
@@ -57,7 +88,7 @@ export function setCssVar<E extends AnyElement = HTMLElement>(
  * because the key (i.e. CSS variable name) is checked prior to setting it on the
  * property.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param vars Object with key of CSS variable name and value of value to set for name.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
@@ -66,6 +97,37 @@ export function setCssVar<E extends AnyElement = HTMLElement>(
  *
  * @throws {@linkcode InvalidCssVarError} If a specified name in `vars` is not a valid {@linkcode CssVarName}.
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML (Before)**
+ *
+ * ```html
+ * <style>:root { --color-fg: green; }</style>
+ *
+ * <button id="example" style="--color-bg: blue;">Example</button>
+ * ```
+ *
+ * **Set in Element**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * setCssVars({ "--color-bg", "red" }, elem);
+ * ```
+ *
+ * **Set in `:root`**
+ *
+ * ```ts
+ * setCssVars({ "--color-fg", "blue" });
+ * ```
+ *
+ * **HTML (After)**
+ *
+ * ```html
+ * <style>:root { --color-fg: blue; }</style>
+ *
+ * <button id="example" style="--color-bg: red;">Example</button>
+ * ```
  *
  * @category CSS
  */

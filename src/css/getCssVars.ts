@@ -29,7 +29,7 @@ import type {
  * back to the `:root` element. If you specify a `target`, you probably want to
  * get the CSS variable on that `target`.
  *
- * @template T Type of value to return.
+ * @typeParam T Type of value to return.
  *
  * @param name Name of the variable to get value for.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
@@ -43,10 +43,12 @@ import type {
  * **HTML**
  *
  * ```html
+ * <style>:root { --color-fg: green; }</style>
+ *
  * <button id="example" style="--color-bg: blue; --gap: 24;">Example</button>
  * ```
  *
- * **Code**
+ * **Get from Element**
  *
  * ```ts
  * const elem = findElem("#example")!;
@@ -56,6 +58,13 @@ import type {
  *
  * getCssVar("--gap", elem);
  * // 24
+ * ```
+ *
+ * **Get from `:root`**
+ *
+ * ```ts
+ * getCssVar("--color-fg");
+ * // "green"
  * ```
  *
  * @category CSS
@@ -80,7 +89,7 @@ export function getCssVar<T extends CssVarValue>(
  * number if numeric, or the string value if a string. If not found, the value
  * is excluded from the return value.
  *
- * @template T Shape of CSS variables object to return.
+ * @typeParam T Shape of CSS variables object to return.
  *
  * @param names Names of the variable to get value for.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.

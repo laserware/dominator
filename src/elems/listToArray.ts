@@ -9,7 +9,7 @@ import { asElem } from "./asElem.ts";
  * or [HTMLCollection](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCollection)
  * to an array.
  *
- * @template E Type of Elements in the returned array.
+ * @typeParam E Type of Elements in the returned array.
  *
  * @param items NodeList or HTMLCollection to convert to array.
  *

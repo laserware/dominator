@@ -19,7 +19,7 @@ import { getAttr } from "./getAttrs.ts";
  * present, or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of an attribute.
  *
- * @template E Type of Element with corresponding attributes to search.
+ * @typeParam E Type of Element with corresponding attributes to search.
  *
  * @category Attrs
  */
@@ -32,7 +32,7 @@ export type AttrsSearch<E extends AnyElement = HTMLElement> = DOMPropertySearch<
  * Checks if the specified `target` has the specified attribute `name`. If a
  * `value` is specified, checks that the values match.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to check for.
@@ -80,7 +80,7 @@ export function hasAttr<E extends AnyElement = HTMLElement>(
  * Checks if the specified `target` has *all* of the attributes that match the
  * specified `search` criteria.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of attribute names or attributes filter object to check for.
@@ -127,7 +127,7 @@ export function hasAllAttrs<E extends AnyElement = HTMLElement>(
  * Checks if the specified `target` has *some* of the attributes that match
  * the specified `search` criteria.
  *
- * @template E Element type of specified `target`.
+ * @typeParam E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of attribute names or attributes filter object to check for.

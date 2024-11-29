@@ -10,7 +10,7 @@ import { cast } from "./cast.ts";
  *
  * @internal
  *
- * @template E Type of Element to return.
+ * @typeParam E Type of Element to return.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param error Error message to include with the error.

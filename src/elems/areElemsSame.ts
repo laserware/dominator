@@ -5,8 +5,9 @@ import { toElem } from "./toElem.ts";
 /**
  * Returns true if the Element, EventTarget, or CSS selector instance(s) specified
  * as `left` and the Element, EventTarget, or CSS selector specified as
- * `right` do *not* match.
+ * `right` **do** match.
  *
+ * @remarks
  * This function doesn't throw if the specified `left` and/or `right` elements
  * don't exist. Rather, it just returns `false`. This was a deliberate choice.
  *

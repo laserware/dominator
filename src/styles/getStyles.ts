@@ -1,6 +1,7 @@
 import { toElem } from "../elems/toElem.ts";
 
 import { InvalidElemError } from "../errors.ts";
+import { cast } from "../internal/cast.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import type {
@@ -10,6 +11,7 @@ import type {
   StyleKey,
   Styles,
   StyleValue,
+  WithUndefinedValues,
 } from "../types.ts";
 
 /**
@@ -18,14 +20,15 @@ import type {
  * `"true"` or `"false"`, a number if numeric, or the string value if a string.
  * If not found, returns `undefined`.
  *
- * @template T Type of value to return.
+ * @typeParam T Type of value to return.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Name of the style property to get.
  *
- * @returns Value of type `T` or `null` if not found.
+ * @returns Value of type `T` or `undefined` if not found.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
+ *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  *
  * @category Styles
  */
@@ -48,37 +51,38 @@ export function getStyle<T extends StyleValue>(
  * `"false"`, a number if numeric, or the string value if a string. If not
  * found, the value is excluded from the return value.
  *
- * @template T Shape of attributes object to return.
+ * @typeParam T Shape of styles object to return.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Names of the style properties to get values for.
  *
- * @returns Object with specified names as keys and corresponding style property values.
- *          Note that you will need to perform checks for the presence of a value in the
- *          returned object because it's a `Partial` of the specified `T`.
+ * @returns Object with specified names as `keys` and corresponding style property values.
+ *          Note that you will need to perform checks for whether a value is
+ *          `undefined` in the returned object if some of the entries weren't present.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
+ *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  *
  * @category Styles
  */
 export function getStyles<T extends Styles = Styles>(
   target: ElemOrCssSelector,
   keys: KeysOf<T>,
-): Partial<T> {
+): WithUndefinedValues<T> {
   const elem = toElem(target);
   if (elem === null || !("style" in elem)) {
     // prettier-ignore
     throw new InvalidElemError(`Unable to get styles for ${formatForError(keys)}`);
   }
 
-  const styles: Partial<T> = {};
+  const styles: Record<string, StyleValue | undefined> = {};
 
   for (const key of keys) {
     // @ts-ignore
     styles[key] = getSingleStyle(elem, key);
   }
 
-  return styles;
+  return cast<WithUndefinedValues<T>>(styles);
 }
 
 function getSingleStyle<T extends StyleValue>(
