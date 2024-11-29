@@ -27,7 +27,7 @@ import type {
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Styles
+ * @category Styles
  */
 export function getStyle<T extends StyleValue>(
   target: ElemOrCssSelector,
@@ -59,7 +59,7 @@ export function getStyle<T extends StyleValue>(
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Styles
+ * @category Styles
  */
 export function getStyles<T extends Styles = Styles>(
   target: ElemOrCssSelector,

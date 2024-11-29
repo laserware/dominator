@@ -16,7 +16,7 @@ import { toElem } from "./toElem.ts";
  *             target element input.
  * @param right Element, EventTarget, or CSS selector to compare against.
  *
- * @group Elements
+ * @category Elems
  */
 export function areElemsSame(
   left: OneOrManyOf<ElemOrCssSelector>,

@@ -19,7 +19,7 @@ import type {
  * dataset entries are present, or an object to search for specific values.
  * Use `null` for the value if you only care about the presence of a dataset entry.
  *
- * @group Dataset
+ * @category Data
  */
 export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
 
@@ -35,7 +35,7 @@ export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Dataset
+ * @category Data
  */
 export function hasDataEntry<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -60,7 +60,7 @@ export function hasDataEntry<E extends AnyElement = HTMLElement>(
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Dataset
+ * @category Data
  */
 export function hasAllData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -85,7 +85,7 @@ export function hasAllData<E extends AnyElement = HTMLElement>(
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Dataset
+ * @category Data
  */
 export function hasSomeData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

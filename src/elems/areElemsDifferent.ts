@@ -14,7 +14,7 @@ import { toElem } from "./toElem.ts";
  *
  * @returns `true` if the elements do **not** match.
  *
- * @group Elements
+ * @category Elems
  */
 export function areElemsDifferent(
   left: OneOrManyOf<ElemOrCssSelector>,

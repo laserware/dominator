@@ -71,7 +71,7 @@ type ListenersOrDescriptors = {
 /**
  * Options for an Element built with {@linkcode html}.
  *
- * @group Elements
+ * @category Elems
  */
 export interface ElemBuilderOptions<TN extends TagName> {
   id?: string;
@@ -90,7 +90,7 @@ const identifier = Symbol("identifier");
  * Interface for the HTML element builder returned from the {@linkcode html}
  * function.
  *
- * @group Elements
+ * @category Elems
  */
 export interface ElemBuilder<TN extends TagName = TagName> {
   [identifier]: "ElemBuilder";
@@ -124,7 +124,7 @@ function isElemBuilder(value: unknown): value is ElemBuilder {
  * - Function that returns any one of the above child items
  * - null, which indicates that nothing should be built/rendered
  *
- * @group Elements
+ * @category Elems
  */
 export type ElemBuilderChild =
   | ElemBuilder
@@ -147,7 +147,7 @@ export type ElemBuilderChild =
  *
  * @returns An object with a `build` function that returns the built Element.
  *
- * @group Elements
+ * @category Elems
  */
 export function html<TN extends TagName>(
   tagName: TN,

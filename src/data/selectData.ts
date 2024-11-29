@@ -37,7 +37,7 @@ import type {
  * const selector = selectDataEntry("data-some-thing", "stuff", "a");
  * // `a[data-some-thing="stuff"]`
  *
- * @group Dataset
+ * @category Data
  */
 export function selectDataEntry(
   key: DataKey,
@@ -70,7 +70,7 @@ export function selectDataEntry(
  * const selector = selectData({ someThing: "stuff", otherThing: "doodles" }, "a");
  * // `a[data-some-thing="stuff"][data-other-thing="doodles"]`
  *
- * @group Dataset
+ * @category Data
  */
 export function selectData(data: Data, tag?: TagName): CssSelector {
   let selector = "";

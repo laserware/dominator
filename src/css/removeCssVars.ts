@@ -21,7 +21,7 @@ import type { AnyElement, CssVarName, ElemOrCssSelector } from "../types.ts";
  * @throws {@linkcode InvalidCssVarError} If the CSS variable could not be removed from `target`.
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group CSS
+ * @category CSS
  */
 export function removeCssVar<E extends AnyElement = HTMLElement>(
   name: CssVarName,
@@ -50,7 +50,7 @@ export function removeCssVar<E extends AnyElement = HTMLElement>(
  * @throws {@linkcode InvalidCssVarError} If a CSS variable could not be removed from `target`.
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group CSS
+ * @category CSS
  */
 export function removeCssVars<E extends AnyElement = HTMLElement>(
   names: CssVarName[],

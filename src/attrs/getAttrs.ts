@@ -72,7 +72,7 @@ import type {
  * // false
  * ```
  *
- * @group Attributes
+ * @category Attrs
  */
 export function getAttr<
   T extends AttrValue = AttrValue,
@@ -131,7 +131,7 @@ export function getAttr<
  * // { "aria-label": "Example", "aria-valuemax": 30, invalid: null }
  * ```
  *
- * @group Attributes
+ * @category Attrs
  */
 export function getAttrs<
   T extends Attrs = Attrs,

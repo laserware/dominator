@@ -43,28 +43,28 @@ export type Booleanish = boolean | "true" | "false";
 /**
  * Tag name for HTML element.
  *
- * @group Elements
+ * @category Elems
  */
 export type HTMLElementTagName = keyof HTMLElementTagNameMap;
 
 /**
  * Tag name for SVG element.
  *
- * @group Elements
+ * @category Elems
  */
 export type SVGElementTagName = keyof SVGElementTagNameMap;
 
 /**
  * Tag name for any HTML or SVG element.
  *
- * @group Elements
+ * @category Elems
  */
 export type TagName = HTMLElementTagName | SVGElementTagName;
 
 /**
  * Element type associated with the specified tag name.
  *
- * @group Elements
+ * @category Elems
  */
 export type ElementWithTagName<TN extends TagName> =
   TN extends HTMLElementTagName
@@ -76,7 +76,7 @@ export type ElementWithTagName<TN extends TagName> =
 /**
  * Any HTML or SVG element.
  *
- * @group Elements
+ * @category Elems
  */
 export type AnyElement = HTMLElement | SVGElement;
 
@@ -1806,7 +1806,7 @@ export interface SVGAttributesTagNameMap {
 /**
  * Attributes for any [SVGElement](https://developer.mozilla.org/en-US/docs/Web/API/SVGElement).
  *
- * @group Attributes
+ * @category Attrs
  */
 export type SVGElementAttributes = SVGAttributes;
 
@@ -1816,7 +1816,7 @@ export type SVGElementAttributes = SVGAttributes;
  *
  * @type E Type of HTMLElement for associated attributes.
  *
- * @group Attributes
+ * @category Attrs
  */
 export type HTMLElementAttributes<E extends AnyElement> =
   E extends HTMLAnchorElement

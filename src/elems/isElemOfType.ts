@@ -21,7 +21,7 @@ import { toElem } from "./toElem.ts";
  *
  * @returns `true` if the specified `target` is of type `tag`.
  *
- * @group Elements
+ * @category Elems
  */
 export function isElemOfType<TN extends TagName>(
   target: ElemOrCssSelector,

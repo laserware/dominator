@@ -24,7 +24,7 @@
 /**
  * Possible values for input to the {@linkcode clsx} function.
  *
- * @group CSS
+ * @category CSS
  */
 export type ClassValue =
   | ClassArray
@@ -40,14 +40,14 @@ export type ClassValue =
  * Object with key of class name and value of truthy/falsy condition.
  * The object is passed into the {@linkcode clsx} function.
  *
- * @group CSS
+ * @category CSS
  */
 export type ClassDict = Record<string, any>;
 
 /**
  * Array of class names that can be used as {@linkcode clsx} inputs.
  *
- * @group CSS
+ * @category CSS
  */
 export type ClassArray = ClassValue[];
 
@@ -65,7 +65,7 @@ export type ClassArray = ClassValue[];
  *
  * @returns A string representing a valid CSS selector.
  *
- * @group CSS
+ * @category CSS
  */
 export function clsx(...inputs: ClassValue[]): string {
   const inputCount = inputs.length;

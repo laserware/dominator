@@ -38,7 +38,7 @@ import type { ElemOrCssSelector } from "../types.ts";
  * // true
  * ```
  *
- * @group Elements
+ * @category Elems
  */
 export function idMatches(target: ElemOrCssSelector, id: string): boolean {
   const elem = elemOrThrow(target, "Unable to check for ID match");

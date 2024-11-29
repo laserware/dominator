@@ -56,7 +56,7 @@ import type {
  * // button[disabled]
  * ```
  *
- * @group Attributes
+ * @category Attrs
  */
 export function selectAttr<E extends AnyElement = HTMLElement>(
   name: AttrName<E>,
@@ -112,7 +112,7 @@ export function selectAttr<E extends AnyElement = HTMLElement>(
  * // [disabled="true"][inert]
  * ```
  *
- * @group Attributes
+ * @category Attrs
  */
 export function selectAttrs<E extends AnyElement = HTMLElement>(
   attrs: Attrs<E>,

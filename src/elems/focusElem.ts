@@ -8,7 +8,7 @@ import { toElem } from "./toElem.ts";
  *
  * @expand
  *
- * @group Elements
+ * @category Elems
  */
 export interface FocusOptions<E extends AnyElement> {
   /** Delay (in milliseconds) to wait until attempting to set focus. */
@@ -38,7 +38,7 @@ export interface FocusOptions<E extends AnyElement> {
  * @param target Element, EventTarget, or CSS selector.
  * @param [options] Options for setting focus.
  *
- * @group Elements
+ * @category Elems
  */
 export function focusElem<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector | null,

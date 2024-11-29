@@ -16,7 +16,7 @@ import type { AnyElement, ElemOrCssSelector, StyleKey } from "../types.ts";
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Styles
+ * @category Styles
  */
 export function removeStyle<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector,
@@ -42,7 +42,7 @@ export function removeStyle<E extends AnyElement = HTMLElement>(
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Styles
+ * @category Styles
  */
 export function removeStyles<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector,

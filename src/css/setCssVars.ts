@@ -32,7 +32,7 @@ import type {
  * @throws {@linkcode InvalidCssVarError} If the specified `name` is not a valid {@linkcode CssVarName}.
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group CSS
+ * @category CSS
  */
 export function setCssVar<E extends AnyElement = HTMLElement>(
   name: CssVarName,
@@ -67,7 +67,7 @@ export function setCssVar<E extends AnyElement = HTMLElement>(
  * @throws {@linkcode InvalidCssVarError} If a specified name in `vars` is not a valid {@linkcode CssVarName}.
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group CSS
+ * @category CSS
  */
 export function setCssVars<E extends AnyElement = HTMLElement>(
   vars: CssVars,

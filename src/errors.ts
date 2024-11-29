@@ -1,7 +1,7 @@
 /**
  * Error thrown if an operation on a CSS variable (i.e. custom property) fails.
  *
- * @group CSS
+ * @category CSS
  */
 export class InvalidCssVarError extends Error {
   constructor(message: string) {
@@ -14,7 +14,7 @@ export class InvalidCssVarError extends Error {
 /**
  * Error thrown when an Element is not in the DOM or invalid for the operation.
  *
- * @group Elements
+ * @category Elems
  */
 export class InvalidElemError extends Error {
   constructor(message: string) {
@@ -27,7 +27,7 @@ export class InvalidElemError extends Error {
 /**
  * Error thrown when an attribute is invalid for the operation.
  *
- * @group Attributes
+ * @category Attrs
  */
 export class InvalidAttrError extends Error {
   constructor(message: string) {

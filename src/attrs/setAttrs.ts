@@ -31,7 +31,7 @@ import type {
  * <div id="example" role="slider">...</div>
  * ```
  *
- * @group Attributes
+ * @category Attrs
  */
 export function setAttr<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -59,7 +59,7 @@ export function setAttr<E extends AnyElement = HTMLElement>(
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Attributes
+ * @category Attrs
  */
 export function setAttrs<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

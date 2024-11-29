@@ -55,7 +55,7 @@ export type Primitive = boolean | number | string;
  *
  * @template E Type of Element.
  *
- * @group Elements
+ * @category Elems
  */
 export type Elem<E extends AnyElement = HTMLElement> =
   | E
@@ -73,7 +73,7 @@ export type Elem<E extends AnyElement = HTMLElement> =
  * so this could represent any string value (even if it is not a valid CSS
  * selector).
  *
- * @group CSS
+ * @category CSS
  */
 export type CssSelector = string;
 
@@ -86,7 +86,7 @@ export type CssSelector = string;
  *
  * @template E Type of Element if `Elem`.
  *
- * @group Elements
+ * @category Elems
  */
 export type ElemOrCssSelector<E extends AnyElement = HTMLElement> =
   | Elem<E>
@@ -97,7 +97,7 @@ export type ElemOrCssSelector<E extends AnyElement = HTMLElement> =
  *
  * @template E Type of Element with corresponding attribute names.
  *
- * @group Attributes
+ * @category Attrs
  */
 export type AttrName<E extends AnyElement = HTMLElement> =
   | Extract<keyof HTMLElementAttributes<E>, string>
@@ -107,7 +107,7 @@ export type AttrName<E extends AnyElement = HTMLElement> =
  * Value type that can be specified as the value for an HTML/SVG attribute.
  * Before actually setting the attribute on an element, the value is stringified.
  *
- * @group Attributes
+ * @category Attrs
  */
 export type AttrValue = DOMPropertyValue;
 
@@ -117,7 +117,7 @@ export type AttrValue = DOMPropertyValue;
  *
  * @template E Type of Element for corresponding attributes.
  *
- * @group Attributes
+ * @category Attrs
  */
 export type Attrs<E extends AnyElement = HTMLElement> = Record<
   AttrName<E>,
@@ -128,7 +128,7 @@ export type Attrs<E extends AnyElement = HTMLElement> = Record<
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
  * All the values must be defined.
  *
- * @group Attributes
+ * @category Attrs
  */
 export type AttrsDefined = Record<string, AttrValue>;
 
@@ -137,14 +137,14 @@ export type AttrsDefined = Record<string, AttrValue>;
  *
  * CSS variables *must* start with `--`.
  *
- * @group CSS
+ * @category CSS
  */
 export type CssVarName = `--${string}`;
 
 /**
  * Valid value for a [CSS variable](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties).
  *
- * @group CSS
+ * @category CSS
  */
 export type CssVarValue = Primitive;
 
@@ -152,7 +152,7 @@ export type CssVarValue = Primitive;
  * Represents an object with key of {@linkcode CssVarName} and value
  * of {@linkcode CssVarValue}.
  *
- * @group CSS
+ * @category CSS
  */
 export type CssVars = Record<CssVarName, CssVarValue>;
 
@@ -160,7 +160,7 @@ export type CssVars = Record<CssVarName, CssVarValue>;
  * Valid type for the key of [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
  * property entries in HTML/SVG Elements.
  *
- * @group Dataset
+ * @category Data
  */
 export type DataPropertyName = string;
 
@@ -168,7 +168,7 @@ export type DataPropertyName = string;
  * Valid name for dataset [data-* attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*)
  * on HTML/SVG Element (e.g. `data-some-value`).
  *
- * @group Dataset
+ * @category Data
  */
 export type DataAttrName = `data-${string}`;
 
@@ -177,14 +177,14 @@ export type DataAttrName = `data-${string}`;
  * [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset) property
  * or a name for the [data-* attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*).
  *
- * @group Dataset
+ * @category Data
  */
 export type DataKey = DataPropertyName | DataAttrName;
 
 /**
  * Valid dataset values (prior to stringifying).
  *
- * @group Dataset
+ * @category Data
  */
 export type DataValue = DOMPropertyValue;
 
@@ -197,14 +197,14 @@ export type DataValue = DOMPropertyValue;
  * Note that the `HTMLElement.dataset` property is a
  * [DOMStringMap](https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap).
  *
- * @group Dataset
+ * @category Data
  */
 export type Data = Record<string, DataValue | null | undefined>;
 
 /**
  * Valid style keys (i.e. non-methods) that can be set on an Element.
  *
- * @group Styles
+ * @category Styles
  */
 export type StyleKey =
   | Exclude<
@@ -230,7 +230,7 @@ export type StyleKey =
  * Value that can be set for an Element style. The value is stringified prior
  * to being set on the Element.
  *
- * @group Styles
+ * @category Styles
  */
 export type StyleValue = Primitive;
 
@@ -238,7 +238,7 @@ export type StyleValue = Primitive;
  * Object representing element styles with a key of {@linkcode StyleKey} and a
  * value of {@linkcode StyleValue}.
  *
- * @group Styles
+ * @category Styles
  */
 export type Styles = Partial<Record<StyleKey, StyleValue>>;
 
@@ -248,7 +248,7 @@ export type Styles = Partial<Record<StyleKey, StyleValue>>;
  *
  * @template E Type of Element associated with the underlying DOM properties.
  *
- * @group DOM Properties
+ * @category DOM Properties
  */
 export type DOMPropertyKey<E extends AnyElement = HTMLElement> =
   | AttrName<E>
@@ -261,7 +261,7 @@ export type DOMPropertyKey<E extends AnyElement = HTMLElement> =
  *
  * Objects and arrays are stringified via [JSON.stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
  *
- * @group DOM Properties
+ * @category DOM Properties
  */
 export type DOMPropertyValue = Primitive | any[] | Record<number | string, any>;
 
@@ -269,7 +269,7 @@ export type DOMPropertyValue = Primitive | any[] | Record<number | string, any>;
  * Filter value for performing DOM property searches. Use `null` to check if
  * an entry exists only (skip checking if values match).
  *
- * @group DOM Properties
+ * @category DOM Properties
  */
 export type DOMPropertyFilterValue =
   | AttrValue
@@ -284,7 +284,7 @@ export type DOMPropertyFilterValue =
  * @template K Key of the property to filter.
  * @template V Value of the property to filter. If not checking for a value, use `null`.
  *
- * @group DOM Properties
+ * @category DOM Properties
  */
 export type DOMPropertyFilter<
   K extends DOMPropertyKey,
@@ -322,7 +322,7 @@ export type DOMPropertyFilter<
  * // true
  * ```
  *
- * @group DOM Properties
+ * @category DOM Properties
  */
 export type DOMPropertySearch<
   K extends DOMPropertyKey = DOMPropertyKey,
@@ -338,7 +338,7 @@ export type DOMPropertySearch<
  *
  * @expand
  *
- * @group Elements
+ * @category Elems
  */
 export interface FindOptions {
   /** CSS selector search string. */

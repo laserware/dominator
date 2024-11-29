@@ -1,6 +1,15 @@
 /** @type {Partial<import("typedoc").TypeDocOptions>} */
 const config = {
   categorizeByGroup: false,
+  categoryOrder: [
+    "Attrs",
+    "CSS",
+    "Data",
+    "Elems",
+    "Styles",
+    "DOM Properties",
+    "Other",
+  ],
   cleanOutputDir: true,
   entryPoints: ["./src/index.ts"],
   entryPointStrategy: "expand",
@@ -16,11 +25,11 @@ const config = {
   navigation: {
     compactFolders: true,
     excludeReferences: true,
-    includeCategories: false,
+    includeCategories: true,
     includeFolders: false,
     includeGroups: true,
   },
-  out: "docs",
+  out: "site",
   useFirstParagraphOfCommentAsSummary: true,
 };
 

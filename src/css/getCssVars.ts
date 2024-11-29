@@ -58,7 +58,7 @@ import type {
  * // 24
  * ```
  *
- * @group CSS
+ * @category CSS
  */
 export function getCssVar<T extends CssVarValue>(
   name: CssVarName,
@@ -95,10 +95,12 @@ export function getCssVar<T extends CssVarValue>(
  * **HTML**
  *
  * ```html
+ * <style>:root { --color-fg: green; }</style>
+ *
  * <button id="example" style="--color-bg: blue; --gap: 24;">Example</button>
  * ```
  *
- * **Code**
+ * **Get from Element**
  *
  * ```ts
  * type CssVarsShape = { "--color-bg": string; "--gap": number; };
@@ -109,7 +111,16 @@ export function getCssVar<T extends CssVarValue>(
  *  // { "--color-bg": "blue", "--gap": 24 }
  * ```
  *
- * @group CSS
+ * **Get from `:root`**
+ *
+ * ```ts
+ * type CssVarsShape = { "--color-fg": string; };
+ *
+ * getCssVars<CssVarsShape>(["--color-bg", "--gap"]);
+ *  // { "--color-fg": "green", "--gap": 24 }
+ * ```
+ *
+ * @category CSS
  */
 export function getCssVars<T extends CssVars = CssVars>(
   names: KeysOf<T>,

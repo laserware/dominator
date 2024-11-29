@@ -24,7 +24,7 @@ const focusableElementsSelector = [
  *
  * @returns Array of focusable Elements in the optionally specified `parent`.
  *
- * @group Elements
+ * @category Elems
  */
 export function findAllFocusable(
   parent: Elem | null | undefined = document,

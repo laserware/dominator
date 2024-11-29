@@ -12,7 +12,7 @@ import type { ElemOrCssSelector } from "../types.ts";
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Elements
+ * @category Elems
  */
 export function isElemScrollable(target: ElemOrCssSelector): boolean {
   const elem = elemOrThrow(target, "Unable to check if target is scrollable");

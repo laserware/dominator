@@ -19,7 +19,7 @@ import { toElem } from "./toElem.ts";
  *
  * @returns `true` if the specified `child` is a child of the specified `parent`.
  *
- * @group Elements
+ * @category Elems
  */
 export function isElemChildOf(
   child: ElemOrCssSelector,

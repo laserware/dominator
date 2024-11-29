@@ -56,7 +56,7 @@ import type { AnyElement, Elem } from "../types.ts";
  * }
  * ```
  *
- * @group Elements
+ * @category Elems
  */
 export function asElem<E extends AnyElement = HTMLElement>(
   target: Elem<E> | null | undefined,

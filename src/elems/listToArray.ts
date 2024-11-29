@@ -15,7 +15,7 @@ import { asElem } from "./asElem.ts";
  *
  * @returns Array of Elements of type `E`.
  *
- * @group Elements
+ * @category Elems
  */
 export function listToArray<E extends AnyElement = HTMLElement>(
   items: NodeListOf<E> | NodeList | HTMLCollection | null,

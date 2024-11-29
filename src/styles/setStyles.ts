@@ -23,7 +23,7 @@ import type {
  *
  * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have a [`style`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  *
- * @group Styles
+ * @category Styles
  */
 export function setStyle<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector,
@@ -54,7 +54,7 @@ export function setStyle<E extends AnyElement = HTMLElement>(
  *
  * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have a [`style`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  *
- * @group Styles
+ * @category Styles
  */
 export function setStyles<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector,

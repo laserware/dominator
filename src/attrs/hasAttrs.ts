@@ -21,7 +21,7 @@ import { getAttr } from "./getAttrs.ts";
  *
  * @template E Type of Element with corresponding attributes to search.
  *
- * @group Attributes
+ * @category Attrs
  */
 export type AttrsSearch<E extends AnyElement = HTMLElement> = DOMPropertySearch<
   AttrName<E>,
@@ -64,7 +64,7 @@ export type AttrsSearch<E extends AnyElement = HTMLElement> = DOMPropertySearch<
  * // true
  * ```
  *
- * @group Attributes
+ * @category Attrs
  */
 export function hasAttr<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -111,7 +111,7 @@ export function hasAttr<E extends AnyElement = HTMLElement>(
  * // true
  * ```
  *
- * @group Attributes
+ * @category Attrs
  */
 export function hasAllAttrs<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -155,7 +155,7 @@ export function hasAllAttrs<E extends AnyElement = HTMLElement>(
  * // true
  * ```
  *
- * @group Attributes
+ * @category Attrs
  */
 export function hasSomeAttrs<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

@@ -23,7 +23,7 @@ import type {
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Dataset
+ * @category Data
  */
 export function removeDataEntry<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -50,7 +50,7 @@ export function removeDataEntry<E extends AnyElement = HTMLElement>(
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Dataset
+ * @category Data
  */
 export function removeData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

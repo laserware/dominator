@@ -27,7 +27,7 @@ import type {
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Dataset
+ * @category Data
  */
 export function setDataEntry<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -52,7 +52,7 @@ export function setDataEntry<E extends AnyElement = HTMLElement>(
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Dataset
+ * @category Data
  */
 export function setData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

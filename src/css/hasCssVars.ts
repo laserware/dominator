@@ -18,7 +18,7 @@ import type {
  * present, or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of a CSS variable.
  *
- * @group CSS
+ * @category CSS
  */
 export type CssVarsSearch = DOMPropertySearch<CssVarName, CssVarValue | null>;
 
@@ -37,7 +37,7 @@ export type CssVarsSearch = DOMPropertySearch<CssVarName, CssVarValue | null>;
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group CSS
+ * @category CSS
  */
 export function hasCssVar(
   name: CssVarName,
@@ -63,7 +63,7 @@ export function hasCssVar(
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group CSS
+ * @category CSS
  */
 export function hasAllCssVars(
   search: CssVarsSearch,
@@ -89,7 +89,7 @@ export function hasAllCssVars(
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group CSS
+ * @category CSS
  */
 export function hasSomeCssVars(
   search: CssVarsSearch,

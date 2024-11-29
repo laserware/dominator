@@ -25,7 +25,7 @@ import type {
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Dataset
+ * @category Data
  */
 export function getDataValue<T extends DataValue = DataValue>(
   target: ElemOrCssSelector,
@@ -52,7 +52,7 @@ export function getDataValue<T extends DataValue = DataValue>(
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Dataset
+ * @category Data
  */
 export function getData<T extends Data = Data>(
   target: ElemOrCssSelector,

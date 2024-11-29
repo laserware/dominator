@@ -10,7 +10,7 @@ import type { ElemOrCssSelector } from "../types.ts";
  *
  * @throws {@linkcode InvalidElemError} If the `target` wasn't found.
  *
- * @group Elements
+ * @category Elems
  */
 export function isElemInViewport(target: ElemOrCssSelector): boolean {
   const elem = elemOrThrow(target, "Unable to determine if element is in view");

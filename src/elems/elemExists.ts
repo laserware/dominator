@@ -15,7 +15,7 @@ import { toElem } from "./toElem.ts";
  *
  * @returns `true` if the specified `target` exists.
  *
- * @group Elements
+ * @category Elems
  */
 export function elemExists(
   target: ElemOrCssSelector | null | undefined,

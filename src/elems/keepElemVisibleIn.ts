@@ -12,7 +12,7 @@ import type { ElemOrCssSelector } from "../types.ts";
  *
  * @throws {@linkcode InvalidElemError} If the `target` or `parent` specified do not exist.
  *
- * @group Elements
+ * @category Elems
  */
 export function keepElemVisibleIn(
   target: ElemOrCssSelector,

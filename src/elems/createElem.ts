@@ -45,7 +45,7 @@ interface CreateElemOptions<E extends AnyElement = HTMLElement> {
  *
  * @returns Element of type `E` with the specified `markup` and `options`.
  *
- * @group Elements
+ * @category Elems
  */
 export function createElem<E extends AnyElement = HTMLElement>(
   markup: string,

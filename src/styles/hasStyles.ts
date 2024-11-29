@@ -19,7 +19,7 @@ import { getStyle } from "./getStyles.ts";
  * present, or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of a style property.
  *
- * @group Styles
+ * @category Styles
  */
 export type StylesSearch = DOMPropertySearch<StyleKey, StyleValue | null>;
 
@@ -35,7 +35,7 @@ export type StylesSearch = DOMPropertySearch<StyleKey, StyleValue | null>;
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Styles
+ * @category Styles
  */
 export function hasStyle(
   target: ElemOrCssSelector,
@@ -58,7 +58,7 @@ export function hasStyle(
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Styles
+ * @category Styles
  */
 export function hasAllStyles(
   target: ElemOrCssSelector,
@@ -81,7 +81,7 @@ export function hasAllStyles(
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
- * @group Styles
+ * @category Styles
  */
 export function hasSomeStyles(
   target: ElemOrCssSelector,

@@ -15,7 +15,7 @@ import type {
  * Valid shape for dataset property. The values can be any type that can be
  * stringified.
  *
- * @group Dataset
+ * @category Data
  */
 export type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
 
@@ -38,7 +38,7 @@ export type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
  *
  * @class
  *
- * @group Dataset
+ * @category Data
  */
 export class Dataset<
   DS extends AnyDatasetShape,
@@ -169,7 +169,7 @@ export class Dataset<
  *
  * @returns Dataset instance associated with `target`.
  *
- * @group Dataset
+ * @category Data
  */
 export function datasetOf<
   DS extends AnyDatasetShape,

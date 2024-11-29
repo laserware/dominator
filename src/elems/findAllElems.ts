@@ -20,7 +20,7 @@ import { toElem } from "./toElem.ts";
  *
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if the specified `selector` is invalid.
  *
- * @group Elements
+ * @category Elems
  */
 export function findAllElems<E extends AnyElement = HTMLElement>(
   selector: CssSelector,
@@ -41,7 +41,7 @@ export function findAllElems<E extends AnyElement = HTMLElement>(
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if `withSelector` in the specified `options` is invalid.
  * @throws {TypeError} [TypeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError) if the specified `options` are invalid.
  *
- * @group Elements
+ * @category Elems
  */
 export function findAllElems<E extends AnyElement = HTMLElement>(
   options: FindOptions,
