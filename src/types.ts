@@ -1,251 +1,361 @@
-type FormInputEvent = Event & {
-  currentTarget: EventTarget & HTMLInputElement;
+/* istanbul ignore file -- @preserve: These are just type definitions, no need to enforce coverage. */
+// noinspection SpellCheckingInspection
+
+import type { AnyElement, HTMLElementAttributes, TagName } from "./dom.ts";
+
+export type {
+  AnyElement,
+  ElementWithTagName,
+  HTMLElementAttributes,
+  HTMLElementTagName,
+  SVGElementTagName,
+  TagName,
+} from "./dom.ts";
+
+/**
+ * Type is either a single item or array of items of type `T`.
+ *
+ * @template T Type of item or items.
+ */
+export type OneOrManyOf<T> = T | T[];
+
+/**
+ * Extracts the keys of the specified object as an array.
+ *
+ * @template T Object to extract keys from.
+ */
+export type KeysOf<T extends Record<any, any>> = Extract<keyof T, string>[];
+
+/**
+ * Adds `null` as the possible type for the fields in the specified type.
+ *
+ * @template T Type of object to add `null` to fields.
+ */
+export type WithNullValues<T extends Record<any, any>> = {
+  [K in keyof T]: T[K] | null;
 };
 
-export type ElementInput =
+/**
+ * Adds `undefined` as the possible type for the fields in the specified type.
+ *
+ * @template T Type of object to add `undefined` to fields.
+ */
+export type WithUndefinedValues<T extends Record<any, any>> = {
+  [K in keyof T]: T[K] | undefined;
+};
+
+/**
+ * Represents primitive values that can be used to set properties on Elements.
+ */
+export type Primitive = boolean | number | string;
+
+/**
+ * Valid type for HTML/SVG attribute name.
+ *
+ * @template E Type of Element with corresponding attribute names.
+ *
+ * @category Attrs
+ */
+export type AttrName<E extends AnyElement = HTMLElement> =
+  | Extract<keyof HTMLElementAttributes<E>, string>
+  | string;
+
+/**
+ * Value type that can be specified as the value for an HTML/SVG attribute.
+ *
+ * Note that *all* attribute values are strings when they make it to the DOM.
+ * This represents the value type that can be assigned to attributes using
+ * {@linkcode setAttr} and {@linkcode setAttrs} as well as the return value for
+ * attributes when using {@linkcode getAttr} and {@linkcode getAttrs}.
+ *
+ * @category Attrs
+ */
+export type AttrValue = Primitive | any[] | Record<number | string, any>;
+
+/**
+ * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
+ * Some of the values may be `null` or `undefined`.
+ *
+ * @template E Type of Element for corresponding attributes.
+ *
+ * @category Attrs
+ */
+export type Attrs<E extends AnyElement = HTMLElement> = Record<
+  AttrName<E>,
+  AttrValue | null | undefined
+>;
+
+/**
+ * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
+ * All the values must be defined.
+ *
+ * @category Attrs
+ */
+export type AttrsDefined = Record<string, AttrValue>;
+
+/**
+ * CSS selector string. Note that no validation is performed on the selector,
+ * so this could represent any string value (even if it is not a valid CSS
+ * selector).
+ *
+ * @category CSS
+ */
+export type CssSelector = string;
+
+/**
+ * Valid name for a [CSS variable](https://developer.mozilla.org/en-US/docs/Web/CSS/--*).
+ *
+ * CSS variables *must* start with `--`.
+ *
+ * @category CSS
+ */
+export type CssVarName = `--${string}`;
+
+/**
+ * Valid value for a [CSS variable](https://developer.mozilla.org/en-US/docs/Web/CSS/--*).
+ *
+ * @category CSS
+ */
+export type CssVarValue = Primitive;
+
+/**
+ * Represents an object with key of {@linkcode CssVarName} and value
+ * of {@linkcode CssVarValue}.
+ *
+ * @category CSS
+ */
+export type CssVars = Record<CssVarName, CssVarValue>;
+
+/**
+ * Valid type for the key of [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
+ * property entries in HTML/SVG Elements.
+ *
+ * @category Data
+ */
+export type DataPropertyName = string;
+
+/**
+ * Valid name for dataset [data-* attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*)
+ * on HTML/SVG Element (e.g. `data-some-value`).
+ *
+ * @category Data
+ */
+export type DataAttrName = `data-${string}`;
+
+/**
+ * Valid name for {@linkcode Data} entries. Represents either a key for the
+ * [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset) property
+ * or a name for the [data-* attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*).
+ *
+ * @category Data
+ */
+export type DataKey = DataPropertyName | DataAttrName;
+
+/**
+ * Valid dataset values (prior to stringifying).
+ *
+ * @category Data
+ */
+export type DataValue = Primitive | any[] | Record<number | string, any>;
+
+/**
+ *
+ * Valid key/value pair representing dataset attributes (prior to stringifying).
+ * The key should be a valid {@linkcode DataKey} and the value must be a valid
+ * {@linkcode DataValue}. Some of the values may be `null` or `undefined`.
+ *
+ * Note that the `HTMLElement.dataset` property is a
+ * [DOMStringMap](https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap).
+ *
+ * @category Data
+ */
+export type Data = Record<string, DataValue | null | undefined>;
+
+/**
+ * Key representing any type of DOM property (i.e. attributes, CSS variables,
+ * dataset attribute/property names and style keys).
+ *
+ * @template E Type of Element associated with the underlying DOM properties.
+ *
+ * @category DOM
+ */
+export type DOMPropertyKey<E extends AnyElement = HTMLElement> =
+  | AttrName<E>
+  | CssVarName
+  | DataKey
+  | StyleKey;
+
+/**
+ * Represents a value that can be assigned to a DOM property after stringification.
+ *
+ * Objects and arrays are stringified via [JSON.stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
+ *
+ * @category DOM
+ */
+export type DOMPropertyValue = AttrValue | CssVarValue | DataValue | StyleValue;
+
+/**
+ * Filter value for performing DOM property searches. Use `null` to check if
+ * an entry exists only (skip checking if values match).
+ *
+ * @category DOM
+ */
+export type DOMPropertyFilterValue =
+  | AttrValue
+  | DataValue
+  | CssVarValue
+  | StyleValue
+  | null;
+
+/**
+ * Filter criteria for determining if a DOM property has the specified value.
+ *
+ * @template K Key of the property to filter.
+ * @template V Value of the property to filter. If not checking for a value, use `null`.
+ *
+ * @category DOM
+ */
+export type DOMPropertyFilter<
+  K extends DOMPropertyKey,
+  V extends DOMPropertyFilterValue,
+> = { [key in K]?: V };
+
+/**
+ * Search criteria that can be used to determine if a DOM property is present
+ * on an Element. If an array, only the presence of the property **names** are
+ * checked. If an object, the property name **and** value are checked.
+ *
+ * To check for the existence of a property only (i.e. you don't care what the
+ * value is), use `null` for the field.
+ *
+ * @template K Key of the property to search.
+ * @template V Type of the value to search for (only needed if using {@linkcode DOMPropertyFilter}).
+ *
+ * @example
+ * **HTML**
+ *
+ * ```html
+ * <button id="example" aria-hidden="true" aria-label="Example">Example</button>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * const result = hasAllAttrs(elem, {
+ *   "aria-hidden": true,
+ *   // Setting to null means "only check if property exists"
+ *   "aria-label": null,
+ * });
+ * // true
+ * ```
+ *
+ * @category DOM
+ */
+export type DOMPropertySearch<
+  K extends DOMPropertyKey = DOMPropertyKey,
+  V extends DOMPropertyFilterValue = DOMPropertyFilterValue,
+> = K[] | DOMPropertyFilter<K, V>;
+
+/**
+ * Element or EventTarget that can be passed into functions.
+ *
+ * @template E Type of Element.
+ *
+ * @category Elems
+ */
+export type Elem<E extends AnyElement = HTMLElement> =
+  | E
   | Document
   | Element
   | EventTarget
-  | FormInputEvent
   | HTMLElement
+  | SVGElement
   | ChildNode
   | Node
-  | ParentNode
-  | null
-  | undefined;
+  | ParentNode;
 
-export type SelectorInput = string | null | undefined;
+/**
+ * Represents a type that can be either an Element, EventTarget, or a CSS
+ * selector.
+ *
+ * This type allows for flexibility in functions or methods that can accept
+ * either an {@linkcode Elem} type object or a string representing a CSS selector.
+ *
+ * @template E Type of Element if {@linkcode Elem}.
+ *
+ * @category Elems
+ */
+export type ElemOrCssSelector<E extends AnyElement = HTMLElement> =
+  | Elem<E>
+  | CssSelector;
 
-export type ElementOrSelectorInput = ElementInput | SelectorInput;
+/**
+ * Use to specify search criteria for finding Element(s). You can find Elements
+ * by selector, dataset entries, or attributes.
+ *
+ * To search for the existence of an attribute or dataset property (not the
+ * value), set the value to `null`.
+ *
+ * @expand
+ *
+ * @category Elems
+ */
+export interface FindOptions {
+  /** CSS selector search string. */
+  withSelector?: CssSelector;
 
-type Booleanish = boolean | "true" | "false";
+  /** Key/value pairs of attributes to search for. */
+  withAttrs?: Attrs;
 
-// All the WAI-ARIA 1.1 attributes from https://www.w3.org/TR/wai-aria-1.1/
-export interface AriaAttrs {
-  /** Identifies the currently active element when DOM focus is on a composite widget, textbox, group, or application. */
-  "aria-activedescendant"?: string | undefined | null;
-  /** Indicates whether assistive technologies will present all, or only parts of, the changed region based on the change notifications defined by the aria-relevant attribute. */
-  "aria-atomic"?: Booleanish | undefined | null;
-  /**
-   * Indicates whether inputting text could trigger display of one or more predictions of the user's intended value for an input and specifies how predictions would be
-   * presented if they are made.
-   */
-  "aria-autocomplete"?: "none" | "inline" | "list" | "both" | undefined | null;
-  /** Indicates an element is being modified and that assistive technologies MAY want to wait until the modifications are complete before exposing them to the user. */
-  "aria-busy"?: Booleanish | undefined | null;
-  /**
-   * Indicates the current "checked" state of checkboxes, radio buttons, and other widgets.
-   * @see aria-pressed @see aria-selected.
-   */
-  "aria-checked"?: boolean | "false" | "mixed" | "true" | undefined | null;
-  /**
-   * Defines the total number of columns in a table, grid, or treegrid.
-   * @see aria-colindex.
-   */
-  "aria-colcount"?: number | undefined | null;
-  /**
-   * Defines an element's column index or position with respect to the total number of columns within a table, grid, or treegrid.
-   * @see aria-colcount @see aria-colspan.
-   */
-  "aria-colindex"?: number | undefined | null;
-  /**
-   * Defines the number of columns spanned by a cell or gridcell within a table, grid, or treegrid.
-   * @see aria-colindex @see aria-rowspan.
-   */
-  "aria-colspan"?: number | undefined | null;
-  /**
-   * Identifies the element (or elements) whose contents or presence are controlled by the current element.
-   * @see aria-owns.
-   */
-  "aria-controls"?: string | undefined | null;
-  /** Indicates the element that represents the current item within a container or set of related elements. */
-  "aria-current"?:
-    | Booleanish
-    | "page"
-    | "step"
-    | "location"
-    | "date"
-    | "time"
-    | undefined
-    | null;
-  /**
-   * Identifies the element (or elements) that describes the object.
-   * @see aria-labelledby
-   */
-  "aria-describedby"?: string | undefined | null;
-  /**
-   * Identifies the element that provides a detailed, extended description for the object.
-   * @see aria-describedby.
-   */
-  "aria-details"?: string | undefined | null;
-  /**
-   * Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable.
-   * @see aria-hidden @see aria-readonly.
-   */
-  "aria-disabled"?: Booleanish | undefined | null;
-  /**
-   * Indicates what functions can be performed when a dragged object is released on the drop target.
-   * @deprecated in ARIA 1.1
-   */
-  "aria-dropeffect"?:
-    | "none"
-    | "copy"
-    | "execute"
-    | "link"
-    | "move"
-    | "popup"
-    | undefined
-    | null;
-  /**
-   * Identifies the element that provides an error message for the object.
-   * @see aria-invalid @see aria-describedby.
-   */
-  "aria-errormessage"?: string | undefined | null;
-  /** Indicates whether the element, or another grouping element it controls, is currently expanded or collapsed. */
-  "aria-expanded"?: Booleanish | undefined | null;
-  /**
-   * Identifies the next element (or elements) in an alternate reading order of content which, at the user's discretion,
-   * allows assistive technology to override the general default of reading in document source order.
-   */
-  "aria-flowto"?: string | undefined | null;
-  /**
-   * Indicates an element's "grabbed" state in a drag-and-drop operation.
-   * @deprecated in ARIA 1.1
-   */
-  "aria-grabbed"?: Booleanish | undefined | null;
-  /** Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element. */
-  "aria-haspopup"?:
-    | Booleanish
-    | "menu"
-    | "listbox"
-    | "tree"
-    | "grid"
-    | "dialog"
-    | undefined
-    | null;
-  /**
-   * Indicates whether the element is exposed to an accessibility API.
-   * @see aria-disabled.
-   */
-  "aria-hidden"?: Booleanish | undefined | null;
-  /**
-   * Indicates the entered value does not conform to the format expected by the application.
-   * @see aria-errormessage.
-   */
-  "aria-invalid"?: Booleanish | "grammar" | "spelling" | undefined | null;
-  /** Indicates keyboard shortcuts that an author has implemented to activate or give focus to an element. */
-  "aria-keyshortcuts"?: string | undefined | null;
-  /**
-   * Defines a string value that labels the current element.
-   * @see aria-labelledby.
-   */
-  "aria-label"?: string | undefined | null;
-  /**
-   * Identifies the element (or elements) that labels the current element.
-   * @see aria-describedby.
-   */
-  "aria-labelledby"?: string | undefined | null;
-  /** Defines the hierarchical level of an element within a structure. */
-  "aria-level"?: number | undefined | null;
-  /** Indicates that an element will be updated, and describes the types of updates the user agents, assistive technologies, and user can expect from the live region. */
-  "aria-live"?: "off" | "assertive" | "polite" | undefined | null;
-  /** Indicates whether an element is modal when displayed. */
-  "aria-modal"?: Booleanish | undefined | null;
-  /** Indicates whether a text box accepts multiple lines of input or only a single line. */
-  "aria-multiline"?: Booleanish | undefined | null;
-  /** Indicates that the user may select more than one item from the current selectable descendants. */
-  "aria-multiselectable"?: Booleanish | undefined | null;
-  /** Indicates whether the element's orientation is horizontal, vertical, or unknown/ambiguous. */
-  "aria-orientation"?: "horizontal" | "vertical" | undefined | null;
-  /**
-   * Identifies an element (or elements) in order to define a visual, functional, or contextual parent/child relationship
-   * between DOM elements where the DOM hierarchy cannot be used to represent the relationship.
-   * @see aria-controls.
-   */
-  "aria-owns"?: string | undefined | null;
-  /**
-   * Defines a short hint (a word or short phrase) intended to aid the user with data entry when the control has no value.
-   * A hint could be a sample value or a brief description of the expected format.
-   */
-  "aria-placeholder"?: string | undefined | null;
-  /**
-   * Defines an element's number or position in the current set of listitems or treeitems. Not required if all elements in the set are present in the DOM.
-   * @see aria-setsize.
-   */
-  "aria-posinset"?: number | undefined | null;
-  /**
-   * Indicates the current "pressed" state of toggle buttons.
-   * @see aria-checked @see aria-selected.
-   */
-  "aria-pressed"?: boolean | "false" | "mixed" | "true" | undefined | null;
-  /**
-   * Indicates that the element is not editable, but is otherwise operable.
-   * @see aria-disabled.
-   */
-  "aria-readonly"?: Booleanish | undefined | null;
-  /**
-   * Indicates what notifications the user agent will trigger when the accessibility tree within a live region is modified.
-   * @see aria-atomic.
-   */
-  "aria-relevant"?:
-    | "additions"
-    | "additions removals"
-    | "additions text"
-    | "all"
-    | "removals"
-    | "removals additions"
-    | "removals text"
-    | "text"
-    | "text additions"
-    | "text removals"
-    | undefined
-    | null;
-  /** Indicates that user input is required on the element before a form may be submitted. */
-  "aria-required"?: Booleanish | undefined | null;
-  /** Defines a human-readable, author-localized description for the role of an element. */
-  "aria-roledescription"?: string | undefined | null;
-  /**
-   * Defines the total number of rows in a table, grid, or treegrid.
-   * @see aria-rowindex.
-   */
-  "aria-rowcount"?: number | undefined | null;
-  /**
-   * Defines an element's row index or position with respect to the total number of rows within a table, grid, or treegrid.
-   * @see aria-rowcount @see aria-rowspan.
-   */
-  "aria-rowindex"?: number | undefined | null;
-  /**
-   * Defines the number of rows spanned by a cell or gridcell within a table, grid, or treegrid.
-   * @see aria-rowindex @see aria-colspan.
-   */
-  "aria-rowspan"?: number | undefined | null;
-  /**
-   * Indicates the current "selected" state of various widgets.
-   * @see aria-checked @see aria-pressed.
-   */
-  "aria-selected"?: Booleanish | undefined | null;
-  /**
-   * Defines the number of items in the current set of listitems or treeitems. Not required if all elements in the set are present in the DOM.
-   * @see aria-posinset.
-   */
-  "aria-setsize"?: number | undefined | null;
-  /** Indicates if items in a table or grid are sorted in ascending or descending order. */
-  "aria-sort"?:
-    | "none"
-    | "ascending"
-    | "descending"
-    | "other"
-    | undefined
-    | null;
-  /** Defines the maximum allowed value for a range widget. */
-  "aria-valuemax"?: number | undefined | null;
-  /** Defines the minimum allowed value for a range widget. */
-  "aria-valuemin"?: number | undefined | null;
-  /**
-   * Defines the current value for a range widget.
-   * @see aria-valuetext.
-   */
-  "aria-valuenow"?: number | undefined | null;
-  /** Defines the human readable text alternative of aria-valuenow for a range widget. */
-  "aria-valuetext"?: string | undefined | null;
+  /** Key/value pairs of dataset entries to search for. */
+  withData?: Data;
+
+  /** Optional parent Element, EventTarget, or CSS selector. */
+  parent?: ElemOrCssSelector | null | undefined;
+
+  /** Optional Element tag to limit search. */
+  tag?: TagName;
 }
+
+/**
+ * Valid style keys (i.e. non-methods) that can be set on an Element.
+ *
+ * @category Styles
+ */
+export type StyleKey =
+  | Exclude<
+      keyof CSSStyleDeclaration,
+      // These are read-only:
+      | "length"
+      | "parentRule"
+
+      // These are methods which can't be stringified:
+      | "getPropertyPriority"
+      | "getPropertyValue"
+      | "item"
+      | "removeProperty"
+      | "setProperty"
+
+      // This allows us to access the index of a style, which we also don't want
+      // to allow in the builder.
+      | number
+    >
+  | CssVarName;
+
+/**
+ * Value that can be set for an Element style. The value is stringified prior
+ * to being set on the Element.
+ *
+ * @category Styles
+ */
+export type StyleValue = Primitive;
+
+/**
+ * Object representing element styles with a key of {@linkcode StyleKey} and a
+ * value of {@linkcode StyleValue}.
+ *
+ * @category Styles
+ */
+export type Styles = Partial<Record<StyleKey, StyleValue>>;

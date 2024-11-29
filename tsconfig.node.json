@@ -4,5 +4,10 @@
     "composite": true,
     "module": "NodeNext"
   },
-  "include": ["./tsup.config.ts", "./vitest.config.ts", "./vitest.setup.ts"]
+  "include": [
+    "./tsup.config.ts",
+    "./vitest.config.ts",
+    "./vitest.setup.ts",
+    "./src/declarations.d.ts"
+  ]
 }

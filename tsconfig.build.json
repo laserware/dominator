@@ -5,6 +5,7 @@
     "dist",
     "node_modules",
     "./src/**/__mocks__/*",
-    "./src/**/*.test.ts"
+    "./src/**/*.test.ts",
+    "./src/testing.ts"
   ]
 }

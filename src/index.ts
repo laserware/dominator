@@ -1,49 +1,133 @@
-export { buildAttributeSelector } from "./attributes/buildAttributeSelector.ts";
-export { getAttribute } from "./attributes/getAttribute.ts";
-export { hasAttribute } from "./attributes/hasAttribute.ts";
-export { setAttribute } from "./attributes/setAttribute.ts";
-export { setAttributes } from "./attributes/setAttributes.ts";
+// Attributes
+export { getAttr, getAttrs } from "./attrs/getAttrs.ts";
+export {
+  hasAllAttrs,
+  hasAttr,
+  hasSomeAttrs,
+  type AttrsSearch,
+} from "./attrs/hasAttrs.ts";
+export { removeAttr, removeAttrs } from "./attrs/removeAttrs.ts";
+export { selectAttr, selectAttrs } from "./attrs/selectAttrs.ts";
+export { setAttr, setAttrs } from "./attrs/setAttrs.ts";
 
-export { buildDatasetSelector } from "./dataset/buildDatasetSelector.ts";
-export { findAllElementsWithDataset } from "./dataset/findAllElementsWithDataset.ts";
-export { findOneElementWithDataset } from "./dataset/findOneElementWithDataset.ts";
-export { getDatasetValue } from "./dataset/getDatasetValue.ts";
-export { hasDatasetKey } from "./dataset/hasDatasetKey.ts";
-export { hasDatasetValue } from "./dataset/hasDatasetValue.ts";
-export { setDatasetValue } from "./dataset/setDatasetValue.ts";
-export { setDatasetValues } from "./dataset/setDatasetValues.ts";
+// CSS
+export {
+  clsx,
+  type ClassArray,
+  type ClassDict,
+  type ClassValue,
+} from "./css/clsx.ts";
+export { getCssVar, getCssVars } from "./css/getCssVars.ts";
+export {
+  hasAllCssVars,
+  hasCssVar,
+  hasSomeCssVars,
+  type CssVarsSearch,
+} from "./css/hasCssVars.ts";
+export { removeCssVar, removeCssVars } from "./css/removeCssVars.ts";
+export { setCssVar, setCssVars } from "./css/setCssVars.ts";
 
-export { getCssVariable } from "./styles/getCssVariable.ts";
-export { setCssVariable } from "./styles/setCssVariable.ts";
-export { setElementStyles } from "./styles/setElementStyles.ts";
+// Dataset
+export {
+  datasetOf,
+  type AnyDatasetShape,
+  type Dataset,
+} from "./data/datasetOf.ts";
+export { getData, getDataValue } from "./data/getData.ts";
+export {
+  hasAllData,
+  hasDataEntry,
+  hasSomeData,
+  type DataSearch,
+} from "./data/hasData.ts";
+export { removeData, removeDataEntry } from "./data/removeData.ts";
+export { selectData, selectDataEntry } from "./data/selectData.ts";
+export { setData, setDataEntry } from "./data/setData.ts";
 
-export { asElement } from "./asElement.ts";
-export { clsx } from "./clsx.ts";
-export { doesElementExist } from "./doesElementExist.ts";
-export { doesElementHaveId } from "./doesElementHaveId.ts";
-export { findAllElements } from "./findAllElements.ts";
-export { findAllFocusableElements } from "./findAllFocusableElements.ts";
-export { findFirstFocusableInput } from "./findFirstFocusableInput.ts";
-export { findOneElement } from "./findOneElement.ts";
-export { getElementValue } from "./getElementValue.ts";
-export { getInputElementWidth } from "./getInputElementWidth.ts";
-export { hasParentElement } from "./hasParentElement.ts";
-export { html } from "./htmlBuilder.ts";
-export { isElementDifferentFrom } from "./isElementDifferentFrom.ts";
-export { isElementInView } from "./isElementInView.ts";
-export { isElementOfType } from "./isElementOfType.ts";
-export { isElementSameAs } from "./isElementSameAs.ts";
-export { isElementSameOrChildOf } from "./isElementSameOrChildOf.ts";
-export { isElementScrollable } from "./isElementScrollable.ts";
-export { listToArray } from "./listToArray.ts";
-export { maintainElementScrollVisibility } from "./maintainElementScrollVisibility.ts";
-export { moveCursorToElementTextEnd } from "./moveCursorToElementTextEnd.ts";
-export { parseTransferData } from "./parseTransferData.ts";
-export { setFocusToElement } from "./setFocusToElement.ts";
-export { TypedEventTarget } from "./TypedEventTarget.ts";
+// Elements
+export { areElemsDifferent } from "./elems/areElemsDifferent.ts";
+export { areElemsSame } from "./elems/areElemsSame.ts";
+export { asElem } from "./elems/asElem.ts";
+export {
+  createElem,
+  type CreateElemOptions,
+  type ElemChild,
+  type ElemProperties,
+  type EventDescriptor,
+  type EventHandlerName,
+  type ListenerOrDescriptor,
+  type ListenersOrDescriptors,
+} from "./elems/createElem.ts";
+export { elemExists } from "./elems/elemExists.ts";
+export { findAllElems } from "./elems/findAllElems.ts";
+export { findAllFocusable } from "./elems/findAllFocusable.ts";
+export { findElem } from "./elems/findElem.ts";
+export { focusElem, type FocusOptions } from "./elems/focusElem.ts";
+export {
+  getInputValue,
+  getInputValueRaw,
+  type InputValueAsType,
+  type InputValueTypeName,
+} from "./elems/getInputValue.ts";
+export { getInputWidth } from "./elems/getInputWidth.ts";
+export { idMatches } from "./elems/idMatches.ts";
+export { isElemChildOf } from "./elems/isElemChildOf.ts";
+export { isElemInViewport } from "./elems/isElemInViewport.ts";
+export { isElemOfType } from "./elems/isElemOfType.ts";
+export { isElemSameOrChildOf } from "./elems/isElemSameOrChildOf.ts";
+export { isElemScrollable } from "./elems/isElemScrollable.ts";
+export { keepElemVisibleIn } from "./elems/keepElemVisibleIn.ts";
+export { listToArray } from "./elems/listToArray.ts";
+export { toElem } from "./elems/toElem.ts";
+
+// Styles
+export { getStyle, getStyles } from "./styles/getStyles.ts";
+export {
+  hasAllStyles,
+  hasSomeStyles,
+  hasStyle,
+  type StylesSearch,
+} from "./styles/hasStyles.ts";
+export { removeStyle, removeStyles } from "./styles/removeStyles.ts";
+export { setStyle, setStyles } from "./styles/setStyles.ts";
+
+// Errors
+export {
+  InvalidAttrError,
+  InvalidCssVarError,
+  InvalidElemError,
+} from "./errors.ts";
+
+// Types
+export type * from "./dom.ts";
 export type {
-  AriaAttrs,
-  ElementInput,
-  ElementOrSelectorInput,
-  SelectorInput,
+  AttrName,
+  Attrs,
+  AttrsDefined,
+  AttrValue,
+  CssSelector,
+  CssVarName,
+  CssVars,
+  CssVarValue,
+  Data,
+  DataAttrName,
+  DataKey,
+  DataPropertyName,
+  DataValue,
+  DOMPropertyFilter,
+  DOMPropertyFilterValue,
+  DOMPropertyKey,
+  DOMPropertySearch,
+  DOMPropertyValue,
+  Elem,
+  ElemOrCssSelector,
+  FindOptions,
+  KeysOf,
+  OneOrManyOf,
+  Primitive,
+  StyleKey,
+  Styles,
+  StyleValue,
+  WithNullValues,
+  WithUndefinedValues,
 } from "./types.ts";

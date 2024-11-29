@@ -14,7 +14,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm install
@@ -27,3 +27,6 @@ jobs:
 
       - name: Check Types
         run: npm run typecheck
+
+      - name: Unit Tests
+        run: npm run vitest -- --run
