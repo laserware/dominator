@@ -1,4 +1,4 @@
-# @laserware/dominator
+# Dominator
 
 Makes working with the DOM and TypeScript less gross.
 See [documentation](https://laserware.github.io/dominator/) if you want to get right to the API.
