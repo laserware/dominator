@@ -14,7 +14,7 @@ import type { AnyElement, Elem } from "../types.ts";
  *
  * This function is useful for getting the [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
  * from an Event as a specific Element type without needing to use a non-null
- * assertion. In some cases, you know *exactly* what type of Element will be
+ * assertion. In some cases, you know _exactly_ what type of Element will be
  * associated with an Event and you want to assert it as such.
  *
  * **Important Note**
@@ -51,7 +51,7 @@ import type { AnyElement, Elem } from "../types.ts";
  *   // button:
  *   const elem = asElem<HTMLInputElement>(event.currentTarget);
  *
- *   // TypeScript will *not* complain about this, but you'll get an error:
+ *   // TypeScript will _not_ complain about this, but you'll get an error:
  *   console.log(elem.valueAsNumber);
  * }
  * ```

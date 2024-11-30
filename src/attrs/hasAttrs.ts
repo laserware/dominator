@@ -77,7 +77,7 @@ export function hasAttr<E extends AnyElement = HTMLElement>(
 }
 
 /**
- * Checks if the specified `target` has *all* of the attributes that match the
+ * Checks if the specified `target` has **all** of the attributes that match the
  * specified `search` criteria.
  *
  * @template E Element type of specified `target`.
@@ -124,7 +124,7 @@ export function hasAllAttrs<E extends AnyElement = HTMLElement>(
 }
 
 /**
- * Checks if the specified `target` has *some* of the attributes that match
+ * Checks if the specified `target` has **some** of the attributes that match
  * the specified `search` criteria.
  *
  * @template E Element type of specified `target`.

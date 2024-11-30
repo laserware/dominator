@@ -13,7 +13,7 @@ import { toElem } from "./toElem.ts";
  *
  *
  * @param left One or many Element, EventTarget, or CSS selectors to check; if
- *             an array, returns true if *one* of the elements matches the
+ *             an array, returns true if **one** of the elements matches the
  *             target element input.
  * @param right Element, EventTarget, or CSS selector to compare against.
  *

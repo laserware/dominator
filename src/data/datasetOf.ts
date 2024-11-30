@@ -24,7 +24,7 @@ export type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
  * property on an element.
  *
  * Trying to work with the `dataset` property using TypeScript is not great. You
- * have to *repeatedly* perform a bunch of type checks, which is tedious and
+ * have to _repeatedly_ perform a bunch of type checks, which is tedious and
  * results in overly-verbose code. This class makes it much easier to get and
  * set properties of the `dataset` (which map to the corresponding `data-*`
  * attributes on an element).
@@ -86,10 +86,10 @@ export class Dataset<
   }
 
   /**
-   * Builds an object with all *defined* dataset attribute values. Note that the
+   * Builds an object with all **defined** dataset attribute values. Note that the
    * return value is a `Partial` because the expected shape of the dataset
    * specified in the `DS` generic doesn't necessarily correspond to dataset
-   * properties that *exist* on the element.
+   * properties that _exist_ on the element.
    *
    * @returns Object with dataset entries that exist.
    *

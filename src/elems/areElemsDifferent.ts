@@ -12,7 +12,7 @@ import { toElem } from "./toElem.ts";
  * don't exist. Rather, it just returns `false`. This was a deliberate choice.
  *
  * @param left One or many Element, EventTarget, or CSS selectors to check; if
- *             an array, returns `true` only if *all* elements don't match the
+ *             an array, returns `true` only if **all** elements don't match the
  *             target Element input.
  * @param right Element, EventTarget, or CSS selector to compare against.
  *

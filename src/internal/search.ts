@@ -1,7 +1,7 @@
 import type { AnyElement, DOMPropertySearch, KeysOf } from "../types.ts";
 
 /**
- * Returns true if *all* properties in the specified `element` match the
+ * Returns true if **all** properties in the specified `element` match the
  * `search` criteria based on the specified `predicate` check.
  *
  * @internal
@@ -36,7 +36,7 @@ export function hasAllProperties(
 }
 
 /**
- * Returns true if *some* properties in the specified `element` match the
+ * Returns true if **some** properties in the specified `element` match the
  * `search` criteria based on the specified `predicate` check.
  *
  * @internal

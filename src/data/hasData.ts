@@ -75,7 +75,7 @@ export function hasDataEntry<E extends AnyElement = HTMLElement>(
 }
 
 /**
- * Checks if the specified `target` has *all* of the dataset entries that match
+ * Checks if the specified `target` has **all** of the dataset entries that match
  * the specified `search` criteria.
  *
  * @template E Element type of specified `target`.
@@ -127,7 +127,7 @@ export function hasAllData<E extends AnyElement = HTMLElement>(
 }
 
 /**
- * Checks if the specified `target` has *some* of the dataset entries that match
+ * Checks if the specified `target` has **some** of the dataset entries that match
  * the specified `search` criteria.
  *
  * @template E Element type of specified `target`.

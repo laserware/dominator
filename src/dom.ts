@@ -36,7 +36,7 @@
 
 /**
  * Value type for boolean attributes. Some boolean attributes can either be
- * `true` or `false` *or* the string `"true"` or `"false"`.
+ * `true` or `false` _or_ the string `"true"` or `"false"`.
  *
  * @category DOM
  */

@@ -18,7 +18,9 @@ The `CSS` module provides functions for querying and manipulating [CSS variables
 
 The API for working with CSS variables is _slightly_ different from the rest of the modules.
 Instead of specifying a `target` as the first argument, you specify it as the last argument.
-In my experience, CSS variables are stored on the `:root` element, so omitting the `target` argument use the `:root` element.
+In my experience, CSS variables are normally stored on the `:root` element, so omitting the `target` argument uses the `:root` element.
+
+See the [`getCssVar` function](https://laserware.github.io/dominator/functions/getCssVar.html) as an example.
 
 ### Data
 
@@ -167,16 +169,13 @@ Removing attributes using the DOM APIs requires that you remove each attribute i
 Assuming you have this markup:
 
 ```html
-<div role="gridcell" aria-disabled="true">Example</div>
+<div id="example" role="gridcell" aria-disabled="true">Example</div>
 ```
 
 Instead of using the `element.removeAttribute` API:
 
 ```ts
-const div = document.createElement("div");
-
-div.setAttribute("role", "gridcell");
-div.setAttribute("aria-disabled", "true");
+const div = document.getElementById("example");
 
 div.removeAttribute("role");
 div.removeAttribute("aria-disabled");
@@ -185,20 +184,13 @@ div.removeAttribute("aria-disabled");
 You can use `removeAttr` or `removeAttrs`. Both functions return the element:
 
 ```ts
-import { 
-  createElem, 
+import {
+  findElem,
   removeAttr,
   removeAttrs,
-  setAttrs,
 } from "@laserware/dominator";
 
-let div = createElem("div");
-
-div = setAttrs(div, {
-  role: "gridcell",
-  "aria-disabled": true,
-  "aria-colindex": 1,
-});
+let div = findElem("#example")!;
 
 div = removeAttr(div, "role");
 
@@ -209,38 +201,36 @@ div = removeAttrs(div, ["aria-disabled", "aria-colindex"]);
 
 If you want to check for the existence of attributes using the DOM API, you'd use `element.hasAttribute`.
 
-If you want to check if a value matches, you're stuck with the annoyances of the DOM APIs. So you're back to dealing with strings:
+If you want to check if a value matches, you're stuck with the annoyances of the DOM APIs. So you're back to dealing with strings.
+
+Assuming you have this markup:
+
+```html
+<div id="example" role="gridcell" aria-disabled="true" aria-colindex="1">Example</div>
+```
+
+Here's how you would check for attributes with the DOM APIs:
 
 ```ts
-const div = document.createElement("div");
-
-div.setAttribute("role", "gridcell");
-div.setAttribute("aria-disabled", "true");
-div.setAttribute("aria-colindex", "1");
+const div = document.getElementById("example");
 
 const hasRole = div.hasAttribute("role");
 
-const myColValue = 1;
-const colIndexMatches = div.getAttribute("aria-colindex") === myColValue.toString();
+const index = 1;
+const isCol = div.getAttribute("aria-colindex") === index.toString();
 ```
 
 You can use `hasAttr`, `hasAllAttrs`, and `hasSomeAttrs` instead:
 
 ```ts
 import { 
-  createElem, 
+  findElem,
   hasAttr,
   hasAllAttrs,
   hasSomeAttrs,
 } from "@laserware/dominator";
 
-const div = createElem("div", {
-  attrs: {
-    role: "gridcell",
-    "aria-disabled": true,
-    "aria-colindex": 1,
-  },
-});
+const div = findElem("#example");
 
 const hasRole = hasAttr(div, "role");
 
@@ -252,7 +242,10 @@ const someMatchValues = hasSomeAttrs(div, { "aria-colindex": 1 });
 
 // Check if all of the attributes match, you can use `null` to
 // check for the _existence_ of an attribute only:
-const allMatch = hasAllAttrs(div, { "aria-colindex": 1, "aria-disabled": null });
+const allMatch = hasAllAttrs(div, { 
+  "aria-colindex": 1, 
+  "aria-disabled": null,
+});
 ```
 
 ### Selecting Elements with Attributes

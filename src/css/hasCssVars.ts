@@ -87,7 +87,7 @@ export function hasCssVar(
 }
 
 /**
- * Checks if *all* of the CSS variables match the specified `search` criteria
+ * Checks if **all** of the CSS variables match the specified `search` criteria
  * in the `target`.
  *
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
@@ -156,7 +156,7 @@ export function hasAllCssVars(
 }
 
 /**
- * Checks if *some* of the CSS variables match the specified `search` criteria
+ * Checks if **some** of the CSS variables match the specified `search` criteria
  * in the `target`.
  *
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
@@ -165,7 +165,7 @@ export function hasAllCssVars(
  * @param search Array of CSS variable names or CSS variables filter to check for.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
- * @returns `true` if the specified `target` has *some* of the specified CSS variables.
+ * @returns `true` if the specified `target` has **some** of the specified CSS variables.
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  *
