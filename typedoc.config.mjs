@@ -4,7 +4,6 @@ const config = {
   categoryOrder: ["Attrs", "CSS", "Data", "Elems", "Styles", "DOM", "Other"],
   cleanOutputDir: true,
   entryPoints: ["./src/index.ts"],
-  entryPointStrategy: "expand",
   exclude: [
     "**/**test.ts",
     "src/internal/**",
@@ -30,7 +29,6 @@ const config = {
   },
   out: "site",
   readme: "./README.md",
-  useFirstParagraphOfCommentAsSummary: true,
 };
 
 export default config;
