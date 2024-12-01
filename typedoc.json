@@ -1,0 +1,36 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "cleanOutputDir": true,
+  "customCss": "./docs/theme.css",
+  "entryPoints": [
+    "./src/attrs/attrs.ts",
+    "./src/css/css.ts",
+    "./src/data/data.ts",
+    "./src/elems/elems.ts",
+    "./src/styles/styles.ts",
+    "./src/dom.ts",
+    "./src/search.ts",
+    "./src/types.ts"
+  ],
+  "exclude": [
+    "**/**test.ts",
+    "src/internal/**",
+    "src/testing.ts",
+    "src/declarations.d.ts"
+  ],
+  "excludeInternal": true,
+  "excludeNotDocumented": true,
+  "headings": { "readme": false, "document": false },
+  "hideGenerator": true,
+  "navigation": {
+    "compactFolders": true,
+    "excludeReferences": true,
+    "includeCategories": false,
+    "includeFolders": false,
+    "includeGroups": false
+  },
+  "navigationLinks": { "GitHub": "https://github.com/laserware/dominator" },
+  "out": "site",
+  "readme": "README.md",
+  "useTsLinkResolution": false
+}

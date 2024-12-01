@@ -1,10 +1,7 @@
-import type {
-  ElementWithTagName,
-  ElemOrCssSelector,
-  TagName,
-} from "../types.ts";
+import type { ElementWithTagName, TagName } from "../dom.ts";
 
 import { toElem } from "./toElem.ts";
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
  * Checks if the specified `target` matches the specified `tag`. If the specified
@@ -14,14 +11,12 @@ import { toElem } from "./toElem.ts";
  * You can't `UPPERCASE` the tag name without getting a type error. That's because
  * this function converts it to lowercase before checking.
  *
- * @template TN Tag name of Element to check for.
+ * @template TN Tag name of element representation of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param tag Tag name to check for (e.g. `div`, `span`, etc.).
  *
  * @returns `true` if the specified `target` is of type `tag`.
- *
- * @category Elems
  */
 export function isElemOfType<TN extends TagName>(
   target: ElemOrCssSelector,

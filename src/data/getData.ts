@@ -1,15 +1,12 @@
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type {
-  Data,
-  DataKey,
-  DataValue,
-  ElemOrCssSelector,
-  WithUndefinedValues,
-} from "../types.ts";
+import type { WithUndefinedValues } from "../types.ts";
+
+import type { Data, DataKey, DataValue } from "./types.ts";
 
 /**
  * Attempts to get the value associated with the specified dataset `key` on the
@@ -23,7 +20,7 @@ import type {
  *
  * @returns Value of the dataset property associated with `key`, otherwise `undefined`.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -34,10 +31,12 @@ import type {
  *   data-is-active="false"
  *   data-count="30"
  *   data-label="Example"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
- * **String Dataset Entry**
+ * **Using Attribute Names (`data-*`)**
  *
  * ```ts
  * const elem = findElem("#example")!;
@@ -45,35 +44,27 @@ import type {
  * getDataValue(elem, "data-label");
  * // "Example"
  *
- * getDataValue(elem, "label");
- * // "Example"
- * ```
- *
- * **Number Dataset Entry**
- *
- * ```ts
- * const elem = findElem("#example")!;
- *
  * getDataValue(elem, "data-count");
  * // 30
  *
- * getDataValue(elem, "count");
- * // 30
+ * getDataValue(elem, "data-is-active");
+ * // false
  * ```
  *
- * **Boolean Dataset Entry**
+ * **Using Property Names (camelCase)**
  *
  * ```ts
  * const elem = findElem("#example")!;
  *
- * getDataValue(elem, "data-is-active");
- * // false
+ * getDataValue(elem, "label");
+ * // "Example"
+ *
+ * getDataValue(elem, "count");
+ * // 30
  *
  * getDataValue(elem, "isActive");
  * // false
  * ```
- *
- * @category Data
  */
 export function getDataValue<T extends DataValue = DataValue>(
   target: ElemOrCssSelector,
@@ -89,16 +80,33 @@ export function getDataValue<T extends DataValue = DataValue>(
  * on the specified `target`. If any of the specified `keys` don't exist, they
  * are set to `undefined` in the return value.
  *
+ * **Important Note**
+ *
+ * You will need to perform checks for whether a value is `undefined` in the returned
+ * object if some of the entries weren't present.
+ *
+ * ```ts
+ * // Assuming you pass this in as the generic:
+ * type ShapeIn = {
+ *   "data-label": string;
+ *   "data-count": number;
+ * };
+ *
+ * // The return type of this function is:
+ * type ShapeOut = {
+ *   "data-label": string | undefined;
+ *   "data-count": number | undefined;
+ * };
+ * ```
+ *
  * @template T Shape of value to return for the corresponding keys.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Properties (e.g. `someProperty`) or attribute names (e.g. `data-some-property`) for the dataset entry.
  *
- * @returns Object with specified keys and corresponding dataset property values.
- *          Note that you will need to perform checks for whether a value is
- *          `undefined` in the returned object if some of the entries weren't present.
+ * @returns Object with specified keys and corresponding dataset property values (or `undefined` if not present).
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -109,32 +117,38 @@ export function getDataValue<T extends DataValue = DataValue>(
  *   data-is-active="false"
  *   data-count="30"
  *   data-label="Example"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
- * **Code**
+ * **Using Attribute Names (`data-*`)**
  *
  * ```ts
  * const elem = findElem("#example")!;
  *
- * interface DataAttrsShape {
- *   "data-label": string;
- *   "data-count": number;
- * }
+ * type AttrsShape = {
+ *   "data-label": string | undefined;
+ *   "data-count": number | undefined;
+ * };
  *
- * getData<DataAttrsShape>(elem, ["data-label", "data-count"]);
+ * getData<AttrsShape>(elem, ["data-label", "data-count"]);
  * // { "data-label": "Example", "data-count": 30 }
- *
- * interface DataPropsShape {
- *   label: string;
- *   count: number;
- * }
- *
- * getData<DataPropsShape>(elem, ["label", "count"]);
- * // { label: "Example", count: 30 }
  * ```
  *
- * @category Data
+ * **Using Property Names (camelCase)**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * type PropsShape = {
+ *   label: string | undefined;
+ *   count: number | undefined;
+ * };
+ *
+ * getData<PropsShape>(elem, ["label", "count"]);
+ * // { label: "Example", count: 30 }
+ * ```
  */
 export function getData<T extends Data = Data>(
   target: ElemOrCssSelector,

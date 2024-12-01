@@ -1,18 +1,15 @@
 import { isNotNil } from "@laserware/arcade";
 
-import { InvalidCssVarError } from "../errors.ts";
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import { isCssVarName } from "../typeGuards.ts";
-import type {
-  AnyElement,
-  CssVarName,
-  CssVars,
-  CssVarValue,
-  ElemOrCssSelector,
-} from "../types.ts";
+
+import { InvalidCssVarError } from "./InvalidCssVarError.ts";
+import { isCssVarName } from "./isCssVarName.ts";
+import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
 
 /**
  * Sets the specified CSS variable `name` to the specified `value` in the
@@ -29,16 +26,22 @@ import type {
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidCssVarError} If the specified `name` is not a valid {@linkcode CssVarName}.
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidCssVarError} if the specified `name` is not a valid {@linkcode CssVarName}.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
  *
  * ```html
- * <style>:root { --color-fg: green; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: green;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: blue;">Example</button>
+ * <button id="example" style="--color-bg: blue;">
+ *   Example
+ * </button>
  * ```
  *
  * **Set in Element**
@@ -58,12 +61,16 @@ import type {
  * **HTML (After)**
  *
  * ```html
- * <style>:root { --color-fg: blue; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: blue;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: red;">Example</button>
+ * <button id="example" style="--color-bg: red;">
+ *   Example
+ * </button>
  * ```
- *
- * @category CSS
  */
 export function setCssVar<E extends AnyElement = HTMLElement>(
   name: CssVarName,
@@ -95,16 +102,22 @@ export function setCssVar<E extends AnyElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidCssVarError} If a specified name in `vars` is not a valid {@linkcode CssVarName}.
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidCssVarError} if a specified name in `vars` is not a valid {@linkcode CssVarName}.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
  *
  * ```html
- * <style>:root { --color-fg: green; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: green;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: blue;">Example</button>
+ * <button id="example" style="--color-bg: blue;">
+ *   Example
+ * </button>
  * ```
  *
  * **Set in Element**
@@ -124,12 +137,16 @@ export function setCssVar<E extends AnyElement = HTMLElement>(
  * **HTML (After)**
  *
  * ```html
- * <style>:root { --color-fg: blue; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: blue;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: red;">Example</button>
+ * <button id="example" style="--color-bg: red;">
+ *   Example
+ * </button>
  * ```
- *
- * @category CSS
  */
 export function setCssVars<E extends AnyElement = HTMLElement>(
   vars: CssVars,

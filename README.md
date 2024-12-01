@@ -4,42 +4,6 @@ Makes working with the DOM and TypeScript less gross.
 See [documentation](https://laserware.github.io/dominator/) if you want to get right to the API.
 For a high-level overview of the library, keep reading!
 
-## Modules
-
-This library is split up into several modules (i.e. categories):
-
-### Attrs
-
-The `Attrs` module provides functions for querying and manipulating [attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes) on HTML and SVG elements.
-
-### CSS
-
-The `CSS` module provides functions for querying and manipulating [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) on HTML and SVG elements.
-
-The API for working with CSS variables is _slightly_ different from the rest of the modules.
-Instead of specifying a `target` as the first argument, you specify it as the last argument.
-In my experience, CSS variables are normally stored on the `:root` element, so omitting the `target` argument uses the `:root` element.
-
-See the [`getCssVar` function](https://laserware.github.io/dominator/functions/getCssVar.html) as an example.
-
-### Data
-
-The `Data` module provides functions for querying and manipulating the [dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset) entries on HTML and SVG elements.
-
-### Elems
-
-The `Elems` module provides functions for working with HTML and SVG elements.
-
-The difference between a native [Element](https://developer.mozilla.org/en-US/docs/Web/API/Element) and an `Elem` is an `Element` 
-is the base class for [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) and [SVGElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), whereas
-an `Elem` could represent a [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), a [SVGElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), 
-the [Document](https://developer.mozilla.org/en-US/docs/Web/API/Document), or the element representation of an [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget).
-Essentially, it's an abstraction layer over _any_ type of element.
-
-### Styles
-
-The `Styles` module provides functions for querying and manipulating the [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property on HTML and SVG elements.
-
 ## Examples
 
 Let's face it, working with the DOM API kind of sucks (_especially_ with TypeScript).
@@ -63,7 +27,7 @@ You can use the `createElem` function:
 ```ts
 import { createElem } from "@laserware/dominator";
 
-const div = createElem("div", { id: "example", props: { ariaLabel: "Hello!" } });
+const div = createElem("div", { id: "example", ariaLabel: "Hello!" });
 ```
 
 ### Finding Elements

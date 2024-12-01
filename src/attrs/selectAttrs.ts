@@ -1,16 +1,12 @@
 import { isNil, kebabCase } from "@laserware/arcade";
 
-import { InvalidAttrError } from "../errors.ts";
+import type { CssSelector } from "../css/types.ts";
+import type { AnyElement, TagName } from "../dom.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
-import type {
-  AnyElement,
-  AttrName,
-  Attrs,
-  AttrValue,
-  CssSelector,
-  TagName,
-} from "../types.ts";
+
+import { InvalidAttrError } from "./InvalidAttrError.ts";
+import type { AttrName, Attrs, AttrValue } from "./types.ts";
 
 /**
  * Attempts to build a CSS selector string from the specified `name` and `value`. Note
@@ -25,7 +21,7 @@ import type {
  *
  * @returns CSS selector based on the specified attribute `name` and optional `value` and `tag`.
  *
- * @throws {@linkcode InvalidAttrError} If the specified `value` could not be stringified.
+ * @throws {@linkcode InvalidAttrError} if the specified `value` could not be stringified.
  *
  * @example
  * **Name Only**
@@ -55,8 +51,6 @@ import type {
  * selectAttr("disabled", null, "button");
  * // button[disabled]
  * ```
- *
- * @category Attrs
  */
 export function selectAttr<E extends AnyElement = HTMLElement>(
   name: AttrName<E>,
@@ -81,7 +75,7 @@ export function selectAttr<E extends AnyElement = HTMLElement>(
  *
  * @returns CSS selector based on the specified `attrs`.
  *
- * @throws {@linkcode InvalidAttrError} If a value in the specified `attrs` could not be stringified.
+ * @throws {@linkcode InvalidAttrError} if a value in the specified `attrs` could not be stringified.
  *
  * @example
  * **Single Entry With Value**
@@ -111,8 +105,6 @@ export function selectAttr<E extends AnyElement = HTMLElement>(
  * selectAttrs({ disabled: true, inert: null });
  * // [disabled="true"][inert]
  * ```
- *
- * @category Attrs
  */
 export function selectAttrs<E extends AnyElement = HTMLElement>(
   attrs: Attrs<E>,

@@ -1,20 +1,19 @@
-import type { AnyElement, ElemOrCssSelector } from "../types.ts";
+import type { AnyElement } from "../dom.ts";
 
 import { asElem } from "./asElem.ts";
 import { toElem } from "./toElem.ts";
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
- * Additional options for setting focus to an Element.
+ * Additional options for setting focus to an element.
  *
  * @expand
- *
- * @category Elems
  */
 export interface FocusOptions<E extends AnyElement> {
   /** Delay (in milliseconds) to wait until attempting to set focus. */
   delay?: number;
 
-  /** Parent element (if `target` is a {@linkcode CssSelector}). */
+  /** Parent element (if `target` is a {@linkcode css!CssSelector}). */
   parent?: ElemOrCssSelector;
 
   /**
@@ -33,12 +32,10 @@ export interface FocusOptions<E extends AnyElement> {
  * the `focus` operation.
  *
  * Note that we don't throw if the `target` is `null` because it may not exist
- * yet if a {@linkcode CssSelector} is specified.
+ * yet if a {@linkcode css!CssSelector} is specified.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param [options] Options for setting focus.
- *
- * @category Elems
  */
 export function focusElem<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector | null,

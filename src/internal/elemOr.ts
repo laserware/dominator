@@ -1,16 +1,17 @@
+import type { AnyElement } from "../dom.ts";
+import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
-import { InvalidElemError } from "../errors.ts";
-import type { AnyElement, ElemOrCssSelector } from "../types.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 
 import { cast } from "./cast.ts";
 
 /**
- * Returns an Element of type `E` that corresponds to the specified `target`.
+ * Returns an element of type `E` that corresponds to the specified `target`.
  * Throws if the `target` isn't a valid element.
  *
  * @internal
  *
- * @template E Type of Element to return.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param error Error message to include with the error.

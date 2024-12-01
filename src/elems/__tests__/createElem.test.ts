@@ -56,11 +56,11 @@ describe("the createElem function", () => {
   it("creates an element with no children and properties", () => {
     const result = createElem("div", { className: "test", styles: { margin: 0, padding: 0 } });
 
-    expect(result.outerHTML).toBe(`<div class="test" style="margin: 0px; padding: 0px;"></div>`);
+    expect(result.outerHTML).toBe(`<div style="margin: 0px; padding: 0px;" class="test"></div>`);
   });
 
   it("creates an element with children and properties", () => {
-    const result = createElem("input", { props: { type: "text", value: "hello" } });
+    const result = createElem("input", { type: "text", value: "hello" });
 
     expect(result).toHaveProperty("type", "text");
     expect(result).toHaveProperty("value", "hello");
@@ -72,6 +72,8 @@ describe("the createElem function", () => {
 
     const result = createElem("button", {
       id: "test",
+      type: "button",
+      ariaDisabled: "false",
       attrs: {
         "aria-label": "Test",
       },
@@ -82,10 +84,6 @@ describe("the createElem function", () => {
       },
       cssVars: {
         "--color-bg": "blue",
-      },
-      props: {
-        type: "button",
-        ariaDisabled: "false",
       },
       on: {
         click,

@@ -1,5 +1,6 @@
 import { elemOrThrow } from "../internal/elemOr.ts";
-import type { ElemOrCssSelector } from "../types.ts";
+
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
  * Checks if the specified `target` has the specified `id` *property*.
@@ -13,7 +14,7 @@ import type { ElemOrCssSelector } from "../types.ts";
  *
  * @returns `true` if the `target` has the specified `id`.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -37,8 +38,6 @@ import type { ElemOrCssSelector } from "../types.ts";
  * idMatches(hasHash, "##hash");
  * // true
  * ```
- *
- * @category Elems
  */
 export function idMatches(target: ElemOrCssSelector, id: string): boolean {
   const elem = elemOrThrow(target, "Unable to check for ID match");

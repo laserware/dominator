@@ -1,17 +1,14 @@
 import { isNil } from "@laserware/arcade";
 
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
-import type {
-  AnyElement,
-  AttrName,
-  AttrValue,
-  DOMPropertySearch,
-  ElemOrCssSelector,
-} from "../types.ts";
+import type { PropertySearch } from "../types.ts";
 
 import { getAttr } from "./getAttrs.ts";
+import type { AttrName, AttrValue } from "./types.ts";
 
 /**
  * Search criteria for checking if attributes are present in an element.
@@ -20,10 +17,8 @@ import { getAttr } from "./getAttrs.ts";
  * if you only care about the presence of an attribute.
  *
  * @template E Type of Element with corresponding attributes to search.
- *
- * @category Attrs
  */
-export type AttrsSearch<E extends AnyElement = HTMLElement> = DOMPropertySearch<
+export type AttrsSearch<E extends AnyElement = HTMLElement> = PropertySearch<
   AttrName<E>,
   AttrValue | null
 >;
@@ -40,13 +35,15 @@ export type AttrsSearch<E extends AnyElement = HTMLElement> = DOMPropertySearch<
  *
  * @returns `true` if the specified attribute `name` is present and `value` matches (if specified).
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
  *
  * ```html
- * <button id="example" aria-pressed="true" aria-label="Example">Example</button>
+ * <button id="example" aria-pressed="true" aria-label="Example">
+ *   Example
+ * </button>
  * ```
  *
  * **Code**
@@ -63,8 +60,6 @@ export type AttrsSearch<E extends AnyElement = HTMLElement> = DOMPropertySearch<
  * hasAttr(elem, "aria-label", "Example");
  * // true
  * ```
- *
- * @category Attrs
  */
 export function hasAttr<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -87,13 +82,15 @@ export function hasAttr<E extends AnyElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches all search criteria.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
  *
  * ```html
- * <div id="example" aria-hidden="true" inert>Example</div>
+ * <div id="example" aria-hidden="true" inert>
+ *   Example
+ * </div>
  * ```
  *
  * **Code**
@@ -107,11 +104,12 @@ export function hasAttr<E extends AnyElement = HTMLElement>(
  * hasAllAttrs(elem, ["aria-hidden", "missing"]);
  * // false ("missing" does not exist)
  *
- * hasAllAttrs(elem, { "aria-hidden": true, name: "test", inert: null });
+ * hasAllAttrs(elem, {
+ *   "aria-hidden": true,
+ *   inert: null,
+ * });
  * // true
  * ```
- *
- * @category Attrs
  */
 export function hasAllAttrs<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -134,7 +132,7 @@ export function hasAllAttrs<E extends AnyElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches some search criteria.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -145,17 +143,22 @@ export function hasAllAttrs<E extends AnyElement = HTMLElement>(
  *
  * **Code**
  *
+ * Note that the `aria-label` attribute isn't present on the `div` above,
+ * but the function still returns `true`:
+ *
  * ```ts
  * const elem = findElem("#example")!;
  *
- * hasSomeAttrs(elem, ["aria-hidden", "missing"]);
+ * hasSomeAttrs(elem, ["aria-hidden", "aria-label"]);
  * // true
  *
- * hasSomeAttrs(elem, { "aria-hidden": true, name: "test", inert: null, missing: null });
+ * hasSomeAttrs(elem, {
+ *   inert: null,
+ *   "aria-hidden": true,
+ *   "aria-label": "Click Me",
+ * });
  * // true
  * ```
- *
- * @category Attrs
  */
 export function hasSomeAttrs<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

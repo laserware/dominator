@@ -1,15 +1,12 @@
 import { isNil } from "@laserware/arcade";
 
 import { selectAttr } from "../attrs/selectAttrs.ts";
+import type { CssSelector } from "../css/types.ts";
+import type { TagName } from "../dom.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
-import type {
-  CssSelector,
-  Data,
-  DataKey,
-  DataValue,
-  TagName,
-} from "../types.ts";
+
+import type { Data, DataKey, DataValue } from "./types.ts";
 
 /**
  * Attempts to build a valid selector for a dataset with the specified `key` and
@@ -25,32 +22,30 @@ import type {
  * **Dataset Key without Value**
  *
  * ```ts
- * const selector = selectDataEntry("someThing");
+ * selectDataEntry("someThing");
  * // `[data-some-thing]`
  * ```
  *
  * **`data-` Attribute Name without Value**
  *
  * ```ts
- * const selector = selectDataEntry("data-some-thing");
+ * selectDataEntry("data-some-thing");
  * // `[data-some-thing]`
  * ```
  *
  * **Dataset Key with Value**
  *
  * ```ts
- * const selector = selectDataEntry("someThing", "stuff");
+ * selectDataEntry("someThing", "stuff");
  * // `[data-some-thing="stuff"]`
  * ```
  *
  * **`data-` Attribute Name with Value and Tag**
  *
  * ```ts
- * const selector = selectDataEntry("data-some-thing", "stuff", "a");
+ * selectDataEntry("data-some-thing", "stuff", "a");
  * // `a[data-some-thing="stuff"]`
  * ```
- *
- * @category Data
  */
 export function selectDataEntry(
   key: DataKey,
@@ -75,25 +70,23 @@ export function selectDataEntry(
  * **Dataset Object With `null` Value**
  *
  * ```ts
- * const selector = selectData({ someThing: null });
+ * selectData({ someThing: null });
  * // `[data-some-thing]`
  * ```
  *
  * **Data Object with Value**
  *
  * ```ts
- * const selector = selectData({ someThing: "stuff" });
+ * selectData({ someThing: "stuff" });
  * // `[data-some-thing="stuff"]`
  * ```
  *
  * **Data Object with Value and Tag**
  *
  * ```ts
- * const selector = selectData({ someThing: "stuff", otherThing: "doodles" }, "a");
+ * selectData({ someThing: "stuff", otherThing: "doodles" }, "a");
  * // `a[data-some-thing="stuff"][data-other-thing="doodles"]`
  * ```
- *
- * @category Data
  */
 export function selectData(data: Data, tag?: TagName): CssSelector {
   let selector = "";

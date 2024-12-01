@@ -1,6 +1,6 @@
 import { camelCase, kebabCase, toEntries } from "@laserware/arcade";
 
-import type { DataAttrName, DataKey, DataPropertyName } from "../types.ts";
+import type { DataAttrName, DataKey, DataPropertyName } from "../data/types.ts";
 
 /**
  * Ensures the specified key or name is `kebab-case` with a `data-` prefix and

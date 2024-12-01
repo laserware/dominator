@@ -1,16 +1,12 @@
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type {
-  AnyElement,
-  AttrName,
-  Attrs,
-  AttrValue,
-  ElemOrCssSelector,
-  KeysOf,
-  WithNullValues,
-} from "../types.ts";
+import type { KeysOf, WithNullValues } from "../types.ts";
+
+import type { AttrName, Attrs, AttrValue } from "./types.ts";
 
 /**
  * Attempts to get the specified attribute `name` from the specified `target`.
@@ -30,7 +26,7 @@ import type {
  *
  * @returns Value of type `T` or `null` if not found.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -42,37 +38,25 @@ import type {
  *   aria-valuemax="30"
  *   aria-label="Example"
  *   aria-disabled="false"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
- * **String Attribute**
+ * **Code**
  *
  * ```ts
  * const elem = findElem("#example")!;
  *
  * getAttr(elem, "aria-label");
  * // "Example"
- * ```
- *
- * **Number Attribute**
- *
- * ```ts
- * const elem = findElem("#example")!;
  *
  * getAttr(elem, "aria-valuemax");
  * // 30
- * ```
- *
- * **Boolean Attribute**
- *
- * ```ts
- * const elem = findElem("#example")!;
  *
  * getAttr(elem, "aria-disabled");
  * // false
  * ```
- *
- * @category Attrs
  */
 export function getAttr<
   T extends AttrValue = AttrValue,
@@ -90,17 +74,34 @@ export function getAttr<
  * number if numeric, or the string value if a string. If not found, the value
  * is `null`.
  *
+ * **Important Note**
+ *
+ * You will need to perform checks for whether a value is `null` in the returned
+ * object if some of the entries weren't present.
+ *
+ * ```ts
+ * // Assuming you pass this in as the generic:
+ * type ShapeIn = {
+ *   role: string;
+ *   "aria-label": string;
+ * };
+ *
+ * // The return type of this function is:
+ * type ShapeOut = {
+ *   role: string | null;
+ *   "aria-label": string | null;
+ * };
+ * ```
+ *
  * @template T Shape of attributes object to return.
  * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param names Names of the attributes for which to find values.
  *
- * @returns Object with specified names as keys and corresponding attribute values.
- *          Note that you will need to perform checks for whether a value is
- *          `null` in the returned object if some of the entries weren't present.
+ * @returns Object with specified names as keys and corresponding attribute values (or `null` if not present).
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -112,26 +113,29 @@ export function getAttr<
  *   aria-valuemax="30"
  *   aria-label="Example"
  *   aria-disabled="false"
- * ></div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
  * **Code**
  *
  * ```ts
- * interface Shape {
+ * type Shape = {
  *   "aria-label": string | null;
  *   "aria-valuemax": number | null;
  *   invalid: string | null;
- * }
+ * };
  *
  * const elem = findElem("#example")!;
  *
- * // Note that `invalid` doesn't exist on the element, so it's `null`:
- * getAttrs<Shape>(elem, ["aria-label", "aria-valuemax", "invalid"]);
+ * getAttrs<Shape>(elem, [
+ *   "aria-label",
+ *   "aria-valuemax",
+ *   "invalid", // Doesn't exist, so it's `null`
+ * ]);
  * // { "aria-label": "Example", "aria-valuemax": 30, invalid: null }
  * ```
- *
- * @category Attrs
  */
 export function getAttrs<
   T extends Attrs = Attrs,

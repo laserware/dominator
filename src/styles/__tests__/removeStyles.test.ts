@@ -1,5 +1,5 @@
 import { getCssVar } from "../../css/getCssVars.ts";
-import { InvalidElemError } from "../../errors.ts";
+import { InvalidElemError } from "../../elems/InvalidElemError.ts";
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { removeStyle, removeStyles } from "../removeStyles.ts";
 

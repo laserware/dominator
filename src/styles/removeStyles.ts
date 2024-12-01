@@ -1,8 +1,11 @@
+import { isCssVarName } from "../css/isCssVarName.ts";
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import { isCssVarName } from "../typeGuards.ts";
-import type { AnyElement, ElemOrCssSelector, StyleKey } from "../types.ts";
+
+import type { StyleKey } from "./types.ts";
 
 /**
  * Removes the specified style `key` from the specified `target`.
@@ -14,10 +17,8 @@ import type { AnyElement, ElemOrCssSelector, StyleKey } from "../types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
- *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
- *
- * @category Styles
+ * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
+ *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function removeStyle<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector,
@@ -41,10 +42,8 @@ export function removeStyle<E extends AnyElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
- *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
- *
- * @category Styles
+ * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
+ *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function removeStyles<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector,

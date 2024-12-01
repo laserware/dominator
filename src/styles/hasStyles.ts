@@ -1,28 +1,23 @@
 import { isNil } from "@laserware/arcade";
 
+import type { AnyElement } from "../dom.ts";
+import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
-import { InvalidElemError } from "../errors.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
-import type {
-  AnyElement,
-  DOMPropertySearch,
-  ElemOrCssSelector,
-  StyleKey,
-  StyleValue,
-} from "../types.ts";
+import type { PropertySearch } from "../types.ts";
 
 import { getStyle } from "./getStyles.ts";
+import type { StyleKey, StyleValue } from "./types.ts";
 
 /**
  * Search criteria for checking if style properties are present in an element.
  * You can use an array of style property names to check only if the styles are
  * present, or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of a style property.
- *
- * @category Styles
  */
-export type StylesSearch = DOMPropertySearch<StyleKey, StyleValue | null>;
+export type StylesSearch = PropertySearch<StyleKey, StyleValue | null>;
 
 /**
  * Checks if the specified `target` has the specified style property with name `key`.
@@ -34,10 +29,8 @@ export type StylesSearch = DOMPropertySearch<StyleKey, StyleValue | null>;
  *
  * @returns `true` if the specified style is present.
  *
- * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
- *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
- *
- * @category Styles
+ * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
+ *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function hasStyle(
   target: ElemOrCssSelector,
@@ -61,10 +54,8 @@ export function hasStyle(
  *
  * @returns `true` if the specified `target` has **all** specified styles.
  *
- * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
- *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
- *
- * @category Styles
+ * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
+ *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function hasAllStyles(
   target: ElemOrCssSelector,
@@ -88,10 +79,8 @@ export function hasAllStyles(
  *
  * @returns `true` if the specified `target` has **some** specified styles.
  *
- * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
- *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
- *
- * @category Styles
+ * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
+ *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function hasSomeStyles(
   target: ElemOrCssSelector,

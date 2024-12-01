@@ -1,5 +1,6 @@
 import { elemOrThrow } from "../internal/elemOr.ts";
-import type { ElemOrCssSelector } from "../types.ts";
+
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
  * Checks if the specified `target` is visible in the browser viewport.
@@ -8,9 +9,7 @@ import type { ElemOrCssSelector } from "../types.ts";
  *
  * @returns `true` if the specified `target` is in the viewport.
  *
- * @throws {@linkcode InvalidElemError} If the `target` wasn't found.
- *
- * @category Elems
+ * @throws {@linkcode InvalidElemError} if the specified `target` wasn't found.
  */
 export function isElemInViewport(target: ElemOrCssSelector): boolean {
   const elem = elemOrThrow(target, "Unable to determine if element is in view");

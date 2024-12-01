@@ -1,7 +1,8 @@
 /* istanbul ignore file -- @preserve: It's impossible to test this because of JSDOM. */
 
 import { elemOrThrow } from "../internal/elemOr.ts";
-import type { ElemOrCssSelector } from "../types.ts";
+
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
  * Ensures the given `target` is within the visible scroll area of the specified
@@ -10,9 +11,7 @@ import type { ElemOrCssSelector } from "../types.ts";
  * @param target Element, EventTarget, or CSS selector.
  * @param parent Element, EventTarget, or selector for scroll parent.
  *
- * @throws {@linkcode InvalidElemError} If the `target` or `parent` specified do not exist.
- *
- * @category Elems
+ * @throws {@linkcode InvalidElemError} if the `target` or `parent` specified do not exist.
  */
 export function keepElemVisibleIn(
   target: ElemOrCssSelector,

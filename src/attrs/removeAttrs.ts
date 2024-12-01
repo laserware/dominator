@@ -1,7 +1,10 @@
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type { AnyElement, AttrName, ElemOrCssSelector } from "../types.ts";
+
+import type { AttrName } from "./types.ts";
 
 /**
  * Removes the specified attribute `name` from the specified `target`.
@@ -13,13 +16,15 @@ import type { AnyElement, AttrName, ElemOrCssSelector } from "../types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
  *
  * ```html
- * <button id="example" aria-disabled="true">Example</button>
+ * <button id="example" aria-disabled="true">
+ *   Example
+ * </button>
  * ```
  *
  * **Code**
@@ -33,10 +38,10 @@ import type { AnyElement, AttrName, ElemOrCssSelector } from "../types.ts";
  * **HTML (After)**
  *
  * ```html
- * <button id="example">Example</button>
+ * <button id="example">
+ *   Example
+ * </button>
  * ```
- *
- * @category Attrs
  */
 export function removeAttr<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -59,7 +64,7 @@ export function removeAttr<E extends AnyElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -71,7 +76,9 @@ export function removeAttr<E extends AnyElement = HTMLElement>(
  *   aria-valuemax="30"
  *   aria-label="Example"
  *   aria-disabled="false"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
  * **Code**
@@ -79,7 +86,11 @@ export function removeAttr<E extends AnyElement = HTMLElement>(
  * ```ts
  * const elem = findElem("#example")!;
  *
- * removeAttrs(elem, ["role", "aria-valuemax", "aria-disabled"]);
+ * removeAttrs(elem, [
+ *   "role",
+ *   "aria-valuemax",
+ *   "aria-disabled",
+ * ]);
  * ```
  *
  * **HTML (After)**
@@ -88,10 +99,10 @@ export function removeAttr<E extends AnyElement = HTMLElement>(
  * <div
  *   id="example"
  *   aria-label="Example"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
- *
- * @category Attrs
  */
 export function removeAttrs<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

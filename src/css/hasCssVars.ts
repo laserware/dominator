@@ -1,26 +1,22 @@
 import { isNil } from "@laserware/arcade";
 
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
-import type {
-  AnyElement,
-  CssVarName,
-  CssVarValue,
-  DOMPropertySearch,
-  ElemOrCssSelector,
-} from "../types.ts";
+import type { PropertySearch } from "../types.ts";
+
+import type { CssVarName, CssVarValue } from "./types.ts";
 
 /**
  * Search criteria for checking if CSS variables are present in an element.
  * You can use an array of CSS variable names to check only if the CSS variables are
  * present, or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of a CSS variable.
- *
- * @category CSS
  */
-export type CssVarsSearch = DOMPropertySearch<CssVarName, CssVarValue | null>;
+export type CssVarsSearch = PropertySearch<CssVarName, CssVarValue | null>;
 
 /**
  * Checks if the specified `target` has the specified CSS variable with `name`.
@@ -35,15 +31,21 @@ export type CssVarsSearch = DOMPropertySearch<CssVarName, CssVarValue | null>;
  *
  * @returns `true` if the specified CSS variable is present.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
  *
  * ```html
- * <style>:root { --color-fg: green; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: green;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: blue; --is-big: true;">Example</button>
+ * <button id="example" style="--color-bg: blue; --is-big: true;">
+ *   Example
+ * </button>
  * ```
  *
  * **Check Element**
@@ -73,8 +75,6 @@ export type CssVarsSearch = DOMPropertySearch<CssVarName, CssVarValue | null>;
  * hasCssVar("--color-bg", "blue");
  * // true
  * ```
- *
- * @category CSS
  */
 export function hasCssVar(
   name: CssVarName,
@@ -98,7 +98,7 @@ export function hasCssVar(
  *
  * @returns `true` if the specified `target` matches all search criteria.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -123,10 +123,16 @@ export function hasCssVar(
  * hasAllCssVars(["--color-bg", "--is-big"] , elem);
  * // true
  *
- * hasAllCssVars({ "--color-bg": "blue", "--is-big": true }, elem);
+ * hasAllCssVars({
+ *   "--color-bg": "blue",
+ *   "--is-big": true,
+ * }, elem);
  * // true
  *
- * hasAllCssVars({ "--color-bg": "blue", "--missing": true }, elem);
+ * hasAllCssVars({
+ *   "--color-bg": "blue",
+ *   "--missing": true,
+ * }, elem);
  * // false
  * ```
  *
@@ -136,14 +142,18 @@ export function hasCssVar(
  * hasAllCssVars(["--color-fg", "--padding-small"]);
  * // true
  *
- * hasAllCssVars({ "--color-fg": "green", "--is-small": "true" });
+ * hasAllCssVars({
+ *   "--color-fg": "green",
+ *   "--is-small": "true",
+ * });
  * // false ("true" cannot be a string, must be the boolean value `true`)
  *
- * hasAllCssVars({ "--color-fg": "green", "--is-small": false });
+ * hasAllCssVars({
+ *   "--color-fg": "green",
+ *   "--is-small": false,
+ * });
  * // false (`--is-small` is `true`)
  * ```
- *
- * @category CSS
  */
 export function hasAllCssVars(
   search: CssVarsSearch,
@@ -167,7 +177,7 @@ export function hasAllCssVars(
  *
  * @returns `true` if the specified `target` has **some** of the specified CSS variables.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -192,10 +202,16 @@ export function hasAllCssVars(
  * hasSomeCssVars(["--color-bg"] , elem);
  * // true
  *
- * hasSomeCssVars({ "--color-bg": "blue", "--missing": null }, elem);
+ * hasSomeCssVars({
+ *   "--color-bg": "blue",
+ *   "--missing": null,
+ * }, elem);
  * // true
  *
- * hasSomeCssVars({ "--color-bg": "blue", "--missing": true }, elem);
+ * hasSomeCssVars({
+ *   "--color-bg": "blue",
+ *   "--missing": true,
+ * }, elem);
  * // false
  * ```
  *
@@ -205,14 +221,18 @@ export function hasAllCssVars(
  * hasSomeCssVars(["--color-fg", "--padding-small"]);
  * // true
  *
- * hasSomeCssVars({ "--color-fg": "green", "--is-small": "true" });
+ * hasSomeCssVars({
+ *   "--color-fg": "green",
+ *   "--is-small": "true",
+ * });
  * // false ("true" cannot be a string, must be the boolean value `true`)
  *
- * hasSomeCssVars({ "--color-fg": "green", "--is-small": false });
+ * hasSomeCssVars({
+ *   "--color-fg": "green",
+ *   "--is-small": false,
+ * });
  * // false (`--is-small` is `true`)
  * ```
- *
- * @category CSS
  */
 export function hasSomeCssVars(
   search: CssVarsSearch,

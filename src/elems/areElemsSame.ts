@@ -1,9 +1,10 @@
-import type { ElemOrCssSelector, OneOrManyOf } from "../types.ts";
+import type { OneOrManyOf } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
- * Returns true if the Element, EventTarget, or CSS selector instance(s) specified
+ * Returns true if the Element(s), EventTarget(s), or CSS selector(s) specified
  * as `left` and the Element, EventTarget, or CSS selector specified as
  * `right` **do** match.
  *
@@ -17,7 +18,31 @@ import { toElem } from "./toElem.ts";
  *             target element input.
  * @param right Element, EventTarget, or CSS selector to compare against.
  *
- * @category Elems
+ * @example
+ * **HTML**
+ *
+ * ```html
+ * <ul>
+ *   <li id="item-1">Item 1</li>
+ *   <li id="item-2">Item 2</li>
+ * </ul>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const item1 = findElem("#item-1")!;
+ * const item2 = findElem("#item-2")!;
+ *
+ * areElemsSame(item1, item2);
+ * // false
+ *
+ * areElemsSame(item1, "#item-1");
+ * // true
+ *
+ * areElemsSame(item1, null);
+ * // false
+ * ```
  */
 export function areElemsSame(
   left: OneOrManyOf<ElemOrCssSelector>,

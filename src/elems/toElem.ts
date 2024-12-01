@@ -1,9 +1,10 @@
 import { isNil } from "@laserware/arcade";
 
-import { isElem } from "../typeGuards.ts";
-import type { AnyElement, ElemOrCssSelector } from "../types.ts";
+import type { AnyElement } from "../dom.ts";
 
 import { findElem } from "./findElem.ts";
+import { isElem } from "./isElem.ts";
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
  * Returns an element of type `E` for the specified Element or EventTarget. You can
@@ -48,8 +49,6 @@ import { findElem } from "./findElem.ts";
  *   buttonElem?.focus?.();
  * }
  * ```
- *
- * @category Elems
  */
 export function toElem<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector | null | undefined,

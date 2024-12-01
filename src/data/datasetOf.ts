@@ -1,23 +1,20 @@
 import { isNotNil } from "@laserware/arcade";
 
+import type { AttrValue } from "../attrs/types.ts";
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { parseDOMValue, stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
-import type {
-  AnyElement,
-  AttrValue,
-  DOMPropertyValue,
-  ElemOrCssSelector,
-} from "../types.ts";
+
+import type { DataValue } from "./types.ts";
 
 /**
  * Valid shape for dataset property. The values can be any type that can be
  * stringified. Used for defining the shape in the {@linkcode Dataset} class.
- *
- * @category Data
  */
-export type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
+export type AnyDatasetShape = Record<string, DataValue | null>;
 
 /**
  * Wrapper for managing the [dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
@@ -34,11 +31,9 @@ export type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
  * stringified while retaining type safety via the `DS` generic passed in.
  *
  * @template DS The shape of the dataset data.
- * @template E Type of Element associated with the dataset.
+ * @template E Type of Element which the dataset data is associated.
  *
  * @class
- *
- * @category Data
  */
 export class Dataset<
   DS extends AnyDatasetShape,
@@ -56,7 +51,7 @@ export class Dataset<
    * @param target Element, EventTarget, or CSS selector.
    * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
    *
-   * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+   * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
    */
   constructor(target: ElemOrCssSelector<E>, initialData?: Partial<DS>) {
     this.#element = elemOrThrow<E>(target, "Unable to initialize Dataset");
@@ -182,14 +177,12 @@ export class Dataset<
  * that can fully or partially match the shape specified in the `DS` generic.
  *
  * @template DS The shape of the dataset data.
- * @template E Type of Element containing the `dataset` property.
+ * @template E Element type  containing the `dataset` property.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
  *
- * @returns Dataset instance associated with `target`.
- *
- * @category Data
+ * @returns {@linkcode Dataset} instance associated with `target`.
  */
 export function datasetOf<
   DS extends AnyDatasetShape,

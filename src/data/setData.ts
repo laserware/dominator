@@ -1,17 +1,14 @@
 import { isNil } from "@laserware/arcade";
 
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type {
-  AnyElement,
-  Data,
-  DataKey,
-  DataValue,
-  ElemOrCssSelector,
-} from "../types.ts";
+
+import type { Data, DataKey, DataValue } from "./types.ts";
 
 /**
  * Assigns the specified `value` to the specified dataset `key` in the specified
@@ -25,7 +22,7 @@ import type {
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -36,10 +33,12 @@ import type {
  *   data-is-active="false"
  *   data-count="30"
  *   data-label="Example"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
- * **Code**
+ * **Using Attribute Name (`data-*`)**
  *
  * ```ts
  * const elem = findElem("#example")!;
@@ -47,6 +46,16 @@ import type {
  * setDataEntry(elem, "data-is-active", true);
  * setDataEntry(elem, "data-count", 50);
  * setDataEntry(elem, "data-label", "Update");
+ * ```
+ *
+ * **Using Property Name (camelCase)**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * setDataEntry(elem, "isActive", true);
+ * setDataEntry(elem, "count", 50);
+ * setDataEntry(elem, "label", "Update");
  * ```
  *
  * **HTML (After)**
@@ -57,10 +66,10 @@ import type {
  *   data-is-active="true"
  *   data-count="50"
  *   data-label="Update"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
- *
- * @category Data
  */
 export function setDataEntry<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -76,14 +85,13 @@ export function setDataEntry<E extends AnyElement = HTMLElement>(
 
 /**
  * Assigns the specified `data` key/value pairs to the specified `target`.
- * Returns the Element representation of the specified `target`.
  *
  * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param data Object with key of dataset key and value of entry value.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -94,18 +102,32 @@ export function setDataEntry<E extends AnyElement = HTMLElement>(
  *   data-is-active="false"
  *   data-count="30"
  *   data-label="Example"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
- * **Code**
+ * **Using Attribute Names (`data-*`)**
  *
  * ```ts
  * const elem = findElem("#example")!;
  *
  * setData(elem, {
  *   "data-is-active", true,
- *   count: 50,
+ *   "data-count": 50,
  *   "data-label": "Update",
+ * });
+ * ```
+ *
+ * **Using Property Names (camelCase)**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * setData(elem, {
+ *   isActive, true,
+ *   count: 50,
+ *   label: "Update",
  * });
  * ```
  *
@@ -117,10 +139,10 @@ export function setDataEntry<E extends AnyElement = HTMLElement>(
  *   data-is-active="true"
  *   data-count="50"
  *   data-label="Update"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
- *
- * @category Data
  */
 export function setData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

@@ -1,10 +1,12 @@
 import { isPlainObject } from "@laserware/arcade";
 
+import type { CssSelector } from "../css/types.ts";
+import type { AnyElement } from "../dom.ts";
 import { cast } from "../internal/cast.ts";
 import { parseFindOptions } from "../internal/findOptions.ts";
-import type { AnyElement, CssSelector, Elem, FindOptions } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
+import type { Elem, FindOptions } from "./types.ts";
 
 /**
  * This is the doc comment for file1.ts
@@ -13,7 +15,7 @@ import { toElem } from "./toElem.ts";
  */
 
 /**
- * Query the DOM for an Element matching the specified CSS `selector` in the
+ * Query the DOM for an element matching the specified CSS `selector` in the
  * optionally specified `parent`.
  *
  * @template E Element type of specified `target`.
@@ -24,8 +26,6 @@ import { toElem } from "./toElem.ts";
  * @returns Element of type `E` if found, otherwise `null`.
  *
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if the specified `selector` is invalid.
- *
- * @category Elems
  */
 export function findElem<E extends AnyElement = HTMLElement>(
   selector: CssSelector,
@@ -33,7 +33,7 @@ export function findElem<E extends AnyElement = HTMLElement>(
 ): E | null;
 
 /**
- * Query the DOM to find the Element using one of the specified `options` in the
+ * Query the DOM to find the element using one of the specified `options` in the
  * optionally specified `parent`.
  *
  * @template E Element type of specified `target`.
@@ -44,8 +44,6 @@ export function findElem<E extends AnyElement = HTMLElement>(
  *
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if `withSelector` in the specified `options` is invalid.
  * @throws {TypeError} [TypeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError) if the specified `options` are invalid.
- *
- * @category Elems
  */
 export function findElem<E extends AnyElement = HTMLElement>(
   options: FindOptions,

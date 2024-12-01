@@ -3,7 +3,8 @@ import { isNotNil } from "@laserware/arcade";
 import { selectAttrs } from "../attrs/selectAttrs.ts";
 import { selectData } from "../data/selectData.ts";
 import { toElem } from "../elems/toElem.ts";
-import type { Elem, FindOptions } from "../types.ts";
+
+import type { Elem, FindOptions } from "../elems/types.ts";
 
 import { selectorWithTag } from "./selectorWithTag.ts";
 

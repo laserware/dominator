@@ -1,27 +1,23 @@
 import { isNil, isNotNil } from "@laserware/arcade";
 
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
-import type {
-  AnyElement,
-  DataKey,
-  DataValue,
-  DOMPropertySearch,
-  ElemOrCssSelector,
-} from "../types.ts";
+import type { PropertySearch } from "../types.ts";
+
+import type { DataKey, DataValue } from "./types.ts";
 
 /**
  * Search criteria for checking if dataset entries are present in an element.
  * You can use an array of dataset property/attribute names to check only if the
  * dataset entries are present, or an object to search for specific values.
  * Use `null` for the value if you only care about the presence of a dataset entry.
- *
- * @category Data
  */
-export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
+export type DataSearch = PropertySearch<DataKey, DataValue | null>;
 
 /**
  * Returns true if the specified `target` has a dataset entry with the specified
@@ -33,7 +29,7 @@ export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
  * @param key Property (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
  * @param [value] Optional dataset value to check for.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -44,7 +40,9 @@ export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
  *   data-is-active="false"
  *   data-count="30"
  *   data-label="Example"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
  * **Code**
@@ -61,8 +59,6 @@ export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
  * hadDataEntry(elem, "data-count", 30);
  * // true
  * ```
- *
- * @category Data
  */
 export function hasDataEntry<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -85,7 +81,7 @@ export function hasDataEntry<E extends AnyElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches all search criteria.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -96,7 +92,9 @@ export function hasDataEntry<E extends AnyElement = HTMLElement>(
  *   data-is-active="false"
  *   data-count="30"
  *   data-label="Example"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
  * **Code**
@@ -113,8 +111,6 @@ export function hasDataEntry<E extends AnyElement = HTMLElement>(
  * hasAllData(elem, { "data-count", 30, "label": null });
  * // true
  * ```
- *
- * @category Data
  */
 export function hasAllData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -137,7 +133,7 @@ export function hasAllData<E extends AnyElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches some search criteria.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -148,7 +144,9 @@ export function hasAllData<E extends AnyElement = HTMLElement>(
  *   data-is-active="false"
  *   data-count="30"
  *   data-label="Example"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
  * **Code**
@@ -162,11 +160,13 @@ export function hasAllData<E extends AnyElement = HTMLElement>(
  * hasSomeData(elem, ["data-missing"]);
  * // false
  *
- * hasSomeData(elem, { "data-is-active": false, "count", 30, "missing": null });
+ * hasSomeData(elem, {
+ *   "data-is-active": false,
+ *   count, 30,
+ *   missing: null,
+ * });
  * // true
  * ```
- *
- * @category Data
  */
 export function hasSomeData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

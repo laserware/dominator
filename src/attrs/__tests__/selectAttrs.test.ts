@@ -1,4 +1,4 @@
-import { InvalidAttrError } from "../../errors.ts";
+import { InvalidAttrError } from "../InvalidAttrError.ts";
 import { selectAttr, selectAttrs } from "../selectAttrs.ts";
 
 describe("within selectAttrs", () => {

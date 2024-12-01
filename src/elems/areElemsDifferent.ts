@@ -1,6 +1,7 @@
-import type { ElemOrCssSelector, OneOrManyOf } from "../types.ts";
+import type { OneOrManyOf } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
  * Checks if the Element(s), EventTarget(s), or CSS selector(s) specified
@@ -13,12 +14,36 @@ import { toElem } from "./toElem.ts";
  *
  * @param left One or many Element, EventTarget, or CSS selectors to check; if
  *             an array, returns `true` only if **all** elements don't match the
- *             target Element input.
+ *             target element input.
  * @param right Element, EventTarget, or CSS selector to compare against.
  *
  * @returns `true` if the elements do **not** match.
  *
- * @category Elems
+ * @example
+ * **HTML**
+ *
+ * ```html
+ * <ul>
+ *   <li id="item-1">Item 1</li>
+ *   <li id="item-2">Item 2</li>
+ * </ul>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const item1 = findElem("#item-1")!;
+ * const item2 = findElem("#item-2")!;
+ *
+ * areElemsDifferent(item1, item2);
+ * // true
+ *
+ * areElemsDifferent(item1, "#item-1");
+ * // false
+ *
+ * areElemsDifferent(item1, null);
+ * // false
+ * ```
  */
 export function areElemsDifferent(
   left: OneOrManyOf<ElemOrCssSelector>,

@@ -1,14 +1,11 @@
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type {
-  AnyElement,
-  AttrName,
-  Attrs,
-  AttrValue,
-  ElemOrCssSelector,
-} from "../types.ts";
+
+import type { AttrName, Attrs, AttrValue } from "./types.ts";
 
 /**
  * Sets the specified attribute `target` of the specified `target` to the specified
@@ -22,13 +19,15 @@ import type {
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
  *
  * ```html
- * <div id="example" role="slider">...</div>
+ * <div id="example" role="slider">
+ *   ...
+ * </div>
  * ```
  *
  * **Code**
@@ -46,10 +45,10 @@ import type {
  *   id="example"
  *   role="slider"
  *   aria-label="Click me"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
- *
- * @category Attrs
  */
 export function setAttr<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -75,13 +74,15 @@ export function setAttr<E extends AnyElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
  *
  * ```html
- * <div id="example" role="slider">...</div>
+ * <div id="example" role="slider">
+ *   ...
+ * </div>
  * ```
  *
  * **Code**
@@ -89,7 +90,10 @@ export function setAttr<E extends AnyElement = HTMLElement>(
  * ```ts
  * const elem = findElem("#example")!;
  *
- * setAttrs(elem, { "aria-label", "Click me", "aria-valuenow": 20 });
+ * setAttrs(elem, {
+ *   "aria-label", "Click me",
+ *   "aria-valuenow": 20,
+ * });
  * ```
  *
  * **HTML (After)**
@@ -100,10 +104,10 @@ export function setAttr<E extends AnyElement = HTMLElement>(
  *   role="slider"
  *   aria-label="Click me"
  *   aria-valuenow="20"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
- *
- * @category Attrs
  */
 export function setAttrs<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
