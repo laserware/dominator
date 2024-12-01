@@ -11,7 +11,7 @@ import type { ElemOrCssSelector } from "./types.ts";
  * @param target Element, EventTarget, or CSS selector.
  * @param parent Element, EventTarget, or selector for scroll parent.
  *
- * @throws {@linkcode InvalidElemError} If the `target` or `parent` specified do not exist.
+ * @throws {@linkcode InvalidElemError} if the `target` or `parent` specified do not exist.
  */
 export function keepElemVisibleIn(
   target: ElemOrCssSelector,

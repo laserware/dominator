@@ -22,7 +22,9 @@ import type { AttrName } from "./types.ts";
  * **HTML (Before)**
  *
  * ```html
- * <button id="example" aria-disabled="true">Example</button>
+ * <button id="example" aria-disabled="true">
+ *   Example
+ * </button>
  * ```
  *
  * **Code**
@@ -36,7 +38,9 @@ import type { AttrName } from "./types.ts";
  * **HTML (After)**
  *
  * ```html
- * <button id="example">Example</button>
+ * <button id="example">
+ *   Example
+ * </button>
  * ```
  */
 export function removeAttr<E extends AnyElement = HTMLElement>(
@@ -72,7 +76,9 @@ export function removeAttr<E extends AnyElement = HTMLElement>(
  *   aria-valuemax="30"
  *   aria-label="Example"
  *   aria-disabled="false"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
  * **Code**
@@ -80,7 +86,11 @@ export function removeAttr<E extends AnyElement = HTMLElement>(
  * ```ts
  * const elem = findElem("#example")!;
  *
- * removeAttrs(elem, ["role", "aria-valuemax", "aria-disabled"]);
+ * removeAttrs(elem, [
+ *   "role",
+ *   "aria-valuemax",
+ *   "aria-disabled",
+ * ]);
  * ```
  *
  * **HTML (After)**
@@ -89,7 +99,9 @@ export function removeAttr<E extends AnyElement = HTMLElement>(
  * <div
  *   id="example"
  *   aria-label="Example"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  */
 export function removeAttrs<E extends AnyElement = HTMLElement>(

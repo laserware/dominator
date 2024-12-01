@@ -14,7 +14,7 @@ import type { ElemOrCssSelector } from "./types.ts";
  *
  * @param left One or many Element, EventTarget, or CSS selectors to check; if
  *             an array, returns `true` only if **all** elements don't match the
- *             target Element input.
+ *             target element input.
  * @param right Element, EventTarget, or CSS selector to compare against.
  *
  * @returns `true` if the elements do **not** match.

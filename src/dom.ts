@@ -38,6 +38,7 @@
  * This module contain type definitions for DOM attributes and elements.
  *
  * @module dom
+ * @mergeModuleWith types
  */
 
 /**
@@ -63,6 +64,8 @@ export type TagName = HTMLElementTagName | SVGElementTagName;
 
 /**
  * Element type associated with the specified tag name.
+ *
+ * @template TN Tag name of the corresponding element.
  */
 export type ElementWithTagName<TN extends TagName> =
   TN extends HTMLElementTagName
@@ -1585,7 +1588,7 @@ export interface HTMLTemplateAttributes extends HTMLAttributes {
 }
 
 /**
- * Attributes for a `webview` element. This Element is available when using
+ * Attributes for a `webview` element. This element is available when using
  * Electron. See [the Electron documentation](https://www.electronjs.org/docs/latest/glossary#webview)
  * for additional details.
  */

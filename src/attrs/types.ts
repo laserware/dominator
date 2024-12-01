@@ -6,7 +6,7 @@ import type {
 import type { Primitive } from "../types.ts";
 
 /**
- * Valid attribute names for the specified Element type.
+ * Valid attribute names for the specified element type.
  *
  * @template E Type of Element with corresponding attribute names.
  */

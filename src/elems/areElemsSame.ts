@@ -4,7 +4,7 @@ import { toElem } from "./toElem.ts";
 import type { ElemOrCssSelector } from "./types.ts";
 
 /**
- * Returns true if the Element, EventTarget, or CSS selector instance(s) specified
+ * Returns true if the Element(s), EventTarget(s), or CSS selector(s) specified
  * as `left` and the Element, EventTarget, or CSS selector specified as
  * `right` **do** match.
  *

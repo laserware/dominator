@@ -40,7 +40,7 @@ export type InputValueAsType<T extends InputValueTypeName> = T extends "boolean"
  *
  * @returns Value of the specified `target` as type `T`.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} if the specified `target` wasn't found.
  * @throws Error if the `target` specified is not of type `HTMLInputElement`.
  */
 export function getInputValue<T extends InputValueTypeName>(
@@ -81,7 +81,7 @@ export function getInputValue<T extends InputValueTypeName>(
  *
  * @returns String value of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} if the specified `target` wasn't found.
  * @throws Error if the `target` specified is not of type `HTMLInputElement`.
  */
 export function getInputValueRaw(target: ElemOrCssSelector): string {

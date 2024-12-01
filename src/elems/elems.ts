@@ -19,8 +19,10 @@ export {
   type ElemProperties,
   type EventDescriptor,
   type EventHandlerName,
-  type ListenerOrDescriptor,
-  type ListenersOrDescriptors,
+  type EventListener,
+  type EventListenerOrDescriptor,
+  type EventListenersOrDescriptors,
+  type NonMethodElemProperties,
 } from "./createElem.ts";
 export { elemExists } from "./elemExists.ts";
 export { findAllElems } from "./findAllElems.ts";

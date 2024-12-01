@@ -1,9 +1,6 @@
 /**
- * This module contains definitions for DOM properties that can be searched.
- * These are used primarily for the `has*`, `hasAll*`, and `hasSome*` functions
- * to determine if Elements contain matching properties.
- *
  * @module search
+ * @mergeModuleWith types
  */
 
 import type { AttrName, AttrValue } from "./attrs/types.ts";
@@ -55,7 +52,7 @@ export type DOMPropertyFilter<
 
 /**
  * Search criteria that can be used to determine if a DOM property is present
- * on an Element. If an array, only the presence of the property **names** are
+ * on an element. If an array, only the presence of the property **names** are
  * checked. If an object, the property name **and** value are checked.
  *
  * To check for the existence of a property only (i.e. you don't care what the

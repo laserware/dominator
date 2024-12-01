@@ -9,11 +9,11 @@ import { asElem } from "./asElem.ts";
  * or [HTMLCollection](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCollection)
  * to an array.
  *
- * @template E Type of Elements in the returned array.
+ * @template E Type of elements in the returned array.
  *
  * @param items NodeList or HTMLCollection to convert to array.
  *
- * @returns Array of Elements of type `E`.
+ * @returns Array of elements of type `E`.
  */
 export function listToArray<E extends AnyElement = HTMLElement>(
   items: NodeListOf<E> | NodeList | HTMLCollection | null,

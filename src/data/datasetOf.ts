@@ -31,7 +31,7 @@ export type AnyDatasetShape = Record<string, DataValue | null>;
  * stringified while retaining type safety via the `DS` generic passed in.
  *
  * @template DS The shape of the dataset data.
- * @template E Type of Element associated with the dataset.
+ * @template E Type of Element which the dataset data is associated.
  *
  * @class
  */
@@ -177,7 +177,7 @@ export class Dataset<
  * that can fully or partially match the shape specified in the `DS` generic.
  *
  * @template DS The shape of the dataset data.
- * @template E Type of Element containing the `dataset` property.
+ * @template E Element type  containing the `dataset` property.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param [initialData] Optional full or partial data that corresponds to the dataset shape.

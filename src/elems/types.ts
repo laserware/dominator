@@ -33,7 +33,7 @@ export type ElemOrCssSelector<E extends AnyElement = HTMLElement> =
   | CssSelector;
 
 /**
- * Use to specify search criteria for finding Element(s). You can find Elements
+ * Use to specify search criteria for finding element(s). You can find elements
  * by selector, dataset entries, or attributes.
  *
  * To search for the existence of an attribute or dataset property (not the
@@ -54,6 +54,6 @@ export interface FindOptions {
   /** Optional parent Element, EventTarget, or CSS selector. */
   parent?: ElemOrCssSelector | null | undefined;
 
-  /** Optional Element tag to limit search. */
+  /** Optional element tag name to limit search. */
   tag?: TagName;
 }

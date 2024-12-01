@@ -15,7 +15,7 @@ import type { Elem, FindOptions } from "./types.ts";
  */
 
 /**
- * Query the DOM for an Element matching the specified CSS `selector` in the
+ * Query the DOM for an element matching the specified CSS `selector` in the
  * optionally specified `parent`.
  *
  * @template E Element type of specified `target`.
@@ -33,7 +33,7 @@ export function findElem<E extends AnyElement = HTMLElement>(
 ): E | null;
 
 /**
- * Query the DOM to find the Element using one of the specified `options` in the
+ * Query the DOM to find the element using one of the specified `options` in the
  * optionally specified `parent`.
  *
  * @template E Element type of specified `target`.

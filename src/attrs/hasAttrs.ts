@@ -42,7 +42,9 @@ export type AttrsSearch<E extends AnyElement = HTMLElement> = DOMPropertySearch<
  * **HTML**
  *
  * ```html
- * <button id="example" aria-pressed="true" aria-label="Example">Example</button>
+ * <button id="example" aria-pressed="true" aria-label="Example">
+ *   Example
+ * </button>
  * ```
  *
  * **Code**
@@ -87,7 +89,9 @@ export function hasAttr<E extends AnyElement = HTMLElement>(
  * **HTML**
  *
  * ```html
- * <div id="example" aria-hidden="true" inert>Example</div>
+ * <div id="example" aria-hidden="true" inert>
+ *   Example
+ * </div>
  * ```
  *
  * **Code**
@@ -101,7 +105,10 @@ export function hasAttr<E extends AnyElement = HTMLElement>(
  * hasAllAttrs(elem, ["aria-hidden", "missing"]);
  * // false ("missing" does not exist)
  *
- * hasAllAttrs(elem, { "aria-hidden": true, name: "test", inert: null });
+ * hasAllAttrs(elem, {
+ *   "aria-hidden": true,
+ *   inert: null,
+ * });
  * // true
  * ```
  */

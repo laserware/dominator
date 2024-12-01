@@ -21,7 +21,7 @@ import type { AttrName, Attrs, AttrValue } from "./types.ts";
  *
  * @returns CSS selector based on the specified attribute `name` and optional `value` and `tag`.
  *
- * @throws {@linkcode InvalidAttrError} If the specified `value` could not be stringified.
+ * @throws {@linkcode InvalidAttrError} if the specified `value` could not be stringified.
  *
  * @example
  * **Name Only**
@@ -75,7 +75,7 @@ export function selectAttr<E extends AnyElement = HTMLElement>(
  *
  * @returns CSS selector based on the specified `attrs`.
  *
- * @throws {@linkcode InvalidAttrError} If a value in the specified `attrs` could not be stringified.
+ * @throws {@linkcode InvalidAttrError} if a value in the specified `attrs` could not be stringified.
  *
  * @example
  * **Single Entry With Value**

@@ -10,15 +10,15 @@ import { toElem } from "./toElem.ts";
 import type { Elem, FindOptions } from "./types.ts";
 
 /**
- * Query the DOM to find the Elements matching the specified CSS `selector` in
+ * Query the DOM to find the elements matching the specified CSS `selector` in
  * the optionally specified `parent`.
  *
- * @template E Type of Elements to return.
+ * @template E Type of elements to return.
  *
  * @param selector CSS selector string to find the elements.
  * @param [parent] Optional Element or EventTarget for parent.
  *
- * @returns Array of Elements of type `T` if found, otherwise empty array.
+ * @returns Array of elements of type `T` if found, otherwise empty array.
  *
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if the specified `selector` is invalid.
  */
@@ -28,15 +28,15 @@ export function findAllElems<E extends AnyElement = HTMLElement>(
 ): E[];
 
 /**
- * Query the DOM using one of the specified `options` and find the Elements
+ * Query the DOM using one of the specified `options` and find the elements
  * that match the criteria in the `options` object in the optionally specified
  * `parent`.
  *
- * @template E Type of Elements to return.
+ * @template E Type of elements to return.
  *
  * @param options Options for finding the elements.
  *
- * @returns Array of Elements of type `T` if found, otherwise empty array.
+ * @returns Array of elements of type `T` if found, otherwise empty array.
  *
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if `withSelector` in the specified `options` is invalid.
  * @throws {TypeError} [TypeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError) if the specified `options` are invalid.

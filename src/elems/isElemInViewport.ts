@@ -9,7 +9,7 @@ import type { ElemOrCssSelector } from "./types.ts";
  *
  * @returns `true` if the specified `target` is in the viewport.
  *
- * @throws {@linkcode InvalidElemError} If the `target` wasn't found.
+ * @throws {@linkcode InvalidElemError} if the specified `target` wasn't found.
  */
 export function isElemInViewport(target: ElemOrCssSelector): boolean {
   const elem = elemOrThrow(target, "Unable to determine if element is in view");

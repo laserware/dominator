@@ -5,7 +5,7 @@ import { toElem } from "./toElem.ts";
 import type { ElemOrCssSelector } from "./types.ts";
 
 /**
- * Additional options for setting focus to an Element.
+ * Additional options for setting focus to an element.
  *
  * @expand
  */

@@ -2,13 +2,13 @@ import type { Primitive } from "../types.ts";
 
 /**
  * Valid type for the key of [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
- * property entries in HTML/SVG Elements.
+ * property entries in HTML/SVG elements.
  */
 export type DataPropertyName = string;
 
 /**
  * Valid name for dataset [data-* attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*)
- * on HTML/SVG Element (e.g. `data-some-value`).
+ * on a HTML/SVG element (e.g. `data-some-value`).
  */
 export type DataAttrName = `data-${string}`;
 

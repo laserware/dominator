@@ -18,15 +18,23 @@ type NeverMethods<T> = {
 
 export type ExcludeMethods<T> = Pick<T, NeverMethods<T>>;
 
-type NonMethodElemProperties<TN extends TagName> = ExcludeMethods<
+/**
+ * Properties of an element with tag name `TN` that are _not_ methods (e.g.
+ * `setAttribute` or `attachInternals`).
+ *
+ * @template TN Tag name for the associated element.
+ */
+export type NonMethodElemProperties<TN extends TagName> = ExcludeMethods<
   ElementWithTagName<TN>
 >;
 
 /**
- * Properties that can be set on the Element with the specified `TN` tag name.
+ * Properties that can be set on the element with the specified `TN` tag name.
  *
  * Note that methods/functions are excluded because this is used in the
  * {@linkcode createElem} function.
+ *
+ * @template TN Tag name for the associated element.
  */
 export type ElemProperties<TN extends TagName> = Omit<
   NonMethodElemProperties<TN>,
@@ -38,7 +46,12 @@ export type ElemProperties<TN extends TagName> = Omit<
  */
 export type EventHandlerName = keyof GlobalEventHandlersEventMap;
 
-type Listener<EN extends EventHandlerName> = (
+/**
+ * Event listener that is called with event that corresponds to name `EN`.
+ *
+ * @template EN Name of the event that listener is associated with.
+ */
+export type EventListener<EN extends EventHandlerName> = (
   event: GlobalEventHandlersEventMap[EN],
 ) => void;
 
@@ -46,13 +59,13 @@ type Listener<EN extends EventHandlerName> = (
  * Object with a listener that is called when the corresponding event fires
  * and the options that are passed into [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener).
  *
- * @template EN Name of the Event that `listener` is associated with`.
+ * @template EN Name of the Event that `listener` is associated with.
  */
 export interface EventDescriptor<EN extends EventHandlerName> {
   /**
    * Callback fired when the event is fired.
    */
-  listener: Listener<EN>;
+  listener: EventListener<EN>;
 
   /**
    * Event listener options object. See [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options)
@@ -62,54 +75,49 @@ export interface EventDescriptor<EN extends EventHandlerName> {
 }
 
 /**
- * Event listener or descriptor used to add listeners to an Element created
+ * Event listener or descriptor used to add listeners to an element created
  * with the {@linkcode createElem} function.
+ *
+ * @template EN Name of the Event that the listener or  is associated with.
  */
-export type ListenerOrDescriptor<EN extends EventHandlerName> =
-  | Listener<EN>
+export type EventListenerOrDescriptor<EN extends EventHandlerName> =
+  | EventListener<EN>
   | EventDescriptor<EN>;
 
 /**
  * Object with key of event name and value of an event listener or
  * {@linkcode EventDescriptor}.
  */
-export type ListenersOrDescriptors = {
-  [EN in EventHandlerName]?: ListenerOrDescriptor<EN>;
+export type EventListenersOrDescriptors = {
+  [EN in EventHandlerName]?: EventListenerOrDescriptor<EN>;
 };
 
 /**
  * Options for creating an element using {@linkcode createElem}.
  *
- * @template E Element type for attributes.
+ * @template TN Tag name for the created element.
  */
-export interface CreateElemOptions<TN extends TagName> {
-  /** Optional ID to set on Element. */
-  id?: string;
-
-  /** Optional CSS class to set on Element. */
-  className?: string;
-
-  /** Attributes to set on Element. */
+export type CreateElemOptions<TN extends TagName> = Partial<
+  ElemProperties<TN>
+> & {
+  /** Attributes to set on element. */
   attrs?: Attrs<ElementWithTagName<TN>>;
 
   /** AbortController to clean up event listeners. */
   controller?: AbortController | undefined;
 
-  /** CSS variables to set on Element. */
+  /** CSS variables to set on element. */
   cssVars?: CssVars;
 
-  /** Dataset entries to set on Element. */
+  /** Dataset entries to set on element. */
   data?: Data;
 
-  /** Event listeners to set on Element. */
-  on?: ListenersOrDescriptors;
-
-  /** Properties to set on Element. */
-  props?: Partial<Omit<ElemProperties<TN>, "id" | "style" | "click">>;
+  /** Event listeners to set on element. */
+  on?: EventListenersOrDescriptors;
 
   /** Styles to set on element. */
   styles?: Styles;
-}
+};
 
 /**
  * Types of children that can be passed to {@linkcode createElem}.
@@ -121,12 +129,12 @@ export type ElemChild = AnyElement | string | null;
  * The attributes, CSS variables, dataset entries, and styles specified in
  * `options` are applied to the root element in the markup.
  *
- * @template TN Tag name of the created Element.
+ * @template TN Tag name of the created element.
  *
  * @param tag Tag name of the HTML/SVG element to create (e.g. `div`, `svg`, etc.).
  * @param options Optional attributes, CSS variables, dataset entries, and styles
- *                to set on Element.
- * @param [children] Optional children to append to created Element.
+ *                to set on element.
+ * @param [children] Optional children to append to created element.
  *
  * @returns Element of type `E` with the specified `tag` and `options`.
  */
@@ -137,39 +145,35 @@ export function createElem<TN extends TagName>(
 ): ElementWithTagName<TN> {
   const element = document.createElement(tag);
 
-  if (isNotNil(options.id)) {
-    element.id = options.id;
-  }
-
-  if (isNotNil(options.className)) {
-    element.classList.add(options.className);
-  }
-
-  if (isNotNil(options.props)) {
-    for (const name of Object.keys(options.props)) {
-      // @ts-ignore
-      element[name] = options.props[name];
-    }
-  }
+  const props = { ...options };
 
   if (isNotNil(options.attrs)) {
     setAttrs(element, options.attrs);
+    delete props.attrs;
   }
 
   if (isNotNil(options.cssVars)) {
     setCssVars(options.cssVars, element);
+    delete props.cssVars;
   }
 
   if (isNotNil(options.data)) {
     setData(element, options.data);
+    delete props.data;
   }
 
   if (isNotNil(options.on)) {
     addEventListeners(element, options.on);
+    delete props.on;
   }
 
   if (isNotNil(options.styles)) {
     setStyles(element, options.styles);
+  }
+
+  for (const name of Object.keys(props)) {
+    // @ts-ignore
+    element[name] = props[name];
   }
 
   for (const child of children) {
@@ -192,23 +196,23 @@ export function createElem<TN extends TagName>(
 }
 
 /**
- * Adds specified event listeners to the specified Element.
+ * Adds specified event listeners in `eventsDict` to the specified `element`.
+ *
+ * @template TN Tag name of the specified `element`.
  *
  * @param element Element to attach events to.
  * @param eventsDict Object with key of event name and value of event listener.
- *
- * @throws {Error} If the `controller` is undefined.
  */
 function addEventListeners<TN extends TagName>(
   element: ElementWithTagName<TN>,
-  eventsDict: ListenersOrDescriptors,
+  eventsDict: EventListenersOrDescriptors,
 ): void {
   const eventNames = Object.keys(eventsDict) as EventHandlerName[];
 
   for (const eventName of eventNames) {
     const listenerOrDescriptor = eventsDict[eventName]!;
 
-    let eventListener: Listener<typeof eventName>;
+    let eventListener: EventListener<typeof eventName>;
 
     let options: AddEventListenerOptions = {};
 
@@ -218,7 +222,7 @@ function addEventListeners<TN extends TagName>(
       options = listenerOrDescriptor.options;
     } else {
       // prettier-ignore
-      eventListener = listenerOrDescriptor as Listener<typeof eventName>;
+      eventListener = listenerOrDescriptor as EventListener<typeof eventName>;
     }
 
     element.addEventListener(eventName, eventListener, options);

@@ -2,7 +2,7 @@ import type { CssVarName } from "../css/types.ts";
 import type { Primitive } from "../types.ts";
 
 /**
- * Valid style keys (i.e. non-methods) that can be set on an Element.
+ * Valid style keys (i.e. non-methods) that can be set on an element.
  */
 export type StyleKey =
   | Exclude<
@@ -25,8 +25,8 @@ export type StyleKey =
   | CssVarName;
 
 /**
- * Value that can be set for an Element style. The value is stringified prior
- * to being set on the Element.
+ * Value that can be set for an element style. The value is stringified prior
+ * to being set on the element.
  */
 export type StyleValue = Primitive;
 

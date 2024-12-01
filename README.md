@@ -27,7 +27,7 @@ You can use the `createElem` function:
 ```ts
 import { createElem } from "@laserware/dominator";
 
-const div = createElem("div", { id: "example", props: { ariaLabel: "Hello!" } });
+const div = createElem("div", { id: "example", ariaLabel: "Hello!" });
 ```
 
 ### Finding Elements

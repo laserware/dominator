@@ -2,7 +2,12 @@
 // noinspection SpellCheckingInspection
 
 /**
- * This module contains commonly used utility types.
+ * This module contains commonly used utility types, type definitions for
+ * DOM properties that can be searched, and type definitions for DOM elements
+ * and attributes that extend the DOM types that ship with TypeScript.
+ *
+ * The `DOMProprty*` types are used primarily for the `has*`, `hasAll*`, and
+ * `hasSome*` functions to determine if Elements contain matching properties.
  *
  * @module types
  */
@@ -40,6 +45,20 @@ export type WithUndefinedValues<T extends Record<any, any>> = {
 };
 
 /**
- * Represents primitive values that can be used to set properties on Elements.
+ * Represents primitive values that can be used to set properties on elements.
  */
 export type Primitive = boolean | number | string;
+
+/**
+ * Filter criteria for determining if a DOM property has the specified value.
+ *
+ * @template K Key of the property to filter.
+ * @template V Value of the property to filter. If not checking for a value, use `null`.
+ */
+export type AnyPropertyFilter<K extends string, V> = {
+  [key in K]?: V;
+};
+
+export type AnyPropertySearch<K extends string, V> =
+  | K[]
+  | AnyPropertyFilter<K, V>;

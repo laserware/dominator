@@ -1,6 +1,7 @@
 {
   "$schema": "https://typedoc.org/schema.json",
   "cleanOutputDir": true,
+  "customCss": "./docs/theme.css",
   "entryPoints": [
     "./src/attrs/attrs.ts",
     "./src/css/css.ts",
@@ -31,6 +32,5 @@
   "navigationLinks": { "GitHub": "https://github.com/laserware/dominator" },
   "out": "site",
   "readme": "README.md",
-  "useTsLinkResolution": false,
-  "customCss": "./docs.css"
+  "useTsLinkResolution": false
 }

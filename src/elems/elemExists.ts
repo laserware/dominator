@@ -8,7 +8,7 @@ import type { ElemOrCssSelector } from "./types.ts";
  *
  * @remarks
  * We allow `null` or `undefined` as well because a `null` or `undefined`
- * Element technically doesn't exist.
+ * element technically doesn't exist.
  *
  * @param target Element, EventTarget, or CSS selector.
  *

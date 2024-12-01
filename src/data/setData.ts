@@ -71,7 +71,6 @@ export function setDataEntry<E extends AnyElement = HTMLElement>(
 
 /**
  * Assigns the specified `data` key/value pairs to the specified `target`.
- * Returns the Element representation of the specified `target`.
  *
  * @template E Element type of specified `target`.
  *
