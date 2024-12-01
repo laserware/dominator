@@ -1,17 +1,14 @@
 import { isNil } from "@laserware/arcade";
 
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type {
-  AnyElement,
-  Data,
-  DataKey,
-  DataValue,
-  ElemOrCssSelector,
-} from "../types.ts";
+
+import type { Data, DataKey, DataValue } from "./types.ts";
 
 /**
  * Assigns the specified `value` to the specified dataset `key` in the specified
@@ -25,7 +22,7 @@ import type {
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -81,7 +78,7 @@ export function setDataEntry<E extends AnyElement = HTMLElement>(
  * @param target Element, EventTarget, or CSS selector.
  * @param data Object with key of dataset key and value of entry value.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**

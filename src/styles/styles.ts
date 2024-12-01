@@ -14,3 +14,4 @@ export {
 } from "./hasStyles.ts";
 export { removeStyle, removeStyles } from "./removeStyles.ts";
 export { setStyle, setStyles } from "./setStyles.ts";
+export type { StyleKey, Styles, StyleValue } from "./types.ts";

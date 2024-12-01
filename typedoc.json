@@ -5,9 +5,10 @@
     "./src/attrs/attrs.ts",
     "./src/css/css.ts",
     "./src/data/data.ts",
-    "./src/dom.ts",
     "./src/elems/elems.ts",
     "./src/styles/styles.ts",
+    "./src/dom.ts",
+    "./src/search.ts",
     "./src/types.ts"
   ],
   "exclude": [
@@ -30,5 +31,6 @@
   "navigationLinks": { "GitHub": "https://github.com/laserware/dominator" },
   "out": "site",
   "readme": "README.md",
-  "useTsLinkResolution": false
+  "useTsLinkResolution": false,
+  "customCss": "./docs.css"
 }

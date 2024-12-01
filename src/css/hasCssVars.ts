@@ -1,16 +1,15 @@
 import { isNil } from "@laserware/arcade";
 
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
-import type {
-  AnyElement,
-  CssVarName,
-  CssVarValue,
-  DOMPropertySearch,
-  ElemOrCssSelector,
-} from "../types.ts";
+
+import type { DOMPropertySearch } from "../search.ts";
+
+import type { CssVarName, CssVarValue } from "./types.ts";
 
 /**
  * Search criteria for checking if CSS variables are present in an element.
@@ -33,7 +32,7 @@ export type CssVarsSearch = DOMPropertySearch<CssVarName, CssVarValue | null>;
  *
  * @returns `true` if the specified CSS variable is present.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -94,7 +93,7 @@ export function hasCssVar(
  *
  * @returns `true` if the specified `target` matches all search criteria.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -161,7 +160,7 @@ export function hasAllCssVars(
  *
  * @returns `true` if the specified `target` has **some** of the specified CSS variables.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**

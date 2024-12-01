@@ -2,8 +2,8 @@
 
 import { dedent } from "@laserware/arcade";
 
+import type { AnyElement } from "./dom.ts";
 import { cast } from "./internal/cast.ts";
-import type { AnyElement } from "./types.ts";
 
 export { screen, waitFor } from "@testing-library/dom";
 

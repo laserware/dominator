@@ -1,17 +1,12 @@
 import { isNil, kebabCase } from "@laserware/arcade";
 
-import type { TagName } from "../dom.ts";
+import type { CssSelector } from "../css/types.ts";
+import type { AnyElement, TagName } from "../dom.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
-import type {
-  AnyElement,
-  AttrName,
-  Attrs,
-  AttrValue,
-  CssSelector,
-} from "../types.ts";
 
 import { InvalidAttrError } from "./InvalidAttrError.ts";
+import type { AttrName, Attrs, AttrValue } from "./types.ts";
 
 /**
  * Attempts to build a CSS selector string from the specified `name` and `value`. Note

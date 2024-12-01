@@ -1,18 +1,14 @@
+import type { AnyElement } from "../dom.ts";
 import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
 
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type {
-  AnyElement,
-  ElemOrCssSelector,
-  KeysOf,
-  StyleKey,
-  Styles,
-  StyleValue,
-  WithUndefinedValues,
-} from "../types.ts";
+import type { KeysOf, WithUndefinedValues } from "../types.ts";
+
+import type { StyleKey, Styles, StyleValue } from "./types.ts";
 
 /**
  * Attempts to get the specified style property with name `key` from the
@@ -27,8 +23,8 @@ import type {
  *
  * @returns Value of type `T` or `undefined` if not found.
  *
- * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
- *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
+ *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function getStyle<T extends StyleValue>(
   target: ElemOrCssSelector,
@@ -58,8 +54,8 @@ export function getStyle<T extends StyleValue>(
  *          Note that you will need to perform checks for whether a value is
  *          `undefined` in the returned object if some of the entries weren't present.
  *
- * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
- *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
+ *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function getStyles<T extends Styles = Styles>(
   target: ElemOrCssSelector,

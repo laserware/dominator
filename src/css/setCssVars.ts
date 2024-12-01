@@ -1,19 +1,15 @@
 import { isNotNil } from "@laserware/arcade";
 
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { isCssVarName } from "../typeGuards.ts";
-import type {
-  AnyElement,
-  CssVarName,
-  CssVars,
-  CssVarValue,
-  ElemOrCssSelector,
-} from "../types.ts";
 
 import { InvalidCssVarError } from "./InvalidCssVarError.ts";
+import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
 
 /**
  * Sets the specified CSS variable `name` to the specified `value` in the
@@ -30,8 +26,8 @@ import { InvalidCssVarError } from "./InvalidCssVarError.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidCssVarError} If the specified `name` is not a valid {@linkcode CssVarName}.
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidCssVarError} if the specified `name` is not a valid {@linkcode CssVarName}.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -94,8 +90,8 @@ export function setCssVar<E extends AnyElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidCssVarError} If a specified name in `vars` is not a valid {@linkcode CssVarName}.
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidCssVarError} if a specified name in `vars` is not a valid {@linkcode CssVarName}.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**

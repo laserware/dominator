@@ -2,14 +2,12 @@
 
 import { isPlainObject } from "@laserware/arcade";
 
-import type {
-  AttrValue,
-  CssVarName,
-  DOMPropertyValue,
-  Elem,
-  Primitive,
-  StyleValue,
-} from "./types.ts";
+import type { AttrValue } from "./attrs/types.ts";
+import type { CssVarName } from "./css/types.ts";
+import type { Elem } from "./elems/types.ts";
+import type { DOMPropertyValue } from "./search.ts";
+import type { StyleValue } from "./styles/types.ts";
+import type { Primitive } from "./types.ts";
 
 /**
  * Returns true if the specified value is a {@linkcode Primitive}.

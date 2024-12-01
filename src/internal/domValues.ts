@@ -1,4 +1,4 @@
-import type { DOMPropertyValue } from "../types.ts";
+import type { DOMPropertyValue } from "../search.ts";
 
 /**
  * Converts the specified value to a string. If the value is `null`, returns

@@ -1,7 +1,8 @@
+import type { AnyElement } from "../dom.ts";
 import { isElem } from "../typeGuards.ts";
-import type { AnyElement, Elem } from "../types.ts";
 
 import { InvalidElemError } from "./InvalidElemError.ts";
+import type { Elem } from "./types.ts";
 
 /**
  * Returns an element of type `E` for the specified `target`.

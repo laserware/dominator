@@ -1,7 +1,6 @@
-import type { ElemOrCssSelector } from "../types.ts";
-
 import { areElemsSame } from "./areElemsSame.ts";
 import { isElemChildOf } from "./isElemChildOf.ts";
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
  * Checks if the specified `target` is the same or a child of the specified

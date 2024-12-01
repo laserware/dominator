@@ -1,16 +1,12 @@
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type {
-  AnyElement,
-  AttrName,
-  Attrs,
-  AttrValue,
-  ElemOrCssSelector,
-  KeysOf,
-  WithNullValues,
-} from "../types.ts";
+import type { KeysOf, WithNullValues } from "../types.ts";
+
+import type { AttrName, Attrs, AttrValue } from "./types.ts";
 
 /**
  * Attempts to get the specified attribute `name` from the specified `target`.
@@ -30,7 +26,7 @@ import type {
  *
  * @returns Value of type `T` or `null` if not found.
  *
- * @throws {InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -42,10 +38,12 @@ import type {
  *   aria-valuemax="30"
  *   aria-label="Example"
  *   aria-disabled="false"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
- * **String Attribute**
+ * **Get String Attribute**
  *
  * ```ts
  * const elem = findElem("#example")!;
@@ -54,7 +52,7 @@ import type {
  * // "Example"
  * ```
  *
- * **Number Attribute**
+ * **Get Number Attribute**
  *
  * ```ts
  * const elem = findElem("#example")!;
@@ -63,7 +61,7 @@ import type {
  * // 30
  * ```
  *
- * **Boolean Attribute**
+ * **Get Boolean Attribute**
  *
  * ```ts
  * const elem = findElem("#example")!;
@@ -98,7 +96,7 @@ export function getAttr<
  *          Note that you will need to perform checks for whether a value is
  *          `null` in the returned object if some of the entries weren't present.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -110,7 +108,9 @@ export function getAttr<
  *   aria-valuemax="30"
  *   aria-label="Example"
  *   aria-disabled="false"
- * ></div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
  * **Code**
@@ -124,8 +124,11 @@ export function getAttr<
  *
  * const elem = findElem("#example")!;
  *
- * // Note that `invalid` doesn't exist on the element, so it's `null`:
- * getAttrs<Shape>(elem, ["aria-label", "aria-valuemax", "invalid"]);
+ * getAttrs<Shape>(elem, [
+ *   "aria-label",
+ *   "aria-valuemax",
+ *   "invalid", // Doesn't exist, so it's `null`
+ * ]);
  * // { "aria-label": "Example", "aria-valuemax": 30, invalid: null }
  * ```
  */

@@ -35,6 +35,12 @@
 // TypeScript Version: 2.8
 
 /**
+ * This module contain type definitions for DOM attributes and elements.
+ *
+ * @module dom
+ */
+
+/**
  * Value type for boolean attributes. Some boolean attributes can either be
  * `true` or `false` _or_ the string `"true"` or `"false"`.
  */
@@ -1892,3 +1898,8 @@ export type HTMLElementAttributes<E extends HTMLElement> =
   : E extends HTMLVideoElement
   ? HTMLVideoAttributes
   : HTMLAttributes;
+
+/**
+ * Any HTML or SVG element.
+ */
+export type AnyElement = HTMLElement | SVGElement;

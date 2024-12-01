@@ -1,5 +1,6 @@
 import { elemOrThrow } from "../internal/elemOr.ts";
-import type { ElemOrCssSelector } from "../types.ts";
+
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
  * Checks if the specified `target` is visible in the browser viewport.

@@ -1,6 +1,7 @@
-import type { ElemOrCssSelector, OneOrManyOf } from "../types.ts";
+import type { OneOrManyOf } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
  * Returns true if the Element, EventTarget, or CSS selector instance(s) specified

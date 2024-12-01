@@ -1,14 +1,11 @@
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type {
-  AnyElement,
-  AttrName,
-  Attrs,
-  AttrValue,
-  ElemOrCssSelector,
-} from "../types.ts";
+
+import type { AttrName, Attrs, AttrValue } from "./types.ts";
 
 /**
  * Sets the specified attribute `target` of the specified `target` to the specified
@@ -22,7 +19,7 @@ import type {
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elems!InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -75,7 +72,7 @@ export function setAttr<E extends AnyElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elems!InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**

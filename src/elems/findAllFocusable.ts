@@ -1,6 +1,5 @@
-import type { Elem } from "../types.ts";
-
 import { findAllElems } from "./findAllElems.ts";
+import type { Elem } from "./types.ts";
 
 const focusableElementsSelector = [
   "a",

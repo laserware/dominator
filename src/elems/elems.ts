@@ -44,3 +44,4 @@ export { isElemScrollable } from "./isElemScrollable.ts";
 export { keepElemVisibleIn } from "./keepElemVisibleIn.ts";
 export { listToArray } from "./listToArray.ts";
 export { toElem } from "./toElem.ts";
+export type { Elem, ElemOrCssSelector, FindOptions } from "./types.ts";

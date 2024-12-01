@@ -1,14 +1,12 @@
 import { removeAttr } from "../attrs/removeAttrs.ts";
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type {
-  AnyElement,
-  DataKey,
-  DataPropertyName,
-  ElemOrCssSelector,
-} from "../types.ts";
+
+import type { DataKey, DataPropertyName } from "./types.ts";
 
 /**
  * Removes the dataset entry with the specified `key` from the specified
@@ -21,7 +19,7 @@ import type {
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  */
 export function removeDataEntry<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -46,7 +44,7 @@ export function removeDataEntry<E extends AnyElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  */
 export function removeData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

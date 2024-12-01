@@ -1,16 +1,13 @@
+import type { AnyElement } from "../dom.ts";
 import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { isCssVarName } from "../typeGuards.ts";
-import type {
-  AnyElement,
-  ElemOrCssSelector,
-  StyleKey,
-  Styles,
-  StyleValue,
-} from "../types.ts";
+
+import type { StyleKey, Styles, StyleValue } from "./types.ts";
 
 /**
  * Sets the style property with name `key` to the specified `value` on the
@@ -22,8 +19,8 @@ import type {
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
- *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
+ *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function setStyle<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector,
@@ -52,8 +49,8 @@ export function setStyle<E extends AnyElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
- *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
+ *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function setStyles<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector,

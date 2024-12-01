@@ -28,3 +28,4 @@ export {
 export { InvalidCssVarError } from "./InvalidCssVarError.ts";
 export { removeCssVar, removeCssVars } from "./removeCssVars.ts";
 export { setCssVar, setCssVars } from "./setCssVars.ts";
+export type { CssSelector, CssVarName, CssVars, CssVarValue } from "./types.ts";

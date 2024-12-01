@@ -1,17 +1,15 @@
 import { isNil } from "@laserware/arcade";
 
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
-import type {
-  AnyElement,
-  AttrName,
-  AttrValue,
-  DOMPropertySearch,
-  ElemOrCssSelector,
-} from "../types.ts";
+
+import type { DOMPropertySearch } from "../search.ts";
 
 import { getAttr } from "./getAttrs.ts";
+import type { AttrName, AttrValue } from "./types.ts";
 
 /**
  * Search criteria for checking if attributes are present in an element.
@@ -38,7 +36,7 @@ export type AttrsSearch<E extends AnyElement = HTMLElement> = DOMPropertySearch<
  *
  * @returns `true` if the specified attribute `name` is present and `value` matches (if specified).
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -83,7 +81,7 @@ export function hasAttr<E extends AnyElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches all search criteria.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -128,7 +126,7 @@ export function hasAllAttrs<E extends AnyElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches some search criteria.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -139,8 +137,8 @@ export function hasAllAttrs<E extends AnyElement = HTMLElement>(
  *
  * **Code**
  *
- * > Note that the `aria-label` attribute isn't present on the `div`, above,
- * > but the function still returns `true`:
+ * Note that the `aria-label` attribute isn't present on the `div` above,
+ * but the function still returns `true`:
  *
  * ```ts
  * const elem = findElem("#example")!;

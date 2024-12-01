@@ -6,33 +6,16 @@ export * from "./styles/styles.ts";
 
 export type * from "./dom.ts";
 export type {
-  AttrName,
-  Attrs,
-  AttrsDefined,
-  AttrValue,
-  CssSelector,
-  CssVarName,
-  CssVars,
-  CssVarValue,
-  Data,
-  DataAttrName,
-  DataKey,
-  DataPropertyName,
-  DataValue,
   DOMPropertyFilter,
   DOMPropertyFilterValue,
   DOMPropertyKey,
   DOMPropertySearch,
   DOMPropertyValue,
-  Elem,
-  ElemOrCssSelector,
-  FindOptions,
+} from "./search.ts";
+export type {
   KeysOf,
   OneOrManyOf,
   Primitive,
-  StyleKey,
-  Styles,
-  StyleValue,
   WithNullValues,
   WithUndefinedValues,
 } from "./types.ts";

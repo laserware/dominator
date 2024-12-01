@@ -1,12 +1,16 @@
 import { isNil, isNotNil, isPlainObject } from "@laserware/arcade";
 
 import { setAttrs } from "../attrs/setAttrs.ts";
+import type { Attrs } from "../attrs/types.ts";
 import { setCssVars } from "../css/setCssVars.ts";
+import type { CssVars } from "../css/types.ts";
 import { setData } from "../data/setData.ts";
-import type { ElementWithTagName, TagName } from "../dom.ts";
+import type { Data } from "../data/types.ts";
+import type { AnyElement, ElementWithTagName, TagName } from "../dom.ts";
 import { cast } from "../internal/cast.ts";
 import { setStyles } from "../styles/setStyles.ts";
-import type { AnyElement, Attrs, CssVars, Data, Styles } from "../types.ts";
+
+import type { Styles } from "../styles/types.ts";
 
 type NeverMethods<T> = {
   [K in keyof T]: T[K] extends (...args: any[]) => any ? never : K;

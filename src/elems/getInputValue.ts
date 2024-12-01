@@ -1,5 +1,6 @@
 import { elemOrThrow } from "../internal/elemOr.ts";
-import type { ElemOrCssSelector } from "../types.ts";
+
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
  * Name of the value type associated with an input.

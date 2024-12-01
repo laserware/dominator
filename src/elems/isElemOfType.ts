@@ -1,7 +1,7 @@
 import type { ElementWithTagName, TagName } from "../dom.ts";
-import type { ElemOrCssSelector } from "../types.ts";
 
 import { toElem } from "./toElem.ts";
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
  * Checks if the specified `target` matches the specified `tag`. If the specified

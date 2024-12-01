@@ -1,8 +1,7 @@
 import { isNil } from "@laserware/arcade";
 
-import type { ElemOrCssSelector } from "../types.ts";
-
 import { toElem } from "./toElem.ts";
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
  * Checks if the specified `target` exists in the DOM.

@@ -1,9 +1,10 @@
 import { isNil } from "@laserware/arcade";
 
+import type { AnyElement } from "../dom.ts";
 import { isElem } from "../typeGuards.ts";
-import type { AnyElement, ElemOrCssSelector } from "../types.ts";
 
 import { findElem } from "./findElem.ts";
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
  * Returns an element of type `E` for the specified Element or EventTarget. You can

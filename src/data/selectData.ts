@@ -1,10 +1,12 @@
 import { isNil } from "@laserware/arcade";
 
 import { selectAttr } from "../attrs/selectAttrs.ts";
+import type { CssSelector } from "../css/types.ts";
 import type { TagName } from "../dom.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
-import type { CssSelector, Data, DataKey, DataValue } from "../types.ts";
+
+import type { Data, DataKey, DataValue } from "./types.ts";
 
 /**
  * Attempts to build a valid selector for a dataset with the specified `key` and

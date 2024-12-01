@@ -1,6 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
-import type { AnyElement } from "../types.ts";
+import type { AnyElement } from "../dom.ts";
 
 import { asElem } from "./asElem.ts";
 

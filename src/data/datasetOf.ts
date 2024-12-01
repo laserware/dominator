@@ -1,23 +1,20 @@
 import { isNotNil } from "@laserware/arcade";
 
+import type { AttrValue } from "../attrs/types.ts";
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { parseDOMValue, stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
-import type {
-  AnyElement,
-  AttrValue,
-  DOMPropertyValue,
-  ElemOrCssSelector,
-} from "../types.ts";
+
+import type { DataValue } from "./types.ts";
 
 /**
  * Valid shape for dataset property. The values can be any type that can be
  * stringified. Used for defining the shape in the {@linkcode Dataset} class.
- *
- * y Data
  */
-export type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
+export type AnyDatasetShape = Record<string, DataValue | null>;
 
 /**
  * Wrapper for managing the [dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
@@ -54,7 +51,7 @@ export class Dataset<
    * @param target Element, EventTarget, or CSS selector.
    * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
    *
-   * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+   * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
    */
   constructor(target: ElemOrCssSelector<E>, initialData?: Partial<DS>) {
     this.#element = elemOrThrow<E>(target, "Unable to initialize Dataset");
@@ -185,7 +182,7 @@ export class Dataset<
  * @param target Element, EventTarget, or CSS selector.
  * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
  *
- * @returns Dataset instance associated with `target`.
+ * @returns {@linkcode Dataset} instance associated with `target`.
  */
 export function datasetOf<
   DS extends AnyDatasetShape,

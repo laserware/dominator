@@ -1,17 +1,16 @@
 import { isNil, isNotNil } from "@laserware/arcade";
 
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
-import type {
-  AnyElement,
-  DataKey,
-  DataValue,
-  DOMPropertySearch,
-  ElemOrCssSelector,
-} from "../types.ts";
+
+import type { DOMPropertySearch } from "../search.ts";
+
+import type { DataKey, DataValue } from "./types.ts";
 
 /**
  * Search criteria for checking if dataset entries are present in an element.
@@ -31,7 +30,7 @@ export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
  * @param key Property (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
  * @param [value] Optional dataset value to check for.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -81,7 +80,7 @@ export function hasDataEntry<E extends AnyElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches all search criteria.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -131,7 +130,7 @@ export function hasAllData<E extends AnyElement = HTMLElement>(
  *
  * @returns `true` if the specified `target` matches some search criteria.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**

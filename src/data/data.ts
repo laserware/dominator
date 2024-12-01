@@ -16,3 +16,10 @@ export {
 export { removeData, removeDataEntry } from "./removeData.ts";
 export { selectData, selectDataEntry } from "./selectData.ts";
 export { setData, setDataEntry } from "./setData.ts";
+export type {
+  Data,
+  DataAttrName,
+  DataKey,
+  DataPropertyName,
+  DataValue,
+} from "./types.ts";

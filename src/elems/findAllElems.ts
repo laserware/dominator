@@ -1,11 +1,13 @@
 import { isPlainObject } from "@laserware/arcade";
 
+import type { CssSelector } from "../css/types.ts";
+import type { AnyElement } from "../dom.ts";
 import { parseFindOptions } from "../internal/findOptions.ts";
-import type { AnyElement, CssSelector, Elem, FindOptions } from "../types.ts";
 
 import { listToArray } from "./listToArray.ts";
 
 import { toElem } from "./toElem.ts";
+import type { Elem, FindOptions } from "./types.ts";
 
 /**
  * Query the DOM to find the Elements matching the specified CSS `selector` in

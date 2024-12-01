@@ -1,18 +1,13 @@
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { isCssVarName } from "../typeGuards.ts";
-import type {
-  CssVarName,
-  CssVars,
-  CssVarValue,
-  ElemOrCssSelector,
-  KeysOf,
-  WithUndefinedValues,
-} from "../types.ts";
+import type { KeysOf, WithUndefinedValues } from "../types.ts";
 
 import { InvalidCssVarError } from "./InvalidCssVarError.ts";
+import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
 
 /**
  * Attempts to get the value associated with the specified CSS variable `name`
@@ -37,8 +32,8 @@ import { InvalidCssVarError } from "./InvalidCssVarError.ts";
  *
  * @returns Value associated with the specified `name` or `undefined` if it doesn't exist.
  *
- * @throws {@linkcode InvalidCssVarError} If the specified `name` is invalid.
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidCssVarError} if the specified `name` is invalid.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -97,35 +92,49 @@ export function getCssVar<T extends CssVarValue>(
  *         Note that you will need to perform checks for whether a value is
  *          `undefined` in the returned object if some of the entries weren't present.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
- * @example
- * **HTML**
+ * ## Examples
+ * ### HTML
  *
  * ```html
- * <style>:root { --color-fg: green; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: green;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: blue; --gap: 24;">Example</button>
+ * <button
+ *   id="example"
+ *   style="--color-bg: blue; --gap: 24;"
+ * >
+ *   Example
+ * </button>
  * ```
  *
- * **Get from Element**
+ * ### Get from Element
  *
  * ```ts
- * type CssVarsShape = { "--color-bg": string; "--gap": number; };
+ * type Shape = {
+ *   "--color-bg": string;
+ *   "--gap": number;
+ * };
  *
  * const elem = findElem("#example")!;
  *
- * getCssVars<CssVarsShape>(["--color-bg", "--gap"], elem);
+ * getCssVars<Shape>(["--color-bg", "--gap"], elem);
  *  // { "--color-bg": "blue", "--gap": 24 }
  * ```
  *
- * **Get from `:root`**
+ * ### Get from :root
  *
  * ```ts
- * type CssVarsShape = { "--color-fg": string; };
+ * type Shape = {
+ *   "--color-fg": string;
+ * };
  *
- * getCssVars<CssVarsShape>(["--color-bg", "--gap"]);
- *  // { "--color-fg": "green", "--gap": 24 }
+ * getCssVars<Shape>(["--color-fg"]);
+ *  // { "--color-fg": "green" }
  * ```
  */
 export function getCssVars<T extends CssVars = CssVars>(

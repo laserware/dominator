@@ -1,6 +1,5 @@
-import type { ElemOrCssSelector } from "../types.ts";
-
 import { toElem } from "./toElem.ts";
+import type { ElemOrCssSelector } from "./types.ts";
 
 /**
  * Determines if the specified `child` is a child of the specified `parent`

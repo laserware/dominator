@@ -1,4 +1,6 @@
-import type { AnyElement, DOMPropertySearch, KeysOf } from "../types.ts";
+import type { AnyElement } from "../dom.ts";
+import type { DOMPropertySearch } from "../search.ts";
+import type { KeysOf } from "../types.ts";
 
 /**
  * Returns true if **all** properties in the specified `element` match the

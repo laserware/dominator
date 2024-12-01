@@ -1,6 +1,7 @@
+import type { AnyElement } from "../dom.ts";
 import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
-import type { AnyElement, ElemOrCssSelector } from "../types.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 
 import { cast } from "./cast.ts";
 

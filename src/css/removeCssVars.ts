@@ -1,9 +1,11 @@
+import type { AnyElement } from "../dom.ts";
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type { AnyElement, CssVarName, ElemOrCssSelector } from "../types.ts";
 
 import { InvalidCssVarError } from "./InvalidCssVarError.ts";
+import type { CssVarName } from "./types.ts";
 
 /**
  * Removes the specified CSS variable `name` from the optionally specified
@@ -19,8 +21,8 @@ import { InvalidCssVarError } from "./InvalidCssVarError.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidCssVarError} If the CSS variable could not be removed from `target`.
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidCssVarError} if the CSS variable could not be removed from `target`.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -79,8 +81,8 @@ export function removeCssVar<E extends AnyElement = HTMLElement>(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidCssVarError} If a CSS variable could not be removed from `target`.
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidCssVarError} if a CSS variable could not be removed from `target`.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**

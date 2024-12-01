@@ -1,15 +1,12 @@
+import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type {
-  Data,
-  DataKey,
-  DataValue,
-  ElemOrCssSelector,
-  WithUndefinedValues,
-} from "../types.ts";
+import type { WithUndefinedValues } from "../types.ts";
+
+import type { Data, DataKey, DataValue } from "./types.ts";
 
 /**
  * Attempts to get the value associated with the specified dataset `key` on the
@@ -23,7 +20,7 @@ import type {
  *
  * @returns Value of the dataset property associated with `key`, otherwise `undefined`.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -96,7 +93,7 @@ export function getDataValue<T extends DataValue = DataValue>(
  *          Note that you will need to perform checks for whether a value is
  *          `undefined` in the returned object if some of the entries weren't present.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
