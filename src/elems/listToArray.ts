@@ -1,6 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
+import type { AnyElement } from "../types.ts";
 
 import { asElem } from "./asElem.ts";
 
@@ -14,8 +14,6 @@ import { asElem } from "./asElem.ts";
  * @param items NodeList or HTMLCollection to convert to array.
  *
  * @returns Array of Elements of type `E`.
- *
- * @category Elems
  */
 export function listToArray<E extends AnyElement = HTMLElement>(
   items: NodeListOf<E> | NodeList | HTMLCollection | null,

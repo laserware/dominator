@@ -20,8 +20,6 @@ import { getAttr } from "./getAttrs.ts";
  * if you only care about the presence of an attribute.
  *
  * @template E Type of Element with corresponding attributes to search.
- *
- * @category Attrs
  */
 export type AttrsSearch<E extends AnyElement = HTMLElement> = DOMPropertySearch<
   AttrName<E>,
@@ -63,8 +61,6 @@ export type AttrsSearch<E extends AnyElement = HTMLElement> = DOMPropertySearch<
  * hasAttr(elem, "aria-label", "Example");
  * // true
  * ```
- *
- * @category Attrs
  */
 export function hasAttr<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -110,8 +106,6 @@ export function hasAttr<E extends AnyElement = HTMLElement>(
  * hasAllAttrs(elem, { "aria-hidden": true, name: "test", inert: null });
  * // true
  * ```
- *
- * @category Attrs
  */
 export function hasAllAttrs<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -145,17 +139,22 @@ export function hasAllAttrs<E extends AnyElement = HTMLElement>(
  *
  * **Code**
  *
+ * > Note that the `aria-label` attribute isn't present on the `div`, above,
+ * > but the function still returns `true`:
+ *
  * ```ts
  * const elem = findElem("#example")!;
  *
- * hasSomeAttrs(elem, ["aria-hidden", "missing"]);
+ * hasSomeAttrs(elem, ["aria-hidden", "aria-label"]);
  * // true
  *
- * hasSomeAttrs(elem, { "aria-hidden": true, name: "test", inert: null, missing: null });
+ * hasSomeAttrs(elem, {
+ *   inert: null,
+ *   "aria-hidden": true,
+ *   "aria-label": "Click Me",
+ * });
  * // true
  * ```
- *
- * @category Attrs
  */
 export function hasSomeAttrs<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

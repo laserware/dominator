@@ -1,4 +1,4 @@
-import { InvalidElemError } from "../../errors.ts";
+import { InvalidElemError } from "../../elems/InvalidElemError.ts";
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { removeAttr, removeAttrs } from "../removeAttrs.ts";
 

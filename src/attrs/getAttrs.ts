@@ -30,7 +30,7 @@ import type {
  *
  * @returns Value of type `T` or `null` if not found.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {InvalidElemError} If the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -71,8 +71,6 @@ import type {
  * getAttr(elem, "aria-disabled");
  * // false
  * ```
- *
- * @category Attrs
  */
 export function getAttr<
   T extends AttrValue = AttrValue,
@@ -130,8 +128,6 @@ export function getAttr<
  * getAttrs<Shape>(elem, ["aria-label", "aria-valuemax", "invalid"]);
  * // { "aria-label": "Example", "aria-valuemax": 30, invalid: null }
  * ```
- *
- * @category Attrs
  */
 export function getAttrs<
   T extends Attrs = Attrs,

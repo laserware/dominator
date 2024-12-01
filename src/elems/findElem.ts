@@ -24,8 +24,6 @@ import { toElem } from "./toElem.ts";
  * @returns Element of type `E` if found, otherwise `null`.
  *
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if the specified `selector` is invalid.
- *
- * @category Elems
  */
 export function findElem<E extends AnyElement = HTMLElement>(
   selector: CssSelector,
@@ -44,8 +42,6 @@ export function findElem<E extends AnyElement = HTMLElement>(
  *
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if `withSelector` in the specified `options` is invalid.
  * @throws {TypeError} [TypeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError) if the specified `options` are invalid.
- *
- * @category Elems
  */
 export function findElem<E extends AnyElement = HTMLElement>(
   options: FindOptions,

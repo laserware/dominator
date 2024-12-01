@@ -1,4 +1,3 @@
-import { InvalidCssVarError } from "../errors.ts";
 import { cast } from "../internal/cast.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
@@ -12,6 +11,8 @@ import type {
   KeysOf,
   WithUndefinedValues,
 } from "../types.ts";
+
+import { InvalidCssVarError } from "./InvalidCssVarError.ts";
 
 /**
  * Attempts to get the value associated with the specified CSS variable `name`
@@ -66,8 +67,6 @@ import type {
  * getCssVar("--color-fg");
  * // "green"
  * ```
- *
- * @category CSS
  */
 export function getCssVar<T extends CssVarValue>(
   name: CssVarName,
@@ -128,8 +127,6 @@ export function getCssVar<T extends CssVarValue>(
  * getCssVars<CssVarsShape>(["--color-bg", "--gap"]);
  *  // { "--color-fg": "green", "--gap": 24 }
  * ```
- *
- * @category CSS
  */
 export function getCssVars<T extends CssVars = CssVars>(
   names: KeysOf<T>,

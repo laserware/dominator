@@ -3,17 +3,10 @@ import { isNil, isNotNil, isPlainObject } from "@laserware/arcade";
 import { setAttrs } from "../attrs/setAttrs.ts";
 import { setCssVars } from "../css/setCssVars.ts";
 import { setData } from "../data/setData.ts";
+import type { ElementWithTagName, TagName } from "../dom.ts";
 import { cast } from "../internal/cast.ts";
 import { setStyles } from "../styles/setStyles.ts";
-import type {
-  AnyElement,
-  Attrs,
-  CssVars,
-  Data,
-  ElementWithTagName,
-  Styles,
-  TagName,
-} from "../types.ts";
+import type { AnyElement, Attrs, CssVars, Data, Styles } from "../types.ts";
 
 type NeverMethods<T> = {
   [K in keyof T]: T[K] extends (...args: any[]) => any ? never : K;
@@ -30,8 +23,6 @@ type NonMethodElemProperties<TN extends TagName> = ExcludeMethods<
  *
  * Note that methods/functions are excluded because this is used in the
  * {@linkcode createElem} function.
- *
- * @category Elems
  */
 export type ElemProperties<TN extends TagName> = Omit<
   NonMethodElemProperties<TN>,
@@ -40,8 +31,6 @@ export type ElemProperties<TN extends TagName> = Omit<
 
 /**
  * Name of the event handler.
- *
- * @category Elems
  */
 export type EventHandlerName = keyof GlobalEventHandlersEventMap;
 
@@ -54,8 +43,6 @@ type Listener<EN extends EventHandlerName> = (
  * and the options that are passed into [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener).
  *
  * @template EN Name of the Event that `listener` is associated with`.
- *
- * @category Elems
  */
 export interface EventDescriptor<EN extends EventHandlerName> {
   /**
@@ -73,8 +60,6 @@ export interface EventDescriptor<EN extends EventHandlerName> {
 /**
  * Event listener or descriptor used to add listeners to an Element created
  * with the {@linkcode createElem} function.
- *
- * @category Elems
  */
 export type ListenerOrDescriptor<EN extends EventHandlerName> =
   | Listener<EN>
@@ -83,8 +68,6 @@ export type ListenerOrDescriptor<EN extends EventHandlerName> =
 /**
  * Object with key of event name and value of an event listener or
  * {@linkcode EventDescriptor}.
- *
- * @category Elems
  */
 export type ListenersOrDescriptors = {
   [EN in EventHandlerName]?: ListenerOrDescriptor<EN>;
@@ -94,8 +77,6 @@ export type ListenersOrDescriptors = {
  * Options for creating an element using {@linkcode createElem}.
  *
  * @template E Element type for attributes.
- *
- * @category Elems
  */
 export interface CreateElemOptions<TN extends TagName> {
   /** Optional ID to set on Element. */
@@ -128,8 +109,6 @@ export interface CreateElemOptions<TN extends TagName> {
 
 /**
  * Types of children that can be passed to {@linkcode createElem}.
- *
- * @category Elems
  */
 export type ElemChild = AnyElement | string | null;
 
@@ -146,8 +125,6 @@ export type ElemChild = AnyElement | string | null;
  * @param [children] Optional children to append to created Element.
  *
  * @returns Element of type `E` with the specified `tag` and `options`.
- *
- * @category Elems
  */
 export function createElem<TN extends TagName>(
   tag: TN,

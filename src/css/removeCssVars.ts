@@ -1,8 +1,9 @@
-import { InvalidCssVarError } from "../errors.ts";
 import { cast } from "../internal/cast.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import type { AnyElement, CssVarName, ElemOrCssSelector } from "../types.ts";
+
+import { InvalidCssVarError } from "./InvalidCssVarError.ts";
 
 /**
  * Removes the specified CSS variable `name` from the optionally specified
@@ -53,8 +54,6 @@ import type { AnyElement, CssVarName, ElemOrCssSelector } from "../types.ts";
  *
  * <button id="example" style="font-size: 18px;">Example</button>
  * ```
- *
- * @category CSS
  */
 export function removeCssVar<E extends AnyElement = HTMLElement>(
   name: CssVarName,
@@ -127,8 +126,6 @@ export function removeCssVar<E extends AnyElement = HTMLElement>(
  *   Example
  * </button>
  * ```
- *
- * @category CSS
  */
 export function removeCssVars<E extends AnyElement = HTMLElement>(
   names: CssVarName[],

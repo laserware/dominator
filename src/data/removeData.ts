@@ -22,8 +22,6 @@ import type {
  * @returns Element representation of the specified `target`.
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
- *
- * @category Data
  */
 export function removeDataEntry<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -49,8 +47,6 @@ export function removeDataEntry<E extends AnyElement = HTMLElement>(
  * @returns Element representation of the specified `target`.
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
- *
- * @category Data
  */
 export function removeData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

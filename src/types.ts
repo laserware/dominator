@@ -1,14 +1,9 @@
 /* istanbul ignore file -- @preserve: These are just type definitions, no need to enforce coverage. */
 // noinspection SpellCheckingInspection
 
-import type { AnyElement, HTMLElementAttributes, TagName } from "./dom.ts";
-
-export type {
-  AnyElement,
-  ElementWithTagName,
+import type {
   HTMLElementAttributes,
-  HTMLElementTagName,
-  SVGElementTagName,
+  SVGElementAttributes,
   TagName,
 } from "./dom.ts";
 
@@ -50,14 +45,23 @@ export type WithUndefinedValues<T extends Record<any, any>> = {
 export type Primitive = boolean | number | string;
 
 /**
+ * Any HTML or SVG element.
+ */
+export type AnyElement = HTMLElement | SVGElement;
+
+type AnyElementAttrName<E extends AnyElement> = E extends HTMLElement
+  ? Extract<keyof HTMLElementAttributes<E>, string>
+  : E extends SVGElement
+    ? Extract<keyof SVGElementAttributes, string>
+    : never;
+
+/**
  * Valid type for HTML/SVG attribute name.
  *
  * @template E Type of Element with corresponding attribute names.
- *
- * @category Attrs
  */
 export type AttrName<E extends AnyElement = HTMLElement> =
-  | Extract<keyof HTMLElementAttributes<E>, string>
+  | AnyElementAttrName<E>
   | string;
 
 /**
@@ -67,8 +71,6 @@ export type AttrName<E extends AnyElement = HTMLElement> =
  * This represents the value type that can be assigned to attributes using
  * {@linkcode setAttr} and {@linkcode setAttrs} as well as the return value for
  * attributes when using {@linkcode getAttr} and {@linkcode getAttrs}.
- *
- * @category Attrs
  */
 export type AttrValue = Primitive | any[] | Record<number | string, any>;
 
@@ -77,8 +79,6 @@ export type AttrValue = Primitive | any[] | Record<number | string, any>;
  * Some of the values may be `null` or `undefined`.
  *
  * @template E Type of Element for corresponding attributes.
- *
- * @category Attrs
  */
 export type Attrs<E extends AnyElement = HTMLElement> = Record<
   AttrName<E>,
@@ -88,8 +88,6 @@ export type Attrs<E extends AnyElement = HTMLElement> = Record<
 /**
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
  * All the values must be defined.
- *
- * @category Attrs
  */
 export type AttrsDefined = Record<string, AttrValue>;
 
@@ -97,8 +95,6 @@ export type AttrsDefined = Record<string, AttrValue>;
  * CSS selector string. Note that no validation is performed on the selector,
  * so this could represent any string value (even if it is not a valid CSS
  * selector).
- *
- * @category CSS
  */
 export type CssSelector = string;
 
@@ -106,39 +102,29 @@ export type CssSelector = string;
  * Valid name for a [CSS variable](https://developer.mozilla.org/en-US/docs/Web/CSS/--*).
  *
  * CSS variables *must* start with `--`.
- *
- * @category CSS
  */
 export type CssVarName = `--${string}`;
 
 /**
  * Valid value for a [CSS variable](https://developer.mozilla.org/en-US/docs/Web/CSS/--*).
- *
- * @category CSS
  */
 export type CssVarValue = Primitive;
 
 /**
  * Represents an object with key of {@linkcode CssVarName} and value
  * of {@linkcode CssVarValue}.
- *
- * @category CSS
  */
 export type CssVars = Record<CssVarName, CssVarValue>;
 
 /**
  * Valid type for the key of [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
  * property entries in HTML/SVG Elements.
- *
- * @category Data
  */
 export type DataPropertyName = string;
 
 /**
  * Valid name for dataset [data-* attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*)
  * on HTML/SVG Element (e.g. `data-some-value`).
- *
- * @category Data
  */
 export type DataAttrName = `data-${string}`;
 
@@ -146,15 +132,11 @@ export type DataAttrName = `data-${string}`;
  * Valid name for {@linkcode Data} entries. Represents either a key for the
  * [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset) property
  * or a name for the [data-* attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*).
- *
- * @category Data
  */
 export type DataKey = DataPropertyName | DataAttrName;
 
 /**
  * Valid dataset values (prior to stringifying).
- *
- * @category Data
  */
 export type DataValue = Primitive | any[] | Record<number | string, any>;
 
@@ -166,8 +148,6 @@ export type DataValue = Primitive | any[] | Record<number | string, any>;
  *
  * Note that the `HTMLElement.dataset` property is a
  * [DOMStringMap](https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap).
- *
- * @category Data
  */
 export type Data = Record<string, DataValue | null | undefined>;
 
@@ -176,8 +156,6 @@ export type Data = Record<string, DataValue | null | undefined>;
  * dataset attribute/property names and style keys).
  *
  * @template E Type of Element associated with the underlying DOM properties.
- *
- * @category DOM
  */
 export type DOMPropertyKey<E extends AnyElement = HTMLElement> =
   | AttrName<E>
@@ -189,16 +167,12 @@ export type DOMPropertyKey<E extends AnyElement = HTMLElement> =
  * Represents a value that can be assigned to a DOM property after stringification.
  *
  * Objects and arrays are stringified via [JSON.stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
- *
- * @category DOM
  */
 export type DOMPropertyValue = AttrValue | CssVarValue | DataValue | StyleValue;
 
 /**
  * Filter value for performing DOM property searches. Use `null` to check if
  * an entry exists only (skip checking if values match).
- *
- * @category DOM
  */
 export type DOMPropertyFilterValue =
   | AttrValue
@@ -212,8 +186,6 @@ export type DOMPropertyFilterValue =
  *
  * @template K Key of the property to filter.
  * @template V Value of the property to filter. If not checking for a value, use `null`.
- *
- * @category DOM
  */
 export type DOMPropertyFilter<
   K extends DOMPropertyKey,
@@ -250,8 +222,6 @@ export type DOMPropertyFilter<
  * });
  * // true
  * ```
- *
- * @category DOM
  */
 export type DOMPropertySearch<
   K extends DOMPropertyKey = DOMPropertyKey,
@@ -262,8 +232,6 @@ export type DOMPropertySearch<
  * Element or EventTarget that can be passed into functions.
  *
  * @template E Type of Element.
- *
- * @category Elems
  */
 export type Elem<E extends AnyElement = HTMLElement> =
   | E
@@ -284,8 +252,6 @@ export type Elem<E extends AnyElement = HTMLElement> =
  * either an {@linkcode Elem} type object or a string representing a CSS selector.
  *
  * @template E Type of Element if {@linkcode Elem}.
- *
- * @category Elems
  */
 export type ElemOrCssSelector<E extends AnyElement = HTMLElement> =
   | Elem<E>
@@ -299,8 +265,6 @@ export type ElemOrCssSelector<E extends AnyElement = HTMLElement> =
  * value), set the value to `null`.
  *
  * @expand
- *
- * @category Elems
  */
 export interface FindOptions {
   /** CSS selector search string. */
@@ -321,8 +285,6 @@ export interface FindOptions {
 
 /**
  * Valid style keys (i.e. non-methods) that can be set on an Element.
- *
- * @category Styles
  */
 export type StyleKey =
   | Exclude<
@@ -347,15 +309,11 @@ export type StyleKey =
 /**
  * Value that can be set for an Element style. The value is stringified prior
  * to being set on the Element.
- *
- * @category Styles
  */
 export type StyleValue = Primitive;
 
 /**
  * Object representing element styles with a key of {@linkcode StyleKey} and a
  * value of {@linkcode StyleValue}.
- *
- * @category Styles
  */
 export type Styles = Partial<Record<StyleKey, StyleValue>>;

@@ -1,6 +1,5 @@
 import { isNotNil } from "@laserware/arcade";
 
-import { InvalidCssVarError } from "../errors.ts";
 import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
@@ -13,6 +12,8 @@ import type {
   CssVarValue,
   ElemOrCssSelector,
 } from "../types.ts";
+
+import { InvalidCssVarError } from "./InvalidCssVarError.ts";
 
 /**
  * Sets the specified CSS variable `name` to the specified `value` in the
@@ -62,8 +63,6 @@ import type {
  *
  * <button id="example" style="--color-bg: red;">Example</button>
  * ```
- *
- * @category CSS
  */
 export function setCssVar<E extends AnyElement = HTMLElement>(
   name: CssVarName,
@@ -128,8 +127,6 @@ export function setCssVar<E extends AnyElement = HTMLElement>(
  *
  * <button id="example" style="--color-bg: red;">Example</button>
  * ```
- *
- * @category CSS
  */
 export function setCssVars<E extends AnyElement = HTMLElement>(
   vars: CssVars,

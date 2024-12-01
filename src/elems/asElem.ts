@@ -1,6 +1,7 @@
-import { InvalidElemError } from "../errors.ts";
 import { isElem } from "../typeGuards.ts";
 import type { AnyElement, Elem } from "../types.ts";
+
+import { InvalidElemError } from "./InvalidElemError.ts";
 
 /**
  * Returns an element of type `E` for the specified `target`.
@@ -55,8 +56,6 @@ import type { AnyElement, Elem } from "../types.ts";
  *   console.log(elem.valueAsNumber);
  * }
  * ```
- *
- * @category Elems
  */
 export function asElem<E extends AnyElement = HTMLElement>(
   target: Elem<E> | null | undefined,

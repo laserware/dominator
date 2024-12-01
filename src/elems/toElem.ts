@@ -48,8 +48,6 @@ import { findElem } from "./findElem.ts";
  *   buttonElem?.focus?.();
  * }
  * ```
- *
- * @category Elems
  */
 export function toElem<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector | null | undefined,

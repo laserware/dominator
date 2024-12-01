@@ -16,8 +16,6 @@ import { toElem } from "./toElem.ts";
  *             an array, returns true if **one** of the elements matches the
  *             target element input.
  * @param right Element, EventTarget, or CSS selector to compare against.
- *
- * @category Elems
  */
 export function areElemsSame(
   left: OneOrManyOf<ElemOrCssSelector>,

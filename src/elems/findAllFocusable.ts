@@ -23,8 +23,6 @@ const focusableElementsSelector = [
  * @param [parent=document] Optional Element or EventTarget for parent.
  *
  * @returns Array of focusable Elements in the optionally specified `parent`.
- *
- * @category Elems
  */
 export function findAllFocusable(
   parent: Elem | null | undefined = document,

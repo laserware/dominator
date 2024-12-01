@@ -3,8 +3,6 @@ import type { ElemOrCssSelector } from "../types.ts";
 
 /**
  * Name of the value type associated with an input.
- *
- * @category Elems
  */
 export type InputValueTypeName = "boolean" | "date" | "number" | "string";
 
@@ -17,8 +15,6 @@ export type InputValueTypeName = "boolean" | "date" | "number" | "string";
  * See {@linkcode getInputValue} to understand how this is used in practice.
  *
  * @template T Name of the input value type.
- *
- * @category Elems
  */
 export type InputValueAsType<T extends InputValueTypeName> = T extends "boolean"
   ? boolean
@@ -45,8 +41,6 @@ export type InputValueAsType<T extends InputValueTypeName> = T extends "boolean"
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  * @throws Error if the `target` specified is not of type `HTMLInputElement`.
- *
- * @category Elems
  */
 export function getInputValue<T extends InputValueTypeName>(
   target: ElemOrCssSelector,
@@ -88,8 +82,6 @@ export function getInputValue<T extends InputValueTypeName>(
  *
  * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
  * @throws Error if the `target` specified is not of type `HTMLInputElement`.
- *
- * @category Elems
  */
 export function getInputValueRaw(target: ElemOrCssSelector): string {
   const elem = elemOrThrow(target, "Could not get value for element");

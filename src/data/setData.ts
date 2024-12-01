@@ -59,8 +59,6 @@ import type {
  *   data-label="Update"
  * >...</div>
  * ```
- *
- * @category Data
  */
 export function setDataEntry<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -119,8 +117,6 @@ export function setDataEntry<E extends AnyElement = HTMLElement>(
  *   data-label="Update"
  * >...</div>
  * ```
- *
- * @category Data
  */
 export function setData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

@@ -1,7 +1,7 @@
 import { isNil } from "@laserware/arcade";
 
+import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
-import { InvalidElemError } from "../errors.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type {
@@ -19,8 +19,6 @@ import { getStyle } from "./getStyles.ts";
  * You can use an array of style property names to check only if the styles are
  * present, or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of a style property.
- *
- * @category Styles
  */
 export type StylesSearch = DOMPropertySearch<StyleKey, StyleValue | null>;
 
@@ -36,8 +34,6 @@ export type StylesSearch = DOMPropertySearch<StyleKey, StyleValue | null>;
  *
  * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
  *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
- *
- * @category Styles
  */
 export function hasStyle(
   target: ElemOrCssSelector,
@@ -63,8 +59,6 @@ export function hasStyle(
  *
  * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
  *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
- *
- * @category Styles
  */
 export function hasAllStyles(
   target: ElemOrCssSelector,
@@ -90,8 +84,6 @@ export function hasAllStyles(
  *
  * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
  *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
- *
- * @category Styles
  */
 export function hasSomeStyles(
   target: ElemOrCssSelector,

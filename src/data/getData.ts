@@ -72,8 +72,6 @@ import type {
  * getDataValue(elem, "isActive");
  * // false
  * ```
- *
- * @category Data
  */
 export function getDataValue<T extends DataValue = DataValue>(
   target: ElemOrCssSelector,
@@ -133,8 +131,6 @@ export function getDataValue<T extends DataValue = DataValue>(
  * getData<DataPropsShape>(elem, ["label", "count"]);
  * // { label: "Example", count: 30 }
  * ```
- *
- * @category Data
  */
 export function getData<T extends Data = Data>(
   target: ElemOrCssSelector,

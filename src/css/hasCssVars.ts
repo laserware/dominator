@@ -17,8 +17,6 @@ import type {
  * You can use an array of CSS variable names to check only if the CSS variables are
  * present, or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of a CSS variable.
- *
- * @category CSS
  */
 export type CssVarsSearch = DOMPropertySearch<CssVarName, CssVarValue | null>;
 
@@ -73,8 +71,6 @@ export type CssVarsSearch = DOMPropertySearch<CssVarName, CssVarValue | null>;
  * hasCssVar("--color-bg", "blue");
  * // true
  * ```
- *
- * @category CSS
  */
 export function hasCssVar(
   name: CssVarName,
@@ -142,8 +138,6 @@ export function hasCssVar(
  * hasAllCssVars({ "--color-fg": "green", "--is-small": false });
  * // false (`--is-small` is `true`)
  * ```
- *
- * @category CSS
  */
 export function hasAllCssVars(
   search: CssVarsSearch,
@@ -211,8 +205,6 @@ export function hasAllCssVars(
  * hasSomeCssVars({ "--color-fg": "green", "--is-small": false });
  * // false (`--is-small` is `true`)
  * ```
- *
- * @category CSS
  */
 export function hasSomeCssVars(
   search: CssVarsSearch,

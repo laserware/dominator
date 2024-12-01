@@ -18,8 +18,6 @@ import type {
  * You can use an array of dataset property/attribute names to check only if the
  * dataset entries are present, or an object to search for specific values.
  * Use `null` for the value if you only care about the presence of a dataset entry.
- *
- * @category Data
  */
 export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
 
@@ -61,8 +59,6 @@ export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
  * hadDataEntry(elem, "data-count", 30);
  * // true
  * ```
- *
- * @category Data
  */
 export function hasDataEntry<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -113,8 +109,6 @@ export function hasDataEntry<E extends AnyElement = HTMLElement>(
  * hasAllData(elem, { "data-count", 30, "label": null });
  * // true
  * ```
- *
- * @category Data
  */
 export function hasAllData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -165,8 +159,6 @@ export function hasAllData<E extends AnyElement = HTMLElement>(
  * hasSomeData(elem, { "data-is-active": false, "count", 30, "missing": null });
  * // true
  * ```
- *
- * @category Data
  */
 export function hasSomeData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

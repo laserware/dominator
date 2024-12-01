@@ -18,8 +18,6 @@ import { toElem } from "./toElem.ts";
  * @param parent Element, EventTarget, or CSS selector for parent.
  *
  * @returns `true` if the specified `child` is a child of the specified `parent`.
- *
- * @category Elems
  */
 export function isElemChildOf(
   child: ElemOrCssSelector,

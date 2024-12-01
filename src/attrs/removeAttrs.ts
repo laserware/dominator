@@ -35,8 +35,6 @@ import type { AnyElement, AttrName, ElemOrCssSelector } from "../types.ts";
  * ```html
  * <button id="example">Example</button>
  * ```
- *
- * @category Attrs
  */
 export function removeAttr<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -90,8 +88,6 @@ export function removeAttr<E extends AnyElement = HTMLElement>(
  *   aria-label="Example"
  * >...</div>
  * ```
- *
- * @category Attrs
  */
 export function removeAttrs<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

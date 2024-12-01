@@ -1,6 +1,7 @@
 import { isNil } from "@laserware/arcade";
 
-import type { CssSelector, TagName } from "../types.ts";
+import type { TagName } from "../dom.ts";
+import type { CssSelector } from "../types.ts";
 
 /**
  * Builds a {@linkcode CssSelector} from the specified `selector` that includes

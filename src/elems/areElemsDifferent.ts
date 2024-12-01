@@ -17,8 +17,6 @@ import { toElem } from "./toElem.ts";
  * @param right Element, EventTarget, or CSS selector to compare against.
  *
  * @returns `true` if the elements do **not** match.
- *
- * @category Elems
  */
 export function areElemsDifferent(
   left: OneOrManyOf<ElemOrCssSelector>,

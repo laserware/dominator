@@ -1,15 +1,10 @@
 import { isNil } from "@laserware/arcade";
 
 import { selectAttr } from "../attrs/selectAttrs.ts";
+import type { TagName } from "../dom.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
-import type {
-  CssSelector,
-  Data,
-  DataKey,
-  DataValue,
-  TagName,
-} from "../types.ts";
+import type { CssSelector, Data, DataKey, DataValue } from "../types.ts";
 
 /**
  * Attempts to build a valid selector for a dataset with the specified `key` and
@@ -49,8 +44,6 @@ import type {
  * const selector = selectDataEntry("data-some-thing", "stuff", "a");
  * // `a[data-some-thing="stuff"]`
  * ```
- *
- * @category Data
  */
 export function selectDataEntry(
   key: DataKey,
@@ -92,8 +85,6 @@ export function selectDataEntry(
  * const selector = selectData({ someThing: "stuff", otherThing: "doodles" }, "a");
  * // `a[data-some-thing="stuff"][data-other-thing="doodles"]`
  * ```
- *
- * @category Data
  */
 export function selectData(data: Data, tag?: TagName): CssSelector {
   let selector = "";

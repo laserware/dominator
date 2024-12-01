@@ -15,7 +15,7 @@ import type {
  * Valid shape for dataset property. The values can be any type that can be
  * stringified. Used for defining the shape in the {@linkcode Dataset} class.
  *
- * @category Data
+ * y Data
  */
 export type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
 
@@ -37,8 +37,6 @@ export type AnyDatasetShape = Record<string, DOMPropertyValue | null>;
  * @template E Type of Element associated with the dataset.
  *
  * @class
- *
- * @category Data
  */
 export class Dataset<
   DS extends AnyDatasetShape,
@@ -188,8 +186,6 @@ export class Dataset<
  * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
  *
  * @returns Dataset instance associated with `target`.
- *
- * @category Data
  */
 export function datasetOf<
   DS extends AnyDatasetShape,

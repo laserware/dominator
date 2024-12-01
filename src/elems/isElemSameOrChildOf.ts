@@ -15,8 +15,6 @@ import { isElemChildOf } from "./isElemChildOf.ts";
  * @param parent Element, EventTarget, or CSS selector for parent (or same) element.
  *
  * @returns `true` if the specified `child` is a child of or the same as the specified `parent`.
- *
- * @category Elems
  */
 export function isElemSameOrChildOf(
   child: ElemOrCssSelector,

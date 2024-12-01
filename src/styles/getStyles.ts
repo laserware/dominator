@@ -1,6 +1,6 @@
+import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
 
-import { InvalidElemError } from "../errors.ts";
 import { cast } from "../internal/cast.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -29,8 +29,6 @@ import type {
  *
  * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
  *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
- *
- * @category Styles
  */
 export function getStyle<T extends StyleValue>(
   target: ElemOrCssSelector,
@@ -62,8 +60,6 @@ export function getStyle<T extends StyleValue>(
  *
  * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
  *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
- *
- * @category Styles
  */
 export function getStyles<T extends Styles = Styles>(
   target: ElemOrCssSelector,

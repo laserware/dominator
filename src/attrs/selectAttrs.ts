@@ -1,6 +1,6 @@
 import { isNil, kebabCase } from "@laserware/arcade";
 
-import { InvalidAttrError } from "../errors.ts";
+import type { TagName } from "../dom.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
 import type {
@@ -9,8 +9,9 @@ import type {
   Attrs,
   AttrValue,
   CssSelector,
-  TagName,
 } from "../types.ts";
+
+import { InvalidAttrError } from "./InvalidAttrError.ts";
 
 /**
  * Attempts to build a CSS selector string from the specified `name` and `value`. Note
@@ -55,8 +56,6 @@ import type {
  * selectAttr("disabled", null, "button");
  * // button[disabled]
  * ```
- *
- * @category Attrs
  */
 export function selectAttr<E extends AnyElement = HTMLElement>(
   name: AttrName<E>,
@@ -111,8 +110,6 @@ export function selectAttr<E extends AnyElement = HTMLElement>(
  * selectAttrs({ disabled: true, inert: null });
  * // [disabled="true"][inert]
  * ```
- *
- * @category Attrs
  */
 export function selectAttrs<E extends AnyElement = HTMLElement>(
   attrs: Attrs<E>,
