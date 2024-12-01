@@ -6,8 +6,7 @@ import { toElem } from "../elems/toElem.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
-
-import type { DOMPropertySearch } from "../search.ts";
+import type { PropertySearch } from "../types.ts";
 
 import { getStyle } from "./getStyles.ts";
 import type { StyleKey, StyleValue } from "./types.ts";
@@ -18,7 +17,7 @@ import type { StyleKey, StyleValue } from "./types.ts";
  * present, or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of a style property.
  */
-export type StylesSearch = DOMPropertySearch<StyleKey, StyleValue | null>;
+export type StylesSearch = PropertySearch<StyleKey, StyleValue | null>;
 
 /**
  * Checks if the specified `target` has the specified style property with name `key`.

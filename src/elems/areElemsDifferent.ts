@@ -18,6 +18,32 @@ import type { ElemOrCssSelector } from "./types.ts";
  * @param right Element, EventTarget, or CSS selector to compare against.
  *
  * @returns `true` if the elements do **not** match.
+ *
+ * @example
+ * **HTML**
+ *
+ * ```html
+ * <ul>
+ *   <li id="item-1">Item 1</li>
+ *   <li id="item-2">Item 2</li>
+ * </ul>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const item1 = findElem("#item-1")!;
+ * const item2 = findElem("#item-2")!;
+ *
+ * areElemsDifferent(item1, item2);
+ * // true
+ *
+ * areElemsDifferent(item1, "#item-1");
+ * // false
+ *
+ * areElemsDifferent(item1, null);
+ * // false
+ * ```
  */
 export function areElemsDifferent(
   left: OneOrManyOf<ElemOrCssSelector>,

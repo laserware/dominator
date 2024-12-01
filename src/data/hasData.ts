@@ -7,8 +7,7 @@ import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
-
-import type { DOMPropertySearch } from "../search.ts";
+import type { PropertySearch } from "../types.ts";
 
 import type { DataKey, DataValue } from "./types.ts";
 
@@ -18,7 +17,7 @@ import type { DataKey, DataValue } from "./types.ts";
  * dataset entries are present, or an object to search for specific values.
  * Use `null` for the value if you only care about the presence of a dataset entry.
  */
-export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
+export type DataSearch = PropertySearch<DataKey, DataValue | null>;
 
 /**
  * Returns true if the specified `target` has a dataset entry with the specified
@@ -41,7 +40,9 @@ export type DataSearch = DOMPropertySearch<DataKey, DataValue | null>;
  *   data-is-active="false"
  *   data-count="30"
  *   data-label="Example"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
  * **Code**
@@ -91,7 +92,9 @@ export function hasDataEntry<E extends AnyElement = HTMLElement>(
  *   data-is-active="false"
  *   data-count="30"
  *   data-label="Example"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
  * **Code**
@@ -141,7 +144,9 @@ export function hasAllData<E extends AnyElement = HTMLElement>(
  *   data-is-active="false"
  *   data-count="30"
  *   data-label="Example"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
  * **Code**
@@ -155,7 +160,11 @@ export function hasAllData<E extends AnyElement = HTMLElement>(
  * hasSomeData(elem, ["data-missing"]);
  * // false
  *
- * hasSomeData(elem, { "data-is-active": false, "count", 30, "missing": null });
+ * hasSomeData(elem, {
+ *   "data-is-active": false,
+ *   count, 30,
+ *   missing: null,
+ * });
  * // true
  * ```
  */

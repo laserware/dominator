@@ -6,16 +6,11 @@ export * from "./styles/styles.ts";
 
 export type * from "./dom.ts";
 export type {
-  DOMPropertyFilter,
-  DOMPropertyFilterValue,
-  DOMPropertyKey,
-  DOMPropertySearch,
-  DOMPropertyValue,
-} from "./search.ts";
-export type {
   KeysOf,
   OneOrManyOf,
   Primitive,
+  PropertyFilter,
+  PropertySearch,
   WithNullValues,
   WithUndefinedValues,
 } from "./types.ts";

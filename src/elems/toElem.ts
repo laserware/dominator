@@ -1,9 +1,9 @@
 import { isNil } from "@laserware/arcade";
 
 import type { AnyElement } from "../dom.ts";
-import { isElem } from "../typeGuards.ts";
 
 import { findElem } from "./findElem.ts";
+import { isElem } from "./isElem.ts";
 import type { ElemOrCssSelector } from "./types.ts";
 
 /**

@@ -1,3 +1,4 @@
+import { isCssVarName } from "../css/isCssVarName.ts";
 import type { AnyElement } from "../dom.ts";
 import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
@@ -5,7 +6,6 @@ import type { ElemOrCssSelector } from "../elems/types.ts";
 import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import { isCssVarName } from "../typeGuards.ts";
 
 import type { StyleKey, Styles, StyleValue } from "./types.ts";
 

@@ -6,9 +6,9 @@ import { cast } from "../internal/cast.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import { isCssVarName } from "../typeGuards.ts";
 
 import { InvalidCssVarError } from "./InvalidCssVarError.ts";
+import { isCssVarName } from "./isCssVarName.ts";
 import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
 
 /**
@@ -33,9 +33,15 @@ import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
  * **HTML (Before)**
  *
  * ```html
- * <style>:root { --color-fg: green; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: green;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: blue;">Example</button>
+ * <button id="example" style="--color-bg: blue;">
+ *   Example
+ * </button>
  * ```
  *
  * **Set in Element**
@@ -55,9 +61,15 @@ import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
  * **HTML (After)**
  *
  * ```html
- * <style>:root { --color-fg: blue; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: blue;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: red;">Example</button>
+ * <button id="example" style="--color-bg: red;">
+ *   Example
+ * </button>
  * ```
  */
 export function setCssVar<E extends AnyElement = HTMLElement>(
@@ -97,9 +109,15 @@ export function setCssVar<E extends AnyElement = HTMLElement>(
  * **HTML (Before)**
  *
  * ```html
- * <style>:root { --color-fg: green; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: green;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: blue;">Example</button>
+ * <button id="example" style="--color-bg: blue;">
+ *   Example
+ * </button>
  * ```
  *
  * **Set in Element**
@@ -119,9 +137,15 @@ export function setCssVar<E extends AnyElement = HTMLElement>(
  * **HTML (After)**
  *
  * ```html
- * <style>:root { --color-fg: blue; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: blue;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: red;">Example</button>
+ * <button id="example" style="--color-bg: red;">
+ *   Example
+ * </button>
  * ```
  */
 export function setCssVars<E extends AnyElement = HTMLElement>(

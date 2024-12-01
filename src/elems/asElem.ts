@@ -1,7 +1,7 @@
 import type { AnyElement } from "../dom.ts";
-import { isElem } from "../typeGuards.ts";
 
 import { InvalidElemError } from "./InvalidElemError.ts";
+import { isElem } from "./isElem.ts";
 import type { Elem } from "./types.ts";
 
 /**

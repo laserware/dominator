@@ -1,4 +1,7 @@
-import type { DOMPropertyValue } from "../search.ts";
+import type { AttrValue } from "../attrs/types.ts";
+import type { CssVarValue } from "../css/types.ts";
+import type { DataValue } from "../data/types.ts";
+import type { StyleValue } from "../styles/types.ts";
 
 /**
  * Converts the specified value to a string. If the value is `null`, returns
@@ -88,9 +91,9 @@ export function stringifyDOMValue(value: unknown): string | undefined {
  * const rowIndex = parseDOMValue<number>(element.getAttribute("aria-rowindex"));
  * // "4abc"
  */
-export function parseDOMValue<T extends DOMPropertyValue>(
-  value: unknown,
-): T | undefined {
+export function parseDOMValue<
+  T extends AttrValue | CssVarValue | DataValue | StyleValue,
+>(value: unknown): T | undefined {
   if (value === null || value === undefined) {
     return undefined;
   }

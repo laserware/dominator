@@ -25,7 +25,9 @@ import type { AttrName, Attrs, AttrValue } from "./types.ts";
  * **HTML (Before)**
  *
  * ```html
- * <div id="example" role="slider">...</div>
+ * <div id="example" role="slider">
+ *   ...
+ * </div>
  * ```
  *
  * **Code**
@@ -78,7 +80,9 @@ export function setAttr<E extends AnyElement = HTMLElement>(
  * **HTML (Before)**
  *
  * ```html
- * <div id="example" role="slider">...</div>
+ * <div id="example" role="slider">
+ *   ...
+ * </div>
  * ```
  *
  * **Code**

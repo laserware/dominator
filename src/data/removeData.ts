@@ -20,6 +20,48 @@ import type { DataKey, DataPropertyName } from "./types.ts";
  * @returns Element representation of the specified `target`.
  *
  * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML (Before)**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   data-is-active="false"
+ *   data-count="30"
+ *   data-label="Example"
+ * >
+ *   ...
+ * </div>
+ * ```
+ *
+ * **Using Attribute Name (`data-*`)**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * removeDataEntry(elem, "data-label");
+ * ```
+ *
+ * **Using Property Name (camelCase)**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * removeDataEntry(elem, "label");
+ * ```
+ *
+ * **HTML (After)**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   data-is-active="false"
+ *   data-count="30"
+ * >
+ *   ...
+ * </div>
+ * ```
  */
 export function removeDataEntry<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,
@@ -45,6 +87,47 @@ export function removeDataEntry<E extends AnyElement = HTMLElement>(
  * @returns Element representation of the specified `target`.
  *
  * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ *
+ * @example
+ * **HTML (Before)**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   data-is-active="false"
+ *   data-count="30"
+ *   data-label="Example"
+ * >
+ *   ...
+ * </div>
+ * ```
+ *
+ * **Using Attribute Names (`data-*`)**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * removeData(elem, ["data-label", "data-count"]);
+ * ```
+ *
+ * **Using Property Names (camelCase)**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * removeData(elem, ["label", "count"]);
+ * ```
+ *
+ * **HTML (After)**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   data-is-active="false"
+ * >
+ *   ...
+ * </div>
+ * ```
  */
 export function removeData<E extends AnyElement = HTMLElement>(
   target: ElemOrCssSelector<E>,

@@ -43,28 +43,16 @@ import type { AttrName, Attrs, AttrValue } from "./types.ts";
  * </div>
  * ```
  *
- * **Get String Attribute**
+ * **Code**
  *
  * ```ts
  * const elem = findElem("#example")!;
  *
  * getAttr(elem, "aria-label");
  * // "Example"
- * ```
- *
- * **Get Number Attribute**
- *
- * ```ts
- * const elem = findElem("#example")!;
  *
  * getAttr(elem, "aria-valuemax");
  * // 30
- * ```
- *
- * **Get Boolean Attribute**
- *
- * ```ts
- * const elem = findElem("#example")!;
  *
  * getAttr(elem, "aria-disabled");
  * // false
@@ -86,15 +74,32 @@ export function getAttr<
  * number if numeric, or the string value if a string. If not found, the value
  * is `null`.
  *
+ * **Important Note**
+ *
+ * You will need to perform checks for whether a value is `null` in the returned
+ * object if some of the entries weren't present.
+ *
+ * ```ts
+ * // Assuming you pass this in as the generic:
+ * type ShapeIn = {
+ *   role: string;
+ *   "aria-label": string;
+ * };
+ *
+ * // The return type of this function is:
+ * type ShapeOut = {
+ *   role: string | null;
+ *   "aria-label": string | null;
+ * };
+ * ```
+ *
  * @template T Shape of attributes object to return.
  * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param names Names of the attributes for which to find values.
  *
- * @returns Object with specified names as keys and corresponding attribute values.
- *          Note that you will need to perform checks for whether a value is
- *          `null` in the returned object if some of the entries weren't present.
+ * @returns Object with specified names as keys and corresponding attribute values (or `null` if not present).
  *
  * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
@@ -116,11 +121,11 @@ export function getAttr<
  * **Code**
  *
  * ```ts
- * interface Shape {
+ * type Shape = {
  *   "aria-label": string | null;
  *   "aria-valuemax": number | null;
  *   invalid: string | null;
- * }
+ * };
  *
  * const elem = findElem("#example")!;
  *

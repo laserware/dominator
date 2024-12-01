@@ -33,10 +33,12 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  *   data-is-active="false"
  *   data-count="30"
  *   data-label="Example"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
- * **Code**
+ * **Using Attribute Name (`data-*`)**
  *
  * ```ts
  * const elem = findElem("#example")!;
@@ -44,6 +46,16 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  * setDataEntry(elem, "data-is-active", true);
  * setDataEntry(elem, "data-count", 50);
  * setDataEntry(elem, "data-label", "Update");
+ * ```
+ *
+ * **Using Property Name (camelCase)**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * setDataEntry(elem, "isActive", true);
+ * setDataEntry(elem, "count", 50);
+ * setDataEntry(elem, "label", "Update");
  * ```
  *
  * **HTML (After)**
@@ -54,7 +66,9 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  *   data-is-active="true"
  *   data-count="50"
  *   data-label="Update"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  */
 export function setDataEntry<E extends AnyElement = HTMLElement>(
@@ -88,18 +102,32 @@ export function setDataEntry<E extends AnyElement = HTMLElement>(
  *   data-is-active="false"
  *   data-count="30"
  *   data-label="Example"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  *
- * **Code**
+ * **Using Attribute Names (`data-*`)**
  *
  * ```ts
  * const elem = findElem("#example")!;
  *
  * setData(elem, {
  *   "data-is-active", true,
- *   count: 50,
+ *   "data-count": 50,
  *   "data-label": "Update",
+ * });
+ * ```
+ *
+ * **Using Property Names (camelCase)**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * setData(elem, {
+ *   isActive, true,
+ *   count: 50,
+ *   label: "Update",
  * });
  * ```
  *
@@ -111,7 +139,9 @@ export function setDataEntry<E extends AnyElement = HTMLElement>(
  *   data-is-active="true"
  *   data-count="50"
  *   data-label="Update"
- * >...</div>
+ * >
+ *   ...
+ * </div>
  * ```
  */
 export function setData<E extends AnyElement = HTMLElement>(

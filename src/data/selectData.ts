@@ -22,28 +22,28 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  * **Dataset Key without Value**
  *
  * ```ts
- * const selector = selectDataEntry("someThing");
+ * selectDataEntry("someThing");
  * // `[data-some-thing]`
  * ```
  *
  * **`data-` Attribute Name without Value**
  *
  * ```ts
- * const selector = selectDataEntry("data-some-thing");
+ * selectDataEntry("data-some-thing");
  * // `[data-some-thing]`
  * ```
  *
  * **Dataset Key with Value**
  *
  * ```ts
- * const selector = selectDataEntry("someThing", "stuff");
+ * selectDataEntry("someThing", "stuff");
  * // `[data-some-thing="stuff"]`
  * ```
  *
  * **`data-` Attribute Name with Value and Tag**
  *
  * ```ts
- * const selector = selectDataEntry("data-some-thing", "stuff", "a");
+ * selectDataEntry("data-some-thing", "stuff", "a");
  * // `a[data-some-thing="stuff"]`
  * ```
  */
@@ -70,21 +70,21 @@ export function selectDataEntry(
  * **Dataset Object With `null` Value**
  *
  * ```ts
- * const selector = selectData({ someThing: null });
+ * selectData({ someThing: null });
  * // `[data-some-thing]`
  * ```
  *
  * **Data Object with Value**
  *
  * ```ts
- * const selector = selectData({ someThing: "stuff" });
+ * selectData({ someThing: "stuff" });
  * // `[data-some-thing="stuff"]`
  * ```
  *
  * **Data Object with Value and Tag**
  *
  * ```ts
- * const selector = selectData({ someThing: "stuff", otherThing: "doodles" }, "a");
+ * selectData({ someThing: "stuff", otherThing: "doodles" }, "a");
  * // `a[data-some-thing="stuff"][data-other-thing="doodles"]`
  * ```
  */

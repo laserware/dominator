@@ -1,6 +1,5 @@
 import type { AnyElement } from "../dom.ts";
-import type { DOMPropertySearch } from "../search.ts";
-import type { KeysOf } from "../types.ts";
+import type { KeysOf, PropertySearch } from "../types.ts";
 
 /**
  * Returns true if **all** properties in the specified `element` match the
@@ -14,7 +13,7 @@ import type { KeysOf } from "../types.ts";
  */
 export function hasAllProperties(
   element: AnyElement,
-  search: DOMPropertySearch,
+  search: PropertySearch<any, any>,
   predicate: (element: AnyElement, key: any, value?: any) => boolean,
 ): boolean {
   if (Array.isArray(search)) {
@@ -49,7 +48,7 @@ export function hasAllProperties(
  */
 export function hasSomeProperties(
   element: AnyElement,
-  search: DOMPropertySearch,
+  search: PropertySearch<any, any>,
   predicate: (element: AnyElement, key: any, value?: any) => boolean,
 ): boolean {
   if (Array.isArray(search)) {

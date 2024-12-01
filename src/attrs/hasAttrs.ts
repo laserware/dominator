@@ -5,8 +5,7 @@ import type { ElemOrCssSelector } from "../elems/types.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
-
-import type { DOMPropertySearch } from "../search.ts";
+import type { PropertySearch } from "../types.ts";
 
 import { getAttr } from "./getAttrs.ts";
 import type { AttrName, AttrValue } from "./types.ts";
@@ -19,7 +18,7 @@ import type { AttrName, AttrValue } from "./types.ts";
  *
  * @template E Type of Element with corresponding attributes to search.
  */
-export type AttrsSearch<E extends AnyElement = HTMLElement> = DOMPropertySearch<
+export type AttrsSearch<E extends AnyElement = HTMLElement> = PropertySearch<
   AttrName<E>,
   AttrValue | null
 >;
