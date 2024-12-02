@@ -5,12 +5,4 @@ export * from "./elems/elems.ts";
 export * from "./styles/styles.ts";
 
 export type * from "./dom.ts";
-export type {
-  KeysOf,
-  OneOrManyOf,
-  Primitive,
-  PropertyFilter,
-  PropertySearch,
-  WithNullValues,
-  WithUndefinedValues,
-} from "./types.ts";
+export type { PropertyFilter, PropertySearch } from "./types.ts";

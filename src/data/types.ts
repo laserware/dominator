@@ -1,4 +1,4 @@
-import type { Primitive } from "../types.ts";
+import type { Primitive } from "@laserware/arcade";
 
 /**
  * Valid type for the key of [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
@@ -21,6 +21,9 @@ export type DataKey = DataPropertyName | DataAttrName;
 
 /**
  * Valid dataset values (prior to stringifying).
+ *
+ * @remarks
+ * The {@linkcode arcade!Primitive} type represents a boolean, number, or string.
  */
 export type DataValue = Primitive | any[] | Record<number | string, any>;
 

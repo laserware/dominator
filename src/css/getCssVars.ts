@@ -1,9 +1,9 @@
+import { cast, type KeysOf, type WithUndefinedValues } from "@laserware/arcade";
+
 import type { ElemOrCssSelector } from "../elems/types.ts";
-import { cast } from "../internal/cast.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type { KeysOf, WithUndefinedValues } from "../types.ts";
 
 import { InvalidCssVarError } from "./InvalidCssVarError.ts";
 import { isCssVarName } from "./isCssVarName.ts";
@@ -107,6 +107,9 @@ export function getCssVar<T extends CssVarValue>(
  *   "--gap": number | undefined;
  * };
  * ```
+ *
+ * @remarks
+ * The {@linkcode arcade!WithUndefinedValues} type represents an object with values that could be `undefined`.
  *
  * @template T Shape of CSS variables object to return.
  *

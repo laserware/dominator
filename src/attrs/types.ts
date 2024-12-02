@@ -1,9 +1,10 @@
+import type { Primitive } from "@laserware/arcade";
+
 import type {
   AnyElement,
   HTMLElementAttributes,
   SVGElementAttributes,
 } from "../dom.ts";
-import type { Primitive } from "../types.ts";
 
 /**
  * Valid attribute names for the specified element type.
@@ -32,6 +33,9 @@ export type AttrName<E extends AnyElement = HTMLElement> =
  * This represents the value type that can be assigned to attributes using
  * {@linkcode setAttr} and {@linkcode setAttrs} as well as the return value for
  * attributes when using {@linkcode getAttr} and {@linkcode getAttrs}.
+ *
+ * @remarks
+ * The {@linkcode arcade!Primitive} type represents a boolean, number, or string.
  */
 export type AttrValue = Primitive | any[] | Record<number | string, any>;
 

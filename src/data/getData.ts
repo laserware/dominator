@@ -1,10 +1,10 @@
+import { cast, type WithUndefinedValues } from "@laserware/arcade";
+
 import type { ElemOrCssSelector } from "../elems/types.ts";
-import { cast } from "../internal/cast.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type { WithUndefinedValues } from "../types.ts";
 
 import type { Data, DataKey, DataValue } from "./types.ts";
 
@@ -98,6 +98,9 @@ export function getDataValue<T extends DataValue = DataValue>(
  *   "data-count": number | undefined;
  * };
  * ```
+ *
+ * @remarks
+ * The {@linkcode arcade!WithUndefinedValues} type represents an object with values that could be `undefined`.
  *
  * @template T Shape of value to return for the corresponding keys.
  *

@@ -20,11 +20,18 @@
   ],
   "excludeInternal": true,
   "excludeNotDocumented": true,
+  "externalSymbolLinkMappings": {
+    "arcade": {
+      "Primitive": "https://laserware.github.io/arcade/types/Primitive.html",
+      "WithNullValues": "https://laserware.github.io/arcade/types/WithNullValues.html",
+      "WithUndefinedValues": "https://laserware.github.io/arcade/types/WithUndefinedValues.html"
+    }
+  },
   "headings": { "readme": false, "document": false },
   "hideGenerator": true,
   "navigation": {
     "compactFolders": true,
-    "excludeReferences": true,
+    "excludeReferences": false,
     "includeCategories": false,
     "includeFolders": false,
     "includeGroups": false

@@ -1,5 +1,7 @@
+import { keysOf } from "@laserware/arcade";
+
 import type { AnyElement } from "../dom.ts";
-import type { KeysOf, PropertySearch } from "../types.ts";
+import type { PropertySearch } from "../types.ts";
 
 /**
  * Returns true if **all** properties in the specified `element` match the
@@ -69,9 +71,4 @@ export function hasSomeProperties(
   }
 
   return false;
-}
-
-// TODO: Import this from `arcade`.
-function keysOf<T extends Record<any, any>>(value: T): KeysOf<T> {
-  return Object.keys(value) as KeysOf<T>;
 }

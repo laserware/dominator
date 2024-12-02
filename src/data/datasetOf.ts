@@ -1,9 +1,8 @@
-import { isNotNil } from "@laserware/arcade";
+import { cast, isNotNil } from "@laserware/arcade";
 
 import type { AttrValue } from "../attrs/types.ts";
 import type { AnyElement } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
-import { cast } from "../internal/cast.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { parseDOMValue, stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";

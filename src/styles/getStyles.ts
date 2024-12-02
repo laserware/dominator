@@ -1,11 +1,11 @@
+import { cast, type KeysOf, type WithUndefinedValues } from "@laserware/arcade";
+
 import type { AnyElement } from "../dom.ts";
 import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
-import { cast } from "../internal/cast.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type { KeysOf, WithUndefinedValues } from "../types.ts";
 
 import type { StyleKey, Styles, StyleValue } from "./types.ts";
 
@@ -84,6 +84,9 @@ export function getStyle<T extends StyleValue>(
  *   lineHeight: number | undefined;
  * };
  * ```
+ *
+ * @remarks
+ * The {@linkcode arcade!WithUndefinedValues} type represents an object with values that could be `undefined`.
  *
  * @template T Shape of styles object to return.
  *

@@ -1,5 +1,6 @@
+import type { Primitive } from "@laserware/arcade";
+
 import type { CssVarName } from "../css/types.ts";
-import type { Primitive } from "../types.ts";
 
 /**
  * Valid style keys (i.e. non-methods) that can be set on an element.
@@ -27,6 +28,9 @@ export type StyleKey =
 /**
  * Value that can be set for an element style. The value is stringified prior
  * to being set on the element.
+ *
+ * @remarks
+ * The {@linkcode arcade!Primitive} type represents a boolean, number, or string.
  */
 export type StyleValue = Primitive;
 

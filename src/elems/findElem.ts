@@ -1,8 +1,7 @@
-import { isPlainObject } from "@laserware/arcade";
+import { cast, isPlainObject } from "@laserware/arcade";
 
 import type { CssSelector } from "../css/types.ts";
 import type { AnyElement } from "../dom.ts";
-import { cast } from "../internal/cast.ts";
 import { parseFindOptions } from "../internal/findOptions.ts";
 
 import { toElem } from "./toElem.ts";

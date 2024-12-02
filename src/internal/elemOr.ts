@@ -1,9 +1,9 @@
+import { cast } from "@laserware/arcade";
+
 import type { AnyElement } from "../dom.ts";
 import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
-
-import { cast } from "./cast.ts";
 
 /**
  * Returns an element of type `E` that corresponds to the specified `target`.

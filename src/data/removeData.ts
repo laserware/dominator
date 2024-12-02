@@ -1,7 +1,8 @@
+import { cast } from "@laserware/arcade";
+
 import { removeAttr } from "../attrs/removeAttrs.ts";
 import type { AnyElement } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
-import { cast } from "../internal/cast.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";

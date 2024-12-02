@@ -1,10 +1,10 @@
+import { cast, type KeysOf, type WithNullValues } from "@laserware/arcade";
+
 import type { AnyElement } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
-import { cast } from "../internal/cast.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import type { KeysOf, WithNullValues } from "../types.ts";
 
 import type { AttrName, Attrs, AttrValue } from "./types.ts";
 
@@ -92,6 +92,9 @@ export function getAttr<
  *   "aria-label": string | null;
  * };
  * ```
+ *
+ * @remarks
+ * The {@linkcode arcade!WithNullValues} type represents an object with values that could be `null`.
  *
  * @template T Shape of attributes object to return.
  * @template E Element type of specified `target`.

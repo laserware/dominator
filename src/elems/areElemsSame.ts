@@ -1,4 +1,4 @@
-import type { OneOrManyOf } from "../types.ts";
+import type { OneOrManyOf } from "@laserware/arcade";
 
 import { toElem } from "./toElem.ts";
 import type { ElemOrCssSelector } from "./types.ts";

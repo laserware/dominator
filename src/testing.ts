@@ -1,9 +1,8 @@
 /* istanbul ignore file -- @preserve: These are testing utilities, so we don't care about coverage. */
 
-import { dedent } from "@laserware/arcade";
+import { cast, dedent } from "@laserware/arcade";
 
 import type { AnyElement } from "./dom.ts";
-import { cast } from "./internal/cast.ts";
 
 export { screen, waitFor } from "@testing-library/dom";
 
