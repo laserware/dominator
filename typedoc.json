@@ -25,6 +25,10 @@
       "Primitive": "https://laserware.github.io/arcade/types/Primitive.html",
       "WithNullValues": "https://laserware.github.io/arcade/types/WithNullValues.html",
       "WithUndefinedValues": "https://laserware.github.io/arcade/types/WithUndefinedValues.html"
+    },
+    "typescript": {
+      "HTMLElement": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement",
+      "SVGElement": "https://developer.mozilla.org/en-US/docs/Web/API/SVGElement"
     }
   },
   "headings": { "readme": false, "document": false },

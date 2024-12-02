@@ -1,5 +1,3 @@
-import type { Primitive } from "@laserware/arcade";
-
 /**
  * Valid type for the key of [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
  * property entries in HTML/SVG elements.
@@ -20,12 +18,15 @@ export type DataAttrName = `data-${string}`;
 export type DataKey = DataPropertyName | DataAttrName;
 
 /**
- * Valid dataset values (prior to stringifying).
- *
- * @remarks
- * The {@linkcode arcade!Primitive} type represents a boolean, number, or string.
+ * Value that can be assigned to or extracted from a dataset property
+ * (prior to stringifying).
  */
-export type DataValue = Primitive | any[] | Record<number | string, any>;
+export type DataValue =
+  | boolean
+  | number
+  | string
+  | any[]
+  | Record<number | string, any>;
 
 /**
  *
