@@ -8,8 +8,8 @@
  * > [!NOTE]
  * > In my experience, CSS variables are normally stored on the `:root` element,
  * > so omitting the `target` argument uses the `:root` element.
- *
- * See the {@linkcode getCssVar} function as an example.
+ * >
+ * > See the {@linkcode getCssVar} function as an example.
  *
  * @module css
  */

@@ -76,7 +76,8 @@ export function getAttr<
  *
  * > [!IMPORTANT]
  * > You will need to perform checks for whether a value is `null` in the returned
- * > object if some of the entries weren't present.
+ * > object if some of the entries weren't present. See the code block below for
+ * > additional details.
  *
  * ```ts
  * // Assuming you pass this in as the generic:

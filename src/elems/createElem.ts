@@ -94,6 +94,8 @@ export type EventListenersOrDescriptors = {
 /**
  * Options for creating an element using {@linkcode createElem}.
  *
+ * @expand
+ *
  * @template TN Tag name for the created element.
  */
 export type CreateElemOptions<TN extends TagName> = Partial<
@@ -111,7 +113,14 @@ export type CreateElemOptions<TN extends TagName> = Partial<
   /** Dataset entries to set on element. */
   data?: Data;
 
-  /** Event listeners to set on element. */
+  /**
+   * Event listeners or {@linkcode EventDescriptor} objects to set on element.
+   *
+   * The `EventDescriptor` is an object with a `listener` field that defines
+   * the callback that is fired when the corresponding event is dispatched and
+   * an `options` object matching the `options` argument in `addEventListener`.
+   * See the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options) for additional details.
+   */
   on?: EventListenersOrDescriptors;
 
   /** Styles to set on element. */
@@ -126,7 +135,8 @@ export type ElemChild = AnyElement | string | null;
 /**
  * Creates an HTML element of type `E` with the specified `tag` and `options`.
  * The attributes, CSS variables, dataset entries, and styles specified in
- * `options` are applied to the root element in the markup.
+ * `options` are set on the element. Optionally specify `children` to append
+ * to the newly created element.
  *
  * @template TN Tag name of the created element.
  *
@@ -136,6 +146,68 @@ export type ElemChild = AnyElement | string | null;
  * @param [children] Optional children to append to created element.
  *
  * @returns Element of type `E` with the specified `tag` and `options`.
+ *
+ * @example
+ * **Code**
+ *
+ * ```ts
+ * // It's nice to use an import alias to shorten the function name:
+ * import { createElem as elem } from "@laserware/dominator";
+ *
+ * // Used to clean up the `dblclick` event listener:
+ * const controller = new AbortController();
+ *
+ * const child = elem("button", {
+ *   ariaLabel: "Click Me",
+ *   type: "button",
+ *   attrs: {
+ *     disabled: true,
+ *   },
+ *   data: {
+ *     isValid: true,
+ *   },
+ *   cssVars: {
+ *     "--color-bg": "blue",
+ *   },
+ *   on: {
+ *     // This listener will never get removed:
+ *     click(event: MouseEvent) {
+ *       console.log("Clicked!");
+ *     },
+ *     // If you need to remove a listener, specify an object so you can
+ *     // use an `AbortSignal`:
+ *     dblclick: {
+ *       listener(event: MouseEvent) {
+ *         console.log("Double-clicked!");
+ *       },
+ *       // Pass in a signal to clean up the listener:
+ *       options: { signal: controller.signal },
+ *     },
+ *   },
+ * }, "Click");
+ *
+ * const parent = elem("div", { styles: { fontSize: "24px" } }, child);
+ *
+ * document.body.appendChild(parent);
+ * ```
+ *
+ * **HTML**
+ *
+ * ```html
+ * <body>
+ *   <div style="font-size: 24px;">
+ *     <button
+ *       type="button"
+ *       disabled="true"
+ *       aria-label="Click Me"
+ *       data-is-valid="true"
+ *       style="--color-bg: blue;"
+ *     >
+ *       Click
+ *     </button>
+ *   </div>
+ * </body>
+ * ```
  */
 export function createElem<TN extends TagName>(
   tag: TN,

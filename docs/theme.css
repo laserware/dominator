@@ -1,3 +1,20 @@
+:root[data-theme="dark"] {
+  --custom-code-color: #d8bfd8;
+}
+
+:root[data-theme="light"] {
+  --custom-code-color: #512251;
+}
+
 p {
   line-height: 1.5 !important;
+}
+
+a > code,
+p > code {
+  border-radius: 4px;
+}
+
+p > code {
+  color: var(--custom-code-color);
 }

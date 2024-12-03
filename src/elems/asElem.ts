@@ -7,9 +7,10 @@ import type { Elem } from "./types.ts";
 /**
  * Returns an element of type `E` for the specified `target`.
  *
- * This differs from {@linkcode toElem} in that it will never return `null`, only
- * the specified element type, and it only accepts an Element or EventTarget
- * as input.
+ * > [!NOTE]
+ * > This differs from {@linkcode toElem} in that it will never return `null`, only
+ * > the specified element type, and it only accepts an Element or EventTarget
+ * > as input.
  *
  * If you specify a `null` or `undefined` input, the function throws rather than
  * returns `null`.
@@ -19,7 +20,7 @@ import type { Elem } from "./types.ts";
  * assertion. In some cases, you know _exactly_ what type of element will be
  * associated with an Event and you want to assert it as such.
  *
- * > [!IMPORTANT]
+ * > [!WARNING]
  * > With this function, you are telling TypeScript what the element is, even if
  * > the type you pass into the generic is incorrect. If you try to access properties
  * > only available on an `HTMLButtonElement` when the Element or EventTarget you
@@ -31,7 +32,7 @@ import type { Elem } from "./types.ts";
  *
  * @throws {@linkcode InvalidElemError} if specified `target` is `null` or `undefined`.
  *
- * @template E Element type of specified `target`.
+ * @returns Element type of specified `target`.
  *
  * @example
  * **Valid EventTarget**

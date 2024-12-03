@@ -11,10 +11,11 @@ import type { ElemOrCssSelector } from "./types.ts";
  * also pass in a CSS selector string, which will attempt to find the element
  * in the DOM.
  *
- * This differs from {@linkcode asElem} in that it will never throw if you pass
- * in an invalid, `null`, or `undefined` target, rather it will return `null`.
- * The `asElem` function only accepts an Element or EventTarget whereas this
- * function also accepts a CSS selector.
+ * > [!NOTE]
+ * > This differs from {@linkcode asElem} in that it will never throw if you pass
+ * > in an invalid, `null`, or `undefined` target, rather it will return `null`.
+ * > The {@linkcode asElem} function only accepts an Element or EventTarget
+ * > whereas this function also accepts a CSS selector.
  *
  * @remarks
  * This function accepts a `parent` element to accommodate for cases where the

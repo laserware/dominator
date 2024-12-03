@@ -70,29 +70,33 @@ describe("the createElem function", () => {
     const click = vi.fn();
     const keydown = vi.fn();
 
-    const result = createElem("button", {
-      id: "test",
-      type: "button",
-      ariaDisabled: "false",
-      attrs: {
-        "aria-label": "Test",
-      },
-      data: {
-        stringProperty: "value",
-        booleanProperty: true,
-        numberProperty: 24,
-      },
-      cssVars: {
-        "--color-bg": "blue",
-      },
-      on: {
-        click,
-        dblclick: {
-          listener: keydown,
-          options: { once: true },
+    const result = createElem(
+      "button",
+      {
+        id: "test",
+        type: "button",
+        ariaDisabled: "false",
+        attrs: {
+          "aria-label": "Test",
+        },
+        data: {
+          stringProperty: "value",
+          booleanProperty: true,
+          numberProperty: 24,
+        },
+        cssVars: {
+          "--color-bg": "blue",
+        },
+        on: {
+          click,
+          dblclick: {
+            listener: keydown,
+            options: { once: true },
+          },
         },
       },
-    });
+      null,
+    );
 
     expect(result).toHaveProperty("type", "button");
 
