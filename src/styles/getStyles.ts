@@ -66,10 +66,9 @@ export function getStyle<T extends StyleValue>(
  * `"false"`, a number if numeric, or the string value if a string. If not
  * found, the value is excluded from the return value.
  *
- * **Important Note**
- *
- * You will need to perform checks for whether a value is `undefined` in the returned
- * object if some of the entries weren't present.
+ * > [!IMPORTANT]
+ * > You will need to perform checks for whether a value is `undefined` in the returned
+ * > object if some of the entries weren't present.
  *
  * ```ts
  * // Assuming you pass this in as the generic:

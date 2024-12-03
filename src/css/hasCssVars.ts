@@ -40,6 +40,8 @@ export type CssVarsSearch = PropertySearch<CssVarName, CssVarValue | null>;
  * <style>
  *   :root {
  *     --color-fg: green;
+ *     --padding-small: "24px";
+ *     --is-small: true;
  *   }
  * </style>
  *
@@ -66,13 +68,13 @@ export type CssVarsSearch = PropertySearch<CssVarName, CssVarValue | null>;
  * **Check `:root`**
  *
  * ```ts
- * hasCssVar("--color-bg");
+ * hasCssVar("--color-fg");
  * // true
  *
- * hasCssVar("--is-big", "true");
+ * hasCssVar("--is-small", "true");
  * // false ("true" cannot be a string, must be the boolean value `true`)
  *
- * hasCssVar("--color-bg", "blue");
+ * hasCssVar("--color-fg", "green");
  * // true
  * ```
  */

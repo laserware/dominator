@@ -7,6 +7,7 @@ import { asDataAttrName } from "../internal/dataKeys.ts";
 import { parseDOMValue, stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 
+import { removeDataEntry } from "./removeData.ts";
 import type { DataValue } from "./types.ts";
 
 /**
@@ -28,6 +29,8 @@ export type AnyDatasetShape = Record<string, DataValue | null>;
  * The `dataset` property is a (very barebones) [DOMStringMap](https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap).
  * This wrapper class enables you to get and set values of any type that can be
  * stringified while retaining type safety via the `DS` generic passed in.
+ *
+ * See usage examples in {@linkcode datasetOf}.
  *
  * @template DS The shape of the dataset data.
  * @template E Type of Element which the dataset data is associated.
@@ -148,6 +151,17 @@ export class Dataset<
   }
 
   /**
+   * Removes the dataset entry associated with the specified `key`.
+   *
+   * @param key Key of the dataset entry to remove.
+   */
+  public remove<K extends keyof DS>(key: K): this {
+    removeDataEntry(this.#element, key as string);
+
+    return this;
+  }
+
+  /**
    * Gets the element attribute name (i.e. `data-<key>`) for the specified
    * `key`.
    *
@@ -182,6 +196,84 @@ export class Dataset<
  * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
  *
  * @returns {@linkcode Dataset} instance associated with `target`.
+ *
+ * @example
+ * **HTML (Before)**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   data-is-active="false"
+ *   data-count="30"
+ *   data-label="Example"
+ * >
+ *   ...
+ * </div>
+ * ```
+ *
+ * **Code**
+ *
+ * ```ts
+ * const elem = findElem("#example")!;
+ *
+ * type Shape = {
+ *   isActive: boolean;
+ *   isInvalid: boolean | undefined;
+ *   count: number;
+ *   label: string;
+ *   status: string | undefined;
+ * }
+ *
+ * // You can pass in initial data which will be added to the element's
+ * // dataset (as well as set as attributes on the element).
+ * const dataset = datasetOf<Shape>(elem, {
+ *   isActive: false,
+ *   count: 30,
+ *   label: "Example",
+ * });
+ *
+ * // Returns the value for the specified key:
+ * data.get("count");
+ * // 30
+ *
+ * // `set` returns the `Dataset` instance so you can perform
+ * // other operations:
+ * data
+ *   .set("count", 40)
+ *   .get("count");
+ * // 40
+ *
+ * // Remove from the element:
+ * data.remove("label");
+ *
+ * // Update existing entry or add new one if not present:
+ * data.set("status", "warning");
+ *
+ * // Sets multiple entries on element:
+ * data.setAll({ isActive: true, isInvalid: false });
+ *
+ * // Returns an object matching `Shape`:
+ * data.getAll();
+ * // { isActive: true, isInvalid: false, count: 40, status: "warning" }
+ *
+ * // Get attribute name for an entry:
+ * data.attrNameFor("isActive");
+ * // "data-is-active"
+ * ```
+ *
+ * **HTML (After)**
+ *
+ * ```html
+ * <div
+ *   id="example"
+ *   data-is-active="true"
+ *   data-is-invalid="false"
+ *   data-count="40"
+ *   data-status="warning"
+ * >
+ *   ...
+ * </div>
+ * ```
  */
 export function datasetOf<
   DS extends AnyDatasetShape,

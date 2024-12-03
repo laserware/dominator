@@ -9,8 +9,7 @@ For a high-level overview of the library, keep reading!
 Let's face it, working with the DOM API kind of sucks (_especially_ with TypeScript).
 This library aims to make it a little less painful.
 
-The following examples compare the use of DOM APIs with this library.
-The examples will use functions from the `Attrs` and `Elems` modules. 
+The following examples compare the use of DOM APIs with this library. 
 
 ### Creating Elements
 
@@ -34,7 +33,7 @@ const div = createElem("div", { id: "example", ariaLabel: "Hello!" });
 
 Finding a single element or multiple elements in the DOM isn't _that_ bad.
 
-Assuming you have this markup:
+Assuming you have this HTML:
 
 ```html
 <div role="grid" aria-colcount="6">
@@ -130,7 +129,7 @@ div = setAttrs(div, {
 
 Removing attributes using the DOM APIs requires that you remove each attribute individually. 
 
-Assuming you have this markup:
+Assuming you have this HTML:
 
 ```html
 <div id="example" role="gridcell" aria-disabled="true">Example</div>
@@ -165,9 +164,9 @@ div = removeAttrs(div, ["aria-disabled", "aria-colindex"]);
 
 If you want to check for the existence of attributes using the DOM API, you'd use `element.hasAttribute`.
 
-If you want to check if a value matches, you're stuck with the annoyances of the DOM APIs. So you're back to dealing with strings.
+If you want to check if a value matches, you're stuck with the annoyances of `getAttribute`. So you're back to dealing with strings.
 
-Assuming you have this markup:
+Assuming you have this HTML:
 
 ```html
 <div id="example" role="gridcell" aria-disabled="true" aria-colindex="1">Example</div>
@@ -216,7 +215,7 @@ const allMatch = hasAllAttrs(div, {
 
 Building a CSS selector to find something based on attributes requires a lot of manual labor.
 
-Assuming you have this markup:
+Assuming you have this HTML:
 
 ```html
 <div role="grid" aria-colcount="6">
@@ -269,5 +268,5 @@ const secondGridCellSelector = selectAttrs({
 const secondGridCell = findElem(secondGridCellSelector);
 ```
 
-You can do more than work with attributes. You can also set, get, remove, and select dataset entries,
-CSS variables, and styles. See the examples in the [documentation](https://laserware.github.io/dominator/) for additional details.
+You can do more than work with attributes. You can also set, get, remove, and select [dataset entries](modules/data.html),
+[CSS variables](modules/css.html), and [styles](modules/styles.html).

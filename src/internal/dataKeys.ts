@@ -1,4 +1,4 @@
-import { camelCase, kebabCase, toEntries } from "@laserware/arcade";
+import { camelCase, entriesOf, kebabCase } from "@laserware/arcade";
 
 import type { DataAttrName, DataKey, DataPropertyName } from "../data/types.ts";
 
@@ -60,7 +60,7 @@ export function withDataPrefix<T extends Record<string, any> | any[]>(
   } else {
     const withData: Record<string, any> = {};
 
-    for (const [key, value] of toEntries(values)) {
+    for (const [key, value] of entriesOf(values)) {
       withData[asDataAttrName(key)] = value;
     }
 

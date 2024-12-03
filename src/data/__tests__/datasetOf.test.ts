@@ -95,6 +95,16 @@ describe("the datasetOf function", () => {
     expect(dataset.get("count")).toBe(expected);
   });
 
+  it("removes the dataset entry when the remove method is called", () => {
+    const element = render(`<div>Test</div>`);
+
+    const dataset = datasetOf<TestDatasetShape>(element, initialData);
+
+    dataset.remove("count");
+
+    expect(dataset.get("count")).toBeUndefined();
+  });
+
   it("sets the dataset entries when the setAll method is called", () => {
     const element = render(`<div>Test</div>`);
 

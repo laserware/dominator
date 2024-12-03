@@ -80,10 +80,9 @@ export function getDataValue<T extends DataValue = DataValue>(
  * on the specified `target`. If any of the specified `keys` don't exist, they
  * are set to `undefined` in the return value.
  *
- * **Important Note**
- *
- * You will need to perform checks for whether a value is `undefined` in the returned
- * object if some of the entries weren't present.
+ * > [!IMPORTANT]
+ * > You will need to perform checks for whether a value is `undefined` in the returned
+ * > object if some of the entries weren't present.
  *
  * ```ts
  * // Assuming you pass this in as the generic:
