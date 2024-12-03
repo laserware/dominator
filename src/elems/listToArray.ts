@@ -1,8 +1,6 @@
-import { isNil } from "@laserware/arcade";
+import { cast, isNil } from "@laserware/arcade";
 
 import type { AnyElement } from "../dom.ts";
-
-import { asElem } from "./asElem.ts";
 
 /**
  * Converts the specified [NodeList](https://developer.mozilla.org/en-US/docs/Web/API/NodeList)
@@ -24,7 +22,7 @@ export function listToArray<E extends AnyElement = HTMLElement>(
 
   const elems: E[] = [];
   for (let index = 0; index < items.length; index++) {
-    elems.push(asElem<E>(items.item(index)));
+    elems.push(cast<E>(items.item(index)));
   }
 
   return elems;

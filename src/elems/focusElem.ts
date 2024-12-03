@@ -1,6 +1,7 @@
+import { cast } from "@laserware/arcade";
+
 import type { AnyElement } from "../dom.ts";
 
-import { asElem } from "./asElem.ts";
 import { toElem } from "./toElem.ts";
 import type { ElemOrCssSelector } from "./types.ts";
 
@@ -38,13 +39,9 @@ export interface FocusOptions<E extends AnyElement> {
  * @param [options] Options for setting focus.
  */
 export function focusElem<E extends AnyElement = HTMLElement>(
-  target: ElemOrCssSelector | null,
+  target: ElemOrCssSelector | null | undefined,
   options?: FocusOptions<E>,
 ): void {
-  if (target === null) {
-    return;
-  }
-
   const focusCallback = (): void => {
     const elem = toElem(target, options?.parent);
 
@@ -54,7 +51,7 @@ export function focusElem<E extends AnyElement = HTMLElement>(
 
     elem.focus({ preventScroll: options?.preventScroll ?? false });
 
-    options?.onDone?.(asElem<E>(elem));
+    options?.onDone?.(cast<E>(elem));
   };
 
   setTimeout(focusCallback, options?.delay ?? 0);
