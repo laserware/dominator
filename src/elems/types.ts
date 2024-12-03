@@ -1,14 +1,14 @@
 import type { Attrs } from "../attrs/types.ts";
 import type { CssSelector } from "../css/types.ts";
 import type { Data } from "../data/types.ts";
-import type { AnyElement, TagName } from "../dom.ts";
+import type { TagName } from "../dom.ts";
 
 /**
  * Element or EventTarget that can be passed into functions.
  *
  * @template E Type of Element.
  */
-export type Elem<E extends AnyElement = HTMLElement> =
+export type Elem<E extends Element = HTMLElement> =
   | E
   | Document
   | Element
@@ -28,7 +28,7 @@ export type Elem<E extends AnyElement = HTMLElement> =
  *
  * @template E Type of Element if {@linkcode Elem}.
  */
-export type ElemOrCssSelector<E extends AnyElement = HTMLElement> =
+export type ElemOrCssSelector<E extends Element = HTMLElement> =
   | Elem<E>
   | CssSelector;
 

@@ -1,6 +1,5 @@
 import { isNil } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
 import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
@@ -96,7 +95,7 @@ export function hasSomeStyles(
 }
 
 function hasSingleStyle(
-  element: AnyElement,
+  element: Element,
   key: string,
   value?: StyleValue | null,
 ): boolean {

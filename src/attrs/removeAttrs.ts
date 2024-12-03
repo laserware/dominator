@@ -1,6 +1,5 @@
 import { cast } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -44,7 +43,7 @@ import type { AttrName } from "./types.ts";
  * </button>
  * ```
  */
-export function removeAttr<E extends AnyElement = HTMLElement>(
+export function removeAttr<E extends Element = HTMLElement>(
   target: ElemOrCssSelector<E>,
   name: AttrName<E>,
 ): E {
@@ -105,7 +104,7 @@ export function removeAttr<E extends AnyElement = HTMLElement>(
  * </div>
  * ```
  */
-export function removeAttrs<E extends AnyElement = HTMLElement>(
+export function removeAttrs<E extends Element = HTMLElement>(
   target: ElemOrCssSelector<E>,
   names: AttrName<E>[],
 ): E {

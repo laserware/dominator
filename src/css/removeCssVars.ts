@@ -1,6 +1,5 @@
 import { cast } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -58,7 +57,7 @@ import type { CssVarName } from "./types.ts";
  * <button id="example" style="font-size: 18px;">Example</button>
  * ```
  */
-export function removeCssVar<E extends AnyElement = HTMLElement>(
+export function removeCssVar<E extends Element = HTMLElement>(
   name: CssVarName,
   target: ElemOrCssSelector<E> = document.documentElement,
 ): E {
@@ -130,7 +129,7 @@ export function removeCssVar<E extends AnyElement = HTMLElement>(
  * </button>
  * ```
  */
-export function removeCssVars<E extends AnyElement = HTMLElement>(
+export function removeCssVars<E extends Element = HTMLElement>(
   names: CssVarName[],
   target: ElemOrCssSelector<E> = document.documentElement,
 ): E {
@@ -144,9 +143,9 @@ export function removeCssVars<E extends AnyElement = HTMLElement>(
   return cast<E>(elem);
 }
 
-function removeSingleCssVar(element: AnyElement, name: CssVarName): void {
+function removeSingleCssVar(element: Element, name: CssVarName): void {
   try {
-    element.style.removeProperty(name);
+    cast<HTMLElement>(element).style.removeProperty(name);
   } catch (err: any) {
     /* istanbul ignore next -- @preserve: This will probably never get hit, but I'm hedging my bets. */
     // prettier-ignore

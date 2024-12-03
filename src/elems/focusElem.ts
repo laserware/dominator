@@ -1,7 +1,5 @@
 import { cast } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
-
 import { toElem } from "./toElem.ts";
 import type { ElemOrCssSelector } from "./types.ts";
 
@@ -10,7 +8,7 @@ import type { ElemOrCssSelector } from "./types.ts";
  *
  * @expand
  */
-export interface FocusOptions<E extends AnyElement> {
+export interface FocusOptions<E extends Element> {
   /** Delay (in milliseconds) to wait until attempting to set focus. */
   delay?: number;
 
@@ -38,7 +36,7 @@ export interface FocusOptions<E extends AnyElement> {
  * @param target Element, EventTarget, or CSS selector.
  * @param [options] Options for setting focus.
  */
-export function focusElem<E extends AnyElement = HTMLElement>(
+export function focusElem<E extends Element = HTMLElement>(
   target: ElemOrCssSelector | null | undefined,
   options?: FocusOptions<E>,
 ): void {

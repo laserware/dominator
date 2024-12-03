@@ -1,6 +1,5 @@
 import { cast, type KeysOf, type WithNullValues } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
@@ -60,7 +59,7 @@ import type { AttrName, Attrs, AttrValue } from "./types.ts";
  */
 export function getAttr<
   T extends AttrValue = AttrValue,
-  E extends AnyElement = HTMLElement,
+  E extends Element = HTMLElement,
 >(target: ElemOrCssSelector<E>, name: AttrName<E>): T | null {
   const elem = elemOrThrow(target, `Unable to get attribute ${name}`);
 
@@ -142,7 +141,7 @@ export function getAttr<
  */
 export function getAttrs<
   T extends Attrs = Attrs,
-  E extends AnyElement = HTMLElement,
+  E extends Element = HTMLElement,
 >(target: ElemOrCssSelector<E>, names: KeysOf<T>): WithNullValues<T> {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to get attributes ${formatForError(names)}`);
@@ -158,7 +157,7 @@ export function getAttrs<
 
 function getSingleAttr<
   T extends AttrValue = AttrValue,
-  E extends AnyElement = HTMLElement,
+  E extends Element = HTMLElement,
 >(element: E, name: AttrName<E>): T | null {
   const attrValue = element.getAttribute(name);
 

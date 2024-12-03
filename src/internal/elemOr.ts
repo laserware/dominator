@@ -1,6 +1,5 @@
 import { cast } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
 import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
@@ -18,7 +17,7 @@ import type { ElemOrCssSelector } from "../elems/types.ts";
  *
  * @returns Element representation of the specified `target`.
  */
-export function elemOrThrow<E extends AnyElement = HTMLElement>(
+export function elemOrThrow<E extends Element = HTMLElement>(
   target: ElemOrCssSelector<E>,
   error: string,
 ): E {

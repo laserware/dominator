@@ -1,6 +1,5 @@
 import { isNil } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
@@ -247,7 +246,7 @@ export function hasSomeCssVars(
 }
 
 function hasSingleCssVar(
-  element: AnyElement,
+  element: Element,
   name: string,
   value?: CssVarValue | null,
 ): boolean {

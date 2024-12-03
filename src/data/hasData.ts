@@ -1,6 +1,5 @@
-import { isNil, isNotNil } from "@laserware/arcade";
+import { cast, isNil, isNotNil } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
@@ -60,7 +59,7 @@ export type DataSearch = PropertySearch<DataKey, DataValue | null>;
  * // true
  * ```
  */
-export function hasDataEntry<E extends AnyElement = HTMLElement>(
+export function hasDataEntry<E extends Element = HTMLElement>(
   target: ElemOrCssSelector<E>,
   key: DataKey,
   value?: DataValue,
@@ -112,7 +111,7 @@ export function hasDataEntry<E extends AnyElement = HTMLElement>(
  * // true
  * ```
  */
-export function hasAllData<E extends AnyElement = HTMLElement>(
+export function hasAllData<E extends Element = HTMLElement>(
   target: ElemOrCssSelector<E>,
   search: DataSearch,
 ): boolean {
@@ -168,7 +167,7 @@ export function hasAllData<E extends AnyElement = HTMLElement>(
  * // true
  * ```
  */
-export function hasSomeData<E extends AnyElement = HTMLElement>(
+export function hasSomeData<E extends Element = HTMLElement>(
   target: ElemOrCssSelector<E>,
   search: DataSearch,
 ): boolean {
@@ -179,13 +178,13 @@ export function hasSomeData<E extends AnyElement = HTMLElement>(
 }
 
 function hasSingleDataEntry(
-  element: AnyElement,
+  element: Element,
   key: DataKey,
   value?: DataValue,
 ): boolean {
   const propertyName = asDataPropertyName(key);
 
-  const datasetValue = element.dataset?.[propertyName];
+  const datasetValue = cast<HTMLElement>(element).dataset?.[propertyName];
 
   if (isNil(value)) {
     return isNotNil(datasetValue);

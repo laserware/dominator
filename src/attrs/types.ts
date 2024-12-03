@@ -1,15 +1,11 @@
-import type {
-  AnyElement,
-  HTMLElementAttributes,
-  SVGElementAttributes,
-} from "../dom.ts";
+import type { HTMLElementAttributes, SVGElementAttributes } from "../dom.ts";
 
 /**
  * Valid attribute names for the specified element type.
  *
  * @template E Type of Element with corresponding attribute names.
  */
-export type AttrNameForElement<E extends AnyElement> = E extends HTMLElement
+export type AttrNameForElement<E extends Element> = E extends HTMLElement
   ? Extract<keyof HTMLElementAttributes<E>, string>
   : E extends SVGElement
     ? Extract<keyof SVGElementAttributes, string>
@@ -20,7 +16,7 @@ export type AttrNameForElement<E extends AnyElement> = E extends HTMLElement
  *
  * @template E Type of Element with corresponding attribute names.
  */
-export type AttrName<E extends AnyElement = HTMLElement> =
+export type AttrName<E extends Element = HTMLElement> =
   | AttrNameForElement<E>
   | string;
 
@@ -45,7 +41,7 @@ export type AttrValue =
  *
  * @template E Type of Element for corresponding attributes.
  */
-export type Attrs<E extends AnyElement = HTMLElement> = Record<
+export type Attrs<E extends Element = HTMLElement> = Record<
   AttrName<E>,
   AttrValue | null | undefined
 >;

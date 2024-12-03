@@ -1,6 +1,5 @@
 import { keysOf } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
 import type { PropertySearch } from "../types.ts";
 
 /**
@@ -14,9 +13,9 @@ import type { PropertySearch } from "../types.ts";
  * @param predicate Callback that returns true if the property *does not* match.
  */
 export function hasAllProperties(
-  element: AnyElement,
+  element: Element,
   search: PropertySearch<any, any>,
-  predicate: (element: AnyElement, key: any, value?: any) => boolean,
+  predicate: (element: Element, key: any, value?: any) => boolean,
 ): boolean {
   if (Array.isArray(search)) {
     for (const name of search) {
@@ -49,9 +48,9 @@ export function hasAllProperties(
  * @param predicate Callback that returns true if the property *does* match.
  */
 export function hasSomeProperties(
-  element: AnyElement,
+  element: Element,
   search: PropertySearch<any, any>,
-  predicate: (element: AnyElement, key: any, value?: any) => boolean,
+  predicate: (element: Element, key: any, value?: any) => boolean,
 ): boolean {
   if (Array.isArray(search)) {
     for (const name of search) {

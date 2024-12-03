@@ -1,7 +1,6 @@
 import { cast, isNotNil } from "@laserware/arcade";
 
 import type { AttrValue } from "../attrs/types.ts";
-import type { AnyElement } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { parseDOMValue, stringifyDOMValue } from "../internal/domValues.ts";
@@ -39,7 +38,7 @@ export type AnyDatasetShape = Record<string, DataValue | null>;
  */
 export class Dataset<
   DS extends AnyDatasetShape,
-  E extends AnyElement = HTMLElement,
+  E extends Element = HTMLElement,
 > {
   readonly #element: E;
 
@@ -176,6 +175,7 @@ export class Dataset<
   get #dataset(): DOMStringMap {
     /* istanbul ignore else -- @preserve: I'm pretty sure this is impossible, but the check can't hurt. */
     if ("dataset" in this.#element) {
+      // @ts-ignore
       return this.#element.dataset;
     } else {
       throw new Error("Element does not have dataset property");
@@ -277,7 +277,7 @@ export class Dataset<
  */
 export function datasetOf<
   DS extends AnyDatasetShape,
-  E extends AnyElement = HTMLElement,
+  E extends Element = HTMLElement,
 >(
   target: Element | ElemOrCssSelector,
   initialData?: Partial<DS>,

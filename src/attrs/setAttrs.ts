@@ -1,6 +1,5 @@
 import { cast } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
@@ -51,7 +50,7 @@ import type { AttrName, Attrs, AttrValue } from "./types.ts";
  * </div>
  * ```
  */
-export function setAttr<E extends AnyElement = HTMLElement>(
+export function setAttr<E extends Element = HTMLElement>(
   target: ElemOrCssSelector<E>,
   name: AttrName<E>,
   value: AttrValue | null | undefined,
@@ -110,7 +109,7 @@ export function setAttr<E extends AnyElement = HTMLElement>(
  * </div>
  * ```
  */
-export function setAttrs<E extends AnyElement = HTMLElement>(
+export function setAttrs<E extends Element = HTMLElement>(
   target: ElemOrCssSelector<E>,
   attrs: Attrs<E>,
 ): E {
@@ -124,7 +123,7 @@ export function setAttrs<E extends AnyElement = HTMLElement>(
   return cast<E>(elem);
 }
 
-function setSingleAttr<E extends AnyElement = HTMLElement>(
+function setSingleAttr<E extends Element = HTMLElement>(
   element: E,
   name: string,
   value: AttrValue | null | undefined,

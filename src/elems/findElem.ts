@@ -1,7 +1,6 @@
 import { cast, isPlainObject } from "@laserware/arcade";
 
 import type { CssSelector } from "../css/types.ts";
-import type { AnyElement } from "../dom.ts";
 import { parseFindOptions } from "../internal/findOptions.ts";
 
 import { toElem } from "./toElem.ts";
@@ -26,7 +25,7 @@ import type { Elem, FindOptions } from "./types.ts";
  *
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if the specified `selector` is invalid.
  */
-export function findElem<E extends AnyElement = HTMLElement>(
+export function findElem<E extends Element = HTMLElement>(
   selector: CssSelector,
   parent?: Elem | null,
 ): E | null;
@@ -44,11 +43,11 @@ export function findElem<E extends AnyElement = HTMLElement>(
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if `withSelector` in the specified `options` is invalid.
  * @throws {TypeError} [TypeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError) if the specified `options` are invalid.
  */
-export function findElem<E extends AnyElement = HTMLElement>(
+export function findElem<E extends Element = HTMLElement>(
   options: FindOptions,
 ): E | null;
 
-export function findElem<E extends AnyElement = HTMLElement>(
+export function findElem<E extends Element = HTMLElement>(
   selectorOrOptions: FindOptions | CssSelector,
   parent?: Elem | null,
 ): E | null {

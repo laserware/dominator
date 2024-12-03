@@ -1,7 +1,6 @@
 import { cast } from "@laserware/arcade";
 
 import { isCssVarName } from "../css/isCssVarName.ts";
-import type { AnyElement } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -21,7 +20,7 @@ import type { StyleKey } from "./types.ts";
  * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
  *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function removeStyle<E extends AnyElement = HTMLElement>(
+export function removeStyle<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
   key: StyleKey,
 ): E {
@@ -46,7 +45,7 @@ export function removeStyle<E extends AnyElement = HTMLElement>(
  * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
  *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function removeStyles<E extends AnyElement = HTMLElement>(
+export function removeStyles<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
   keys: StyleKey[],
 ): E {
@@ -60,11 +59,11 @@ export function removeStyles<E extends AnyElement = HTMLElement>(
   return cast<E>(elem);
 }
 
-function removeSingleStyle(element: AnyElement, key: StyleKey): void {
+function removeSingleStyle(element: Element, key: StyleKey): void {
   if (isCssVarName(key)) {
-    element.style.removeProperty(key);
+    cast<HTMLElement>(element).style.removeProperty(key);
   } else {
     // Setting a style value to an empty string removes it:
-    element.style[key] = "";
+    cast<HTMLElement>(element).style[key] = "";
   }
 }

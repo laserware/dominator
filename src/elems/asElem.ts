@@ -1,5 +1,3 @@
-import type { AnyElement } from "../dom.ts";
-
 import { InvalidElemError } from "./InvalidElemError.ts";
 import { isElem } from "./isElem.ts";
 import type { Elem } from "./types.ts";
@@ -58,7 +56,7 @@ import type { Elem } from "./types.ts";
  * }
  * ```
  */
-export function asElem<E extends AnyElement = HTMLElement>(
+export function asElem<E extends Element = HTMLElement>(
   target: Elem<E> | null | undefined,
 ): E {
   if (isElem(target)) {

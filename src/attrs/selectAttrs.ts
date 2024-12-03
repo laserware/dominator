@@ -1,7 +1,7 @@
 import { isNil, kebabCase } from "@laserware/arcade";
 
 import type { CssSelector } from "../css/types.ts";
-import type { AnyElement, TagName } from "../dom.ts";
+import type { TagName } from "../dom.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
 
@@ -52,7 +52,7 @@ import type { AttrName, Attrs, AttrValue } from "./types.ts";
  * // button[disabled]
  * ```
  */
-export function selectAttr<E extends AnyElement = HTMLElement>(
+export function selectAttr<E extends Element = HTMLElement>(
   name: AttrName<E>,
   value: AttrValue | null | undefined = undefined,
   tag?: TagName,
@@ -106,7 +106,7 @@ export function selectAttr<E extends AnyElement = HTMLElement>(
  * // [disabled="true"][inert]
  * ```
  */
-export function selectAttrs<E extends AnyElement = HTMLElement>(
+export function selectAttrs<E extends Element = HTMLElement>(
   attrs: Attrs<E>,
   tag?: TagName,
 ): CssSelector {
@@ -119,7 +119,7 @@ export function selectAttrs<E extends AnyElement = HTMLElement>(
   return selectorWithTag(selector, tag);
 }
 
-function selectSingleAttr<E extends AnyElement = HTMLElement>(
+function selectSingleAttr<E extends Element = HTMLElement>(
   name: AttrName<E>,
   value: AttrValue | null | undefined,
 ): CssSelector {

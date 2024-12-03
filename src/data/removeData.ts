@@ -1,7 +1,6 @@
 import { cast } from "@laserware/arcade";
 
 import { removeAttr } from "../attrs/removeAttrs.ts";
-import type { AnyElement } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
@@ -64,7 +63,7 @@ import type { DataKey, DataPropertyName } from "./types.ts";
  * </div>
  * ```
  */
-export function removeDataEntry<E extends AnyElement = HTMLElement>(
+export function removeDataEntry<E extends Element = HTMLElement>(
   target: ElemOrCssSelector<E>,
   key: DataPropertyName,
 ): E {
@@ -130,7 +129,7 @@ export function removeDataEntry<E extends AnyElement = HTMLElement>(
  * </div>
  * ```
  */
-export function removeData<E extends AnyElement = HTMLElement>(
+export function removeData<E extends Element = HTMLElement>(
   target: ElemOrCssSelector<E>,
   keys: DataKey[],
 ): E {
@@ -144,7 +143,7 @@ export function removeData<E extends AnyElement = HTMLElement>(
   return cast<E>(elem);
 }
 
-function removeSingleDataEntry(element: AnyElement, key: string): void {
+function removeSingleDataEntry(element: Element, key: string): void {
   const validAttrName = asDataAttrName(key);
 
   // We remove the _attribute_ rather than deleting the entry from the elements

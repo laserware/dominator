@@ -1,6 +1,5 @@
 import { cast, isNotNil } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
@@ -71,7 +70,7 @@ import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
  * </button>
  * ```
  */
-export function setCssVar<E extends AnyElement = HTMLElement>(
+export function setCssVar<E extends Element = HTMLElement>(
   name: CssVarName,
   value: CssVarValue,
   target: ElemOrCssSelector<E> = document.documentElement,
@@ -147,7 +146,7 @@ export function setCssVar<E extends AnyElement = HTMLElement>(
  * </button>
  * ```
  */
-export function setCssVars<E extends AnyElement = HTMLElement>(
+export function setCssVars<E extends Element = HTMLElement>(
   vars: CssVars,
   target: ElemOrCssSelector<E> = document.documentElement,
 ): E {
@@ -164,7 +163,7 @@ export function setCssVars<E extends AnyElement = HTMLElement>(
 }
 
 function setSingleCssVar(
-  element: AnyElement,
+  element: Element,
   name: string,
   value: CssVarValue,
 ): void {
@@ -175,6 +174,6 @@ function setSingleCssVar(
 
   const attrValue = stringifyDOMValue(value);
   if (isNotNil(attrValue)) {
-    element.style.setProperty(name, attrValue);
+    cast<HTMLElement>(element).style.setProperty(name, attrValue);
   }
 }

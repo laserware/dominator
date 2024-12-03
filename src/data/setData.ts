@@ -1,6 +1,5 @@
 import { cast, isNil } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
@@ -70,7 +69,7 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  * </div>
  * ```
  */
-export function setDataEntry<E extends AnyElement = HTMLElement>(
+export function setDataEntry<E extends Element = HTMLElement>(
   target: ElemOrCssSelector<E>,
   key: DataKey,
   value: DataValue | null,
@@ -143,7 +142,7 @@ export function setDataEntry<E extends AnyElement = HTMLElement>(
  * </div>
  * ```
  */
-export function setData<E extends AnyElement = HTMLElement>(
+export function setData<E extends Element = HTMLElement>(
   target: ElemOrCssSelector<E>,
   data: Data,
 ): E {
@@ -158,15 +157,15 @@ export function setData<E extends AnyElement = HTMLElement>(
 }
 
 function setSingleDataEntry(
-  elem: AnyElement,
+  element: Element,
   key: DataKey,
   value?: DataValue | null | undefined,
 ): void {
   const validKey = asDataPropertyName(key);
 
   if (isNil(value)) {
-    elem.dataset[validKey] = "";
+    cast<HTMLElement>(element).dataset[validKey] = "";
   } else {
-    elem.dataset[validKey] = stringifyDOMValue(value);
+    cast<HTMLElement>(element).dataset[validKey] = stringifyDOMValue(value);
   }
 }

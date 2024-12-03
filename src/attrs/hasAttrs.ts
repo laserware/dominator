@@ -1,6 +1,5 @@
 import { isNil } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -18,7 +17,7 @@ import type { AttrName, AttrValue } from "./types.ts";
  *
  * @template E Type of Element with corresponding attributes to search.
  */
-export type AttrsSearch<E extends AnyElement = HTMLElement> = PropertySearch<
+export type AttrsSearch<E extends Element = HTMLElement> = PropertySearch<
   AttrName<E>,
   AttrValue | null
 >;
@@ -61,7 +60,7 @@ export type AttrsSearch<E extends AnyElement = HTMLElement> = PropertySearch<
  * // true
  * ```
  */
-export function hasAttr<E extends AnyElement = HTMLElement>(
+export function hasAttr<E extends Element = HTMLElement>(
   target: ElemOrCssSelector<E>,
   name: AttrName<E>,
   value?: AttrValue,
@@ -111,7 +110,7 @@ export function hasAttr<E extends AnyElement = HTMLElement>(
  * // true
  * ```
  */
-export function hasAllAttrs<E extends AnyElement = HTMLElement>(
+export function hasAllAttrs<E extends Element = HTMLElement>(
   target: ElemOrCssSelector<E>,
   search: AttrsSearch<E>,
 ): boolean {
@@ -160,7 +159,7 @@ export function hasAllAttrs<E extends AnyElement = HTMLElement>(
  * // true
  * ```
  */
-export function hasSomeAttrs<E extends AnyElement = HTMLElement>(
+export function hasSomeAttrs<E extends Element = HTMLElement>(
   target: ElemOrCssSelector<E>,
   search: AttrsSearch<E>,
 ): boolean {
@@ -171,7 +170,7 @@ export function hasSomeAttrs<E extends AnyElement = HTMLElement>(
 }
 
 function hasSingleAttr(
-  element: AnyElement,
+  element: Element,
   name: AttrName,
   value?: AttrValue | null,
 ): boolean {

@@ -1,7 +1,5 @@
 import { cast, isNil } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
-
 /**
  * Converts the specified [NodeList](https://developer.mozilla.org/en-US/docs/Web/API/NodeList)
  * or [HTMLCollection](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCollection)
@@ -13,7 +11,7 @@ import type { AnyElement } from "../dom.ts";
  *
  * @returns Array of elements of type `E`.
  */
-export function listToArray<E extends AnyElement = HTMLElement>(
+export function listToArray<E extends Element = HTMLElement>(
   items: NodeListOf<E> | NodeList | HTMLCollection | null,
 ): E[] {
   if (isNil(items)) {

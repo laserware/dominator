@@ -1,7 +1,6 @@
 import { cast } from "@laserware/arcade";
 
 import { isCssVarName } from "../css/isCssVarName.ts";
-import type { AnyElement } from "../dom.ts";
 import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
@@ -23,7 +22,7 @@ import type { StyleKey, Styles, StyleValue } from "./types.ts";
  * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
  *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function setStyle<E extends AnyElement = HTMLElement>(
+export function setStyle<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
   key: StyleKey,
   value: StyleValue,
@@ -53,7 +52,7 @@ export function setStyle<E extends AnyElement = HTMLElement>(
  * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
  *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function setStyles<E extends AnyElement = HTMLElement>(
+export function setStyles<E extends Element = HTMLElement>(
   target: ElemOrCssSelector,
   styles: Styles,
 ): E {
@@ -71,16 +70,16 @@ export function setStyles<E extends AnyElement = HTMLElement>(
 }
 
 function setSingleStyle(
-  element: AnyElement,
+  element: Element,
   key: string,
   value: StyleValue,
 ): void {
   const styleValue = stringifyDOMValue(value) ?? "";
 
   if (isCssVarName(key)) {
-    element.style.setProperty(key, styleValue);
+    cast<HTMLElement>(element).style.setProperty(key, styleValue);
   } else {
     // @ts-ignore
-    element.style[key] = styleValue;
+    cast<HTMLElement>(element).style[key] = styleValue;
   }
 }

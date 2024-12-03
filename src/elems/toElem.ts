@@ -1,7 +1,5 @@
 import { isNil } from "@laserware/arcade";
 
-import type { AnyElement } from "../dom.ts";
-
 import { findElem } from "./findElem.ts";
 import { isElem } from "./isElem.ts";
 import type { ElemOrCssSelector } from "./types.ts";
@@ -51,7 +49,7 @@ import type { ElemOrCssSelector } from "./types.ts";
  * }
  * ```
  */
-export function toElem<E extends AnyElement = HTMLElement>(
+export function toElem<E extends Element = HTMLElement>(
   target: ElemOrCssSelector | null | undefined,
   parent?: ElemOrCssSelector | null | undefined,
 ): E | null {
