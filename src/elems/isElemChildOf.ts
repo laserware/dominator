@@ -1,5 +1,5 @@
 import { toElem } from "./toElem.ts";
-import type { ElemOrCssSelector } from "./types.ts";
+import type { Target } from "./types.ts";
 
 /**
  * Determines if the `child` is a child of the `parent` in the DOM.
@@ -17,10 +17,7 @@ import type { ElemOrCssSelector } from "./types.ts";
  *
  * @returns `true` if the `child` is a child of the specified `parent`.
  */
-export function isElemChildOf(
-  child: ElemOrCssSelector,
-  parent: ElemOrCssSelector,
-): boolean {
+export function isElemChildOf(child: Target, parent: Target): boolean {
   const parentElem = toElem(parent);
   const childElem = toElem(child, parentElem);
 

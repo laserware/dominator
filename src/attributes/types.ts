@@ -12,7 +12,7 @@ import type {
  *
  * @template TN TN extends TagName = "*" with corresponding attribute names.
  */
-export type AttrNameForElement<TN extends TagName> =
+export type AttributeNameForElement<TN extends TagName> =
   TN extends HTMLElementTagName
     ? Extract<keyof HTMLElementAttributes<TN>, string>
     : TN extends SVGElementTagName
@@ -26,8 +26,8 @@ export type AttrNameForElement<TN extends TagName> =
  *
  * @template TN Tag name of element with corresponding attribute names.
  */
-export type AttrName<TN extends TagName = "*"> =
-  | AttrNameForElement<TN>
+export type AttributeName<TN extends TagName = "*"> =
+  | AttributeNameForElement<TN>
   | string;
 
 /**
@@ -35,10 +35,10 @@ export type AttrName<TN extends TagName = "*"> =
  *
  * Note that **all** attribute values are strings when they make it to the DOM.
  * This represents the value type that can be assigned to attributes using
- * {@linkcode setAttr} and {@linkcode setAttrs} as well as the return value for
- * attributes when using {@linkcode getAttr} and {@linkcode getAttrs}.
+ * {@linkcode setAttribute} and {@linkcode setAttributes} as well as the return value for
+ * attributes when using {@linkcode getAttribute} and {@linkcode getAttributes}.
  */
-export type AttrValue =
+export type AttributeValue =
   | boolean
   | number
   | string
@@ -51,13 +51,13 @@ export type AttrValue =
  *
  * @template TN Tag name of element with corresponding attributes.
  */
-export type Attrs<TN extends TagName = "*"> = Record<
-  AttrName<TN>,
-  AttrValue | null | undefined
+export type Attributes<TN extends TagName = "*"> = Record<
+  AttributeName<TN>,
+  AttributeValue | null | undefined
 >;
 
 /**
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
  * All the values must be defined.
  */
-export type AttrsDefined = Record<string, AttrValue>;
+export type AttributesDefined = Record<string, AttributeValue>;

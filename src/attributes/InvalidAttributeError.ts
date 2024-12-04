@@ -1,10 +1,10 @@
 /**
  * Error thrown when an attribute is invalid for the operation.
  */
-export class InvalidAttrError extends Error {
+export class InvalidAttributeError extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = "InvalidAttrError";
+    this.name = "InvalidAttributeError";
   }
 }

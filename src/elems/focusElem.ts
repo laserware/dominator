@@ -3,7 +3,7 @@ import { cast } from "@laserware/arcade";
 import type { ElementOf, TagName } from "../dom.ts";
 
 import { toElem } from "./toElem.ts";
-import type { ElemOrCssSelector } from "./types.ts";
+import type { Target } from "./types.ts";
 
 /**
  * Additional options for setting focus to an element.
@@ -15,7 +15,7 @@ export type FocusOptions<TN extends TagName> = {
   delay?: number;
 
   /** Parent element (if `target` is a {@linkcode css!CssSelector}). */
-  parent?: ElemOrCssSelector;
+  parent?: Target;
 
   /**
    * If true, don't scroll the focused element into view.
@@ -39,7 +39,7 @@ export type FocusOptions<TN extends TagName> = {
  * @param [options] Options for setting focus.
  */
 export function focusElem<TN extends TagName = "*">(
-  target: ElemOrCssSelector | null | undefined,
+  target: Target | null | undefined,
   options?: FocusOptions<TN>,
 ): void {
   const focusCallback = (): void => {

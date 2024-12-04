@@ -1,6 +1,6 @@
-import { elemOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../internal/elemOr.ts";
 
-import type { ElemOrCssSelector } from "./types.ts";
+import type { Target } from "./types.ts";
 
 /**
  * Name of the value type associated with an input.
@@ -44,9 +44,9 @@ export type InputValueAsType<T extends InputValueTypeName> = T extends "boolean"
  * @throws Error if the `target` specified is not of type `HTMLInputElement`.
  */
 export function getInputValue<T extends InputValueTypeName>(
-  target: ElemOrCssSelector,
+  target: Target,
 ): InputValueAsType<T> {
-  const elem = elemOrThrow(target, "Could not get value for element");
+  const elem = toElementOrThrow(target, "Could not get value for element");
 
   if (!isInputElement(elem)) {
     throw new Error("Cannot get value on an element if it is not an input");
@@ -84,8 +84,8 @@ export function getInputValue<T extends InputValueTypeName>(
  * @throws {@linkcode InvalidElemError} if the specified `target` wasn't found.
  * @throws Error if the `target` specified is not of type `HTMLInputElement`.
  */
-export function getInputValueRaw(target: ElemOrCssSelector): string {
-  const elem = elemOrThrow(target, "Could not get value for element");
+export function getInputValueRaw(target: Target): string {
+  const elem = toElementOrThrow(target, "Could not get value for element");
 
   if (isInputElement(elem)) {
     return elem.value;

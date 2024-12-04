@@ -1,14 +1,14 @@
 import { isNil } from "@laserware/arcade";
 
 import type { TagName } from "../dom.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
+import type { Target } from "../elems/types.ts";
+import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type { PropertySearch } from "../types.ts";
 
-import { getAttr } from "./getAttrs.ts";
-import type { AttrName, AttrValue } from "./types.ts";
+import { getAttribute } from "./getAttributes.ts";
+import type { AttributeName, AttributeValue } from "./types.ts";
 
 /**
  * Search criteria for checking if attributes are present in an element.
@@ -18,9 +18,9 @@ import type { AttrName, AttrValue } from "./types.ts";
  *
  * @template TN Tag name of element with corresponding attributes to search.
  */
-export type AttrsSearch<TN extends TagName = "*"> = PropertySearch<
-  AttrName<TN>,
-  AttrValue | null
+export type AttributesSearch<TN extends TagName = "*"> = PropertySearch<
+  AttributeName<TN>,
+  AttributeValue | null
 >;
 
 /**
@@ -49,26 +49,27 @@ export type AttrsSearch<TN extends TagName = "*"> = PropertySearch<
  * **Code**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElem("#example")!;
  *
- * hasAttr(elem, "aria-pressed");
+ * hasAttribute(element, "aria-pressed");
  * // true
  *
- * hasAttr(elem, "aria-pressed", "true");
+ * hasAttribute(element, "aria-pressed", "true");
  * // false ("true" cannot be a string, must be the boolean value `true`)
  *
- * hasAttr(elem, "aria-label", "Example");
+ * hasAttribute(element, "aria-label", "Example");
  * // true
  * ```
  */
-export function hasAttr<TN extends TagName = "*">(
-  target: ElemOrCssSelector<TN>,
-  name: AttrName<TN>,
-  value?: AttrValue,
+export function hasAttribute<TN extends TagName = "*">(
+  target: Target<TN>,
+  name: AttributeName<TN>,
+  value?: AttributeValue,
 ): boolean {
-  const elem = elemOrThrow(target, `Unable to check for attribute ${name}`);
+  // prettier-ignore
+  const element = toElementOrThrow(target, `Unable to check for attribute ${name}`);
 
-  return hasSingleAttr(elem, name, value);
+  return hasSingleAttribute(element, name, value);
 }
 
 /**
@@ -96,29 +97,29 @@ export function hasAttr<TN extends TagName = "*">(
  * **Code**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElem("#example")!;
  *
- * hasAllAttrs(elem, ["aria-hidden"]);
+ * hasAllAttributes(element, ["aria-hidden"]);
  * // true
  *
- * hasAllAttrs(elem, ["aria-hidden", "missing"]);
+ * hasAllAttributes(element, ["aria-hidden", "missing"]);
  * // false ("missing" does not exist)
  *
- * hasAllAttrs(elem, {
+ * hasAllAttributes(element, {
  *   "aria-hidden": true,
  *   inert: null,
  * });
  * // true
  * ```
  */
-export function hasAllAttrs<TN extends TagName = "*">(
-  target: ElemOrCssSelector<TN>,
-  search: AttrsSearch<TN>,
+export function hasAllAttributes<TN extends TagName = "*">(
+  target: Target<TN>,
+  search: AttributesSearch<TN>,
 ): boolean {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to check for all attributes ${formatForError(search)}`);
+  const element = toElementOrThrow(target, `Unable to check for all attributes ${formatForError(search)}`);
 
-  return hasAllProperties(elem, search, hasSingleAttr);
+  return hasAllProperties(element, search, hasSingleAttribute);
 }
 
 /**
@@ -147,12 +148,12 @@ export function hasAllAttrs<TN extends TagName = "*">(
  * but the function still returns `true`:
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElem("#example")!;
  *
- * hasSomeAttrs(elem, ["aria-hidden", "aria-label"]);
+ * hasSomeAttributes(element, ["aria-hidden", "aria-label"]);
  * // true
  *
- * hasSomeAttrs(elem, {
+ * hasSomeAttributes(element, {
  *   inert: null,
  *   "aria-hidden": true,
  *   "aria-label": "Click Me",
@@ -160,24 +161,24 @@ export function hasAllAttrs<TN extends TagName = "*">(
  * // true
  * ```
  */
-export function hasSomeAttrs<TN extends TagName = "*">(
-  target: ElemOrCssSelector<TN>,
-  search: AttrsSearch<TN>,
+export function hasSomeAttributes<TN extends TagName = "*">(
+  target: Target<TN>,
+  search: AttributesSearch<TN>,
 ): boolean {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to check for some attributes ${formatForError(search)}`);
+  const element = toElementOrThrow(target, `Unable to check for some attributes ${formatForError(search)}`);
 
-  return hasSomeProperties(elem, search, hasSingleAttr);
+  return hasSomeProperties(element, search, hasSingleAttribute);
 }
 
-function hasSingleAttr(
+function hasSingleAttribute(
   element: Element,
-  name: AttrName,
-  value?: AttrValue | null,
+  name: AttributeName,
+  value?: AttributeValue | null,
 ): boolean {
   if (isNil(value)) {
     return element.hasAttribute(name);
   } else {
-    return getAttr(element, name) === value;
+    return getAttribute(element, name) === value;
   }
 }

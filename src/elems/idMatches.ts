@@ -1,6 +1,6 @@
-import { elemOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../internal/elemOr.ts";
 
-import type { ElemOrCssSelector } from "./types.ts";
+import type { Target } from "./types.ts";
 
 /**
  * Checks if the `target` has the ID *property* that matches `id`.
@@ -39,8 +39,8 @@ import type { ElemOrCssSelector } from "./types.ts";
  * // true
  * ```
  */
-export function idMatches(target: ElemOrCssSelector, id: string): boolean {
-  const elem = elemOrThrow(target, "Unable to check for ID match");
+export function idMatches(target: Target, id: string): boolean {
+  const elem = toElementOrThrow(target, "Unable to check for ID match");
 
   // Clear the `#` in case the ID CSS selector is part of the string:
   const validId = id.replace("#", "");

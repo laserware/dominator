@@ -1,8 +1,8 @@
 import { cast, type KeysOf, type WithUndefinedValues } from "@laserware/arcade";
 
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import type { Target } from "../elems/types.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import { InvalidCssVarError } from "./InvalidCssVarError.ts";
@@ -70,9 +70,9 @@ import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
  */
 export function getCssVar<V extends CssVarValue>(
   name: CssVarName,
-  target: ElemOrCssSelector = document.documentElement,
+  target: Target = document.documentElement,
 ): V | undefined {
-  const elem = elemOrThrow(target, `Unable to get CSS variable ${name}`);
+  const elem = toElementOrThrow(target, `Unable to get CSS variable ${name}`);
 
   return getSingleCssVar<V>(elem, name);
 }
@@ -164,10 +164,10 @@ export function getCssVar<V extends CssVarValue>(
  */
 export function getCssVars<V extends CssVars = CssVars>(
   names: KeysOf<V>,
-  target: ElemOrCssSelector = document.documentElement,
+  target: Target = document.documentElement,
 ): WithUndefinedValues<V> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to get CSS variables ${formatForError(names)}`);
+  const elem = toElementOrThrow(target, `Unable to get CSS variables ${formatForError(names)}`);
 
   const cssVars: Record<string, CssVarValue | undefined> = {};
 

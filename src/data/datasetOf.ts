@@ -1,11 +1,11 @@
 import { cast, isNotNil } from "@laserware/arcade";
 
-import type { AttrValue } from "../attrs/types.ts";
+import type { AttributeValue } from "../attributes/types.ts";
 import type { ElementOf, TagName } from "../dom.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import type { Target } from "../elems/types.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { parseDOMValue, stringifyDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../internal/elemOr.ts";
 
 import { removeDataEntry } from "./removeData.ts";
 import type { DataValue } from "./types.ts";
@@ -52,8 +52,11 @@ export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
    *
    * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
    */
-  constructor(target: ElemOrCssSelector<TN>, initialData?: Partial<DS>) {
-    this.#element = elemOrThrow<TN>(target, "Unable to initialize Dataset");
+  constructor(target: Target<TN>, initialData?: Partial<DS>) {
+    this.#element = toElementOrThrow<TN>(
+      target,
+      "Unable to initialize Dataset",
+    );
 
     if (isNotNil(initialData)) {
       this.setAll(initialData);
@@ -110,7 +113,7 @@ export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
   public getAll(): Partial<DS> {
     const dataset = this.#dataset;
 
-    const entries: Record<string, AttrValue> = {};
+    const entries: Record<string, AttributeValue> = {};
 
     for (const name of Object.keys(dataset)) {
       // @ts-ignore Expects a `Stringifiable`, but can be `null` or `undefined`.
@@ -274,7 +277,7 @@ export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
  * ```
  */
 export function datasetOf<DS extends AnyDatasetShape, TN extends TagName = "*">(
-  target: Element | ElemOrCssSelector,
+  target: Element | Target,
   initialData?: Partial<DS>,
 ): Dataset<DS, TN> {
   return new Dataset<DS, TN>(target, initialData);

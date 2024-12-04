@@ -1,7 +1,7 @@
 import type { OneOrManyOf } from "@laserware/arcade";
 
 import { toElem } from "./toElem.ts";
-import type { ElemOrCssSelector } from "./types.ts";
+import type { Target } from "./types.ts";
 
 /**
  * Checks if the Element(s), EventTarget(s), or CSS selector(s) specified
@@ -46,8 +46,8 @@ import type { ElemOrCssSelector } from "./types.ts";
  * ```
  */
 export function areElemsDifferent(
-  left: OneOrManyOf<ElemOrCssSelector>,
-  right: ElemOrCssSelector,
+  left: OneOrManyOf<Target>,
+  right: Target,
 ): boolean {
   if (Array.isArray(left)) {
     // Ensure we bail early if we find an element that is the same:
@@ -63,10 +63,7 @@ export function areElemsDifferent(
   }
 }
 
-function isDifferentFrom(
-  left: ElemOrCssSelector,
-  right: ElemOrCssSelector,
-): boolean {
+function isDifferentFrom(left: Target, right: Target): boolean {
   const sourceElem = toElem(left);
   const targetElem = toElem(right);
 

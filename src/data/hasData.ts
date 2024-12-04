@@ -1,10 +1,10 @@
 import { cast, isNil, isNotNil } from "@laserware/arcade";
 
 import type { TagName } from "../dom.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import type { Target } from "../elems/types.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type { PropertySearch } from "../types.ts";
@@ -61,11 +61,11 @@ export type DataSearch = PropertySearch<DataKey, DataValue | null>;
  * ```
  */
 export function hasDataEntry<TN extends TagName = "*">(
-  target: ElemOrCssSelector<TN>,
+  target: Target<TN>,
   key: DataKey,
   value?: DataValue,
 ): boolean {
-  const elem = elemOrThrow(target, `Unable to check for data ${key}`);
+  const elem = toElementOrThrow(target, `Unable to check for data ${key}`);
 
   return hasSingleDataEntry(elem, key, value);
 }
@@ -113,11 +113,11 @@ export function hasDataEntry<TN extends TagName = "*">(
  * ```
  */
 export function hasAllData<TN extends TagName = "*">(
-  target: ElemOrCssSelector<TN>,
+  target: Target<TN>,
   search: DataSearch,
 ): boolean {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to check for data ${formatForError(search)}`);
+  const elem = toElementOrThrow(target, `Unable to check for data ${formatForError(search)}`);
 
   return hasAllProperties(elem, search, hasSingleDataEntry);
 }
@@ -169,11 +169,11 @@ export function hasAllData<TN extends TagName = "*">(
  * ```
  */
 export function hasSomeData<TN extends TagName = "*">(
-  target: ElemOrCssSelector<TN>,
+  target: Target<TN>,
   search: DataSearch,
 ): boolean {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to check for data ${formatForError(search)}`);
+  const elem = toElementOrThrow(target, `Unable to check for data ${formatForError(search)}`);
 
   return hasSomeProperties(elem, search, hasSingleDataEntry);
 }

@@ -4,7 +4,7 @@ import { isCssVarName } from "../css/isCssVarName.ts";
 import type { ElementOf, TagName } from "../dom.ts";
 import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import type { Target } from "../elems/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
@@ -24,7 +24,7 @@ import type { StyleKey, Styles, StyleValue } from "./types.ts";
  *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function setStyle<TN extends TagName = "*">(
-  target: ElemOrCssSelector,
+  target: Target,
   key: StyleKey,
   value: StyleValue,
 ): ElementOf<TN> {
@@ -54,7 +54,7 @@ export function setStyle<TN extends TagName = "*">(
  *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function setStyles<TN extends TagName = "*">(
-  target: ElemOrCssSelector,
+  target: Target,
   styles: Styles,
 ): ElementOf<TN> {
   const elem = toElem(target);

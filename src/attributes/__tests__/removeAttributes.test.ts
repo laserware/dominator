@@ -1,13 +1,13 @@
 import { InvalidElemError } from "../../elems/InvalidElemError.ts";
 import { render, selectorForNonExistent } from "../../testing.ts";
-import { removeAttr, removeAttrs } from "../removeAttrs.ts";
+import { removeAttribute, removeAttributes } from "../removeAttributes.ts";
 
-describe("within removeAttrs", () => {
-  describe("the removeAttr function", () => {
+describe("within removeAttributes", () => {
+  describe("the removeAttribute function", () => {
     it("removes the the specified attribute from the target", () => {
       const element = render(`<span aria-label="Test element">Hello</span>`);
 
-      const result = removeAttr(element, "aria-label");
+      const result = removeAttribute(element, "aria-label");
 
       expect(result.hasAttribute("aria-label")).toBeFalsy();
     });
@@ -15,23 +15,23 @@ describe("within removeAttrs", () => {
     it("does nothing if the specified attribute does not exist in the target", () => {
       const element = render(`<span aria-label="Test element">Hello</span>`);
 
-      const result = removeAttr(element, "name");
+      const result = removeAttribute(element, "name");
 
       expect(result.hasAttribute("aria-label")).toBeTruthy();
     });
 
     it("throws an error if the target does not exist", () => {
       expect(() => {
-        removeAttr(selectorForNonExistent, "name");
+        removeAttribute(selectorForNonExistent, "name");
       }).toThrow(InvalidElemError);
     });
   });
 
-  describe("the removeAttrs function", () => {
+  describe("the removeAttributes function", () => {
     it("removes the the specified attribute names from the target", () => {
       const element = render(`<span id="hello" aria-label="Test element">Hello</span>`);
 
-      const result = removeAttrs(element, ["id", "aria-label"]);
+      const result = removeAttributes(element, ["id", "aria-label"]);
 
       expect(result.hasAttribute("id")).toBeFalsy();
       expect(result.hasAttribute("aria-label")).toBeFalsy();
@@ -39,7 +39,7 @@ describe("within removeAttrs", () => {
 
     it("throws an error if the target does not exist", () => {
       expect(() => {
-        removeAttrs(selectorForNonExistent, ["name"]);
+        removeAttributes(selectorForNonExistent, ["name"]);
       }).toThrow(InvalidElemError);
     });
   });

@@ -2,7 +2,7 @@ import { isNil } from "@laserware/arcade";
 
 import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import type { Target } from "../elems/types.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type { PropertySearch } from "../types.ts";
@@ -32,7 +32,7 @@ export type StylesSearch = PropertySearch<StyleKey, StyleValue | null>;
  *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function hasStyle(
-  target: ElemOrCssSelector,
+  target: Target,
   key: StyleKey,
   value?: StyleValue,
 ): boolean {
@@ -56,10 +56,7 @@ export function hasStyle(
  * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
  *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function hasAllStyles(
-  target: ElemOrCssSelector,
-  search: StylesSearch,
-): boolean {
+export function hasAllStyles(target: Target, search: StylesSearch): boolean {
   const elem = toElem(target);
   if (elem === null || !("style" in elem)) {
     // prettier-ignore
@@ -81,10 +78,7 @@ export function hasAllStyles(
  * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
  *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function hasSomeStyles(
-  target: ElemOrCssSelector,
-  search: StylesSearch,
-): boolean {
+export function hasSomeStyles(target: Target, search: StylesSearch): boolean {
   const elem = toElem(target);
   if (elem === null || !("style" in elem)) {
     // prettier-ignore

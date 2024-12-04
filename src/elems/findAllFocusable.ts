@@ -1,6 +1,6 @@
 import { findAllElems } from "./findAllElems.ts";
 import { toElem } from "./toElem.ts";
-import type { ElemOrCssSelector } from "./types.ts";
+import type { Target } from "./types.ts";
 
 const focusableElementsSelector = [
   "a",
@@ -51,7 +51,7 @@ const focusableElementsSelector = [
  * ```
  */
 export function findAllFocusable(
-  parent: ElemOrCssSelector | null | undefined = document,
+  parent: Target | null | undefined = document,
 ): HTMLElement[] {
   const parentElem = toElem(parent) ?? document;
 

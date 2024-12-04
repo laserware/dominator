@@ -7,7 +7,7 @@ import { parseFindOptions } from "../internal/findOptions.ts";
 import { listToArray } from "./listToArray.ts";
 
 import { toElem } from "./toElem.ts";
-import type { Elem, FindOptions } from "./types.ts";
+import type { ElementLike, FindOptions } from "./types.ts";
 
 /**
  * Query the DOM to find the elements matching the specified CSS `selector` in
@@ -24,7 +24,7 @@ import type { Elem, FindOptions } from "./types.ts";
  */
 export function findAllElems<TN extends TagName = "*">(
   selector: CssSelector,
-  parent?: Elem | null,
+  parent?: ElementLike | null,
 ): ElementOf<TN>[];
 
 /**
@@ -47,10 +47,10 @@ export function findAllElems<TN extends TagName = "*">(
 
 export function findAllElems<TN extends TagName = "*">(
   selectorOrOptions: FindOptions | CssSelector,
-  parent?: Elem | null,
+  parent?: ElementLike | null,
 ): ElementOf<TN>[] {
   let selector: string;
-  let validParent: Elem = parent ?? document;
+  let validParent: ElementLike = parent ?? document;
 
   if (isPlainObject(selectorOrOptions)) {
     const parsed = parseFindOptions(selectorOrOptions);

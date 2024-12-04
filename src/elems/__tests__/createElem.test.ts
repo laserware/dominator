@@ -13,7 +13,7 @@ describe("the createElem function", () => {
     const result = createElem("div", {
       id: "test-id",
       className: "test-class",
-      attrs: {
+      attributes: {
         "aria-label": "Example",
       },
     });
@@ -76,7 +76,7 @@ describe("the createElem function", () => {
         id: "test",
         type: "button",
         ariaDisabled: "false",
-        attrs: {
+        attributes: {
           "aria-label": "Test",
         },
         data: {

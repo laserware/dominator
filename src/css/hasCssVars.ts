@@ -1,8 +1,8 @@
 import { isNil } from "@laserware/arcade";
 
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import type { Target } from "../elems/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type { PropertySearch } from "../types.ts";
@@ -80,9 +80,12 @@ export type CssVarsSearch = PropertySearch<CssVarName, CssVarValue | null>;
 export function hasCssVar(
   name: CssVarName,
   value: CssVarValue | undefined = undefined,
-  target: ElemOrCssSelector = document.documentElement,
+  target: Target = document.documentElement,
 ): boolean {
-  const elem = elemOrThrow(target, `Unable to check for CSS variable ${name}`);
+  const elem = toElementOrThrow(
+    target,
+    `Unable to check for CSS variable ${name}`,
+  );
 
   return hasSingleCssVar(elem, name, value);
 }
@@ -158,10 +161,10 @@ export function hasCssVar(
  */
 export function hasAllCssVars(
   search: CssVarsSearch,
-  target: ElemOrCssSelector = document.documentElement,
+  target: Target = document.documentElement,
 ): boolean {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to check for all CSS variables ${formatForError(search)}`);
+  const elem = toElementOrThrow(target, `Unable to check for all CSS variables ${formatForError(search)}`);
 
   return hasAllProperties(elem, search, hasSingleCssVar);
 }
@@ -237,10 +240,10 @@ export function hasAllCssVars(
  */
 export function hasSomeCssVars(
   search: CssVarsSearch,
-  target: ElemOrCssSelector = document.documentElement,
+  target: Target = document.documentElement,
 ): boolean {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to check for some CSS variables ${formatForError(search)}`);
+  const elem = toElementOrThrow(target, `Unable to check for some CSS variables ${formatForError(search)}`);
 
   return hasSomeProperties(elem, search, hasSingleCssVar);
 }

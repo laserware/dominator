@@ -1,7 +1,7 @@
 import type { ElementOf, TagName } from "../dom.ts";
 
 import { toElem } from "./toElem.ts";
-import type { ElemOrCssSelector } from "./types.ts";
+import type { Target } from "./types.ts";
 
 /**
  * Checks if the `target` matches the specified `tagName`. If the `target`
@@ -19,7 +19,7 @@ import type { ElemOrCssSelector } from "./types.ts";
  * @returns `true` if the `target` is of type `tagName`.
  */
 export function isElemOfType<TN extends TagName>(
-  target: ElemOrCssSelector,
+  target: Target,
   tagName: TN,
 ): target is ElementOf<TN> {
   const elem = toElem(target);

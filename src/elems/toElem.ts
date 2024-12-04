@@ -4,7 +4,7 @@ import type { ElementOf, TagName } from "../dom.ts";
 
 import { findElem } from "./findElem.ts";
 import { isElem } from "./isElem.ts";
-import type { ElemOrCssSelector } from "./types.ts";
+import type { Target } from "./types.ts";
 
 /**
  * Returns an element of tag name `TN` for the specified Element or EventTarget.
@@ -52,8 +52,8 @@ import type { ElemOrCssSelector } from "./types.ts";
  * ```
  */
 export function toElem<TN extends TagName = "*">(
-  target: ElemOrCssSelector | null | undefined,
-  parent?: ElemOrCssSelector | null | undefined,
+  target: Target | null | undefined,
+  parent?: Target | null | undefined,
 ): ElementOf<TN> | null {
   if (isNil(target)) {
     return null;

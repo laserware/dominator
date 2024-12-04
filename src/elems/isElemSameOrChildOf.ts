@@ -1,6 +1,6 @@
 import { areElemsSame } from "./areElemsSame.ts";
 import { isElemChildOf } from "./isElemChildOf.ts";
-import type { ElemOrCssSelector } from "./types.ts";
+import type { Target } from "./types.ts";
 
 /**
  * Checks if the `target` is the same or a child element of the `parent`.
@@ -14,10 +14,7 @@ import type { ElemOrCssSelector } from "./types.ts";
  *
  * @returns `true` if the `child` is a child of or the same as the specified `parent`.
  */
-export function isElemSameOrChildOf(
-  child: ElemOrCssSelector,
-  parent: ElemOrCssSelector,
-): boolean {
+export function isElemSameOrChildOf(child: Target, parent: Target): boolean {
   // Return immediately if the is same check passes, so we don't have to
   // iterate through the DOM if we don't need to:
   if (areElemsSame(child, parent)) {

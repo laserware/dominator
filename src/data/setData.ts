@@ -1,10 +1,10 @@
 import { cast, isNil } from "@laserware/arcade";
 
 import type { ElementOf, TagName } from "../dom.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import type { Target } from "../elems/types.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import type { Data, DataKey, DataValue } from "./types.ts";
@@ -70,11 +70,11 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  * ```
  */
 export function setDataEntry<TN extends TagName = "*">(
-  target: ElemOrCssSelector<TN>,
+  target: Target<TN>,
   key: DataKey,
   value: DataValue | null,
 ): ElementOf<TN> {
-  const elem = elemOrThrow(target, `Unable to set data for ${key}`);
+  const elem = toElementOrThrow(target, `Unable to set data for ${key}`);
 
   setSingleDataEntry(elem, key, value);
 
@@ -144,11 +144,11 @@ export function setDataEntry<TN extends TagName = "*">(
  * ```
  */
 export function setData<TN extends TagName = "*">(
-  target: ElemOrCssSelector<TN>,
+  target: Target<TN>,
   data: Data,
 ): ElementOf<TN> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to set data for keys ${formatForError(data)}`);
+  const elem = toElementOrThrow(target, `Unable to set data for keys ${formatForError(data)}`);
 
   for (const key of Object.keys(data)) {
     setSingleDataEntry(elem, key, data[key]);

@@ -1,6 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
-import { selectAttr } from "../attrs/selectAttrs.ts";
+import { selectAttribute } from "../attributes/selectAttributes.ts";
 import type { CssSelector } from "../css/types.ts";
 import type { TagName } from "../dom.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
@@ -111,6 +111,6 @@ function selectSingleDataEntry(
   if (isNil(value)) {
     return `[${attrName}]`;
   } else {
-    return selectAttr(attrName, value);
+    return selectAttribute(attrName, value);
   }
 }

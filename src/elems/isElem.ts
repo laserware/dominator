@@ -1,11 +1,11 @@
-import type { Elem } from "./types.ts";
+import type { ElementLike } from "./types.ts";
 
 /**
- * Returns true if the `value` is an {@linkcode Elem} instance.
+ * Returns true if the `value` is an {@linkcode ElementLike} instance.
  *
  * @internal
  */
-export function isElem(value: unknown): value is Elem {
+export function isElem(value: unknown): value is ElementLike {
   return (
     value instanceof Document ||
     value instanceof Element ||

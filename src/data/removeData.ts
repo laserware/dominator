@@ -1,10 +1,10 @@
 import { cast } from "@laserware/arcade";
 
-import { removeAttr } from "../attrs/removeAttrs.ts";
+import { removeAttribute } from "../attributes/removeAttributes.ts";
 import type { ElementOf, TagName } from "../dom.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import type { Target } from "../elems/types.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import type { DataKey, DataPropertyName } from "./types.ts";
@@ -64,11 +64,11 @@ import type { DataKey, DataPropertyName } from "./types.ts";
  * ```
  */
 export function removeDataEntry<TN extends TagName = "*">(
-  target: ElemOrCssSelector<TN>,
+  target: Target<TN>,
   key: DataPropertyName,
 ): ElementOf<TN> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to remove data for ${key}`);
+  const elem = toElementOrThrow(target, `Unable to remove data for ${key}`);
 
   removeSingleDataEntry(elem, key);
 
@@ -130,11 +130,11 @@ export function removeDataEntry<TN extends TagName = "*">(
  * ```
  */
 export function removeData<TN extends TagName = "*">(
-  target: ElemOrCssSelector<TN>,
+  target: Target<TN>,
   keys: DataKey[],
 ): ElementOf<TN> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to remove data for ${formatForError(keys)}`);
+  const elem = toElementOrThrow(target, `Unable to remove data for ${formatForError(keys)}`);
 
   for (const key of keys) {
     removeSingleDataEntry(elem, key);
@@ -149,5 +149,5 @@ function removeSingleDataEntry(element: Element, key: string): void {
   // We remove the _attribute_ rather than deleting the entry from the elements
   // dataset because deleting a dataset entry using `delete` won't work in
   // older versions of Safari:
-  removeAttr(element, validAttrName);
+  removeAttribute(element, validAttrName);
 }

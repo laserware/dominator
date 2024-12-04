@@ -3,7 +3,7 @@ import { cast } from "@laserware/arcade";
 import type { ElementOf, TagName } from "../dom.ts";
 import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import type { Target } from "../elems/types.ts";
 
 /**
  * Returns an element of type `TN` that corresponds to the specified `target`.
@@ -18,8 +18,8 @@ import type { ElemOrCssSelector } from "../elems/types.ts";
  *
  * @returns Element representation of the specified `target`.
  */
-export function elemOrThrow<TN extends TagName = "*">(
-  target: ElemOrCssSelector<TN>,
+export function toElementOrThrow<TN extends TagName = "*">(
+  target: Target<TN>,
   error: string,
 ): ElementOf<TN> {
   const elem = toElem(target);

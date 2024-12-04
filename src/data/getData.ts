@@ -1,9 +1,9 @@
 import { cast, type WithUndefinedValues } from "@laserware/arcade";
 
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import type { Target } from "../elems/types.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import type { Data, DataKey, DataValue } from "./types.ts";
@@ -67,10 +67,10 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  * ```
  */
 export function getDataValue<V extends DataValue = DataValue>(
-  target: ElemOrCssSelector,
+  target: Target,
   key: DataKey,
 ): V | undefined {
-  const elem = elemOrThrow(target, `Unable to get data value for ${key}`);
+  const elem = toElementOrThrow(target, `Unable to get data value for ${key}`);
 
   return getSingleDataValue(elem, key);
 }
@@ -154,11 +154,11 @@ export function getDataValue<V extends DataValue = DataValue>(
  * ```
  */
 export function getData<D extends Data = Data>(
-  target: ElemOrCssSelector,
+  target: Target,
   keys: DataKey[],
 ): WithUndefinedValues<D> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to get data for ${formatForError(keys)}`);
+  const elem = toElementOrThrow(target, `Unable to get data for ${formatForError(keys)}`);
 
   const result: Record<DataKey, DataValue | undefined> = {};
 

@@ -1,8 +1,8 @@
 /* istanbul ignore file -- @preserve: It's impossible to test this because of JSDOM. */
 
-import { elemOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../internal/elemOr.ts";
 
-import type { ElemOrCssSelector } from "./types.ts";
+import type { Target } from "./types.ts";
 
 /**
  * Ensures the given `target` is within the visible scroll area of the specified
@@ -13,14 +13,11 @@ import type { ElemOrCssSelector } from "./types.ts";
  *
  * @throws {@linkcode InvalidElemError} if the `target` or `parent` specified do not exist.
  */
-export function keepElemVisibleIn(
-  target: ElemOrCssSelector,
-  parent: ElemOrCssSelector,
-): void {
-  const activeElem = elemOrThrow(target, "Unable to keep target visible");
+export function keepElemVisibleIn(target: Target, parent: Target): void {
+  const activeElem = toElementOrThrow(target, "Unable to keep target visible");
 
   // prettier-ignore
-  const scrollElem = elemOrThrow(parent, "Unable to keep element visible in parent");
+  const scrollElem = toElementOrThrow(parent, "Unable to keep element visible in parent");
 
   const isAbove = activeElem.offsetTop < scrollElem.scrollTop;
   const isBelow =

@@ -1,7 +1,7 @@
 import { cast, isNil, isNotNil, isPlainObject } from "@laserware/arcade";
 
-import { setAttrs } from "../attrs/setAttrs.ts";
-import type { Attrs } from "../attrs/types.ts";
+import { setAttributes } from "../attributes/setAttributes.ts";
+import type { Attributes } from "../attributes/types.ts";
 import { setCssVars } from "../css/setCssVars.ts";
 import type { CssVars } from "../css/types.ts";
 import { setData } from "../data/setData.ts";
@@ -99,10 +99,10 @@ export type EventListenersOrDescriptors = {
  * @template TN Tag name for the created element.
  */
 export type CreateElemOptions<TN extends TagName> = Partial<
-  ElemProperties<TN>
+  Omit<ElemProperties<TN>, "attributes">
 > & {
   /** Attributes to set on element. */
-  attrs?: Attrs<TN>;
+  attributes?: Attributes<TN>;
 
   /** AbortController to clean up event listeners. */
   controller?: AbortController | undefined;
@@ -162,7 +162,7 @@ export type ElemChild = HTMLElement | SVGElement | string | null;
  * const child = elem("button", {
  *   ariaLabel: "Click Me",
  *   type: "button",
- *   attrs: {
+ *   attributes: {
  *     disabled: true,
  *   },
  *   data: {
@@ -220,9 +220,9 @@ export function createElem<TN extends TagName>(
 
   const props = { ...options };
 
-  if (isNotNil(options.attrs)) {
-    setAttrs(element, options.attrs);
-    delete props.attrs;
+  if (isNotNil(options.attributes)) {
+    setAttributes(element, options.attributes);
+    delete props.attributes;
   }
 
   if (isNotNil(options.cssVars)) {

@@ -1,8 +1,8 @@
 import { cast } from "@laserware/arcade";
 
 import type { ElementOf, TagName } from "../dom.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
+import type { Target } from "../elems/types.ts";
+import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import { InvalidCssVarError } from "./InvalidCssVarError.ts";
@@ -59,9 +59,12 @@ import type { CssVarName } from "./types.ts";
  */
 export function removeCssVar<TN extends TagName = "*">(
   name: CssVarName,
-  target: ElemOrCssSelector<TN> = document.documentElement,
+  target: Target<TN> = document.documentElement,
 ): ElementOf<TN> {
-  const elem = elemOrThrow(target, `Unable to remove CSS variable ${name}`);
+  const elem = toElementOrThrow(
+    target,
+    `Unable to remove CSS variable ${name}`,
+  );
 
   removeSingleCssVar(elem, name);
 
@@ -131,10 +134,10 @@ export function removeCssVar<TN extends TagName = "*">(
  */
 export function removeCssVars<TN extends TagName = "*">(
   names: CssVarName[],
-  target: ElemOrCssSelector<TN> = document.documentElement,
+  target: Target<TN> = document.documentElement,
 ): ElementOf<TN> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to remove CSS variables ${formatForError(names)}`);
+  const elem = toElementOrThrow(target, `Unable to remove CSS variables ${formatForError(names)}`);
 
   for (const name of names) {
     removeSingleCssVar(elem, name);

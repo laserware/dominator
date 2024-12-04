@@ -1,10 +1,10 @@
 import { isNotNil } from "@laserware/arcade";
 
-import { selectAttrs } from "../attrs/selectAttrs.ts";
+import { selectAttributes } from "../attributes/selectAttributes.ts";
 import { selectData } from "../data/selectData.ts";
 import { toElem } from "../elems/toElem.ts";
 
-import type { Elem, FindOptions } from "../elems/types.ts";
+import type { ElementLike, FindOptions } from "../elems/types.ts";
 
 import { selectorWithTag } from "./selectorWithTag.ts";
 
@@ -18,7 +18,7 @@ import { selectorWithTag } from "./selectorWithTag.ts";
  */
 export function parseFindOptions(options: FindOptions): {
   selector: string;
-  parent: Elem;
+  parent: ElementLike;
 } {
   let selector: string = "";
 
@@ -27,7 +27,7 @@ export function parseFindOptions(options: FindOptions): {
   }
 
   if (isNotNil(options.withAttrs)) {
-    selector += selectAttrs(options.withAttrs);
+    selector += selectAttributes(options.withAttrs);
   }
 
   if (isNotNil(options.withData)) {

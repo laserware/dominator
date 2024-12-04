@@ -4,7 +4,7 @@ import type { ElementOf, TagName } from "../dom.ts";
 
 import { InvalidElemError } from "./InvalidElemError.ts";
 import { isElem } from "./isElem.ts";
-import type { Elem } from "./types.ts";
+import type { ElementLike } from "./types.ts";
 
 /**
  * Returns an element with tag name `TN` for the specified `target`.
@@ -61,7 +61,7 @@ import type { Elem } from "./types.ts";
  * ```
  */
 export function asElem<TN extends TagName = "*">(
-  target: Elem<TN> | null | undefined,
+  target: ElementLike<TN> | null | undefined,
 ): ElementOf<TN> {
   if (isElem(target)) {
     return cast<ElementOf<TN>>(target);

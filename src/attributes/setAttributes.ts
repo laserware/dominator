@@ -1,12 +1,12 @@
 import { cast } from "@laserware/arcade";
 
 import type { ElementOf, TagName } from "../dom.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import type { Target } from "../elems/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
-import type { AttrName, Attrs, AttrValue } from "./types.ts";
+import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
 
 /**
  * Sets the attribute `name` of the `target` element to the `value`. The `value`
@@ -34,9 +34,9 @@ import type { AttrName, Attrs, AttrValue } from "./types.ts";
  * **Code**
  *
  * ```ts
- * let elem = findElem("#example")!;
+ * let element = findElem("#example")!;
  *
- * elem = setAttr(elem, "aria-label", "Click me");
+ * element = setAttribute(element, "aria-label", "Click me");
  * ```
  *
  * **HTML (After)**
@@ -51,27 +51,27 @@ import type { AttrName, Attrs, AttrValue } from "./types.ts";
  * </div>
  * ```
  */
-export function setAttr<TN extends TagName = "*">(
-  target: ElemOrCssSelector<TN>,
-  name: AttrName<TN>,
-  value: AttrValue | null | undefined,
+export function setAttribute<TN extends TagName = "*">(
+  target: Target<TN>,
+  name: AttributeName<TN>,
+  value: AttributeValue | null | undefined,
 ): ElementOf<TN> {
-  const elem = elemOrThrow(target, `Unable to set attribute ${name}`);
+  const element = toElementOrThrow(target, `Unable to set attribute ${name}`);
 
-  setSingleAttr(elem, name, value);
+  setSingleAttribute(element, name, value);
 
-  return cast<ElementOf<TN>>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 /**
- * Sets the attributes of the `target` to the `attrs` object, where the key of
+ * Sets the attributes of the `target` to the `attributes` object, where the key of
  * the object is the attribute name and the value of the object is the attribute
  * value.
  *
  * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
- * @param attrs Object with key of attribute name and value of attribute value.
+ * @param attributes Object with key of attribute name and value of attribute value.
  *
  * @returns Element representation of the specified `target`.
  *
@@ -89,9 +89,9 @@ export function setAttr<TN extends TagName = "*">(
  * **Code**
  *
  * ```ts
- * let elem = findElem<"div">("#example")!;
+ * let element = findElem<"div">("#example")!;
  *
- * elem = setAttrs(elem, {
+ * element = setAttributes(element, {
  *   "aria-label", "Click me",
  *   "aria-valuenow": 20,
  * });
@@ -110,30 +110,30 @@ export function setAttr<TN extends TagName = "*">(
  * </div>
  * ```
  */
-export function setAttrs<TN extends TagName = "*">(
-  target: ElemOrCssSelector<TN>,
-  attrs: Attrs<TN>,
+export function setAttributes<TN extends TagName = "*">(
+  target: Target<TN>,
+  attributes: Attributes<TN>,
 ): ElementOf<TN> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to set attributes ${formatForError(attrs)}`);
+  const element = toElementOrThrow(target, `Unable to set attributes ${formatForError(attributes)}`);
 
-  for (const name of Object.keys(attrs)) {
-    setSingleAttr(elem, name, attrs[name]);
+  for (const name of Object.keys(attributes)) {
+    setSingleAttribute(element, name, attributes[name]);
   }
 
-  return cast<ElementOf<TN>>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
-function setSingleAttr<TN extends TagName = "*">(
+function setSingleAttribute<TN extends TagName = "*">(
   element: ElementOf<TN>,
   name: string,
-  value: AttrValue | null | undefined,
+  value: AttributeValue | null | undefined,
 ): void {
-  const attrValue = stringifyDOMValue(value);
+  const attributeValue = stringifyDOMValue(value);
 
-  if (attrValue === undefined) {
+  if (attributeValue === undefined) {
     element.removeAttribute(name);
   } else {
-    element.setAttribute(name, attrValue);
+    element.setAttribute(name, attributeValue);
   }
 }

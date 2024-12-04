@@ -1,12 +1,12 @@
 import { cast, type KeysOf, type WithNullValues } from "@laserware/arcade";
 
 import type { ElementOf, TagName } from "../dom.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import type { Target } from "../elems/types.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
-import type { AttrName, Attrs, AttrValue } from "./types.ts";
+import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
 
 /**
  * Attempts to get the attribute `name` from the `target`. If the value is found,
@@ -45,25 +45,25 @@ import type { AttrName, Attrs, AttrValue } from "./types.ts";
  * **Code**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElem("#example")!;
  *
- * getAttr(elem, "aria-label");
+ * getAttribute(element, "aria-label");
  * // "Example"
  *
- * getAttr(elem, "aria-valuemax");
+ * getAttribute(element, "aria-valuemax");
  * // 30
  *
- * getAttr(elem, "aria-disabled");
+ * getAttribute(element, "aria-disabled");
  * // false
  * ```
  */
-export function getAttr<
-  V extends AttrValue = AttrValue,
+export function getAttribute<
+  V extends AttributeValue = AttributeValue,
   TN extends TagName = "*",
->(target: ElemOrCssSelector<TN>, name: AttrName<TN>): V | null {
-  const elem = elemOrThrow(target, `Unable to get attribute ${name}`);
+>(target: Target<TN>, name: AttributeName<TN>): V | null {
+  const element = toElementOrThrow(target, `Unable to get attribute ${name}`);
 
-  return getSingleAttr<V, TN>(elem, name) ?? null;
+  return getSingleAttribute<V, TN>(element, name) ?? null;
 }
 
 /**
@@ -128,9 +128,9 @@ export function getAttr<
  *   invalid: string | null;
  * };
  *
- * const elem = findElem("#example")!;
+ * const element = findElem("#example")!;
  *
- * getAttrs<Shape>(elem, [
+ * getAttributes<Shape>(element, [
  *   "aria-label",
  *   "aria-valuemax",
  *   "invalid", // Doesn't exist, so it's `null`
@@ -138,26 +138,26 @@ export function getAttr<
  * // { "aria-label": "Example", "aria-valuemax": 30, invalid: null }
  * ```
  */
-export function getAttrs<V extends Attrs = Attrs, TN extends TagName = "*">(
-  target: ElemOrCssSelector<TN>,
-  names: KeysOf<V>,
-): WithNullValues<V> {
+export function getAttributes<
+  V extends Attributes = Attributes,
+  TN extends TagName = "*",
+>(target: Target<TN>, names: KeysOf<V>): WithNullValues<V> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to get attributes ${formatForError(names)}`);
+  const element = toElementOrThrow(target, `Unable to get attributes ${formatForError(names)}`);
 
-  const attrs: Record<string, AttrValue | null> = {};
+  const attributes: Record<string, AttributeValue | null> = {};
 
   for (const name of names) {
-    attrs[name] = getSingleAttr(elem, cast<AttrName>(name));
+    attributes[name] = getSingleAttribute(element, cast<AttributeName>(name));
   }
 
-  return cast<WithNullValues<V>>(attrs);
+  return cast<WithNullValues<V>>(attributes);
 }
 
-function getSingleAttr<
-  V extends AttrValue = AttrValue,
+function getSingleAttribute<
+  V extends AttributeValue = AttributeValue,
   TN extends TagName = "*",
->(element: ElementOf<TN>, name: AttrName<TN>): V | null {
+>(element: ElementOf<TN>, name: AttributeName<TN>): V | null {
   const attrValue = element.getAttribute(name);
 
   return parseDOMValue<V>(attrValue) ?? null;

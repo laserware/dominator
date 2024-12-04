@@ -1,4 +1,4 @@
-import type { Attrs } from "../attrs/types.ts";
+import type { Attributes } from "../attributes/types.ts";
 import type { CssSelector } from "../css/types.ts";
 import type { Data } from "../data/types.ts";
 import type { ElementOf, TagName } from "../dom.ts";
@@ -8,7 +8,7 @@ import type { ElementOf, TagName } from "../dom.ts";
  *
  * @template TN Tag name of Element.
  */
-export type Elem<TN extends TagName = "*"> =
+export type ElementLike<TN extends TagName = "*"> =
   | ElementOf<TN>
   | Document
   | Element
@@ -24,13 +24,11 @@ export type Elem<TN extends TagName = "*"> =
  * selector.
  *
  * This type allows for flexibility in functions or methods that can accept
- * either an {@linkcode Elem} type object or a string representing a CSS selector.
+ * either an {@linkcode ElementLike} type object or a string representing a CSS selector.
  *
- * @template TN Tag name of Element if {@linkcode Elem}.
+ * @template TN Tag name of Element if {@linkcode ElementLike}.
  */
-export type ElemOrCssSelector<TN extends TagName = "*"> =
-  | Elem<TN>
-  | CssSelector;
+export type Target<TN extends TagName = "*"> = ElementLike<TN> | CssSelector;
 
 /**
  * Use to specify search criteria for finding element(s). You can find elements
@@ -46,13 +44,13 @@ export type FindOptions<TN extends TagName = "*"> = {
   withSelector?: CssSelector;
 
   /** Key/value pairs of attributes to search for. */
-  withAttrs?: Attrs<TN>;
+  withAttrs?: Attributes<TN>;
 
   /** Key/value pairs of dataset entries to search for. */
   withData?: Data;
 
   /** Optional parent Element, EventTarget, or CSS selector. */
-  parent?: ElemOrCssSelector | null | undefined;
+  parent?: Target | null | undefined;
 
   /** Optional element tag name to limit search. */
   tagName?: TagName;

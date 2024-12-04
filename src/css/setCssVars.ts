@@ -1,9 +1,9 @@
 import { cast, isNotNil } from "@laserware/arcade";
 
 import type { ElementOf, TagName } from "../dom.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import type { Target } from "../elems/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import { InvalidCssVarError } from "./InvalidCssVarError.ts";
@@ -73,9 +73,9 @@ import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
 export function setCssVar<TN extends TagName = "*">(
   name: CssVarName,
   value: CssVarValue,
-  target: ElemOrCssSelector<TN> = document.documentElement,
+  target: Target<TN> = document.documentElement,
 ): ElementOf<TN> {
-  const elem = elemOrThrow(target, `Unable to set CSS variable ${name}`);
+  const elem = toElementOrThrow(target, `Unable to set CSS variable ${name}`);
 
   setSingleCssVar(elem, name, value);
 
@@ -148,10 +148,10 @@ export function setCssVar<TN extends TagName = "*">(
  */
 export function setCssVars<TN extends TagName = "*">(
   vars: CssVars,
-  target: ElemOrCssSelector<TN> = document.documentElement,
+  target: Target<TN> = document.documentElement,
 ): ElementOf<TN> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to set CSS variables ${formatForError(vars)}`);
+  const elem = toElementOrThrow(target, `Unable to set CSS variables ${formatForError(vars)}`);
 
   for (const key of Object.keys(vars)) {
     const varName = cast<keyof typeof vars>(key);

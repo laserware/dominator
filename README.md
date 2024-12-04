@@ -106,18 +106,18 @@ div.setAttribute("aria-disabled", "true");
 div.setAttribute("aria-colindex", "1");
 ```
 
-You can use `setAttr` or `setAttrs` instead. Both functions return the element:
+You can use `setAttribute` or `setAttributes` instead. Both functions return the element:
 
 ```ts
-import { createElem, setAttr, setAttrs } from "@laserware/dominator";
+import { createElem, setAttribute, setAttributes } from "@laserware/dominator";
 
 let div = createElem("div");
 
 // Set one attribute:
-div = setAttr(div, "role", "gridcell");
+div = setAttribute(div, "role", "gridcell");
 
 // Set multiple attributes:
-div = setAttrs(div, {
+div = setAttributes(div, {
   // You can just use a boolean, no need to stringify:
   "aria-disabled": true,
   // Same goes for numbers:
@@ -144,20 +144,20 @@ div.removeAttribute("role");
 div.removeAttribute("aria-disabled");
 ```
 
-You can use `removeAttr` or `removeAttrs`. Both functions return the element:
+You can use `removeAttribute` or `removeAttributes`. Both functions return the element:
 
 ```ts
 import {
   findElem,
-  removeAttr,
-  removeAttrs,
+  removeAttribute,
+  removeAttributes,
 } from "@laserware/dominator";
 
 let div = findElem("#example")!;
 
-div = removeAttr(div, "role");
+div = removeAttribute(div, "role");
 
-div = removeAttrs(div, ["aria-disabled", "aria-colindex"]);
+div = removeAttributes(div, ["aria-disabled", "aria-colindex"]);
 ```
 
 ### Checking for Attributes
@@ -183,29 +183,29 @@ const index = 1;
 const isCol = div.getAttribute("aria-colindex") === index.toString();
 ```
 
-You can use `hasAttr`, `hasAllAttrs`, and `hasSomeAttrs` instead:
+You can use `hasAttribute`, `hasAllAttributes`, and `hasSomeAttributes` instead:
 
 ```ts
 import { 
   findElem,
-  hasAttr,
-  hasAllAttrs,
-  hasSomeAttrs,
+  hasAttribute,
+  hasAllAttributes,
+  hasSomeAttributes,
 } from "@laserware/dominator";
 
 const div = findElem("#example");
 
-const hasRole = hasAttr(div, "role");
+const hasRole = hasAttribute(div, "role");
 
 // Check if any of the attributes are present:
-const someArePresent = hasSomeAttrs(div, ["aria-colindex"]);
+const someArePresent = hasSomeAttributes(div, ["aria-colindex"]);
 
 // Check if any of the attributes names and values match:
-const someMatchValues = hasSomeAttrs(div, { "aria-colindex": 1 });
+const someMatchValues = hasSomeAttributes(div, { "aria-colindex": 1 });
 
 // Check if all of the attributes match, you can use `null` to
 // check for the _existence_ of an attribute only:
-const allMatch = hasAllAttrs(div, { 
+const allMatch = hasAllAttributes(div, { 
   "aria-colindex": 1, 
   "aria-disabled": null,
 });
@@ -247,19 +247,19 @@ const firstHeaderColumn = findElem(`[role="row"] [role="columnheader"]`);
 const secondGridCell = findElem(`[role="gridcell"][aria-colindex="2"]`);
 ```
 
-You can use `selectAttr` and `selectAttrs` instead:
+You can use `selectAttribute` and `selectAttributes` instead:
 
 ```ts
-import { findElem, selectAttr, selectAttrs } from "@laserware/dominator";
+import { findElem, selectAttribute, selectAttributes } from "@laserware/dominator";
 
 const firstHeaderSelector = [
-  selectAttr("role", "row"),
-  selectAttr("role", "columnheader"),
+  selectAttribute("role", "row"),
+  selectAttribute("role", "columnheader"),
 ].join(" ");
 
 const firstHeaderColumn = findElem(firstHeaderSelector);
 
-const secondGridCellSelector = selectAttrs({
+const secondGridCellSelector = selectAttributes({
   role: "gridcell",
   // Note that we're using a number:
   "aria-colindex": 2,

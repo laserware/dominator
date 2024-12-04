@@ -2,7 +2,7 @@ import { cast, type KeysOf, type WithUndefinedValues } from "@laserware/arcade";
 
 import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import type { Target } from "../elems/types.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
@@ -47,7 +47,7 @@ import type { StyleKey, Styles, StyleValue } from "./types.ts";
  * ```
  */
 export function getStyle<V extends StyleValue>(
-  target: ElemOrCssSelector,
+  target: Target,
   key: StyleKey,
 ): V | undefined {
   const elem = toElem(target);
@@ -127,7 +127,7 @@ export function getStyle<V extends StyleValue>(
  * ```
  */
 export function getStyles<S extends Styles = Styles>(
-  target: ElemOrCssSelector,
+  target: Target,
   keys: KeysOf<S>,
 ): WithUndefinedValues<S> {
   const elem = toElem(target);

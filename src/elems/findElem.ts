@@ -5,7 +5,7 @@ import type { ElementOf, TagName } from "../dom.ts";
 import { parseFindOptions } from "../internal/findOptions.ts";
 
 import { toElem } from "./toElem.ts";
-import type { Elem, FindOptions } from "./types.ts";
+import type { ElementLike, FindOptions } from "./types.ts";
 
 /**
  * This is the doc comment for file1.ts
@@ -28,7 +28,7 @@ import type { Elem, FindOptions } from "./types.ts";
  */
 export function findElem<TN extends TagName = "*">(
   selector: CssSelector,
-  parent?: Elem | null,
+  parent?: ElementLike | null,
 ): ElementOf<TN> | null;
 
 /**
@@ -50,10 +50,10 @@ export function findElem<TN extends TagName = "*">(
 
 export function findElem<TN extends TagName = "*">(
   selectorOrOptions: FindOptions | CssSelector,
-  parent?: Elem | null,
+  parent?: ElementLike | null,
 ): ElementOf<TN> | null {
   let selector: string;
-  let validParent: Elem = parent ?? document;
+  let validParent: ElementLike = parent ?? document;
 
   if (isPlainObject(selectorOrOptions)) {
     const parsed = parseFindOptions(selectorOrOptions);

@@ -1,7 +1,7 @@
 import { isNil } from "@laserware/arcade";
 
 import { toElem } from "./toElem.ts";
-import type { ElemOrCssSelector } from "./types.ts";
+import type { Target } from "./types.ts";
 
 /**
  * Checks if the specified `target` exists in the DOM.
@@ -37,9 +37,7 @@ import type { ElemOrCssSelector } from "./types.ts";
  * // false
  * ```
  */
-export function elemExists(
-  target: ElemOrCssSelector | null | undefined,
-): boolean {
+export function elemExists(target: Target | null | undefined): boolean {
   if (isNil(target)) {
     return false;
   }

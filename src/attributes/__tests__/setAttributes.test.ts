@@ -1,12 +1,12 @@
 import { render, selectorForNonExistent } from "../../testing.ts";
-import { setAttr, setAttrs } from "../setAttrs.ts";
+import { setAttribute, setAttributes } from "../setAttributes.ts";
 
-describe("within setAttrs", () => {
-  describe("the setAttr function", () => {
+describe("within setAttributes", () => {
+  describe("the setAttribute function", () => {
     it("sets the attribute on the target when a name and value is specified", () => {
       const element = render(`<div>Test</div>`);
 
-      const result = setAttr(element, "inert", null)!;
+      const result = setAttribute(element, "inert", null)!;
 
       expect(result.hasAttribute("inert")).toBeTruthy();
     });
@@ -14,7 +14,7 @@ describe("within setAttrs", () => {
     it("sets the attribute on the target with an object value", () => {
       const element = render(`<div>Test</div>`);
 
-      const result = setAttr(element, "data-object", { a: "b" });
+      const result = setAttribute(element, "data-object", { a: "b" });
 
       expect(JSON.parse(result.getAttribute("data-object")!)).toEqual({ a: "b" });
     });
@@ -22,7 +22,7 @@ describe("within setAttrs", () => {
     it("sets the attribute on the target with an array value", () => {
       const element = render(`<div>Test</div>`);
 
-      const result = setAttr(element, "data-array", [1, "2", true]);
+      const result = setAttribute(element, "data-array", [1, "2", true]);
 
       expect(JSON.parse(result.getAttribute("data-array")!)).toEqual([1, "2", true]);
     });
@@ -30,9 +30,9 @@ describe("within setAttrs", () => {
     it("removes the attribute from a target when undefined is specified as the value", () => {
       const element = render(`<div inert>Test</div>`);
 
-      const result = setAttr(element, "inert", null)!;
+      const result = setAttribute(element, "inert", null)!;
 
-      setAttr(result, "inert", undefined);
+      setAttribute(result, "inert", undefined);
 
       expect(result.hasAttribute("inert")).toBeFalsy();
     });
@@ -41,16 +41,16 @@ describe("within setAttrs", () => {
       render(`<div>Test</div>`);
 
       expect(() => {
-        setAttr(selectorForNonExistent, "name", "parent");
+        setAttribute(selectorForNonExistent, "name", "parent");
       }).toThrow(/Unable to set/);
     });
   });
 
-  describe("the setAttrs function", () => {
+  describe("the setAttributes function", () => {
     it("sets the attributes on a target when an attributes object is specified", () => {
       const element = render(`<div>Test</div>`);
 
-      const result = setAttrs(element, { name: "parent", "aria-invalid": true })!;
+      const result = setAttributes(element, { name: "parent", "aria-invalid": true })!;
 
       expect(result.getAttribute("name")).toBe("parent");
       expect(result.getAttribute("aria-invalid")).toBe("true");
