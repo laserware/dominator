@@ -35,7 +35,7 @@ describe("within hasDataset", () => {
     it("throws an error if the target does not exist", () => {
       expect(() => {
         hasDatasetEntry(selectorForNonExistent, "name");
-      }).toThrow(/Unable to check/);
+      }).toThrow(/Cannot check/);
     });
   });
 
@@ -88,7 +88,7 @@ describe("within hasDataset", () => {
     it("throws an error if the target does not exist", () => {
       expect(() => {
         hasAllDatasetEntries(selectorForNonExistent, ["name"]);
-      }).toThrow(/Unable to check/);
+      }).toThrow(/Cannot check/);
     });
   });
 
@@ -138,7 +138,7 @@ describe("within hasDataset", () => {
     it("throws an error if the target does not exist", () => {
       expect(() => {
         hasSomeDatasetEntries(selectorForNonExistent, ["name", "data-name"]);
-      }).toThrow(/Unable to check/);
+      }).toThrow(/Cannot check/);
     });
   });
 });

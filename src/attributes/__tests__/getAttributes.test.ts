@@ -37,7 +37,7 @@ describe("within getAttributes", () => {
     it("throws an error if the element doesn't exist", () => {
       expect(() => {
         getAttribute(selectorForNonExistent, "name");
-      }).toThrow(/Unable to get/);
+      }).toThrow(/Cannot get/);
     });
   });
 
@@ -80,7 +80,7 @@ describe("within getAttributes", () => {
     it("throws an error if the target doesn't exist", () => {
       expect(() => {
         getAttributes(selectorForNonExistent, ["name", "disabled"]);
-      }).toThrow(/Unable to get attributes/);
+      }).toThrow(/Cannot get attributes/);
     });
   });
 });

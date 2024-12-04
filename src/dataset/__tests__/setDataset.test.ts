@@ -31,7 +31,7 @@ describe("within setDataset", () => {
 
       expect(() => {
         setDatasetEntry(selectorForNonExistent, "name", "parent");
-      }).toThrow(/Unable to set/);
+      }).toThrow(/Cannot set/);
     });
   });
 

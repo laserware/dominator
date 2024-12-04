@@ -40,7 +40,7 @@ describe("within setStyles", () => {
     it("throws an error if the target does not exist", () => {
       expect(() => {
         setStyle(selectorForNonExistent, "color", "green");
-      }).toThrow(/Unable to set/);
+      }).toThrow(/Cannot set/);
     });
   });
 
@@ -60,7 +60,7 @@ describe("within setStyles", () => {
     it("throws an error if the target does not exist", () => {
       expect(() => {
         setStyles(selectorForNonExistent, { color: "green" });
-      }).toThrow(/Unable to set/);
+      }).toThrow(/Cannot set/);
     });
   });
 });

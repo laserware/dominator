@@ -40,7 +40,7 @@ describe("within hasAttributes", () => {
 
       expect(() => {
         hasAttribute("button", "name");
-      }).toThrow(/Unable to check/);
+      }).toThrow(/Cannot check/);
     });
   });
 

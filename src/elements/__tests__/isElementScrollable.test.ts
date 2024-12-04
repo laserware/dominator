@@ -10,6 +10,6 @@ describe("the isElementScrollable function", () => {
   it("throws InvalidElementError if the element is not found", () => {
     expect(() => {
       isElementScrollable(selectorForNonExistent);
-    }).toThrow(/Unable to check if target is scrollable/);
+    }).toThrow(/Cannot check if target is scrollable/);
   });
 });

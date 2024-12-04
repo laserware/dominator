@@ -38,7 +38,7 @@ describe("within getDataset", () => {
 
       expect(() => {
         getDatasetValue("button", "name");
-      }).toThrow(/Unable to get/);
+      }).toThrow(/Cannot get/);
     });
   });
 
@@ -81,7 +81,7 @@ describe("within getDataset", () => {
     it("throws an error if the target isn't found when passing in an dataset entries object", () => {
       expect(() => {
         getDatasetEntries(selectorForNonExistent, ["name", "disabled"]);
-      }).toThrow(/Unable to get dataset/);
+      }).toThrow(/Cannot get dataset/);
     });
   });
 });

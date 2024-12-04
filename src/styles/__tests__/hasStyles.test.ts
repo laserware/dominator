@@ -40,7 +40,7 @@ describe("within hasStyles", () => {
 
       expect(() => {
         hasStyle("button", "color");
-      }).toThrow(/Unable to check/);
+      }).toThrow(/Cannot check/);
     });
   });
 
@@ -95,7 +95,7 @@ describe("within hasStyles", () => {
 
       expect(() => {
         hasAllStyles("button", ["color"]);
-      }).toThrow(/Unable to check/);
+      }).toThrow(/Cannot check/);
     });
   });
 
@@ -145,7 +145,7 @@ describe("within hasStyles", () => {
 
       expect(() => {
         hasSomeStyles("button", ["color"]);
-      }).toThrow(/Unable to check/);
+      }).toThrow(/Cannot check/);
     });
   });
 });

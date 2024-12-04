@@ -80,6 +80,6 @@ describe("the isElementInViewport function", () => {
   it("throws an error if the element was not found", () => {
     expect(() => {
       isElementInViewport(selectorForNonExistent);
-    }).toThrow(/Unable to determine if element is in view/);
+    }).toThrow(/Cannot determine if element is in view/);
   });
 });

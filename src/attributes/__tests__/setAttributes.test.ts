@@ -42,7 +42,7 @@ describe("within setAttributes", () => {
 
       expect(() => {
         setAttribute(selectorForNonExistent, "name", "parent");
-      }).toThrow(/Unable to set/);
+      }).toThrow(/Cannot set/);
     });
   });
 

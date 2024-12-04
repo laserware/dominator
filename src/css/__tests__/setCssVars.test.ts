@@ -43,7 +43,7 @@ describe("within setCssVars", () => {
     it("throws an error if the target does not exist", () => {
       expect(() => {
         setCssVar("--button-color", "red", selectorForNonExistent);
-      }).toThrow(/Unable to set/);
+      }).toThrow(/Cannot set/);
     });
 
     it("throws an error if an invalid name is specified", () => {
@@ -78,7 +78,7 @@ describe("within setCssVars", () => {
     it("throws an error if the target does not exist", () => {
       expect(() => {
         setCssVars({ "--button-color": "red" }, selectorForNonExistent);
-      }).toThrow(/Unable to set/);
+      }).toThrow(/Cannot set/);
     });
 
     it("throws an error if an invalid name is specified", () => {
