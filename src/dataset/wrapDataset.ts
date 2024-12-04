@@ -4,11 +4,9 @@ import type { AttributeValue } from "../attributes/types.ts";
 import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
-
 import { parseDOMValue, stringifyDOMValue } from "../internal/domValues.ts";
 
 import { asDatasetAttributeName } from "./datasetKeys.ts";
-
 import { removeDatasetEntry } from "./removeDataset.ts";
 import type { DatasetValue } from "./types.ts";
 
@@ -106,11 +104,11 @@ export class DatasetWrapper<
    * ```ts
    * const element = findElement("#example");
    *
-   * const ds = wrapDataset<{ count: number; label: string }>(element);
+   * const data = wrapDataset<{ count: number; label: string }>(element);
    *
    * // Note that `label` is missing because there is no `data-label` attribute
    * // on the specified element:
-   * const entries = ds.getAll();
+   * const entries = data.getAll();
    * // { count: 20 }
    * ```
    */

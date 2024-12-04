@@ -2,12 +2,10 @@ import { cast, type WithUndefinedValues } from "@laserware/arcade";
 
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
-
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import { asDatasetPropertyName } from "./datasetKeys.ts";
-
 import type { Dataset, DatasetKey, DatasetValue } from "./types.ts";
 
 /**
@@ -105,7 +103,7 @@ export function getDatasetValue<V extends DatasetValue = DatasetValue>(
  * @remarks
  * The {@linkcode arcade!WithUndefinedValues} type represents an object with values that could be `undefined`.
  *
- * @template D Shape of value to return for the corresponding keys.
+ * @template V Shape of value to return for the corresponding keys.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Properties (e.g. `someProperty`) or attribute names (e.g. `data-some-property`) for the dataset entry.
@@ -159,10 +157,10 @@ export function getDatasetValue<V extends DatasetValue = DatasetValue>(
  * // { label: "Example", count: 30 }
  * ```
  */
-export function getDatasetEntries<D extends Dataset = Dataset>(
+export function getDatasetEntries<V extends Dataset = Dataset>(
   target: Target,
   keys: DatasetKey[],
-): WithUndefinedValues<D> {
+): WithUndefinedValues<V> {
   // prettier-ignore
   const element = toElementOrThrow(target, `Unable to get dataset entries for ${formatForError(keys)}`);
 
@@ -172,7 +170,7 @@ export function getDatasetEntries<D extends Dataset = Dataset>(
     result[key] = getSingleDatasetValue(element, key);
   }
 
-  return cast<WithUndefinedValues<D>>(result);
+  return cast<WithUndefinedValues<V>>(result);
 }
 
 function getSingleDatasetValue<V extends DatasetValue>(

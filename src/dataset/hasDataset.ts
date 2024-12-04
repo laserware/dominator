@@ -3,14 +3,12 @@ import { cast, isNil, isNotNil } from "@laserware/arcade";
 import type { TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
-
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type { PropertySearch } from "../types.ts";
 
 import { asDatasetPropertyName } from "./datasetKeys.ts";
-
 import type { DatasetKey, DatasetValue } from "./types.ts";
 
 /**

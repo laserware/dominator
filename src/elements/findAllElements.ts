@@ -4,9 +4,7 @@ import type { CssSelector } from "../css/types.ts";
 import type { ElementOf, TagName } from "../dom.ts";
 
 import { parseFindOptions } from "./findOptions.ts";
-
 import { listToArray } from "./listToArray.ts";
-
 import { toElement } from "./toElement.ts";
 import type { ElementLike, FindOptions } from "./types.ts";
 

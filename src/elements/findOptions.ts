@@ -2,11 +2,9 @@ import { isNotNil } from "@laserware/arcade";
 
 import { selectAttributes } from "../attributes/selectAttributes.ts";
 import { selectDatasetEntries } from "../dataset/selectDataset.ts";
-
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
 
 import { toElement } from "./toElement.ts";
-
 import type { ElementLike, FindOptions } from "./types.ts";
 
 /**

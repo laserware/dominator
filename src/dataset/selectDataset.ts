@@ -3,11 +3,9 @@ import { isNil } from "@laserware/arcade";
 import { selectAttribute } from "../attributes/selectAttributes.ts";
 import type { CssSelector } from "../css/types.ts";
 import type { TagName } from "../dom.ts";
-
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
 
 import { asDatasetAttributeName } from "./datasetKeys.ts";
-
 import type { Dataset, DatasetKey, DatasetValue } from "./types.ts";
 
 /**

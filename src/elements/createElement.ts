@@ -8,7 +8,6 @@ import { setDatasetEntries } from "../dataset/setDataset.ts";
 import type { Dataset } from "../dataset/types.ts";
 import type { ElementOf, TagName } from "../dom.ts";
 import { setStyles } from "../styles/setStyles.ts";
-
 import type { Styles } from "../styles/types.ts";
 
 type NeverMethods<T> = {

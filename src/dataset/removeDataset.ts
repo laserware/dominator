@@ -4,11 +4,9 @@ import { removeAttribute } from "../attributes/removeAttributes.ts";
 import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
-
 import { formatForError } from "../internal/formatForError.ts";
 
 import { asDatasetAttributeName } from "./datasetKeys.ts";
-
 import type { DatasetKey, DatasetPropertyName } from "./types.ts";
 
 /**

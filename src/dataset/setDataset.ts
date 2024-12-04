@@ -3,12 +3,10 @@ import { cast, isNil } from "@laserware/arcade";
 import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
-
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import { asDatasetPropertyName } from "./datasetKeys.ts";
-
 import type { Dataset, DatasetKey, DatasetValue } from "./types.ts";
 
 /**
@@ -151,7 +149,7 @@ export function setDatasetEntries<TN extends TagName = "*">(
   dataset: Dataset,
 ): ElementOf<TN> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to set dataset entries for keys ${formatForError(dataset)}`);
+  const element = toElementOrThrow(target, `Unable to set dataset entries for ${formatForError(dataset)}`);
 
   for (const key of Object.keys(dataset)) {
     setSingleDatasetEntry(element, key, dataset[key]);
