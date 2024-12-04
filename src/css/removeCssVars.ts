@@ -1,8 +1,8 @@
 import { cast } from "@laserware/arcade";
 
 import type { ElementOf, TagName } from "../dom.ts";
-import type { Target } from "../elems/types.ts";
-import { toElementOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import { InvalidCssVarError } from "./InvalidCssVarError.ts";
@@ -22,7 +22,7 @@ import type { CssVarName } from "./types.ts";
  * @returns Element representation of the specified `target`.
  *
  * @throws {@linkcode InvalidCssVarError} if the CSS variable could not be removed from `target`.
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -36,15 +36,15 @@ import type { CssVarName } from "./types.ts";
  * **Remove from Element**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * removeCssVar("color-bg", elem);
+ * removeCssVar("color-bg", element);
  * ```
  *
  * **Remove from `:root`**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
  * removeCssVar("color-fg");
  * ```
@@ -61,14 +61,12 @@ export function removeCssVar<TN extends TagName = "*">(
   name: CssVarName,
   target: Target<TN> = document.documentElement,
 ): ElementOf<TN> {
-  const elem = toElementOrThrow(
-    target,
-    `Unable to remove CSS variable ${name}`,
-  );
+  // prettier-ignore
+  const element = toElementOrThrow(target, `Unable to remove CSS variable ${name}`);
 
-  removeSingleCssVar(elem, name);
+  removeSingleCssVar(element, name);
 
-  return cast<ElementOf<TN>>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 /**
@@ -85,7 +83,7 @@ export function removeCssVar<TN extends TagName = "*">(
  * @returns Element representation of the specified `target`.
  *
  * @throws {@linkcode InvalidCssVarError} if a CSS variable could not be removed from `target`.
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -107,9 +105,9 @@ export function removeCssVar<TN extends TagName = "*">(
  * **Remove from Element**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * removeCssVars(["--color-bg", "--is-big"] , elem);
+ * removeCssVars(["--color-bg", "--is-big"] , element);
  * ```
  *
  * **Remove from `:root`**
@@ -137,13 +135,13 @@ export function removeCssVars<TN extends TagName = "*">(
   target: Target<TN> = document.documentElement,
 ): ElementOf<TN> {
   // prettier-ignore
-  const elem = toElementOrThrow(target, `Unable to remove CSS variables ${formatForError(names)}`);
+  const element = toElementOrThrow(target, `Unable to remove CSS variables ${formatForError(names)}`);
 
   for (const name of names) {
-    removeSingleCssVar(elem, name);
+    removeSingleCssVar(element, name);
   }
 
-  return cast<ElementOf<TN>>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 function removeSingleCssVar(element: Element, name: CssVarName): void {

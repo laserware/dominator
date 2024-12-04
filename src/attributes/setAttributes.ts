@@ -1,9 +1,9 @@
 import { cast } from "@laserware/arcade";
 
 import type { ElementOf, TagName } from "../dom.ts";
-import type { Target } from "../elems/types.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
@@ -20,7 +20,7 @@ import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -34,7 +34,7 @@ import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
  * **Code**
  *
  * ```ts
- * let element = findElem("#example")!;
+ * let element = findElement("#example")!;
  *
  * element = setAttribute(element, "aria-label", "Click me");
  * ```
@@ -75,7 +75,7 @@ export function setAttribute<TN extends TagName = "*">(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -89,7 +89,7 @@ export function setAttribute<TN extends TagName = "*">(
  * **Code**
  *
  * ```ts
- * let element = findElem<"div">("#example")!;
+ * let element = findElement<"div">("#example")!;
  *
  * element = setAttributes(element, {
  *   "aria-label", "Click me",

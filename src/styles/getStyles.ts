@@ -1,8 +1,8 @@
 import { cast, type KeysOf, type WithUndefinedValues } from "@laserware/arcade";
 
-import { InvalidElemError } from "../elems/InvalidElemError.ts";
-import { toElem } from "../elems/toElem.ts";
-import type { Target } from "../elems/types.ts";
+import { InvalidElementError } from "../elements/InvalidElementError.ts";
+import { toElement } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
@@ -21,7 +21,7 @@ import type { StyleKey, Styles, StyleValue } from "./types.ts";
  *
  * @returns Value of type `T` or `undefined` if not found.
  *
- * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have
  *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  *
  * @example
@@ -37,12 +37,12 @@ import type { StyleKey, Styles, StyleValue } from "./types.ts";
  * **Code**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * getStyle(elem, "display");
+ * getStyle(element, "display");
  * // "flex"
  *
- * getStyle(elem, "lineHeight");
+ * getStyle(element, "lineHeight");
  * // 1.5
  * ```
  */
@@ -50,12 +50,12 @@ export function getStyle<V extends StyleValue>(
   target: Target,
   key: StyleKey,
 ): V | undefined {
-  const elem = toElem(target);
-  if (elem === null || !("style" in elem)) {
-    throw new InvalidElemError(`Unable to get style for ${key}`);
+  const element = toElement(target);
+  if (element === null || !("style" in element)) {
+    throw new InvalidElementError(`Unable to get style for ${key}`);
   }
 
-  return getSingleStyle<V>(elem, key);
+  return getSingleStyle<V>(element, key);
 }
 
 /**
@@ -94,7 +94,7 @@ export function getStyle<V extends StyleValue>(
  *
  * @returns Object with specified names as `keys` and corresponding style property values (or `undefined` if not present).
  *
- * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have
  *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  *
  * @example
@@ -116,9 +116,9 @@ export function getStyle<V extends StyleValue>(
  *   fontSize: number | undefined;
  * };
  *
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * getStyles<Shape>(elem, [
+ * getStyles<Shape>(element, [
  *   "display",
  *   "lineHeight",
  *   "fontSize",
@@ -130,17 +130,17 @@ export function getStyles<S extends Styles = Styles>(
   target: Target,
   keys: KeysOf<S>,
 ): WithUndefinedValues<S> {
-  const elem = toElem(target);
-  if (elem === null || !("style" in elem)) {
+  const element = toElement(target);
+  if (element === null || !("style" in element)) {
     // prettier-ignore
-    throw new InvalidElemError(`Unable to get styles for ${formatForError(keys)}`);
+    throw new InvalidElementError(`Unable to get styles for ${formatForError(keys)}`);
   }
 
   const styles: Record<string, StyleValue | undefined> = {};
 
   for (const key of keys) {
     // @ts-ignore
-    styles[key] = getSingleStyle(elem, key);
+    styles[key] = getSingleStyle(element, key);
   }
 
   return cast<WithUndefinedValues<S>>(styles);

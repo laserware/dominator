@@ -1,8 +1,8 @@
 import { cast } from "@laserware/arcade";
 
 import type { ElementOf, TagName } from "../dom.ts";
-import type { Target } from "../elems/types.ts";
-import { toElementOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import type { AttributeName } from "./types.ts";
@@ -17,7 +17,7 @@ import type { AttributeName } from "./types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -31,7 +31,7 @@ import type { AttributeName } from "./types.ts";
  * **Code**
  *
  * ```ts
- * const element = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
  * removeAttribute(element, "aria-disabled");
  * ```
@@ -66,7 +66,7 @@ export function removeAttribute<TN extends TagName = "*">(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -86,7 +86,7 @@ export function removeAttribute<TN extends TagName = "*">(
  * **Code**
  *
  * ```ts
- * const element = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
  * removeAttributes(element, [
  *   "role",

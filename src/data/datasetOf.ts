@@ -2,10 +2,10 @@ import { cast, isNotNil } from "@laserware/arcade";
 
 import type { AttributeValue } from "../attributes/types.ts";
 import type { ElementOf, TagName } from "../dom.ts";
-import type { Target } from "../elems/types.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { parseDOMValue, stringifyDOMValue } from "../internal/domValues.ts";
-import { toElementOrThrow } from "../internal/elemOr.ts";
 
 import { removeDataEntry } from "./removeData.ts";
 import type { DataValue } from "./types.ts";
@@ -50,13 +50,11 @@ export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
    * @param target Element, EventTarget, or CSS selector.
    * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
    *
-   * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+   * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
    */
   constructor(target: Target<TN>, initialData?: Partial<DS>) {
-    this.#element = toElementOrThrow<TN>(
-      target,
-      "Unable to initialize Dataset",
-    );
+    // prettier-ignore
+    this.#element = toElementOrThrow<TN>(target, "Unable to initialize Dataset");
 
     if (isNotNil(initialData)) {
       this.setAll(initialData);
@@ -100,9 +98,9 @@ export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
    * **Code**
    *
    * ```ts
-   * const elem = findElem("#example");
+   * const element = findElement("#example");
    *
-   * const ds = datasetOf<{ count: number; label: string }>(elem);
+   * const ds = datasetOf<{ count: number; label: string }>(element);
    *
    * // Note that `label` is missing because there is no `data-label` attribute
    * // on the specified element:
@@ -215,7 +213,7 @@ export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
  * **Code**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
  * type Shape = {
  *   isActive: boolean;
@@ -227,7 +225,7 @@ export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
  *
  * // You can pass in initial data which will be added to the element's
  * // dataset (as well as set as attributes on the element).
- * const dataset = datasetOf<Shape>(elem, {
+ * const dataset = datasetOf<Shape>(element, {
  *   isActive: false,
  *   count: 30,
  *   label: "Example",

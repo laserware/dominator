@@ -1,10 +1,10 @@
 import { cast, isNil } from "@laserware/arcade";
 
 import type { ElementOf, TagName } from "../dom.ts";
-import type { Target } from "../elems/types.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import type { Data, DataKey, DataValue } from "./types.ts";
@@ -20,7 +20,7 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -39,21 +39,21 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  * **Using Attribute Name (`data-*`)**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * setDataEntry(elem, "data-is-active", true);
- * setDataEntry(elem, "data-count", 50);
- * setDataEntry(elem, "data-label", "Update");
+ * setDataEntry(element, "data-is-active", true);
+ * setDataEntry(element, "data-count", 50);
+ * setDataEntry(element, "data-label", "Update");
  * ```
  *
  * **Using Property Name (camelCase)**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * setDataEntry(elem, "isActive", true);
- * setDataEntry(elem, "count", 50);
- * setDataEntry(elem, "label", "Update");
+ * setDataEntry(element, "isActive", true);
+ * setDataEntry(element, "count", 50);
+ * setDataEntry(element, "label", "Update");
  * ```
  *
  * **HTML (After)**
@@ -74,11 +74,11 @@ export function setDataEntry<TN extends TagName = "*">(
   key: DataKey,
   value: DataValue | null,
 ): ElementOf<TN> {
-  const elem = toElementOrThrow(target, `Unable to set data for ${key}`);
+  const element = toElementOrThrow(target, `Unable to set data for ${key}`);
 
-  setSingleDataEntry(elem, key, value);
+  setSingleDataEntry(element, key, value);
 
-  return cast<ElementOf<TN>>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 /**
@@ -90,7 +90,7 @@ export function setDataEntry<TN extends TagName = "*">(
  * @param data Object with keys of dataset attribute/property names and values
  *             of corresponding values.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -109,9 +109,9 @@ export function setDataEntry<TN extends TagName = "*">(
  * **Using Attribute Names (`data-*`)**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * setData(elem, {
+ * setData(element, {
  *   "data-is-active", true,
  *   "data-count": 50,
  *   "data-label": "Update",
@@ -121,9 +121,9 @@ export function setDataEntry<TN extends TagName = "*">(
  * **Using Property Names (camelCase)**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * setData(elem, {
+ * setData(element, {
  *   isActive, true,
  *   count: 50,
  *   label: "Update",
@@ -148,13 +148,13 @@ export function setData<TN extends TagName = "*">(
   data: Data,
 ): ElementOf<TN> {
   // prettier-ignore
-  const elem = toElementOrThrow(target, `Unable to set data for keys ${formatForError(data)}`);
+  const element = toElementOrThrow(target, `Unable to set data for keys ${formatForError(data)}`);
 
   for (const key of Object.keys(data)) {
-    setSingleDataEntry(elem, key, data[key]);
+    setSingleDataEntry(element, key, data[key]);
   }
 
-  return cast<ElementOf<TN>>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 function setSingleDataEntry(

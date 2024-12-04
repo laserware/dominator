@@ -1,8 +1,8 @@
 import { isNil } from "@laserware/arcade";
 
 import type { TagName } from "../dom.ts";
-import type { Target } from "../elems/types.ts";
-import { toElementOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type { PropertySearch } from "../types.ts";
@@ -35,7 +35,7 @@ export type AttributesSearch<TN extends TagName = "*"> = PropertySearch<
  *
  * @returns `true` if the attribute `name` is present and `value` matches (if specified).
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -49,7 +49,7 @@ export type AttributesSearch<TN extends TagName = "*"> = PropertySearch<
  * **Code**
  *
  * ```ts
- * const element = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
  * hasAttribute(element, "aria-pressed");
  * // true
@@ -83,7 +83,7 @@ export function hasAttribute<TN extends TagName = "*">(
  *
  * @returns `true` if the `target` matches all search criteria.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -97,7 +97,7 @@ export function hasAttribute<TN extends TagName = "*">(
  * **Code**
  *
  * ```ts
- * const element = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
  * hasAllAttributes(element, ["aria-hidden"]);
  * // true
@@ -133,7 +133,7 @@ export function hasAllAttributes<TN extends TagName = "*">(
  *
  * @returns `true` if the `target` matches some search criteria.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -148,7 +148,7 @@ export function hasAllAttributes<TN extends TagName = "*">(
  * but the function still returns `true`:
  *
  * ```ts
- * const element = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
  * hasSomeAttributes(element, ["aria-hidden", "aria-label"]);
  * // true

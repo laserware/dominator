@@ -1,4 +1,4 @@
-import { InvalidElemError } from "../../elems/InvalidElemError.ts";
+import { InvalidElementError } from "../../elements/InvalidElementError.ts";
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { removeAttribute, removeAttributes } from "../removeAttributes.ts";
 
@@ -23,7 +23,7 @@ describe("within removeAttributes", () => {
     it("throws an error if the target does not exist", () => {
       expect(() => {
         removeAttribute(selectorForNonExistent, "name");
-      }).toThrow(InvalidElemError);
+      }).toThrow(InvalidElementError);
     });
   });
 
@@ -40,7 +40,7 @@ describe("within removeAttributes", () => {
     it("throws an error if the target does not exist", () => {
       expect(() => {
         removeAttributes(selectorForNonExistent, ["name"]);
-      }).toThrow(InvalidElemError);
+      }).toThrow(InvalidElementError);
     });
   });
 });

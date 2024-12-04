@@ -1,9 +1,9 @@
 import { cast, type KeysOf, type WithNullValues } from "@laserware/arcade";
 
 import type { ElementOf, TagName } from "../dom.ts";
-import type { Target } from "../elems/types.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
-import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
@@ -25,7 +25,7 @@ import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
  *
  * @returns Value of type `V` or `null` if not found.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -45,7 +45,7 @@ import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
  * **Code**
  *
  * ```ts
- * const element = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
  * getAttribute(element, "aria-label");
  * // "Example"
@@ -102,7 +102,7 @@ export function getAttribute<
  *
  * @returns Object with `names` as keys and corresponding attribute values (or `null` if not present).
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -128,7 +128,7 @@ export function getAttribute<
  *   invalid: string | null;
  * };
  *
- * const element = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
  * getAttributes<Shape>(element, [
  *   "aria-label",

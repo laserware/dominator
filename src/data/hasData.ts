@@ -1,10 +1,10 @@
 import { cast, isNil, isNotNil } from "@laserware/arcade";
 
 import type { TagName } from "../dom.ts";
-import type { Target } from "../elems/types.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type { PropertySearch } from "../types.ts";
@@ -29,7 +29,7 @@ export type DataSearch = PropertySearch<DataKey, DataValue | null>;
  * @param key Property (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
  * @param [value] Optional dataset value to check for.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -48,15 +48,15 @@ export type DataSearch = PropertySearch<DataKey, DataValue | null>;
  * **Code**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * hasDataEntry(elem, "data-is-active");
+ * hasDataEntry(element, "data-is-active");
  * // true
  *
- * hadDataEntry(elem, "isActive", "false");
+ * hadDataEntry(element, "isActive", "false");
  * // false ("false" cannot be a string, must be the boolean value `false`)
  *
- * hadDataEntry(elem, "data-count", 30);
+ * hadDataEntry(element, "data-count", 30);
  * // true
  * ```
  */
@@ -65,9 +65,9 @@ export function hasDataEntry<TN extends TagName = "*">(
   key: DataKey,
   value?: DataValue,
 ): boolean {
-  const elem = toElementOrThrow(target, `Unable to check for data ${key}`);
+  const element = toElementOrThrow(target, `Unable to check for data ${key}`);
 
-  return hasSingleDataEntry(elem, key, value);
+  return hasSingleDataEntry(element, key, value);
 }
 
 /**
@@ -81,7 +81,7 @@ export function hasDataEntry<TN extends TagName = "*">(
  *
  * @returns `true` if the `target` matches all search criteria.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -100,15 +100,15 @@ export function hasDataEntry<TN extends TagName = "*">(
  * **Code**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * hasAllData(elem, ["data-is-active", "data-count"]);
+ * hasAllData(element, ["data-is-active", "data-count"]);
  * // true
  *
- * hasAllData(elem, ["isActive", "data-missing"]);
+ * hasAllData(element, ["isActive", "data-missing"]);
  * // false
  *
- * hasAllData(elem, { "data-count", 30, "label": null });
+ * hasAllData(element, { "data-count", 30, "label": null });
  * // true
  * ```
  */
@@ -117,9 +117,9 @@ export function hasAllData<TN extends TagName = "*">(
   search: DataSearch,
 ): boolean {
   // prettier-ignore
-  const elem = toElementOrThrow(target, `Unable to check for data ${formatForError(search)}`);
+  const element = toElementOrThrow(target, `Unable to check for data ${formatForError(search)}`);
 
-  return hasAllProperties(elem, search, hasSingleDataEntry);
+  return hasAllProperties(element, search, hasSingleDataEntry);
 }
 
 /**
@@ -133,7 +133,7 @@ export function hasAllData<TN extends TagName = "*">(
  *
  * @returns `true` if the `target` matches some search criteria.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -152,15 +152,15 @@ export function hasAllData<TN extends TagName = "*">(
  * **Code**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * hasSomeData(elem, ["data-is-active", "data-missing"]);
+ * hasSomeData(element, ["data-is-active", "data-missing"]);
  * // true
  *
- * hasSomeData(elem, ["data-missing"]);
+ * hasSomeData(element, ["data-missing"]);
  * // false
  *
- * hasSomeData(elem, {
+ * hasSomeData(element, {
  *   "data-is-active": false,
  *   count, 30,
  *   missing: null,
@@ -173,9 +173,9 @@ export function hasSomeData<TN extends TagName = "*">(
   search: DataSearch,
 ): boolean {
   // prettier-ignore
-  const elem = toElementOrThrow(target, `Unable to check for data ${formatForError(search)}`);
+  const element = toElementOrThrow(target, `Unable to check for data ${formatForError(search)}`);
 
-  return hasSomeProperties(elem, search, hasSingleDataEntry);
+  return hasSomeProperties(element, search, hasSingleDataEntry);
 }
 
 function hasSingleDataEntry(

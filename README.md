@@ -21,12 +21,12 @@ div.id = "example";
 div.ariaLabel = "Hello!";
 ```
 
-You can use the `createElem` function:
+You can use the `createElement` function:
 
 ```ts
-import { createElem } from "@laserware/dominator";
+import { createElement } from "@laserware/dominator";
 
-const div = createElem("div", { id: "example", ariaLabel: "Hello!" });
+const div = createElement("div", { id: "example", ariaLabel: "Hello!" });
 ```
 
 ### Finding Elements
@@ -73,18 +73,18 @@ const gridRows = grid.querySelectorAll(`[role="row"]`);
 
 But there are some issues. For one, `document.querySelectorAll` returns a [NodeList](https://developer.mozilla.org/en-US/docs/Web/API/NodeList), which are annoying to work with.
 
-You can use `findElem` and `findAllElems` instead:
+You can use `findElement` and `findAllElements` instead:
 
 ```ts
-import { findElem, findAllElems } from "@laserware/dominator";
+import { findElement, findAllElements } from "@laserware/dominator";
 
-const firstHeaderColumn = findElem(`[role="row"] [role="columnheader"]:first-child`);
+const firstHeaderColumn = findElement(`[role="row"] [role="columnheader"]:first-child`);
 
 // Returns the grid cell elements as an array:
-const allGridCells = findAllElems<"div">(`[role="gridcell"]`);
+const allGridCells = findAllElements<"div">(`[role="gridcell"]`);
 
 // You can use string selectors for the target and parent to get children:
-const gridRows = findAllElems(`[role="row"]`, "grid");
+const gridRows = findAllElements(`[role="row"]`, "grid");
 ```
 
 ### Setting Attributes
@@ -109,9 +109,9 @@ div.setAttribute("aria-colindex", "1");
 You can use `setAttribute` or `setAttributes` instead. Both functions return the element:
 
 ```ts
-import { createElem, setAttribute, setAttributes } from "@laserware/dominator";
+import { createElement, setAttribute, setAttributes } from "@laserware/dominator";
 
-let div = createElem("div");
+let div = createElement("div");
 
 // Set one attribute:
 div = setAttribute(div, "role", "gridcell");
@@ -148,12 +148,12 @@ You can use `removeAttribute` or `removeAttributes`. Both functions return the e
 
 ```ts
 import {
-  findElem,
+  findElement,
   removeAttribute,
   removeAttributes,
 } from "@laserware/dominator";
 
-let div = findElem("#example")!;
+let div = findElement("#example")!;
 
 div = removeAttribute(div, "role");
 
@@ -187,13 +187,13 @@ You can use `hasAttribute`, `hasAllAttributes`, and `hasSomeAttributes` instead:
 
 ```ts
 import { 
-  findElem,
+  findElement,
   hasAttribute,
   hasAllAttributes,
   hasSomeAttributes,
 } from "@laserware/dominator";
 
-const div = findElem("#example");
+const div = findElement("#example");
 
 const hasRole = hasAttribute(div, "role");
 
@@ -242,22 +242,22 @@ Assuming you have this HTML:
 You'll need to write the selectors yourself:
 
 ```ts
-const firstHeaderColumn = findElem(`[role="row"] [role="columnheader"]`);
+const firstHeaderColumn = findElement(`[role="row"] [role="columnheader"]`);
 
-const secondGridCell = findElem(`[role="gridcell"][aria-colindex="2"]`);
+const secondGridCell = findElement(`[role="gridcell"][aria-colindex="2"]`);
 ```
 
 You can use `selectAttribute` and `selectAttributes` instead:
 
 ```ts
-import { findElem, selectAttribute, selectAttributes } from "@laserware/dominator";
+import { findElement, selectAttribute, selectAttributes } from "@laserware/dominator";
 
 const firstHeaderSelector = [
   selectAttribute("role", "row"),
   selectAttribute("role", "columnheader"),
 ].join(" ");
 
-const firstHeaderColumn = findElem(firstHeaderSelector);
+const firstHeaderColumn = findElement(firstHeaderSelector);
 
 const secondGridCellSelector = selectAttributes({
   role: "gridcell",
@@ -265,7 +265,7 @@ const secondGridCellSelector = selectAttributes({
   "aria-colindex": 2,
 });
 
-const secondGridCell = findElem(secondGridCellSelector);
+const secondGridCell = findElement(secondGridCellSelector);
 ```
 
 You can do more than work with attributes. You can also set, get, remove, and select [dataset entries](modules/data.html),

@@ -2,9 +2,9 @@ import { cast } from "@laserware/arcade";
 
 import { removeAttribute } from "../attributes/removeAttributes.ts";
 import type { ElementOf, TagName } from "../dom.ts";
-import type { Target } from "../elems/types.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
-import { toElementOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import type { DataKey, DataPropertyName } from "./types.ts";
@@ -19,7 +19,7 @@ import type { DataKey, DataPropertyName } from "./types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -38,17 +38,17 @@ import type { DataKey, DataPropertyName } from "./types.ts";
  * **Using Attribute Name (`data-*`)**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * removeDataEntry(elem, "data-label");
+ * removeDataEntry(element, "data-label");
  * ```
  *
  * **Using Property Name (camelCase)**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * removeDataEntry(elem, "label");
+ * removeDataEntry(element, "label");
  * ```
  *
  * **HTML (After)**
@@ -67,12 +67,11 @@ export function removeDataEntry<TN extends TagName = "*">(
   target: Target<TN>,
   key: DataPropertyName,
 ): ElementOf<TN> {
-  // prettier-ignore
-  const elem = toElementOrThrow(target, `Unable to remove data for ${key}`);
+  const element = toElementOrThrow(target, `Unable to remove data for ${key}`);
 
-  removeSingleDataEntry(elem, key);
+  removeSingleDataEntry(element, key);
 
-  return cast<ElementOf<TN>>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 /**
@@ -86,7 +85,7 @@ export function removeDataEntry<TN extends TagName = "*">(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -105,17 +104,17 @@ export function removeDataEntry<TN extends TagName = "*">(
  * **Using Attribute Names (`data-*`)**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * removeData(elem, ["data-label", "data-count"]);
+ * removeData(element, ["data-label", "data-count"]);
  * ```
  *
  * **Using Property Names (camelCase)**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * removeData(elem, ["label", "count"]);
+ * removeData(element, ["label", "count"]);
  * ```
  *
  * **HTML (After)**
@@ -134,13 +133,13 @@ export function removeData<TN extends TagName = "*">(
   keys: DataKey[],
 ): ElementOf<TN> {
   // prettier-ignore
-  const elem = toElementOrThrow(target, `Unable to remove data for ${formatForError(keys)}`);
+  const element = toElementOrThrow(target, `Unable to remove data for ${formatForError(keys)}`);
 
   for (const key of keys) {
-    removeSingleDataEntry(elem, key);
+    removeSingleDataEntry(element, key);
   }
 
-  return cast<ElementOf<TN>>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 function removeSingleDataEntry(element: Element, key: string): void {
