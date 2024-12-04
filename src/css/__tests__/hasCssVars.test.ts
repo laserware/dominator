@@ -62,7 +62,7 @@ describe("within hasCssVars", () => {
 
       expect(() => {
         hasCssVar("--color-bg", undefined, "button");
-      }).toThrow(/Unable to check/);
+      }).toThrow(/Cannot check/);
     });
   });
 

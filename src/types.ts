@@ -44,9 +44,9 @@ export type PropertyFilter<K extends string, V> = {
  * **Code**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * const result = hasAllAttrs(elem, {
+ * const result = hasAllAttributes(element, {
  *   "aria-hidden": true,
  *   // Setting to null means "only check if property exists"
  *   "aria-label": null,

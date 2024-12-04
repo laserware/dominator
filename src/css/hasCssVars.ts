@@ -1,8 +1,8 @@
 import { isNil } from "@laserware/arcade";
 
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type { PropertySearch } from "../types.ts";
@@ -30,7 +30,7 @@ export type CssVarsSearch = PropertySearch<CssVarName, CssVarValue | null>;
  *
  * @returns `true` if the CSS variable `name` is present.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -52,15 +52,15 @@ export type CssVarsSearch = PropertySearch<CssVarName, CssVarValue | null>;
  * **Check Element**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * hasCssVar("--color-bg", undefined, elem);
+ * hasCssVar("--color-bg", undefined, element);
  * // true
  *
- * hasCssVar("--is-big", "true", elem);
+ * hasCssVar("--is-big", "true", element);
  * // false ("true" cannot be a string, must be the boolean value `true`)
  *
- * hasCssVar("--color-bg", "blue", elem);
+ * hasCssVar("--color-bg", "blue", element);
  * // true
  * ```
  *
@@ -80,11 +80,12 @@ export type CssVarsSearch = PropertySearch<CssVarName, CssVarValue | null>;
 export function hasCssVar(
   name: CssVarName,
   value: CssVarValue | undefined = undefined,
-  target: ElemOrCssSelector = document.documentElement,
+  target: Target = document.documentElement,
 ): boolean {
-  const elem = elemOrThrow(target, `Unable to check for CSS variable ${name}`);
+  // prettier-ignore
+  const element = toElementOrThrow(target, `Cannot check for CSS variable ${name}`);
 
-  return hasSingleCssVar(elem, name, value);
+  return hasSingleCssVar(element, name, value);
 }
 
 /**
@@ -99,7 +100,7 @@ export function hasCssVar(
  *
  * @returns `true` if the `target` matches all `search` criteria.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -119,21 +120,21 @@ export function hasCssVar(
  * **Check Element**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * hasAllCssVars(["--color-bg", "--is-big"] , elem);
+ * hasAllCssVars(["--color-bg", "--is-big"] , element);
  * // true
  *
  * hasAllCssVars({
  *   "--color-bg": "blue",
  *   "--is-big": true,
- * }, elem);
+ * }, element);
  * // true
  *
  * hasAllCssVars({
  *   "--color-bg": "blue",
  *   "--missing": true,
- * }, elem);
+ * }, element);
  * // false
  * ```
  *
@@ -158,12 +159,12 @@ export function hasCssVar(
  */
 export function hasAllCssVars(
   search: CssVarsSearch,
-  target: ElemOrCssSelector = document.documentElement,
+  target: Target = document.documentElement,
 ): boolean {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to check for all CSS variables ${formatForError(search)}`);
+  const element = toElementOrThrow(target, `Cannot check for all CSS variables ${formatForError(search)}`);
 
-  return hasAllProperties(elem, search, hasSingleCssVar);
+  return hasAllProperties(element, search, hasSingleCssVar);
 }
 
 /**
@@ -178,7 +179,7 @@ export function hasAllCssVars(
  *
  * @returns `true` if the `target` matches some `search` criteria.
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -198,21 +199,21 @@ export function hasAllCssVars(
  * **Check Element**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * hasSomeCssVars(["--color-bg"] , elem);
+ * hasSomeCssVars(["--color-bg"] , element);
  * // true
  *
  * hasSomeCssVars({
  *   "--color-bg": "blue",
  *   "--missing": null,
- * }, elem);
+ * }, element);
  * // true
  *
  * hasSomeCssVars({
  *   "--color-bg": "blue",
  *   "--missing": true,
- * }, elem);
+ * }, element);
  * // false
  * ```
  *
@@ -237,12 +238,12 @@ export function hasAllCssVars(
  */
 export function hasSomeCssVars(
   search: CssVarsSearch,
-  target: ElemOrCssSelector = document.documentElement,
+  target: Target = document.documentElement,
 ): boolean {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to check for some CSS variables ${formatForError(search)}`);
+  const element = toElementOrThrow(target, `Cannot check for some CSS variables ${formatForError(search)}`);
 
-  return hasSomeProperties(elem, search, hasSingleCssVar);
+  return hasSomeProperties(element, search, hasSingleCssVar);
 }
 
 function hasSingleCssVar(

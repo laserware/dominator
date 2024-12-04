@@ -1,9 +1,9 @@
 import { cast, isNotNil } from "@laserware/arcade";
 
 import type { ElementOf, TagName } from "../dom.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import { InvalidCssVarError } from "./InvalidCssVarError.ts";
@@ -25,7 +25,7 @@ import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
  * @returns Element representation of the specified `target`.
  *
  * @throws {@linkcode InvalidCssVarError} if the `name` is not a valid {@linkcode CssVarName}.
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -45,9 +45,9 @@ import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
  * **Set in Element**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * setCssVar("--color-bg", "red", elem);
+ * setCssVar("--color-bg", "red", element);
  * ```
  *
  * **Set in `:root`**
@@ -73,13 +73,14 @@ import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
 export function setCssVar<TN extends TagName = "*">(
   name: CssVarName,
   value: CssVarValue,
-  target: ElemOrCssSelector<TN> = document.documentElement,
+  target: Target<TN> = document.documentElement,
 ): ElementOf<TN> {
-  const elem = elemOrThrow(target, `Unable to set CSS variable ${name}`);
+  // prettier-ignore
+  const element = toElementOrThrow(target, `Cannot set CSS variable ${name}`);
 
-  setSingleCssVar(elem, name, value);
+  setSingleCssVar(element, name, value);
 
-  return cast<ElementOf<TN>>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 /**
@@ -101,7 +102,7 @@ export function setCssVar<TN extends TagName = "*">(
  * @returns Element representation of the specified `target`.
  *
  * @throws {@linkcode InvalidCssVarError} if a name in `vars` is not a valid {@linkcode CssVarName}.
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
@@ -121,9 +122,9 @@ export function setCssVar<TN extends TagName = "*">(
  * **Set in Element**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * setCssVars({ "--color-bg", "red" }, elem);
+ * setCssVars({ "--color-bg", "red" }, element);
  * ```
  *
  * **Set in `:root`**
@@ -148,18 +149,18 @@ export function setCssVar<TN extends TagName = "*">(
  */
 export function setCssVars<TN extends TagName = "*">(
   vars: CssVars,
-  target: ElemOrCssSelector<TN> = document.documentElement,
+  target: Target<TN> = document.documentElement,
 ): ElementOf<TN> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to set CSS variables ${formatForError(vars)}`);
+  const element = toElementOrThrow(target, `Cannot set CSS variables ${formatForError(vars)}`);
 
   for (const key of Object.keys(vars)) {
     const varName = cast<keyof typeof vars>(key);
 
-    setSingleCssVar(elem, varName, vars[varName]);
+    setSingleCssVar(element, varName, vars[varName]);
   }
 
-  return cast<ElementOf<TN>>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 function setSingleCssVar(
@@ -172,8 +173,8 @@ function setSingleCssVar(
     throw new InvalidCssVarError(`CSS variable ${name} must be a string that starts with "--"`);
   }
 
-  const attrValue = stringifyDOMValue(value);
-  if (isNotNil(attrValue)) {
-    cast<HTMLElement>(element).style.setProperty(name, attrValue);
+  const attributeValue = stringifyDOMValue(value);
+  if (isNotNil(attributeValue)) {
+    cast<HTMLElement>(element).style.setProperty(name, attributeValue);
   }
 }

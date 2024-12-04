@@ -2,9 +2,9 @@ import { cast } from "@laserware/arcade";
 
 import { isCssVarName } from "../css/isCssVarName.ts";
 import type { ElementOf, TagName } from "../dom.ts";
-import { InvalidElemError } from "../elems/InvalidElemError.ts";
-import { toElem } from "../elems/toElem.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import { InvalidElementError } from "../elements/InvalidElementError.ts";
+import { toElement } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
@@ -20,22 +20,21 @@ import type { StyleKey, Styles, StyleValue } from "./types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
- *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function setStyle<TN extends TagName = "*">(
-  target: ElemOrCssSelector,
+  target: Target,
   key: StyleKey,
   value: StyleValue,
 ): ElementOf<TN> {
-  const elem = toElem(target);
-  if (elem === null || !("style" in elem)) {
-    throw new InvalidElemError(`Unable to set style for ${key}`);
+  const element = toElement(target);
+  if (element === null || !("style" in element)) {
+    throw new InvalidElementError(`Cannot set style for ${key}`);
   }
 
-  setSingleStyle(elem, key, value);
+  setSingleStyle(element, key, value);
 
-  return cast<ElementOf<TN>>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 /**
@@ -50,24 +49,23 @@ export function setStyle<TN extends TagName = "*">(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
- *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function setStyles<TN extends TagName = "*">(
-  target: ElemOrCssSelector,
+  target: Target,
   styles: Styles,
 ): ElementOf<TN> {
-  const elem = toElem(target);
-  if (elem === null || !("style" in elem)) {
+  const element = toElement(target);
+  if (element === null || !("style" in element)) {
     // prettier-ignore
-    throw new InvalidElemError(`Unable to set styles for ${formatForError(styles)}`);
+    throw new InvalidElementError(`Cannot set styles ${formatForError(styles)}`);
   }
 
   for (const key of Object.keys(styles)) {
-    setSingleStyle(elem, key, styles[key as StyleKey] as StyleValue);
+    setSingleStyle(element, key, styles[key as StyleKey] as StyleValue);
   }
 
-  return cast<ElementOf<TN>>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 function setSingleStyle(

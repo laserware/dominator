@@ -1,8 +1,8 @@
 import { isNil } from "@laserware/arcade";
 
-import { InvalidElemError } from "../elems/InvalidElemError.ts";
-import { toElem } from "../elems/toElem.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import { InvalidElementError } from "../elements/InvalidElementError.ts";
+import { toElement } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type { PropertySearch } from "../types.ts";
@@ -28,20 +28,19 @@ export type StylesSearch = PropertySearch<StyleKey, StyleValue | null>;
  *
  * @returns `true` if the specified style is present.
  *
- * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
- *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function hasStyle(
-  target: ElemOrCssSelector,
+  target: Target,
   key: StyleKey,
   value?: StyleValue,
 ): boolean {
-  const elem = toElem(target);
-  if (elem === null || !("style" in elem)) {
-    throw new InvalidElemError(`Unable to check for style ${key}`);
+  const element = toElement(target);
+  if (element === null || !("style" in element)) {
+    throw new InvalidElementError(`Cannot check for style ${key}`);
   }
 
-  return hasSingleStyle(elem, key, value);
+  return hasSingleStyle(element, key, value);
 }
 
 /**
@@ -53,20 +52,16 @@ export function hasStyle(
  *
  * @returns `true` if the specified `target` has **all** specified styles.
  *
- * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
- *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function hasAllStyles(
-  target: ElemOrCssSelector,
-  search: StylesSearch,
-): boolean {
-  const elem = toElem(target);
-  if (elem === null || !("style" in elem)) {
+export function hasAllStyles(target: Target, search: StylesSearch): boolean {
+  const element = toElement(target);
+  if (element === null || !("style" in element)) {
     // prettier-ignore
-    throw new InvalidElemError(`Unable to check for all styles ${formatForError(search)}`);
+    throw new InvalidElementError(`Cannot check for all styles ${formatForError(search)}`);
   }
 
-  return hasAllProperties(elem, search, hasSingleStyle);
+  return hasAllProperties(element, search, hasSingleStyle);
 }
 
 /**
@@ -78,20 +73,16 @@ export function hasAllStyles(
  *
  * @returns `true` if the specified `target` has **some** specified styles.
  *
- * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
- *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function hasSomeStyles(
-  target: ElemOrCssSelector,
-  search: StylesSearch,
-): boolean {
-  const elem = toElem(target);
-  if (elem === null || !("style" in elem)) {
+export function hasSomeStyles(target: Target, search: StylesSearch): boolean {
+  const element = toElement(target);
+  if (element === null || !("style" in element)) {
     // prettier-ignore
-    throw new InvalidElemError(`Unable to check for some styles ${formatForError(search)}`);
+    throw new InvalidElementError(`Cannot check for some styles ${formatForError(search)}`);
   }
 
-  return hasSomeProperties(elem, search, hasSingleStyle);
+  return hasSomeProperties(element, search, hasSingleStyle);
 }
 
 function hasSingleStyle(

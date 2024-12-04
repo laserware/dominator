@@ -3,10 +3,10 @@
   "cleanOutputDir": true,
   "customCss": "./docs/theme.css",
   "entryPoints": [
-    "./src/attrs/attrs.ts",
+    "./src/attributes/attributes.ts",
     "./src/css/css.ts",
-    "./src/data/data.ts",
-    "./src/elems/elems.ts",
+    "./src/dataset/dataset.ts",
+    "./src/elements/elements.ts",
     "./src/styles/styles.ts",
     "./src/dom.ts",
     "./src/search.ts",
@@ -34,6 +34,7 @@
       "WithUndefinedValues": "https://laserware.github.io/arcade/types/WithUndefinedValues.html"
     },
     "typescript": {
+      "CSSStyleDeclaration": "https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration",
       "Document": "https://developer.mozilla.org/en-US/docs/Web/API/Document",
       "Node": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
       "ChildNode": "https://developer.mozilla.org/en-US/docs/Web/API/Node",

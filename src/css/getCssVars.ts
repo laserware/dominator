@@ -1,8 +1,8 @@
 import { cast, type KeysOf, type WithUndefinedValues } from "@laserware/arcade";
 
-import type { ElemOrCssSelector } from "../elems/types.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import { InvalidCssVarError } from "./InvalidCssVarError.ts";
@@ -32,7 +32,7 @@ import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
  * @returns Value associated with the `name` or `undefined` if it doesn't exist.
  *
  * @throws {@linkcode InvalidCssVarError} if the specified `name` is invalid.
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -52,12 +52,12 @@ import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
  * **Get from Element**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * getCssVar("--color-bg", elem);
+ * getCssVar("--color-bg", element);
  * // "blue"
  *
- * getCssVar("--gap", elem);
+ * getCssVar("--gap", element);
  * // 24
  * ```
  *
@@ -70,11 +70,12 @@ import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
  */
 export function getCssVar<V extends CssVarValue>(
   name: CssVarName,
-  target: ElemOrCssSelector = document.documentElement,
+  target: Target = document.documentElement,
 ): V | undefined {
-  const elem = elemOrThrow(target, `Unable to get CSS variable ${name}`);
+  // prettier-ignore
+  const element = toElementOrThrow(target, `Cannot get CSS variable ${name}`);
 
-  return getSingleCssVar<V>(elem, name);
+  return getSingleCssVar<V>(element, name);
 }
 
 /**
@@ -117,7 +118,7 @@ export function getCssVar<V extends CssVarValue>(
  *
  * @returns Object with `names` as keys and corresponding CSS variable values (or `undefined` if not present).
  *
- * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -145,9 +146,9 @@ export function getCssVar<V extends CssVarValue>(
  *   "--gap": number | undefined;
  * };
  *
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * getCssVars<Shape>(["--color-bg", "--gap"], elem);
+ * getCssVars<Shape>(["--color-bg", "--gap"], element);
  *  // { "--color-bg": "blue", "--gap": 24 }
  * ```
  *
@@ -164,17 +165,17 @@ export function getCssVar<V extends CssVarValue>(
  */
 export function getCssVars<V extends CssVars = CssVars>(
   names: KeysOf<V>,
-  target: ElemOrCssSelector = document.documentElement,
+  target: Target = document.documentElement,
 ): WithUndefinedValues<V> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to get CSS variables ${formatForError(names)}`);
+  const element = toElementOrThrow(target, `Cannot get CSS variables ${formatForError(names)}`);
 
   const cssVars: Record<string, CssVarValue | undefined> = {};
 
   for (const name of names) {
     // @ts-ignore TypeScript is complaining that the `name` isn't a valid `CssVarName`,
     //            but we check that in this function, so I don't care.
-    cssVars[name] = getSingleCssVar(elem, name);
+    cssVars[name] = getSingleCssVar(element, name);
   }
 
   return cast<WithUndefinedValues<V>>(cssVars);

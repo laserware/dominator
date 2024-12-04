@@ -2,8 +2,8 @@ import { cast } from "@laserware/arcade";
 
 import { isCssVarName } from "../css/isCssVarName.ts";
 import type { ElementOf, TagName } from "../dom.ts";
-import type { ElemOrCssSelector } from "../elems/types.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
 import type { StyleKey } from "./types.ts";
@@ -18,18 +18,17 @@ import type { StyleKey } from "./types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
- *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function removeStyle<TN extends TagName = "*">(
-  target: ElemOrCssSelector,
+  target: Target,
   key: StyleKey,
 ): ElementOf<TN> {
-  const elem = elemOrThrow(target, `Unable to remove style ${key}`);
+  const element = toElementOrThrow(target, `Cannot remove style ${key}`);
 
-  removeSingleStyle(elem, key);
+  removeSingleStyle(element, key);
 
-  return cast<ElementOf<TN>>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 /**
@@ -43,21 +42,20 @@ export function removeStyle<TN extends TagName = "*">(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
- *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function removeStyles<TN extends TagName = "*">(
-  target: ElemOrCssSelector,
+  target: Target,
   keys: StyleKey[],
 ): ElementOf<TN> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to remove styles ${formatForError(keys)}`);
+  const element = toElementOrThrow(target, `Cannot remove styles ${formatForError(keys)}`);
 
   for (const key of keys) {
-    removeSingleStyle(elem, key);
+    removeSingleStyle(element, key);
   }
 
-  return cast<ElementOf<TN>>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 function removeSingleStyle(element: Element, key: StyleKey): void {
