@@ -116,11 +116,11 @@ describe("the wrapDataset function", () => {
     expect(dataset.get("size")).toBe("small");
   });
 
-  it("returns the dataset attribute name when attrNameFor is called", () => {
+  it("returns the dataset attribute name when attributeNameFor is called", () => {
     const element = render(`<div data-name="test">Test</div>`);
 
     const dataset = wrapDataset<{ name: string }>(element);
 
-    expect(dataset.attrNameFor("name")).toBe("data-name");
+    expect(dataset.attributeNameFor("name")).toBe("data-name");
   });
 });

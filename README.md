@@ -268,5 +268,5 @@ const secondGridCellSelector = selectAttributes({
 const secondGridCell = findElement(secondGridCellSelector);
 ```
 
-You can do more than work with attributes. You can also set, get, remove, and select [dataset entries](modules/data.html),
+You can do more than work with attributes. You can also set, get, remove, and select [dataset entries](modules/dataset.html),
 [CSS variables](modules/css.html), and [styles](modules/styles.html).

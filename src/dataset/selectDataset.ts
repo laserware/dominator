@@ -108,14 +108,14 @@ function selectSingleDataEntry(
   key: string,
   value: DatasetValue | null | undefined,
 ): CssSelector {
-  const attrName = asDatasetAttributeName(key);
+  const attributeName = asDatasetAttributeName(key);
 
   // If a value was specified, that's what we want to search by. So for key
   // of `someKey` and value of `someValue`, we would return `[data-some-key="someValue"]`,
   // otherwise we would just return `[data-some-key]`:
   if (isNil(value)) {
-    return `[${attrName}]`;
+    return `[${attributeName}]`;
   } else {
-    return selectAttribute(attrName, value);
+    return selectAttribute(attributeName, value);
   }
 }

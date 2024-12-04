@@ -73,7 +73,7 @@ export function getDatasetValue<V extends DatasetValue = DatasetValue>(
   key: DatasetKey,
 ): V | undefined {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to get data value for ${key}`);
+  const element = toElementOrThrow(target, `Unable to get dataset value for ${key}`);
 
   return getSingleDatasetValue(element, key);
 }
@@ -133,12 +133,15 @@ export function getDatasetValue<V extends DatasetValue = DatasetValue>(
  * ```ts
  * const element = findElement("#example")!;
  *
- * type AttrsShape = {
+ * type AttributesShape = {
  *   "data-label": string | undefined;
  *   "data-count": number | undefined;
  * };
  *
- * getDatasetEntries<AttrsShape>(element, ["data-label", "data-count"]);
+ * getDatasetEntries<AttributesShape>(element, [
+ *   "data-label",
+ *   "data-count",
+ * ]);
  * // { "data-label": "Example", "data-count": 30 }
  * ```
  *
@@ -147,12 +150,12 @@ export function getDatasetValue<V extends DatasetValue = DatasetValue>(
  * ```ts
  * const element = findElement("#example")!;
  *
- * type PropsShape = {
+ * type PropertiesShape = {
  *   label: string | undefined;
  *   count: number | undefined;
  * };
  *
- * getDatasetEntries<PropsShape>(element, ["label", "count"]);
+ * getDatasetEntries<PropertiesShape>(element, ["label", "count"]);
  * // { label: "Example", count: 30 }
  * ```
  */
@@ -161,7 +164,7 @@ export function getDatasetEntries<D extends Dataset = Dataset>(
   keys: DatasetKey[],
 ): WithUndefinedValues<D> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to get data for ${formatForError(keys)}`);
+  const element = toElementOrThrow(target, `Unable to get dataset entries for ${formatForError(keys)}`);
 
   const result: Record<DatasetKey, DatasetValue | undefined> = {};
 

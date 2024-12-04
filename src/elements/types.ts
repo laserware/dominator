@@ -49,10 +49,10 @@ export type FindOptions<TN extends TagName = "*"> = {
   withSelector?: CssSelector;
 
   /** Key/value pairs of attributes to search for. */
-  withAttrs?: Attributes<TN>;
+  withAttributes?: Attributes<TN>;
 
   /** Key/value pairs of dataset entries to search for. */
-  withData?: Dataset;
+  withDataset?: Dataset;
 
   /** Optional parent Element, EventTarget, or CSS selector. */
   parent?: Target | null | undefined;

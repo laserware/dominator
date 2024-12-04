@@ -2,11 +2,12 @@ import { isNotNil } from "@laserware/arcade";
 
 import { selectAttributes } from "../attributes/selectAttributes.ts";
 import { selectDatasetEntries } from "../dataset/selectDataset.ts";
-import { toElement } from "../elements/toElement.ts";
 
-import type { ElementLike, FindOptions } from "../elements/types.ts";
+import { selectorWithTag } from "../internal/selectorWithTag.ts";
 
-import { selectorWithTag } from "./selectorWithTag.ts";
+import { toElement } from "./toElement.ts";
+
+import type { ElementLike, FindOptions } from "./types.ts";
 
 /**
  * Parses the specified `options` and returns the corresponding `selector`
@@ -26,12 +27,12 @@ export function parseFindOptions(options: FindOptions): {
     selector += options.withSelector;
   }
 
-  if (isNotNil(options.withAttrs)) {
-    selector += selectAttributes(options.withAttrs);
+  if (isNotNil(options.withAttributes)) {
+    selector += selectAttributes(options.withAttributes);
   }
 
-  if (isNotNil(options.withData)) {
-    selector += selectDatasetEntries(options.withData);
+  if (isNotNil(options.withDataset)) {
+    selector += selectDatasetEntries(options.withDataset);
   }
 
   const parent = toElement(options.parent) ?? document;

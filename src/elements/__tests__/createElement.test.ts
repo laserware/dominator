@@ -30,7 +30,7 @@ describe("the createElement function", () => {
   });
 
   it("assigns provided dataset entries to the created element", () => {
-    const result = createElement("div", { data: { test: "test-dataset" } });
+    const result = createElement("div", { dataset: { test: "test-dataset" } });
 
     expect(result.dataset.test).toBe("test-dataset");
   });
@@ -79,7 +79,7 @@ describe("the createElement function", () => {
         attributes: {
           "aria-label": "Test",
         },
-        data: {
+        dataset: {
           stringProperty: "value",
           booleanProperty: true,
           numberProperty: 24,

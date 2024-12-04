@@ -158,7 +158,7 @@ function getSingleAttribute<
   V extends AttributeValue = AttributeValue,
   TN extends TagName = "*",
 >(element: ElementOf<TN>, name: AttributeName<TN>): V | null {
-  const attrValue = element.getAttribute(name);
+  const attributeValue = element.getAttribute(name);
 
-  return parseDOMValue<V>(attrValue) ?? null;
+  return parseDOMValue<V>(attributeValue) ?? null;
 }

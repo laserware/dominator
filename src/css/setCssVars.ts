@@ -173,8 +173,8 @@ function setSingleCssVar(
     throw new InvalidCssVarError(`CSS variable ${name} must be a string that starts with "--"`);
   }
 
-  const attrValue = stringifyDOMValue(value);
-  if (isNotNil(attrValue)) {
-    cast<HTMLElement>(element).style.setProperty(name, attrValue);
+  const attributeValue = stringifyDOMValue(value);
+  if (isNotNil(attributeValue)) {
+    cast<HTMLElement>(element).style.setProperty(name, attributeValue);
   }
 }

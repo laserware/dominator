@@ -34,10 +34,10 @@ import type { Target } from "./types.ts";
  * **Usage with CSS Selector**
  *
  * ```ts
- * const elemThatExists = toElement<"input">("#test");
+ * const elementThatExists = toElement<"input">("#test");
  * // Returns the element and asserts as an `<input>`
  *
- * const elemNoExists = toElement<"button">("#missing");
+ * const elementNoExists = toElement<"button">("#missing");
  * // Returns null
  * ```
  *

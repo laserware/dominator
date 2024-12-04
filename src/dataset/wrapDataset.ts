@@ -13,8 +13,9 @@ import { removeDatasetEntry } from "./removeDataset.ts";
 import type { DatasetValue } from "./types.ts";
 
 /**
- * Valid shape for dataset property. The values can be any type that can be
- * stringified. Used for defining the shape in the {@linkcode DatasetWrapper} class.
+ * Valid shape for [dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset) property.
+ * The values can be any type that can be stringified. Used for defining the shape
+ * in the {@linkcode DatasetWrapper} class.
  */
 export type AnyDatasetShape = Record<string, DatasetValue | null>;
 
@@ -34,8 +35,8 @@ export type AnyDatasetShape = Record<string, DatasetValue | null>;
  *
  * See usage examples in {@linkcode wrapDataset}.
  *
- * @template DS The shape of the dataset dataset.
- * @template TN Tag name of element which the dataset dataset is associated.
+ * @template DS The shape of the dataset data.
+ * @template TN Tag name of element with which the dataset is associated.
  *
  * @class
  */
@@ -50,7 +51,7 @@ export class DatasetWrapper<
    * property of the corresponding `target`. Optionally pass in `initialData`
    * that can fully match the shape specified in the `DS` generic or partially.
    *
-   * @template DS The shape of the dataset dataset.
+   * @template DS The shape of the dataset data.
    *
    * @param target Element, EventTarget, or CSS selector.
    * @param [initialData] Optional full or partial dataset that corresponds to the dataset shape.
@@ -172,7 +173,7 @@ export class DatasetWrapper<
    *
    * @returns Dataset attribute name associated with the specified `key`.
    */
-  public attrNameFor<K extends keyof DS>(key: K): string {
+  public attributeNameFor<K extends keyof DS>(key: K): string {
     return asDatasetAttributeName(key as string);
   }
 
@@ -193,8 +194,8 @@ export class DatasetWrapper<
  * property on the `target` element. Optionally pass in `initialData`
  * that can fully or partially match the shape specified in the `DS` generic.
  *
- * @template DS The shape of the dataset dataset.
- * @template TN Tag name of element containing the `dataset` property.
+ * @template DS The shape of the dataset data.
+ * @template TN Tag name of element with which the dataset is associated.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param [initialData] Optional full or partial dataset that corresponds to the dataset shape.
@@ -261,7 +262,7 @@ export class DatasetWrapper<
  * // { isActive: true, isInvalid: false, count: 40, status: "warning" }
  *
  * // Get attribute name for an entry:
- * dataset.attrNameFor("isActive");
+ * dataset.attributeNameFor("isActive");
  * // "data-is-active"
  * ```
  *

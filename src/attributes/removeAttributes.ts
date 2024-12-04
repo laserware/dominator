@@ -31,9 +31,9 @@ import type { AttributeName } from "./types.ts";
  * **Code**
  *
  * ```ts
- * const element = findElement("#example")!;
+ * let element = findElement("#example")!;
  *
- * removeAttribute(element, "aria-disabled");
+ * element = removeAttribute(element, "aria-disabled");
  * ```
  *
  * **HTML (After)**

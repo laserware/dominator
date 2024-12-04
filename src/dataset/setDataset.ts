@@ -76,7 +76,8 @@ export function setDatasetEntry<TN extends TagName = "*">(
   key: DatasetKey,
   value: DatasetValue | null,
 ): ElementOf<TN> {
-  const element = toElementOrThrow(target, `Unable to set data for ${key}`);
+  // prettier-ignore
+  const element = toElementOrThrow(target, `Unable to set dataset entry for ${key}`);
 
   setSingleDatasetEntry(element, key, value);
 
@@ -89,7 +90,7 @@ export function setDatasetEntry<TN extends TagName = "*">(
  * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
- * @param data Object with keys of dataset attribute/property names and values
+ * @param dataset Object with keys of dataset attribute/property names and values
  *             of corresponding values.
  *
  * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
@@ -147,13 +148,13 @@ export function setDatasetEntry<TN extends TagName = "*">(
  */
 export function setDatasetEntries<TN extends TagName = "*">(
   target: Target<TN>,
-  data: Dataset,
+  dataset: Dataset,
 ): ElementOf<TN> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to set data for keys ${formatForError(data)}`);
+  const element = toElementOrThrow(target, `Unable to set dataset entries for keys ${formatForError(dataset)}`);
 
-  for (const key of Object.keys(data)) {
-    setSingleDatasetEntry(element, key, data[key]);
+  for (const key of Object.keys(dataset)) {
+    setSingleDatasetEntry(element, key, dataset[key]);
   }
 
   return cast<ElementOf<TN>>(element);

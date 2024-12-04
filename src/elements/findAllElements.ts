@@ -2,7 +2,8 @@ import { cast, isPlainObject } from "@laserware/arcade";
 
 import type { CssSelector } from "../css/types.ts";
 import type { ElementOf, TagName } from "../dom.ts";
-import { parseFindOptions } from "../internal/findOptions.ts";
+
+import { parseFindOptions } from "./findOptions.ts";
 
 import { listToArray } from "./listToArray.ts";
 

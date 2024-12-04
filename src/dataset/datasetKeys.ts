@@ -62,12 +62,12 @@ export function withDataPrefix<T extends Record<string, any> | any[]>(
   if (Array.isArray(values)) {
     return values.map((value) => asDatasetAttributeName(value)) as T;
   } else {
-    const withData: Record<string, any> = {};
+    const withDataset: Record<string, any> = {};
 
     for (const [key, value] of entriesOf(values)) {
-      withData[asDatasetAttributeName(key)] = value;
+      withDataset[asDatasetAttributeName(key)] = value;
     }
 
-    return withData as T;
+    return withDataset as T;
   }
 }

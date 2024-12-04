@@ -23,8 +23,8 @@ describe("the findAllElements function", () => {
       </ul>
     `);
 
-    expect(findAllElements({ withAttrs: { "aria-label": "Label" } })).toHaveLength(3);
-    expect(findAllElements({ withAttrs: { "aria-label": null } })).toHaveLength(3);
+    expect(findAllElements({ withAttributes: { "aria-label": "Label" } })).toHaveLength(3);
+    expect(findAllElements({ withAttributes: { "aria-label": null } })).toHaveLength(3);
   });
 
   it("finds all elements with matching dataset in an options object", () => {
@@ -36,10 +36,10 @@ describe("the findAllElements function", () => {
       </ul>
     `);
 
-    expect(findAllElements({ withData: { "data-label": "Label" } })).toHaveLength(3);
-    expect(findAllElements({ withData: { "data-label": null } })).toHaveLength(3);
-    expect(findAllElements({ withData: { label: "Label" } })).toHaveLength(3);
-    expect(findAllElements({ withData: { label: null } })).toHaveLength(3);
+    expect(findAllElements({ withDataset: { "data-label": "Label" } })).toHaveLength(3);
+    expect(findAllElements({ withDataset: { "data-label": null } })).toHaveLength(3);
+    expect(findAllElements({ withDataset: { label: "Label" } })).toHaveLength(3);
+    expect(findAllElements({ withDataset: { label: null } })).toHaveLength(3);
   });
 
   it("finds all elements with matching selector and dataset in an options object", () => {
@@ -51,7 +51,10 @@ describe("the findAllElements function", () => {
       </ul>
     `);
 
-    const result = findAllElements({ withData: { "data-label": "Label" }, withSelector: ".item" });
+    const result = findAllElements({
+      withDataset: { "data-label": "Label" },
+      withSelector: ".item",
+    });
 
     expect(result).toHaveLength(3);
   });
@@ -77,7 +80,7 @@ describe("the findAllElements function", () => {
 
     const result = findAllElements({
       withSelector: ".test",
-      withAttrs: {
+      withAttributes: {
         name: "button",
         disabled: null,
         "aria-disabled": true,
@@ -85,7 +88,7 @@ describe("the findAllElements function", () => {
         draggable: true,
         inert: null,
       },
-      withData: {
+      withDataset: {
         someProperty: "thing",
         "data-other-property": null,
       },

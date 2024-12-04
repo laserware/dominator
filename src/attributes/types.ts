@@ -33,10 +33,12 @@ export type AttributeName<TN extends TagName = "*"> =
 /**
  * Value type that can be specified as the value for an HTML/SVG attribute.
  *
- * Note that **all** attribute values are strings when they make it to the DOM.
- * This represents the value type that can be assigned to attributes using
- * {@linkcode setAttribute} and {@linkcode setAttributes} as well as the return value for
- * attributes when using {@linkcode getAttribute} and {@linkcode getAttributes}.
+ * > [!NOTE]
+ * > **All** attribute values are strings when they make it to the DOM.
+ * > This represents the value type that can be assigned to attributes using
+ * > {@linkcode setAttribute} and {@linkcode setAttributes} as well as the return value for
+ * > attributes when using {@linkcode getAttribute} and {@linkcode getAttributes}.
+ * > It's a convenience mechanism to avoid stringifying/parsing attribute values.
  */
 export type AttributeValue =
   | boolean

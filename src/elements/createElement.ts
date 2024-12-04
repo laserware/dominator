@@ -99,7 +99,7 @@ export type EventListenersOrDescriptors = {
  * @template TN Tag name for the created element.
  */
 export type CreateElemOptions<TN extends TagName> = Partial<
-  Omit<ElemProperties<TN>, "attributes">
+  Omit<ElemProperties<TN>, "attributes" | "dataset">
 > & {
   /** Attributes to set on element. */
   attributes?: Attributes<TN>;
@@ -111,7 +111,7 @@ export type CreateElemOptions<TN extends TagName> = Partial<
   cssVars?: CssVars;
 
   /** Dataset entries to set on element. */
-  data?: Dataset;
+  dataset?: Dataset;
 
   /**
    * Event listeners or {@linkcode EventDescriptor} objects to set on element.
@@ -154,12 +154,12 @@ export type ElemChild = HTMLElement | SVGElement | string | null;
  *
  * ```ts
  * // It's nice to use an import alias to shorten the function name:
- * import { createElement as elem } from "@laserware/dominator";
+ * import { createElement as html } from "@laserware/dominator";
  *
  * // Used to clean up the `dblclick` event listener:
  * const controller = new AbortController();
  *
- * const child = elem("button", {
+ * const child = html("button", {
  *   ariaLabel: "Click Me",
  *   type: "button",
  *   attributes: {
@@ -188,7 +188,7 @@ export type ElemChild = HTMLElement | SVGElement | string | null;
  *   },
  * }, "Click");
  *
- * const parent = elem("div", { styles: { fontSize: "24px" } }, child);
+ * const parent = html("div", { styles: { fontSize: "24px" } }, child);
  *
  * document.body.appendChild(parent);
  * ```
@@ -230,9 +230,9 @@ export function createElement<TN extends TagName>(
     delete props.cssVars;
   }
 
-  if (isNotNil(options.data)) {
-    setDatasetEntries(element, options.data);
-    delete props.data;
+  if (isNotNil(options.dataset)) {
+    setDatasetEntries(element, options.dataset);
+    delete props.dataset;
   }
 
   if (isNotNil(options.on)) {

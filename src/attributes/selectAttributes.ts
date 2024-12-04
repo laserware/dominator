@@ -14,6 +14,10 @@ import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
  * only includes a name. If `tagName` is specified, it is included in the
  * resulting selector.
  *
+ * > [!NOTE]
+ * > If you specify the optional `TN` (tag name) generic, you'll get autocomplete
+ * > on the attributes for the Element associated with that tag name.
+ *
  * @template TN Tag name of Element to select attribute from.
  *
  * @param name Attribute name to include in the selector.
@@ -28,28 +32,28 @@ import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
  * **Name Only**
  *
  * ```ts
- * selectAttr("disabled");
+ * selectAttribute("disabled");
  * // [disabled]
  * ```
  *
  * **Name and Value**
  *
  * ```ts
- * selectAttr("disabled", true);
+ * selectAttribute("disabled", true);
  * // [disabled="true"]
  * ```
  *
  * **Name, Value, and Tag**
  *
  * ```ts
- * selectAttr("disabled", true, "button");
+ * selectAttribute("disabled", true, "button");
  * // button[disabled="true"]
  * ```
  *
  * **Name and Tag (No Value)**
  *
  * ```ts
- * selectAttr("disabled", null, "button");
+ * selectAttribute("disabled", null, "button");
  * // button[disabled]
  * ```
  */
@@ -69,6 +73,10 @@ export function selectAttribute<TN extends TagName = "*">(
  * a value but only includes a name. If `tagName` is specified, it is included in the
  * resulting selector.
  *
+ * > [!NOTE]
+ * > If you specify the optional `TN` (tag name) generic, you'll get autocomplete
+ * > on the attributes for the Element associated with that tag name.
+ *
  * @template TN Tag name of Element to select attributes from.
  *
  * @param attributes Object with key of attribute name and value of attribute value.
@@ -82,28 +90,28 @@ export function selectAttribute<TN extends TagName = "*">(
  * **Single Entry With Value**
  *
  * ```ts
- * selectAttrs({ disabled: true });
+ * selectAttributes({ disabled: true });
  * // [disabled="true"]
  * ```
  *
  * **Single Entry With Value and Tag**
  *
  * ```ts
- * selectAttrs({ disabled: true }, "button");
+ * selectAttributes({ disabled: true }, "button");
  * // button[disabled="true"]
  * ```
 
  * **Single Entry Without Value**
  *
  * ```ts
- * selectAttrs({ inert: null });
+ * selectAttributes({ inert: null });
  * // [inert]
  * ```
  *
  * **Multiple Entries**
  *
  * ```ts
- * selectAttrs({ disabled: true, inert: null });
+ * selectAttributes({ disabled: true, inert: null });
  * // [disabled="true"][inert]
  * ```
  */

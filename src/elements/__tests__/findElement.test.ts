@@ -24,7 +24,7 @@ describe("the findElement function", () => {
   it("finds an element with a matching attribute in an options object", () => {
     render(`<div aria-hidden="true" data-value="test">Child</div>`);
 
-    const result = findElement({ withAttrs: { "aria-hidden": true } });
+    const result = findElement({ withAttributes: { "aria-hidden": true } });
 
     expect(result).not.toBeNull();
   });
@@ -56,7 +56,7 @@ describe("the findElement function", () => {
     `);
 
     const result = findElement({
-      withAttrs: {
+      withAttributes: {
         name: "button",
         disabled: null,
         "aria-disabled": true,
@@ -86,7 +86,7 @@ describe("the findElement function", () => {
     `);
 
     const result = findElement({
-      withAttrs: {
+      withAttributes: {
         name: "button",
         disabled: null,
         "aria-disabled": true,
@@ -104,7 +104,7 @@ describe("the findElement function", () => {
     const element = render(`<button data-some-property="thing">Button</button>`);
 
     const result = findElement({
-      withData: { someProperty: "thing" },
+      withDataset: { someProperty: "thing" },
       tagName: "button",
     });
 
@@ -131,7 +131,7 @@ describe("the findElement function", () => {
 
     const result = findElement({
       withSelector: ".test",
-      withAttrs: {
+      withAttributes: {
         name: "button",
         disabled: null,
         "aria-disabled": true,
@@ -139,7 +139,7 @@ describe("the findElement function", () => {
         draggable: true,
         inert: null,
       },
-      withData: {
+      withDataset: {
         someProperty: "thing",
       },
       tagName: "button",

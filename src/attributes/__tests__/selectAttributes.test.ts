@@ -1,8 +1,8 @@
 import { InvalidAttributeError } from "../InvalidAttributeError.ts";
 import { selectAttribute, selectAttributes } from "../selectAttributes.ts";
 
-describe("within selectAttrs", () => {
-  describe("the selectAttr function", () => {
+describe("within selectAttributes", () => {
+  describe("the selectAttribute function", () => {
     it("returns a selector when an attribute name is specified", () => {
       const result = selectAttribute("inert");
 
@@ -49,7 +49,7 @@ describe("within selectAttrs", () => {
     });
   });
 
-  describe("the selectAttrs function", () => {
+  describe("the selectAttributes function", () => {
     it("returns a selector when an attributes object is specified", () => {
       const result = selectAttributes({ "aria-hidden": true, inert: null });
 
