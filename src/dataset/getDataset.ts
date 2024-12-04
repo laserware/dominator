@@ -2,11 +2,13 @@ import { cast, type WithUndefinedValues } from "@laserware/arcade";
 
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
-import { asDataPropertyName } from "../internal/dataKeys.ts";
+
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
-import type { Data, DataKey, DataValue } from "./types.ts";
+import { asDatasetPropertyName } from "./datasetKeys.ts";
+
+import type { Dataset, DatasetKey, DatasetValue } from "./types.ts";
 
 /**
  * Attempts to get the value associated with the dataset attribute/property name
@@ -41,13 +43,13 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  * ```ts
  * const element = findElement("#example")!;
  *
- * getDataValue(element, "data-label");
+ * getDatasetValue(element, "data-label");
  * // "Example"
  *
- * getDataValue(element, "data-count");
+ * getDatasetValue(element, "data-count");
  * // 30
  *
- * getDataValue(element, "data-is-active");
+ * getDatasetValue(element, "data-is-active");
  * // false
  * ```
  *
@@ -56,24 +58,24 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  * ```ts
  * const element = findElement("#example")!;
  *
- * getDataValue(element, "label");
+ * getDatasetValue(element, "label");
  * // "Example"
  *
- * getDataValue(element, "count");
+ * getDatasetValue(element, "count");
  * // 30
  *
- * getDataValue(element, "isActive");
+ * getDatasetValue(element, "isActive");
  * // false
  * ```
  */
-export function getDataValue<V extends DataValue = DataValue>(
+export function getDatasetValue<V extends DatasetValue = DatasetValue>(
   target: Target,
-  key: DataKey,
+  key: DatasetKey,
 ): V | undefined {
   // prettier-ignore
   const element = toElementOrThrow(target, `Unable to get data value for ${key}`);
 
-  return getSingleDataValue(element, key);
+  return getSingleDatasetValue(element, key);
 }
 
 /**
@@ -136,7 +138,7 @@ export function getDataValue<V extends DataValue = DataValue>(
  *   "data-count": number | undefined;
  * };
  *
- * getData<AttrsShape>(element, ["data-label", "data-count"]);
+ * getDatasetEntries<AttrsShape>(element, ["data-label", "data-count"]);
  * // { "data-label": "Example", "data-count": 30 }
  * ```
  *
@@ -150,31 +152,31 @@ export function getDataValue<V extends DataValue = DataValue>(
  *   count: number | undefined;
  * };
  *
- * getData<PropsShape>(element, ["label", "count"]);
+ * getDatasetEntries<PropsShape>(element, ["label", "count"]);
  * // { label: "Example", count: 30 }
  * ```
  */
-export function getData<D extends Data = Data>(
+export function getDatasetEntries<D extends Dataset = Dataset>(
   target: Target,
-  keys: DataKey[],
+  keys: DatasetKey[],
 ): WithUndefinedValues<D> {
   // prettier-ignore
   const element = toElementOrThrow(target, `Unable to get data for ${formatForError(keys)}`);
 
-  const result: Record<DataKey, DataValue | undefined> = {};
+  const result: Record<DatasetKey, DatasetValue | undefined> = {};
 
   for (const key of keys) {
-    result[key] = getSingleDataValue(element, key);
+    result[key] = getSingleDatasetValue(element, key);
   }
 
   return cast<WithUndefinedValues<D>>(result);
 }
 
-function getSingleDataValue<V extends DataValue>(
+function getSingleDatasetValue<V extends DatasetValue>(
   element: HTMLElement,
-  key: DataKey,
+  key: DatasetKey,
 ): V | undefined {
-  const validKey = asDataPropertyName(key);
+  const validKey = asDatasetPropertyName(key);
 
   const matchingValue = element?.dataset[validKey];
 

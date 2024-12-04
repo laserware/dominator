@@ -1,7 +1,7 @@
 import { isNotNil } from "@laserware/arcade";
 
 import { selectAttributes } from "../attributes/selectAttributes.ts";
-import { selectData } from "../data/selectData.ts";
+import { selectDatasetEntries } from "../dataset/selectDataset.ts";
 import { toElement } from "../elements/toElement.ts";
 
 import type { ElementLike, FindOptions } from "../elements/types.ts";
@@ -31,7 +31,7 @@ export function parseFindOptions(options: FindOptions): {
   }
 
   if (isNotNil(options.withData)) {
-    selector += selectData(options.withData);
+    selector += selectDatasetEntries(options.withData);
   }
 
   const parent = toElement(options.parent) ?? document;

@@ -3,13 +3,15 @@ import { cast, isNil, isNotNil } from "@laserware/arcade";
 import type { TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
-import { asDataPropertyName } from "../internal/dataKeys.ts";
+
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
 import type { PropertySearch } from "../types.ts";
 
-import type { DataKey, DataValue } from "./types.ts";
+import { asDatasetPropertyName } from "./datasetKeys.ts";
+
+import type { DatasetKey, DatasetValue } from "./types.ts";
 
 /**
  * Search criteria for checking if dataset entries are present in an element.
@@ -17,7 +19,7 @@ import type { DataKey, DataValue } from "./types.ts";
  * dataset entries are present, or an object to search for specific values.
  * Use `null` for the value if you only care about the presence of a dataset entry.
  */
-export type DataSearch = PropertySearch<DataKey, DataValue | null>;
+export type DatasetSearch = PropertySearch<DatasetKey, DatasetValue | null>;
 
 /**
  * Returns true if the `target` has a dataset entry with `key` and optionally,
@@ -50,7 +52,7 @@ export type DataSearch = PropertySearch<DataKey, DataValue | null>;
  * ```ts
  * const element = findElement("#example")!;
  *
- * hasDataEntry(element, "data-is-active");
+ * hasDatasetEntry(element, "data-is-active");
  * // true
  *
  * hadDataEntry(element, "isActive", "false");
@@ -60,14 +62,14 @@ export type DataSearch = PropertySearch<DataKey, DataValue | null>;
  * // true
  * ```
  */
-export function hasDataEntry<TN extends TagName = "*">(
+export function hasDatasetEntry<TN extends TagName = "*">(
   target: Target<TN>,
-  key: DataKey,
-  value?: DataValue,
+  key: DatasetKey,
+  value?: DatasetValue,
 ): boolean {
   const element = toElementOrThrow(target, `Unable to check for data ${key}`);
 
-  return hasSingleDataEntry(element, key, value);
+  return hasSingleDatasetEntry(element, key, value);
 }
 
 /**
@@ -102,24 +104,24 @@ export function hasDataEntry<TN extends TagName = "*">(
  * ```ts
  * const element = findElement("#example")!;
  *
- * hasAllData(element, ["data-is-active", "data-count"]);
+ * hasAllDatasetEntries(element, ["data-is-active", "data-count"]);
  * // true
  *
- * hasAllData(element, ["isActive", "data-missing"]);
+ * hasAllDatasetEntries(element, ["isActive", "data-missing"]);
  * // false
  *
- * hasAllData(element, { "data-count", 30, "label": null });
+ * hasAllDatasetEntries(element, { "data-count", 30, "label": null });
  * // true
  * ```
  */
-export function hasAllData<TN extends TagName = "*">(
+export function hasAllDatasetEntries<TN extends TagName = "*">(
   target: Target<TN>,
-  search: DataSearch,
+  search: DatasetSearch,
 ): boolean {
   // prettier-ignore
   const element = toElementOrThrow(target, `Unable to check for data ${formatForError(search)}`);
 
-  return hasAllProperties(element, search, hasSingleDataEntry);
+  return hasAllProperties(element, search, hasSingleDatasetEntry);
 }
 
 /**
@@ -154,13 +156,13 @@ export function hasAllData<TN extends TagName = "*">(
  * ```ts
  * const element = findElement("#example")!;
  *
- * hasSomeData(element, ["data-is-active", "data-missing"]);
+ * hasSomeDatasetEntries(element, ["data-is-active", "data-missing"]);
  * // true
  *
- * hasSomeData(element, ["data-missing"]);
+ * hasSomeDatasetEntries(element, ["data-missing"]);
  * // false
  *
- * hasSomeData(element, {
+ * hasSomeDatasetEntries(element, {
  *   "data-is-active": false,
  *   count, 30,
  *   missing: null,
@@ -168,22 +170,22 @@ export function hasAllData<TN extends TagName = "*">(
  * // true
  * ```
  */
-export function hasSomeData<TN extends TagName = "*">(
+export function hasSomeDatasetEntries<TN extends TagName = "*">(
   target: Target<TN>,
-  search: DataSearch,
+  search: DatasetSearch,
 ): boolean {
   // prettier-ignore
   const element = toElementOrThrow(target, `Unable to check for data ${formatForError(search)}`);
 
-  return hasSomeProperties(element, search, hasSingleDataEntry);
+  return hasSomeProperties(element, search, hasSingleDatasetEntry);
 }
 
-function hasSingleDataEntry(
+function hasSingleDatasetEntry(
   element: Element,
-  key: DataKey,
-  value?: DataValue,
+  key: DatasetKey,
+  value?: DatasetValue,
 ): boolean {
-  const propertyName = asDataPropertyName(key);
+  const propertyName = asDatasetPropertyName(key);
 
   const datasetValue = cast<HTMLElement>(element).dataset?.[propertyName];
 

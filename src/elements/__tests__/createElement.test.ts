@@ -30,9 +30,9 @@ describe("the createElement function", () => {
   });
 
   it("assigns provided dataset entries to the created element", () => {
-    const result = createElement("div", { data: { test: "test-data" } });
+    const result = createElement("div", { data: { test: "test-dataset" } });
 
-    expect(result.dataset.test).toBe("test-data");
+    expect(result.dataset.test).toBe("test-dataset");
   });
 
   it("assigns provided styles to the created element", () => {

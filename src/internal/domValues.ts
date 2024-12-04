@@ -1,6 +1,6 @@
 import type { AttributeValue } from "../attributes/types.ts";
 import type { CssVarValue } from "../css/types.ts";
-import type { DataValue } from "../data/types.ts";
+import type { DatasetValue } from "../dataset/types.ts";
 import type { StyleValue } from "../styles/types.ts";
 
 /**
@@ -92,7 +92,7 @@ export function stringifyDOMValue(value: unknown): string | undefined {
  * // "4abc"
  */
 export function parseDOMValue<
-  T extends AttributeValue | CssVarValue | DataValue | StyleValue,
+  T extends AttributeValue | CssVarValue | DatasetValue | StyleValue,
 >(value: unknown): T | undefined {
   if (value === null || value === undefined) {
     return undefined;

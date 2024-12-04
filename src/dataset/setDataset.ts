@@ -3,11 +3,13 @@ import { cast, isNil } from "@laserware/arcade";
 import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
-import { asDataPropertyName } from "../internal/dataKeys.ts";
+
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
-import type { Data, DataKey, DataValue } from "./types.ts";
+import { asDatasetPropertyName } from "./datasetKeys.ts";
+
+import type { Dataset, DatasetKey, DatasetValue } from "./types.ts";
 
 /**
  * Assigns the `value` to the dataset attribute/property name `key` in the `target`.
@@ -41,9 +43,9 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  * ```ts
  * const element = findElement("#example")!;
  *
- * setDataEntry(element, "data-is-active", true);
- * setDataEntry(element, "data-count", 50);
- * setDataEntry(element, "data-label", "Update");
+ * setDatasetEntry(element, "data-is-active", true);
+ * setDatasetEntry(element, "data-count", 50);
+ * setDatasetEntry(element, "data-label", "Update");
  * ```
  *
  * **Using Property Name (camelCase)**
@@ -51,9 +53,9 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  * ```ts
  * const element = findElement("#example")!;
  *
- * setDataEntry(element, "isActive", true);
- * setDataEntry(element, "count", 50);
- * setDataEntry(element, "label", "Update");
+ * setDatasetEntry(element, "isActive", true);
+ * setDatasetEntry(element, "count", 50);
+ * setDatasetEntry(element, "label", "Update");
  * ```
  *
  * **HTML (After)**
@@ -69,20 +71,20 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  * </div>
  * ```
  */
-export function setDataEntry<TN extends TagName = "*">(
+export function setDatasetEntry<TN extends TagName = "*">(
   target: Target<TN>,
-  key: DataKey,
-  value: DataValue | null,
+  key: DatasetKey,
+  value: DatasetValue | null,
 ): ElementOf<TN> {
   const element = toElementOrThrow(target, `Unable to set data for ${key}`);
 
-  setSingleDataEntry(element, key, value);
+  setSingleDatasetEntry(element, key, value);
 
   return cast<ElementOf<TN>>(element);
 }
 
 /**
- * Assigns the `data` key/value pairs to the `target`.
+ * Assigns the `dataset` key/value pairs to the `target`.
  *
  * @template TN Tag name of the Element representation of `target`.
  *
@@ -111,7 +113,7 @@ export function setDataEntry<TN extends TagName = "*">(
  * ```ts
  * const element = findElement("#example")!;
  *
- * setData(element, {
+ * setDatasetEntries(element, {
  *   "data-is-active", true,
  *   "data-count": 50,
  *   "data-label": "Update",
@@ -123,7 +125,7 @@ export function setDataEntry<TN extends TagName = "*">(
  * ```ts
  * const element = findElement("#example")!;
  *
- * setData(element, {
+ * setDatasetEntries(element, {
  *   isActive, true,
  *   count: 50,
  *   label: "Update",
@@ -143,26 +145,26 @@ export function setDataEntry<TN extends TagName = "*">(
  * </div>
  * ```
  */
-export function setData<TN extends TagName = "*">(
+export function setDatasetEntries<TN extends TagName = "*">(
   target: Target<TN>,
-  data: Data,
+  data: Dataset,
 ): ElementOf<TN> {
   // prettier-ignore
   const element = toElementOrThrow(target, `Unable to set data for keys ${formatForError(data)}`);
 
   for (const key of Object.keys(data)) {
-    setSingleDataEntry(element, key, data[key]);
+    setSingleDatasetEntry(element, key, data[key]);
   }
 
   return cast<ElementOf<TN>>(element);
 }
 
-function setSingleDataEntry(
+function setSingleDatasetEntry(
   element: Element,
-  key: DataKey,
-  value?: DataValue | null | undefined,
+  key: DatasetKey,
+  value?: DatasetValue | null | undefined,
 ): void {
-  const validKey = asDataPropertyName(key);
+  const validKey = asDatasetPropertyName(key);
 
   if (isNil(value)) {
     cast<HTMLElement>(element).dataset[validKey] = "";

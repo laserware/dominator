@@ -4,10 +4,12 @@ import { removeAttribute } from "../attributes/removeAttributes.ts";
 import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
-import { asDataAttrName } from "../internal/dataKeys.ts";
+
 import { formatForError } from "../internal/formatForError.ts";
 
-import type { DataKey, DataPropertyName } from "./types.ts";
+import { asDatasetAttributeName } from "./datasetKeys.ts";
+
+import type { DatasetKey, DatasetPropertyName } from "./types.ts";
 
 /**
  * Removes the dataset entry with attribute/property name `key` from the `target`.
@@ -40,7 +42,7 @@ import type { DataKey, DataPropertyName } from "./types.ts";
  * ```ts
  * const element = findElement("#example")!;
  *
- * removeDataEntry(element, "data-label");
+ * removeDatasetEntry(element, "data-label");
  * ```
  *
  * **Using Property Name (camelCase)**
@@ -48,7 +50,7 @@ import type { DataKey, DataPropertyName } from "./types.ts";
  * ```ts
  * const element = findElement("#example")!;
  *
- * removeDataEntry(element, "label");
+ * removeDatasetEntry(element, "label");
  * ```
  *
  * **HTML (After)**
@@ -63,13 +65,13 @@ import type { DataKey, DataPropertyName } from "./types.ts";
  * </div>
  * ```
  */
-export function removeDataEntry<TN extends TagName = "*">(
+export function removeDatasetEntry<TN extends TagName = "*">(
   target: Target<TN>,
-  key: DataPropertyName,
+  key: DatasetPropertyName,
 ): ElementOf<TN> {
   const element = toElementOrThrow(target, `Unable to remove data for ${key}`);
 
-  removeSingleDataEntry(element, key);
+  removeSingleDatasetEntry(element, key);
 
   return cast<ElementOf<TN>>(element);
 }
@@ -106,7 +108,7 @@ export function removeDataEntry<TN extends TagName = "*">(
  * ```ts
  * const element = findElement("#example")!;
  *
- * removeData(element, ["data-label", "data-count"]);
+ * removeDatasetEntries(element, ["data-label", "data-count"]);
  * ```
  *
  * **Using Property Names (camelCase)**
@@ -114,7 +116,7 @@ export function removeDataEntry<TN extends TagName = "*">(
  * ```ts
  * const element = findElement("#example")!;
  *
- * removeData(element, ["label", "count"]);
+ * removeDatasetEntries(element, ["label", "count"]);
  * ```
  *
  * **HTML (After)**
@@ -128,22 +130,22 @@ export function removeDataEntry<TN extends TagName = "*">(
  * </div>
  * ```
  */
-export function removeData<TN extends TagName = "*">(
+export function removeDatasetEntries<TN extends TagName = "*">(
   target: Target<TN>,
-  keys: DataKey[],
+  keys: DatasetKey[],
 ): ElementOf<TN> {
   // prettier-ignore
   const element = toElementOrThrow(target, `Unable to remove data for ${formatForError(keys)}`);
 
   for (const key of keys) {
-    removeSingleDataEntry(element, key);
+    removeSingleDatasetEntry(element, key);
   }
 
   return cast<ElementOf<TN>>(element);
 }
 
-function removeSingleDataEntry(element: Element, key: string): void {
-  const validAttrName = asDataAttrName(key);
+function removeSingleDatasetEntry(element: Element, key: string): void {
+  const validAttrName = asDatasetAttributeName(key);
 
   // We remove the _attribute_ rather than deleting the entry from the elements
   // dataset because deleting a dataset entry using `delete` won't work in

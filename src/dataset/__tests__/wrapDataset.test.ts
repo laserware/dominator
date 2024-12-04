@@ -1,5 +1,5 @@
 import { render } from "../../testing.ts";
-import { datasetOf } from "../datasetOf.ts";
+import { wrapDataset } from "../wrapDataset.ts";
 
 type TestDatasetShape = {
   count: number;
@@ -15,11 +15,11 @@ const initialData: TestDatasetShape = {
   valid: true,
 };
 
-describe("the datasetOf function", () => {
+describe("the wrapDataset function", () => {
   it("sets the dataset properties to the specified initial values when called", () => {
     const element = render(`<div>Test</div>`);
 
-    const dataset = datasetOf<TestDatasetShape>(element, initialData);
+    const dataset = wrapDataset<TestDatasetShape>(element, initialData);
 
     expect(dataset.element.getAttribute("data-count")).toBe("20");
     expect(dataset.element.getAttribute("data-size")).toBe("small");
@@ -27,19 +27,19 @@ describe("the datasetOf function", () => {
     expect(dataset.element.getAttribute("data-valid")).toBe("true");
   });
 
-  it("creates an instance of Dataset with no initial data when specified", () => {
+  it("creates an instance of Dataset with no initial dataset when specified", () => {
     const element = render(`<div>Test</div>`);
 
-    const dataset = datasetOf<TestDatasetShape>(element);
+    const dataset = wrapDataset<TestDatasetShape>(element);
 
     expect(dataset.element.hasAttribute("data-count")).toBeFalsy();
   });
 
   describe("the getAll method", () => {
-    it("returns all data when dataset entries exist on target", () => {
+    it("returns all dataset when dataset entries exist on target", () => {
       const element = render(`<div>Test</div>`);
 
-      const dataset = datasetOf<TestDatasetShape>(element, initialData);
+      const dataset = wrapDataset<TestDatasetShape>(element, initialData);
 
       expect(dataset.getAll()).toEqual(initialData);
     });
@@ -47,7 +47,7 @@ describe("the datasetOf function", () => {
     it("returns an empty object when no dataset entries exist on target", () => {
       const element = render(`<div>Test</div>`);
 
-      const dataset = datasetOf(element);
+      const dataset = wrapDataset(element);
 
       expect(dataset.getAll()).toEqual({});
     });
@@ -55,7 +55,7 @@ describe("the datasetOf function", () => {
     it("returns object with with defined dataset properties", () => {
       const element = render(`<div data-count="10">Test</div>`);
 
-      const dataset = datasetOf<{ count: number; color: string }>(element);
+      const dataset = wrapDataset<{ count: number; color: string }>(element);
 
       expect(dataset.getAll()).toEqual({ count: 10 });
     });
@@ -65,7 +65,7 @@ describe("the datasetOf function", () => {
     it("returns the value when it exists in the dataset", () => {
       const element = render(`<div>Test</div>`);
 
-      const dataset = datasetOf<TestDatasetShape>(element, initialData);
+      const dataset = wrapDataset<TestDatasetShape>(element, initialData);
 
       expect(dataset.get("count")).toBe(initialData.count);
       expect(dataset.get("size")).toBe(initialData.size);
@@ -76,7 +76,7 @@ describe("the datasetOf function", () => {
     it("returns undefined if the value isn't found", () => {
       const element = render(`<div>Test</div>`);
 
-      const dataset = datasetOf<TestDatasetShape>(element, initialData);
+      const dataset = wrapDataset<TestDatasetShape>(element, initialData);
 
       // @ts-ignore
       expect(dataset.get("[missing]")).toBeUndefined();
@@ -86,7 +86,7 @@ describe("the datasetOf function", () => {
   it("sets the dataset value when the set method is called", () => {
     const element = render(`<div>Test</div>`);
 
-    const dataset = datasetOf<TestDatasetShape>(element, initialData);
+    const dataset = wrapDataset<TestDatasetShape>(element, initialData);
 
     const expected = 50;
 
@@ -98,7 +98,7 @@ describe("the datasetOf function", () => {
   it("removes the dataset entry when the remove method is called", () => {
     const element = render(`<div>Test</div>`);
 
-    const dataset = datasetOf<TestDatasetShape>(element, initialData);
+    const dataset = wrapDataset<TestDatasetShape>(element, initialData);
 
     dataset.remove("count");
 
@@ -108,7 +108,7 @@ describe("the datasetOf function", () => {
   it("sets the dataset entries when the setAll method is called", () => {
     const element = render(`<div>Test</div>`);
 
-    const dataset = datasetOf<TestDatasetShape>(element);
+    const dataset = wrapDataset<TestDatasetShape>(element);
 
     dataset.setAll({ count: 50, size: "small" });
 
@@ -119,7 +119,7 @@ describe("the datasetOf function", () => {
   it("returns the dataset attribute name when attrNameFor is called", () => {
     const element = render(`<div data-name="test">Test</div>`);
 
-    const dataset = datasetOf<{ name: string }>(element);
+    const dataset = wrapDataset<{ name: string }>(element);
 
     expect(dataset.attrNameFor("name")).toBe("data-name");
   });

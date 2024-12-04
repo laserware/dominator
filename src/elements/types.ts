@@ -1,6 +1,6 @@
 import type { Attributes } from "../attributes/types.ts";
 import type { CssSelector } from "../css/types.ts";
-import type { Data } from "../data/types.ts";
+import type { Dataset } from "../dataset/types.ts";
 import type { ElementOf, TagName } from "../dom.ts";
 
 /**
@@ -52,7 +52,7 @@ export type FindOptions<TN extends TagName = "*"> = {
   withAttrs?: Attributes<TN>;
 
   /** Key/value pairs of dataset entries to search for. */
-  withData?: Data;
+  withData?: Dataset;
 
   /** Optional parent Element, EventTarget, or CSS selector. */
   parent?: Target | null | undefined;

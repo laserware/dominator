@@ -267,7 +267,7 @@ export interface AriaAttributes {
   "aria-owns"?: string | undefined | null;
   /**
    * Defines a short hint (a word or short phrase) intended to aid the user with
-   * data entry when the control has no value. A hint could be a sample value or a
+   * dataset entry when the control has no value. A hint could be a sample value or a
    * brief description of the expected format.
    */
   "aria-placeholder"?: string | undefined | null;
@@ -546,7 +546,7 @@ export interface HTMLAttributes
 
   // Living Standard
   /**
-   * Hints at the type of data that might be entered by the user while editing
+   * Hints at the type of dataset that might be entered by the user while editing
    * the element or its contents. See the [specification for `inputmode`](https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-inputmode-attribute).
    */
   inputmode?:
@@ -635,7 +635,7 @@ export interface HTMLButtonAttributes extends HTMLAttributes {
   formaction?: string | undefined | null;
   formenctype?:
     | "application/x-www-form-urlencoded"
-    | "multipart/form-data"
+    | "multipart/form-dataset"
     | "text/plain"
     | undefined
     | null;
@@ -738,7 +738,7 @@ export interface HTMLFormAttributes extends HTMLAttributes {
   autocomplete?: AutoFillBase | undefined | null;
   enctype?:
     | "application/x-www-form-urlencoded"
-    | "multipart/form-data"
+    | "multipart/form-dataset"
     | "text/plain"
     | undefined
     | null;
@@ -863,7 +863,7 @@ export interface HTMLInputAttributes extends HTMLAttributes {
   formaction?: string | undefined | null;
   formenctype?:
     | "application/x-www-form-urlencoded"
-    | "multipart/form-data"
+    | "multipart/form-dataset"
     | "text/plain"
     | undefined
     | null;

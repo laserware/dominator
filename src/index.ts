@@ -1,6 +1,6 @@
 export * from "./attributes/attributes.ts";
 export * from "./css/css.ts";
-export * from "./data/data.ts";
+export * from "./dataset/dataset.ts";
 export * from "./elements/elements.ts";
 export * from "./styles/styles.ts";
 

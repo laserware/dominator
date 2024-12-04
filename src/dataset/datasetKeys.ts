@@ -1,6 +1,10 @@
 import { camelCase, entriesOf, kebabCase } from "@laserware/arcade";
 
-import type { DataAttrName, DataKey, DataPropertyName } from "../data/types.ts";
+import type {
+  DatasetAttributeName,
+  DatasetKey,
+  DatasetPropertyName,
+} from "./types.ts";
 
 /**
  * Ensures the specified key or name is `kebab-case` with a `data-` prefix and
@@ -15,9 +19,9 @@ import type { DataAttrName, DataKey, DataPropertyName } from "../data/types.ts";
  * @param key Key for the dataset entry that is either camelCase or already in
  *            the `data-` name form.
  */
-export function asDataAttrName(key: DataKey): DataAttrName {
+export function asDatasetAttributeName(key: DatasetKey): DatasetAttributeName {
   if (key.startsWith("data-")) {
-    return key as DataAttrName;
+    return key as DatasetAttributeName;
   } else {
     return `data-${kebabCase(key)}`;
   }
@@ -36,7 +40,7 @@ export function asDataAttrName(key: DataKey): DataAttrName {
  * @param key Key for the dataset entry that is either camelCase or already in
  *            the `data-` name form.
  */
-export function asDataPropertyName(key: DataKey): DataPropertyName {
+export function asDatasetPropertyName(key: DatasetKey): DatasetPropertyName {
   if (key.startsWith("data-")) {
     return camelCase(key.replace("data-", ""));
   } else {
@@ -56,12 +60,12 @@ export function withDataPrefix<T extends Record<string, any> | any[]>(
   values: T,
 ): T {
   if (Array.isArray(values)) {
-    return values.map((value) => asDataAttrName(value)) as T;
+    return values.map((value) => asDatasetAttributeName(value)) as T;
   } else {
     const withData: Record<string, any> = {};
 
     for (const [key, value] of entriesOf(values)) {
-      withData[asDataAttrName(key)] = value;
+      withData[asDatasetAttributeName(key)] = value;
     }
 
     return withData as T;

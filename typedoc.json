@@ -3,10 +3,10 @@
   "cleanOutputDir": true,
   "customCss": "./docs/theme.css",
   "entryPoints": [
-    "./src/attrs/attrs.ts",
+    "./src/attributes/attributes.ts",
     "./src/css/css.ts",
-    "./src/data/data.ts",
-    "./src/elems/elems.ts",
+    "./src/dataset/dataset.ts",
+    "./src/elements/elements.ts",
     "./src/styles/styles.ts",
     "./src/dom.ts",
     "./src/search.ts",

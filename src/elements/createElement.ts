@@ -4,8 +4,8 @@ import { setAttributes } from "../attributes/setAttributes.ts";
 import type { Attributes } from "../attributes/types.ts";
 import { setCssVars } from "../css/setCssVars.ts";
 import type { CssVars } from "../css/types.ts";
-import { setData } from "../data/setData.ts";
-import type { Data } from "../data/types.ts";
+import { setDatasetEntries } from "../dataset/setDataset.ts";
+import type { Dataset } from "../dataset/types.ts";
 import type { ElementOf, TagName } from "../dom.ts";
 import { setStyles } from "../styles/setStyles.ts";
 
@@ -111,7 +111,7 @@ export type CreateElemOptions<TN extends TagName> = Partial<
   cssVars?: CssVars;
 
   /** Dataset entries to set on element. */
-  data?: Data;
+  data?: Dataset;
 
   /**
    * Event listeners or {@linkcode EventDescriptor} objects to set on element.
@@ -165,7 +165,7 @@ export type ElemChild = HTMLElement | SVGElement | string | null;
  *   attributes: {
  *     disabled: true,
  *   },
- *   data: {
+ *   dataset: {
  *     isValid: true,
  *   },
  *   cssVars: {
@@ -231,7 +231,7 @@ export function createElement<TN extends TagName>(
   }
 
   if (isNotNil(options.data)) {
-    setData(element, options.data);
+    setDatasetEntries(element, options.data);
     delete props.data;
   }
 

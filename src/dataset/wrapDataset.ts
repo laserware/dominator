@@ -4,17 +4,19 @@ import type { AttributeValue } from "../attributes/types.ts";
 import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
-import { asDataAttrName } from "../internal/dataKeys.ts";
+
 import { parseDOMValue, stringifyDOMValue } from "../internal/domValues.ts";
 
-import { removeDataEntry } from "./removeData.ts";
-import type { DataValue } from "./types.ts";
+import { asDatasetAttributeName } from "./datasetKeys.ts";
+
+import { removeDatasetEntry } from "./removeDataset.ts";
+import type { DatasetValue } from "./types.ts";
 
 /**
  * Valid shape for dataset property. The values can be any type that can be
- * stringified. Used for defining the shape in the {@linkcode Dataset} class.
+ * stringified. Used for defining the shape in the {@linkcode DatasetWrapper} class.
  */
-export type AnyDatasetShape = Record<string, DataValue | null>;
+export type AnyDatasetShape = Record<string, DatasetValue | null>;
 
 /**
  * Wrapper for managing the [dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
@@ -30,25 +32,28 @@ export type AnyDatasetShape = Record<string, DataValue | null>;
  * This wrapper class enables you to get and set values of any type that can be
  * stringified while retaining type safety via the `DS` generic passed in.
  *
- * See usage examples in {@linkcode datasetOf}.
+ * See usage examples in {@linkcode wrapDataset}.
  *
- * @template DS The shape of the dataset data.
- * @template TN Tag name of element which the dataset data is associated.
+ * @template DS The shape of the dataset dataset.
+ * @template TN Tag name of element which the dataset dataset is associated.
  *
  * @class
  */
-export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
+export class DatasetWrapper<
+  DS extends AnyDatasetShape,
+  TN extends TagName = "*",
+> {
   readonly #element: ElementOf<TN>;
 
   /**
-   * Creates a new instance of a {@linkcode Dataset} class to manage the dataset
+   * Creates a new instance of a {@linkcode DatasetWrapper} class to manage the dataset
    * property of the corresponding `target`. Optionally pass in `initialData`
    * that can fully match the shape specified in the `DS` generic or partially.
    *
-   * @template DS The shape of the dataset data.
+   * @template DS The shape of the dataset dataset.
    *
    * @param target Element, EventTarget, or CSS selector.
-   * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
+   * @param [initialData] Optional full or partial dataset that corresponds to the dataset shape.
    *
    * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
    */
@@ -100,7 +105,7 @@ export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
    * ```ts
    * const element = findElement("#example");
    *
-   * const ds = datasetOf<{ count: number; label: string }>(element);
+   * const ds = wrapDataset<{ count: number; label: string }>(element);
    *
    * // Note that `label` is missing because there is no `data-label` attribute
    * // on the specified element:
@@ -135,7 +140,7 @@ export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
 
   /**
    * Updates the element's dataset property values to match the `entries` object
-   * specified. You can pass in a subset of the shape of data and only those
+   * specified. You can pass in a subset of the shape of dataset and only those
    * values will be updated.
    *
    * @param entries Data to update in the dataset.
@@ -154,7 +159,7 @@ export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
    * @param key Key of the dataset entry to remove.
    */
   public remove<K extends keyof DS>(key: K): this {
-    removeDataEntry(this.#element, key as string);
+    removeDatasetEntry(this.#element, key as string);
 
     return this;
   }
@@ -168,7 +173,7 @@ export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
    * @returns Dataset attribute name associated with the specified `key`.
    */
   public attrNameFor<K extends keyof DS>(key: K): string {
-    return asDataAttrName(key as string);
+    return asDatasetAttributeName(key as string);
   }
 
   get #dataset(): DOMStringMap {
@@ -183,18 +188,18 @@ export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
 }
 
 /**
- * Creates a new {@linkcode Dataset} instance for managing the
+ * Creates a new {@linkcode DatasetWrapper} instance for managing the
  * [dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
  * property on the `target` element. Optionally pass in `initialData`
  * that can fully or partially match the shape specified in the `DS` generic.
  *
- * @template DS The shape of the dataset data.
+ * @template DS The shape of the dataset dataset.
  * @template TN Tag name of element containing the `dataset` property.
  *
  * @param target Element, EventTarget, or CSS selector.
- * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
+ * @param [initialData] Optional full or partial dataset that corresponds to the dataset shape.
  *
- * @returns {@linkcode Dataset} instance associated with `target`.
+ * @returns {@linkcode DatasetWrapper} instance associated with `target`.
  *
  * @example
  * **HTML (Before)**
@@ -223,40 +228,40 @@ export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
  *   status: string | undefined;
  * }
  *
- * // You can pass in initial data which will be added to the element's
+ * // You can pass in initial dataset which will be added to the element's
  * // dataset (as well as set as attributes on the element).
- * const dataset = datasetOf<Shape>(element, {
+ * const dataset = wrapDataset<Shape>(element, {
  *   isActive: false,
  *   count: 30,
  *   label: "Example",
  * });
  *
  * // Returns the value for the specified key:
- * data.get("count");
+ * dataset.get("count");
  * // 30
  *
  * // `set` returns the `Dataset` instance so you can perform
  * // other operations:
- * data
+ * dataset
  *   .set("count", 40)
  *   .get("count");
  * // 40
  *
  * // Remove from the element:
- * data.remove("label");
+ * dataset.remove("label");
  *
  * // Update existing entry or add new one if not present:
- * data.set("status", "warning");
+ * dataset.set("status", "warning");
  *
  * // Sets multiple entries on element:
- * data.setAll({ isActive: true, isInvalid: false });
+ * dataset.setAll({ isActive: true, isInvalid: false });
  *
  * // Returns an object matching `Shape`:
- * data.getAll();
+ * dataset.getAll();
  * // { isActive: true, isInvalid: false, count: 40, status: "warning" }
  *
  * // Get attribute name for an entry:
- * data.attrNameFor("isActive");
+ * dataset.attrNameFor("isActive");
  * // "data-is-active"
  * ```
  *
@@ -274,9 +279,9 @@ export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
  * </div>
  * ```
  */
-export function datasetOf<DS extends AnyDatasetShape, TN extends TagName = "*">(
-  target: Element | Target,
-  initialData?: Partial<DS>,
-): Dataset<DS, TN> {
-  return new Dataset<DS, TN>(target, initialData);
+export function wrapDataset<
+  DS extends AnyDatasetShape,
+  TN extends TagName = "*",
+>(target: Element | Target, initialData?: Partial<DS>): DatasetWrapper<DS, TN> {
+  return new DatasetWrapper<DS, TN>(target, initialData);
 }
