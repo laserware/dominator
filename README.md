@@ -78,7 +78,9 @@ You can use `findElement` and `findAllElements` instead:
 ```ts
 import { findElement, findAllElements } from "@laserware/dominator";
 
-const firstHeaderColumn = findElement(`[role="row"] [role="columnheader"]:first-child`);
+const firstHeaderColumn = findElement(
+  `[role="row"] [role="columnheader"]:first-child`,
+);
 
 // Returns the grid cell elements as an array:
 const allGridCells = findAllElements<"div">(`[role="gridcell"]`);
@@ -109,7 +111,11 @@ div.setAttribute("aria-colindex", "1");
 You can use `setAttribute` or `setAttributes` instead. Both functions return the element:
 
 ```ts
-import { createElement, setAttribute, setAttributes } from "@laserware/dominator";
+import { 
+  createElement,
+  setAttribute,
+  setAttributes, 
+} from "@laserware/dominator";
 
 let div = createElement("div");
 
@@ -250,7 +256,11 @@ const secondGridCell = findElement(`[role="gridcell"][aria-colindex="2"]`);
 You can use `selectAttribute` and `selectAttributes` instead:
 
 ```ts
-import { findElement, selectAttribute, selectAttributes } from "@laserware/dominator";
+import { 
+  findElement,
+  selectAttribute,
+  selectAttributes,
+} from "@laserware/dominator";
 
 const firstHeaderSelector = [
   selectAttribute("role", "row"),

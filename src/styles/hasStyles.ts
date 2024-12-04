@@ -28,8 +28,7 @@ export type StylesSearch = PropertySearch<StyleKey, StyleValue | null>;
  *
  * @returns `true` if the specified style is present.
  *
- * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have
- *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function hasStyle(
   target: Target,
@@ -38,7 +37,7 @@ export function hasStyle(
 ): boolean {
   const element = toElement(target);
   if (element === null || !("style" in element)) {
-    throw new InvalidElementError(`Unable to check for style ${key}`);
+    throw new InvalidElementError(`Cannot check for style ${key}`);
   }
 
   return hasSingleStyle(element, key, value);
@@ -59,7 +58,7 @@ export function hasAllStyles(target: Target, search: StylesSearch): boolean {
   const element = toElement(target);
   if (element === null || !("style" in element)) {
     // prettier-ignore
-    throw new InvalidElementError(`Unable to check for all styles ${formatForError(search)}`);
+    throw new InvalidElementError(`Cannot check for all styles ${formatForError(search)}`);
   }
 
   return hasAllProperties(element, search, hasSingleStyle);
@@ -80,7 +79,7 @@ export function hasSomeStyles(target: Target, search: StylesSearch): boolean {
   const element = toElement(target);
   if (element === null || !("style" in element)) {
     // prettier-ignore
-    throw new InvalidElementError(`Unable to check for some styles ${formatForError(search)}`);
+    throw new InvalidElementError(`Cannot check for some styles ${formatForError(search)}`);
   }
 
   return hasSomeProperties(element, search, hasSingleStyle);

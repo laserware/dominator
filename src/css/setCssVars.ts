@@ -76,7 +76,7 @@ export function setCssVar<TN extends TagName = "*">(
   target: Target<TN> = document.documentElement,
 ): ElementOf<TN> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to set CSS variable ${name}`);
+  const element = toElementOrThrow(target, `Cannot set CSS variable ${name}`);
 
   setSingleCssVar(element, name, value);
 
@@ -152,7 +152,7 @@ export function setCssVars<TN extends TagName = "*">(
   target: Target<TN> = document.documentElement,
 ): ElementOf<TN> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to set CSS variables ${formatForError(vars)}`);
+  const element = toElementOrThrow(target, `Cannot set CSS variables ${formatForError(vars)}`);
 
   for (const key of Object.keys(vars)) {
     const varName = cast<keyof typeof vars>(key);

@@ -45,7 +45,7 @@ export type InputValueAsType<T extends InputValueTypeName> = T extends "boolean"
 export function getInputValue<T extends InputValueTypeName>(
   target: Target,
 ): InputValueAsType<T> {
-  const element = toElementOrThrow(target, "Could not get value for element");
+  const element = toElementOrThrow(target, "Cannot get value for element");
 
   if (!isInputElement(element)) {
     throw new Error("Cannot get value on an element if it is not an input");
@@ -84,7 +84,7 @@ export function getInputValue<T extends InputValueTypeName>(
  * @throws Error if the `target` specified is not of type `HTMLInputElement`.
  */
 export function getInputValueRaw(target: Target): string {
-  const element = toElementOrThrow(target, "Could not get value for element");
+  const element = toElementOrThrow(target, "Cannot get value for element");
 
   if (isInputElement(element)) {
     return element.value;

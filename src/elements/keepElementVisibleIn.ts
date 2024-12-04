@@ -14,10 +14,10 @@ import type { Target } from "./types.ts";
  */
 export function keepElementVisibleIn(target: Target, parent: Target): void {
   // prettier-ignore
-  const activeElement = toElementOrThrow(target, "Unable to keep target visible");
+  const activeElement = toElementOrThrow(target, "Cannot keep target visible");
 
   // prettier-ignore
-  const scrollElement = toElementOrThrow(parent, "Unable to keep element visible in parent");
+  const scrollElement = toElementOrThrow(parent, "Cannot keep element visible in parent");
 
   const isAbove = activeElement.offsetTop < scrollElement.scrollTop;
   const isBelow =

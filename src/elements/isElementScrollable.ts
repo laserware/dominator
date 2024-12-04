@@ -14,7 +14,7 @@ import type { Target } from "./types.ts";
  */
 export function isElementScrollable(target: Target): boolean {
   // prettier-ignore
-  const element = toElementOrThrow(target, "Unable to check if target is scrollable");
+  const element = toElementOrThrow(target, "Cannot check if target is scrollable");
 
   // prettier-ignore
   return element.clientHeight < element.scrollHeight || element.clientWidth < element.scrollWidth;

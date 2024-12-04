@@ -12,7 +12,7 @@ import type { Target } from "./types.ts";
  */
 export function isElementInViewport(target: Target): boolean {
   // prettier-ignore
-  const element = toElementOrThrow(target, "Unable to determine if element is in view");
+  const element = toElementOrThrow(target, "Cannot determine if element is in view");
 
   const { top, left, bottom, right } = element.getBoundingClientRect();
 

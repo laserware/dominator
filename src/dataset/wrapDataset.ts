@@ -58,7 +58,7 @@ export class DatasetWrapper<
    */
   constructor(target: Target<TN>, initialData?: Partial<DS>) {
     // prettier-ignore
-    this.#element = toElementOrThrow<TN>(target, "Unable to initialize Dataset");
+    this.#element = toElementOrThrow<TN>(target, "Cannot initialize Dataset");
 
     if (isNotNil(initialData)) {
       this.setAll(initialData);

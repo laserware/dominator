@@ -83,7 +83,7 @@ export function hasCssVar(
   target: Target = document.documentElement,
 ): boolean {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to check for CSS variable ${name}`);
+  const element = toElementOrThrow(target, `Cannot check for CSS variable ${name}`);
 
   return hasSingleCssVar(element, name, value);
 }
@@ -162,7 +162,7 @@ export function hasAllCssVars(
   target: Target = document.documentElement,
 ): boolean {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to check for all CSS variables ${formatForError(search)}`);
+  const element = toElementOrThrow(target, `Cannot check for all CSS variables ${formatForError(search)}`);
 
   return hasAllProperties(element, search, hasSingleCssVar);
 }
@@ -241,7 +241,7 @@ export function hasSomeCssVars(
   target: Target = document.documentElement,
 ): boolean {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to check for some CSS variables ${formatForError(search)}`);
+  const element = toElementOrThrow(target, `Cannot check for some CSS variables ${formatForError(search)}`);
 
   return hasSomeProperties(element, search, hasSingleCssVar);
 }

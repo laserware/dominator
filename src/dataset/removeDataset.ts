@@ -68,7 +68,7 @@ export function removeDatasetEntry<TN extends TagName = "*">(
   key: DatasetPropertyName,
 ): ElementOf<TN> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to remove dataset entry for ${key}`);
+  const element = toElementOrThrow(target, `Cannot remove dataset entry for ${key}`);
 
   removeSingleDatasetEntry(element, key);
 
@@ -134,7 +134,7 @@ export function removeDatasetEntries<TN extends TagName = "*">(
   keys: DatasetKey[],
 ): ElementOf<TN> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to remove dataset entries for ${formatForError(keys)}`);
+  const element = toElementOrThrow(target, `Cannot remove dataset entries ${formatForError(keys)}`);
 
   for (const key of keys) {
     removeSingleDatasetEntry(element, key);

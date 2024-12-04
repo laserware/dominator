@@ -35,6 +35,6 @@ describe("the idMatches function", () => {
   it("throws an error if the target does not exist", () => {
     expect(() => {
       idMatches(selectorForNonExistent, "test-id");
-    }).toThrow("Unable to check for ID match");
+    }).toThrow("Cannot check for ID match");
   });
 });

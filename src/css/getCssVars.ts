@@ -73,7 +73,7 @@ export function getCssVar<V extends CssVarValue>(
   target: Target = document.documentElement,
 ): V | undefined {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to get CSS variable ${name}`);
+  const element = toElementOrThrow(target, `Cannot get CSS variable ${name}`);
 
   return getSingleCssVar<V>(element, name);
 }
@@ -168,7 +168,7 @@ export function getCssVars<V extends CssVars = CssVars>(
   target: Target = document.documentElement,
 ): WithUndefinedValues<V> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to get CSS variables ${formatForError(names)}`);
+  const element = toElementOrThrow(target, `Cannot get CSS variables ${formatForError(names)}`);
 
   const cssVars: Record<string, CssVarValue | undefined> = {};
 

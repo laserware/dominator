@@ -49,7 +49,7 @@ export function removeAttribute<TN extends TagName = "*">(
   name: AttributeName<TN>,
 ): ElementOf<TN> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to remove attribute ${name}`);
+  const element = toElementOrThrow(target, `Cannot remove attribute ${name}`);
 
   element.removeAttribute(name);
 
@@ -111,7 +111,7 @@ export function removeAttributes<TN extends TagName = "*">(
   names: AttributeName<TN>[],
 ): ElementOf<TN> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to remove attributes ${formatForError(names)}`);
+  const element = toElementOrThrow(target, `Cannot remove attributes ${formatForError(names)}`);
 
   for (const name of names) {
     element.removeAttribute(name);

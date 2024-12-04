@@ -75,7 +75,7 @@ export function setDatasetEntry<TN extends TagName = "*">(
   value: DatasetValue | null,
 ): ElementOf<TN> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to set dataset entry for ${key}`);
+  const element = toElementOrThrow(target, `Cannot set dataset entry for ${key}`);
 
   setSingleDatasetEntry(element, key, value);
 
@@ -149,7 +149,7 @@ export function setDatasetEntries<TN extends TagName = "*">(
   dataset: Dataset,
 ): ElementOf<TN> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to set dataset entries for ${formatForError(dataset)}`);
+  const element = toElementOrThrow(target, `Cannot set dataset entries ${formatForError(dataset)}`);
 
   for (const key of Object.keys(dataset)) {
     setSingleDatasetEntry(element, key, dataset[key]);

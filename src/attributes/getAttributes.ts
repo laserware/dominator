@@ -61,7 +61,7 @@ export function getAttribute<
   V extends AttributeValue = AttributeValue,
   TN extends TagName = "*",
 >(target: Target<TN>, name: AttributeName<TN>): V | null {
-  const element = toElementOrThrow(target, `Unable to get attribute ${name}`);
+  const element = toElementOrThrow(target, `Cannot get attribute ${name}`);
 
   return getSingleAttribute<V, TN>(element, name) ?? null;
 }
@@ -143,7 +143,7 @@ export function getAttributes<
   TN extends TagName = "*",
 >(target: Target<TN>, names: KeysOf<V>): WithNullValues<V> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to get attributes ${formatForError(names)}`);
+  const element = toElementOrThrow(target, `Cannot get attributes ${formatForError(names)}`);
 
   const attributes: Record<string, AttributeValue | null> = {};
 

@@ -66,7 +66,7 @@ export function hasDatasetEntry<TN extends TagName = "*">(
   value?: DatasetValue,
 ): boolean {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to check for dataset entry ${key}`);
+  const element = toElementOrThrow(target, `Cannot check for dataset entry for ${key}`);
 
   return hasSingleDatasetEntry(element, key, value);
 }
@@ -118,7 +118,7 @@ export function hasAllDatasetEntries<TN extends TagName = "*">(
   search: DatasetSearch,
 ): boolean {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to check for all dataset entries ${formatForError(search)}`);
+  const element = toElementOrThrow(target, `Cannot check for all dataset entries ${formatForError(search)}`);
 
   return hasAllProperties(element, search, hasSingleDatasetEntry);
 }
@@ -174,7 +174,7 @@ export function hasSomeDatasetEntries<TN extends TagName = "*">(
   search: DatasetSearch,
 ): boolean {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to check for some dataset entries ${formatForError(search)}`);
+  const element = toElementOrThrow(target, `Cannot check for some dataset entries ${formatForError(search)}`);
 
   return hasSomeProperties(element, search, hasSingleDatasetEntry);
 }

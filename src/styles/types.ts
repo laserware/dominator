@@ -18,7 +18,7 @@ export type StyleKey =
       | "setProperty"
 
       // This allows us to access the index of a style, which we also don't want
-      // to allow in the builder.
+      // to allow.
       | number
     >
   | CssVarName;

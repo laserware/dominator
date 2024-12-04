@@ -62,7 +62,7 @@ export function removeCssVar<TN extends TagName = "*">(
   target: Target<TN> = document.documentElement,
 ): ElementOf<TN> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to remove CSS variable ${name}`);
+  const element = toElementOrThrow(target, `Cannot remove CSS variable ${name}`);
 
   removeSingleCssVar(element, name);
 
@@ -135,7 +135,7 @@ export function removeCssVars<TN extends TagName = "*">(
   target: Target<TN> = document.documentElement,
 ): ElementOf<TN> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to remove CSS variables ${formatForError(names)}`);
+  const element = toElementOrThrow(target, `Cannot remove CSS variables ${formatForError(names)}`);
 
   for (const name of names) {
     removeSingleCssVar(element, name);
@@ -150,6 +150,6 @@ function removeSingleCssVar(element: Element, name: CssVarName): void {
   } catch (err: any) {
     /* istanbul ignore next -- @preserve: This will probably never get hit, but I'm hedging my bets. */
     // prettier-ignore
-    throw new InvalidCssVarError(`Unable to remove CSS variable ${name}: ${err.message}`);
+    throw new InvalidCssVarError(`Cannot remove CSS variable ${name}: ${err.message}`);
   }
 }

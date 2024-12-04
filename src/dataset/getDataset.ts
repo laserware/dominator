@@ -71,7 +71,7 @@ export function getDatasetValue<V extends DatasetValue = DatasetValue>(
   key: DatasetKey,
 ): V | undefined {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to get dataset value for ${key}`);
+  const element = toElementOrThrow(target, `Cannot get dataset value for ${key}`);
 
   return getSingleDatasetValue(element, key);
 }
@@ -162,7 +162,7 @@ export function getDatasetEntries<V extends Dataset = Dataset>(
   keys: DatasetKey[],
 ): WithUndefinedValues<V> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to get dataset entries for ${formatForError(keys)}`);
+  const element = toElementOrThrow(target, `Cannot get dataset entries ${formatForError(keys)}`);
 
   const result: Record<DatasetKey, DatasetValue | undefined> = {};
 

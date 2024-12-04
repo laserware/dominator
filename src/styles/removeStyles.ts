@@ -18,14 +18,13 @@ import type { StyleKey } from "./types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have
- *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function removeStyle<TN extends TagName = "*">(
   target: Target,
   key: StyleKey,
 ): ElementOf<TN> {
-  const element = toElementOrThrow(target, `Unable to remove style ${key}`);
+  const element = toElementOrThrow(target, `Cannot remove style ${key}`);
 
   removeSingleStyle(element, key);
 
@@ -43,15 +42,14 @@ export function removeStyle<TN extends TagName = "*">(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have
- *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function removeStyles<TN extends TagName = "*">(
   target: Target,
   keys: StyleKey[],
 ): ElementOf<TN> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to remove styles ${formatForError(keys)}`);
+  const element = toElementOrThrow(target, `Cannot remove styles ${formatForError(keys)}`);
 
   for (const key of keys) {
     removeSingleStyle(element, key);

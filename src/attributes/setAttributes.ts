@@ -56,7 +56,7 @@ export function setAttribute<TN extends TagName = "*">(
   name: AttributeName<TN>,
   value: AttributeValue | null | undefined,
 ): ElementOf<TN> {
-  const element = toElementOrThrow(target, `Unable to set attribute ${name}`);
+  const element = toElementOrThrow(target, `Cannot set attribute ${name}`);
 
   setSingleAttribute(element, name, value);
 
@@ -115,7 +115,7 @@ export function setAttributes<TN extends TagName = "*">(
   attributes: Attributes<TN>,
 ): ElementOf<TN> {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to set attributes ${formatForError(attributes)}`);
+  const element = toElementOrThrow(target, `Cannot set attributes ${formatForError(attributes)}`);
 
   for (const name of Object.keys(attributes)) {
     setSingleAttribute(element, name, attributes[name]);

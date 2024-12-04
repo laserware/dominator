@@ -39,7 +39,7 @@ import type { Target } from "./types.ts";
  * ```
  */
 export function idMatches(target: Target, id: string): boolean {
-  const element = toElementOrThrow(target, "Unable to check for ID match");
+  const element = toElementOrThrow(target, "Cannot check for ID match");
 
   // Clear the `#` in case the ID CSS selector is part of the string:
   const validId = id.replace("#", "");

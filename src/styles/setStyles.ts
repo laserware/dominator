@@ -20,8 +20,7 @@ import type { StyleKey, Styles, StyleValue } from "./types.ts";
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have
- *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function setStyle<TN extends TagName = "*">(
   target: Target,
@@ -30,7 +29,7 @@ export function setStyle<TN extends TagName = "*">(
 ): ElementOf<TN> {
   const element = toElement(target);
   if (element === null || !("style" in element)) {
-    throw new InvalidElementError(`Unable to set style for ${key}`);
+    throw new InvalidElementError(`Cannot set style for ${key}`);
   }
 
   setSingleStyle(element, key, value);
@@ -50,8 +49,7 @@ export function setStyle<TN extends TagName = "*">(
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have
- *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function setStyles<TN extends TagName = "*">(
   target: Target,
@@ -60,7 +58,7 @@ export function setStyles<TN extends TagName = "*">(
   const element = toElement(target);
   if (element === null || !("style" in element)) {
     // prettier-ignore
-    throw new InvalidElementError(`Unable to set styles for ${formatForError(styles)}`);
+    throw new InvalidElementError(`Cannot set styles ${formatForError(styles)}`);
   }
 
   for (const key of Object.keys(styles)) {

@@ -67,7 +67,7 @@ export function hasAttribute<TN extends TagName = "*">(
   value?: AttributeValue,
 ): boolean {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to check for attribute ${name}`);
+  const element = toElementOrThrow(target, `Cannot check for attribute ${name}`);
 
   return hasSingleAttribute(element, name, value);
 }
@@ -117,7 +117,7 @@ export function hasAllAttributes<TN extends TagName = "*">(
   search: AttributesSearch<TN>,
 ): boolean {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to check for all attributes ${formatForError(search)}`);
+  const element = toElementOrThrow(target, `Cannot check for all attributes ${formatForError(search)}`);
 
   return hasAllProperties(element, search, hasSingleAttribute);
 }
@@ -166,7 +166,7 @@ export function hasSomeAttributes<TN extends TagName = "*">(
   search: AttributesSearch<TN>,
 ): boolean {
   // prettier-ignore
-  const element = toElementOrThrow(target, `Unable to check for some attributes ${formatForError(search)}`);
+  const element = toElementOrThrow(target, `Cannot check for some attributes ${formatForError(search)}`);
 
   return hasSomeProperties(element, search, hasSingleAttribute);
 }
