@@ -12,7 +12,7 @@ describe("within getAttrs", () => {
     });
 
     it("returns the number attribute value if it exists", () => {
-      const element = render(`<div aria-colcount="20">Button</div>`);
+      const element = render<"div">(`<div aria-colcount="20">Button</div>`);
 
       const result = getAttr(element, "aria-colcount");
 

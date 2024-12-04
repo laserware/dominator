@@ -1,5 +1,6 @@
 import { cast } from "@laserware/arcade";
 
+import type { ElementOf, TagName } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
@@ -8,10 +9,10 @@ import { formatForError } from "../internal/formatForError.ts";
 import type { AttrName, Attrs, AttrValue } from "./types.ts";
 
 /**
- * Sets the specified attribute `target` of the specified `target` to the specified
- * `value`. The `value` is coerced to a string.
+ * Sets the attribute `name` of the `target` element to the `value`. The `value`
+ * is coerced to a string.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to set.
@@ -33,9 +34,9 @@ import type { AttrName, Attrs, AttrValue } from "./types.ts";
  * **Code**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * let elem = findElem("#example")!;
  *
- * setAttr(elem, "aria-label", "Click me");
+ * elem = setAttr(elem, "aria-label", "Click me");
  * ```
  *
  * **HTML (After)**
@@ -50,24 +51,24 @@ import type { AttrName, Attrs, AttrValue } from "./types.ts";
  * </div>
  * ```
  */
-export function setAttr<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector<E>,
-  name: AttrName<E>,
+export function setAttr<TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
+  name: AttrName<TN>,
   value: AttrValue | null | undefined,
-): E {
+): ElementOf<TN> {
   const elem = elemOrThrow(target, `Unable to set attribute ${name}`);
 
   setSingleAttr(elem, name, value);
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(elem);
 }
 
 /**
- * Sets the attributes of the specified `target` to the specified `attrs`
- * object, where the key of the object is the attribute name and the value of
- * the object is the attribute value.
+ * Sets the attributes of the `target` to the `attrs` object, where the key of
+ * the object is the attribute name and the value of the object is the attribute
+ * value.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param attrs Object with key of attribute name and value of attribute value.
@@ -88,9 +89,9 @@ export function setAttr<E extends Element = HTMLElement>(
  * **Code**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * let elem = findElem<"div">("#example")!;
  *
- * setAttrs(elem, {
+ * elem = setAttrs(elem, {
  *   "aria-label", "Click me",
  *   "aria-valuenow": 20,
  * });
@@ -109,10 +110,10 @@ export function setAttr<E extends Element = HTMLElement>(
  * </div>
  * ```
  */
-export function setAttrs<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector<E>,
-  attrs: Attrs<E>,
-): E {
+export function setAttrs<TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
+  attrs: Attrs<TN>,
+): ElementOf<TN> {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to set attributes ${formatForError(attrs)}`);
 
@@ -120,11 +121,11 @@ export function setAttrs<E extends Element = HTMLElement>(
     setSingleAttr(elem, name, attrs[name]);
   }
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(elem);
 }
 
-function setSingleAttr<E extends Element = HTMLElement>(
-  element: E,
+function setSingleAttr<TN extends TagName = "*">(
+  element: ElementOf<TN>,
   name: string,
   value: AttrValue | null | undefined,
 ): void {

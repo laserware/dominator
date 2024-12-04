@@ -81,7 +81,7 @@ import { findElem, findAllElems } from "@laserware/dominator";
 const firstHeaderColumn = findElem(`[role="row"] [role="columnheader"]:first-child`);
 
 // Returns the grid cell elements as an array:
-const allGridCells = findAllElems<HTMLDivElement>(`[role="gridcell"]`);
+const allGridCells = findAllElems<"div">(`[role="gridcell"]`);
 
 // You can use string selectors for the target and parent to get children:
 const gridRows = findAllElems(`[role="row"]`, "grid");

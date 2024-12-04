@@ -1,6 +1,7 @@
 import { cast, isPlainObject } from "@laserware/arcade";
 
 import type { CssSelector } from "../css/types.ts";
+import type { ElementOf, TagName } from "../dom.ts";
 import { parseFindOptions } from "../internal/findOptions.ts";
 
 import { toElem } from "./toElem.ts";
@@ -16,41 +17,41 @@ import type { Elem, FindOptions } from "./types.ts";
  * Query the DOM for an element matching the specified CSS `selector` in the
  * optionally specified `parent`.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param selector CSS selector string to find the element.
  * @param [parent] Optional Element or EventTarget for parent.
  *
- * @returns Element of type `E` if found, otherwise `null`.
+ * @returns Element of tag name `TN` if found, otherwise `null`.
  *
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if the specified `selector` is invalid.
  */
-export function findElem<E extends Element = HTMLElement>(
+export function findElem<TN extends TagName = "*">(
   selector: CssSelector,
   parent?: Elem | null,
-): E | null;
+): ElementOf<TN> | null;
 
 /**
  * Query the DOM to find the element using one of the specified `options` in the
  * optionally specified `parent`.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param options Options for finding the element.
  *
- * @returns Element of type `E` if found, otherwise `null`.
+ * @returns Element of tag name `TN` if found, otherwise `null`.
  *
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if `withSelector` in the specified `options` is invalid.
  * @throws {TypeError} [TypeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError) if the specified `options` are invalid.
  */
-export function findElem<E extends Element = HTMLElement>(
+export function findElem<TN extends TagName = "*">(
   options: FindOptions,
-): E | null;
+): ElementOf<TN> | null;
 
-export function findElem<E extends Element = HTMLElement>(
+export function findElem<TN extends TagName = "*">(
   selectorOrOptions: FindOptions | CssSelector,
   parent?: Elem | null,
-): E | null {
+): ElementOf<TN> | null {
   let selector: string;
   let validParent: Elem = parent ?? document;
 
@@ -69,5 +70,5 @@ export function findElem<E extends Element = HTMLElement>(
 
   const elem = toElem(validParent)?.querySelector(selector);
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(elem);
 }

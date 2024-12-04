@@ -89,7 +89,7 @@ describe("the findAllElems function", () => {
         someProperty: "thing",
         "data-other-property": null,
       },
-      tag: "button",
+      tagName: "button",
     });
 
     expect(result).toHaveLength(3);

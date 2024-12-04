@@ -1,5 +1,6 @@
 import { cast, type KeysOf, type WithNullValues } from "@laserware/arcade";
 
+import type { ElementOf, TagName } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
@@ -8,22 +9,21 @@ import { formatForError } from "../internal/formatForError.ts";
 import type { AttrName, Attrs, AttrValue } from "./types.ts";
 
 /**
- * Attempts to get the specified attribute `name` from the specified `target`.
- * If the value is found, it is coerced to a boolean if `"true"` or `"false"`, a
- * number if numeric, or the string value if a string. If not found, returns
- * `null`.
+ * Attempts to get the attribute `name` from the `target`. If the value is found,
+ * it is coerced to a boolean if `"true"` or `"false"`, a number if numeric, or
+ * the string value if a string. If not found, returns `null`.
  *
  * @remarks
  * We're returning `null`, rather than `undefined` to match the
  * [Element.getAttribute](https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute) API.
  *
- * @template T Type of value to return.
- * @template E Element type of specified `target`.
+ * @template V Type of value to return.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to get.
  *
- * @returns Value of type `T` or `null` if not found.
+ * @returns Value of type `V` or `null` if not found.
  *
  * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
@@ -58,20 +58,19 @@ import type { AttrName, Attrs, AttrValue } from "./types.ts";
  * ```
  */
 export function getAttr<
-  T extends AttrValue = AttrValue,
-  E extends Element = HTMLElement,
->(target: ElemOrCssSelector<E>, name: AttrName<E>): T | null {
+  V extends AttrValue = AttrValue,
+  TN extends TagName = "*",
+>(target: ElemOrCssSelector<TN>, name: AttrName<TN>): V | null {
   const elem = elemOrThrow(target, `Unable to get attribute ${name}`);
 
-  return getSingleAttr<T, E>(elem, name) ?? null;
+  return getSingleAttr<V, TN>(elem, name) ?? null;
 }
 
 /**
- * Builds an object with the keys equal to the specified attribute `names` and
- * the value equal to the corresponding attribute value in the specified `target`.
- * If the value is found it is coerced to a boolean if `"true"` or `"false"`, a
- * number if numeric, or the string value if a string. If not found, the value
- * is `null`.
+ * Builds an object with the keys equal to the attribute `names` and the value
+ * equal to the corresponding attribute value in the `target`. If the value is
+ * found it is coerced to a boolean if `"true"` or `"false"`, a number if
+ * numeric, or the string value if a string. If not found, the value is `null`.
  *
  * > [!IMPORTANT]
  * > You will need to perform checks for whether a value is `null` in the returned
@@ -95,13 +94,13 @@ export function getAttr<
  * @remarks
  * The {@linkcode arcade!WithNullValues} type represents an object with values that could be `null`.
  *
- * @template T Shape of attributes object to return.
- * @template E Element type of specified `target`.
+ * @template V Shape of attributes object value to return.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param names Names of the attributes for which to find values.
  *
- * @returns Object with specified names as keys and corresponding attribute values (or `null` if not present).
+ * @returns Object with `names` as keys and corresponding attribute values (or `null` if not present).
  *
  * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
@@ -139,10 +138,10 @@ export function getAttr<
  * // { "aria-label": "Example", "aria-valuemax": 30, invalid: null }
  * ```
  */
-export function getAttrs<
-  T extends Attrs = Attrs,
-  E extends Element = HTMLElement,
->(target: ElemOrCssSelector<E>, names: KeysOf<T>): WithNullValues<T> {
+export function getAttrs<V extends Attrs = Attrs, TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
+  names: KeysOf<V>,
+): WithNullValues<V> {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to get attributes ${formatForError(names)}`);
 
@@ -152,14 +151,14 @@ export function getAttrs<
     attrs[name] = getSingleAttr(elem, cast<AttrName>(name));
   }
 
-  return cast<WithNullValues<T>>(attrs);
+  return cast<WithNullValues<V>>(attrs);
 }
 
 function getSingleAttr<
-  T extends AttrValue = AttrValue,
-  E extends Element = HTMLElement,
->(element: E, name: AttrName<E>): T | null {
+  V extends AttrValue = AttrValue,
+  TN extends TagName = "*",
+>(element: ElementOf<TN>, name: AttrName<TN>): V | null {
   const attrValue = element.getAttribute(name);
 
-  return parseDOMValue<T>(attrValue) ?? null;
+  return parseDOMValue<V>(attrValue) ?? null;
 }

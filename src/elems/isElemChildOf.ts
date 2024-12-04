@@ -2,21 +2,20 @@ import { toElem } from "./toElem.ts";
 import type { ElemOrCssSelector } from "./types.ts";
 
 /**
- * Determines if the specified `child` is a child of the specified `parent`
- * in the DOM.
+ * Determines if the `child` is a child of the `parent` in the DOM.
  *
  * Note that it returns `false` if the `parent` and `child` match.
  * If you want to check if an element is a descendent or the same as a parent,
  * use {@linkcode isElemSameOrChildOf}.
  *
  * @remarks
- * This function doesn't throw if the specified `child` and/or `parent` elements
+ * This function doesn't throw if the `child` and/or `parent` elements
  * don't exist. Rather, it just returns `false`. This was a deliberate choice.
  *
  * @param child Element, EventTarget, or CSS selector for child.
  * @param parent Element, EventTarget, or CSS selector for parent.
  *
- * @returns `true` if the specified `child` is a child of the specified `parent`.
+ * @returns `true` if the `child` is a child of the specified `parent`.
  */
 export function isElemChildOf(
   child: ElemOrCssSelector,

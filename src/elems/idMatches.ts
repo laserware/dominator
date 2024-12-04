@@ -3,7 +3,7 @@ import { elemOrThrow } from "../internal/elemOr.ts";
 import type { ElemOrCssSelector } from "./types.ts";
 
 /**
- * Checks if the specified `target` has the specified `id` *property*.
+ * Checks if the `target` has the ID *property* that matches `id`.
  *
  * Note that you can pass an ID string or CSS selector (e.g. `#some-id`).
  * If your ID starts with `#` and is *not* a CSS selector, ensure there are

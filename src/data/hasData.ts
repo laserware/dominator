@@ -1,5 +1,6 @@
 import { cast, isNil, isNotNil } from "@laserware/arcade";
 
+import type { TagName } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
@@ -19,10 +20,10 @@ import type { DataKey, DataValue } from "./types.ts";
 export type DataSearch = PropertySearch<DataKey, DataValue | null>;
 
 /**
- * Returns true if the specified `target` has a dataset entry with the specified
- * `key` and optionally, the matching `value`.
+ * Returns true if the `target` has a dataset entry with `key` and optionally,
+ * the matching `value`.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Property (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
@@ -59,8 +60,8 @@ export type DataSearch = PropertySearch<DataKey, DataValue | null>;
  * // true
  * ```
  */
-export function hasDataEntry<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector<E>,
+export function hasDataEntry<TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
   key: DataKey,
   value?: DataValue,
 ): boolean {
@@ -70,15 +71,15 @@ export function hasDataEntry<E extends Element = HTMLElement>(
 }
 
 /**
- * Checks if the specified `target` has **all** of the dataset entries that match
- * the specified `search` criteria.
+ * Checks if the `target` has **all** of the dataset entries that match the
+ * `search` criteria.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of dataset keys or dataset filter object to check for.
  *
- * @returns `true` if the specified `target` matches all search criteria.
+ * @returns `true` if the `target` matches all search criteria.
  *
  * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
@@ -111,8 +112,8 @@ export function hasDataEntry<E extends Element = HTMLElement>(
  * // true
  * ```
  */
-export function hasAllData<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector<E>,
+export function hasAllData<TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
   search: DataSearch,
 ): boolean {
   // prettier-ignore
@@ -122,15 +123,15 @@ export function hasAllData<E extends Element = HTMLElement>(
 }
 
 /**
- * Checks if the specified `target` has **some** of the dataset entries that match
- * the specified `search` criteria.
+ * Checks if the `target` has **some** of the dataset entries that match the
+ * `search` criteria.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of dataset keys or dataset filter object to check for.
  *
- * @returns `true` if the specified `target` matches some search criteria.
+ * @returns `true` if the `target` matches some search criteria.
  *
  * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
@@ -167,8 +168,8 @@ export function hasAllData<E extends Element = HTMLElement>(
  * // true
  * ```
  */
-export function hasSomeData<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector<E>,
+export function hasSomeData<TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
   search: DataSearch,
 ): boolean {
   // prettier-ignore

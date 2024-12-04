@@ -1,6 +1,7 @@
 import { cast, isNotNil } from "@laserware/arcade";
 
 import type { AttrValue } from "../attrs/types.ts";
+import type { ElementOf, TagName } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { parseDOMValue, stringifyDOMValue } from "../internal/domValues.ts";
@@ -32,15 +33,12 @@ export type AnyDatasetShape = Record<string, DataValue | null>;
  * See usage examples in {@linkcode datasetOf}.
  *
  * @template DS The shape of the dataset data.
- * @template E Type of Element which the dataset data is associated.
+ * @template TN Tag name of element which the dataset data is associated.
  *
  * @class
  */
-export class Dataset<
-  DS extends AnyDatasetShape,
-  E extends Element = HTMLElement,
-> {
-  readonly #element: E;
+export class Dataset<DS extends AnyDatasetShape, TN extends TagName = "*"> {
+  readonly #element: ElementOf<TN>;
 
   /**
    * Creates a new instance of a {@linkcode Dataset} class to manage the dataset
@@ -54,8 +52,8 @@ export class Dataset<
    *
    * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
    */
-  constructor(target: ElemOrCssSelector<E>, initialData?: Partial<DS>) {
-    this.#element = elemOrThrow<E>(target, "Unable to initialize Dataset");
+  constructor(target: ElemOrCssSelector<TN>, initialData?: Partial<DS>) {
+    this.#element = elemOrThrow<TN>(target, "Unable to initialize Dataset");
 
     if (isNotNil(initialData)) {
       this.setAll(initialData);
@@ -65,7 +63,7 @@ export class Dataset<
   /**
    * Element containing the dataset property being managed.
    */
-  public get element(): E {
+  public get element(): ElementOf<TN> {
     return this.#element;
   }
 
@@ -186,11 +184,11 @@ export class Dataset<
 /**
  * Creates a new {@linkcode Dataset} instance for managing the
  * [dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
- * property on the specified `target`. Optionally pass in `initialData`
+ * property on the `target` element. Optionally pass in `initialData`
  * that can fully or partially match the shape specified in the `DS` generic.
  *
  * @template DS The shape of the dataset data.
- * @template E Element type  containing the `dataset` property.
+ * @template TN Tag name of element containing the `dataset` property.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param [initialData] Optional full or partial data that corresponds to the dataset shape.
@@ -275,12 +273,9 @@ export class Dataset<
  * </div>
  * ```
  */
-export function datasetOf<
-  DS extends AnyDatasetShape,
-  E extends Element = HTMLElement,
->(
+export function datasetOf<DS extends AnyDatasetShape, TN extends TagName = "*">(
   target: Element | ElemOrCssSelector,
   initialData?: Partial<DS>,
-): Dataset<DS, E> {
-  return new Dataset<DS, E>(target, initialData);
+): Dataset<DS, TN> {
+  return new Dataset<DS, TN>(target, initialData);
 }

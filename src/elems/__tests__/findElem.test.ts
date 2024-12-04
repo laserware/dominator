@@ -94,7 +94,7 @@ describe("the findElem function", () => {
         draggable: true,
         inert: null,
       },
-      tag: "button",
+      tagName: "button",
     });
 
     expect(result!).toEqual(element);
@@ -105,7 +105,7 @@ describe("the findElem function", () => {
 
     const result = findElem({
       withData: { someProperty: "thing" },
-      tag: "button",
+      tagName: "button",
     });
 
     expect(result!).toEqual(element);
@@ -142,7 +142,7 @@ describe("the findElem function", () => {
       withData: {
         someProperty: "thing",
       },
-      tag: "button",
+      tagName: "button",
     });
 
     expect(result!).toEqual(element);

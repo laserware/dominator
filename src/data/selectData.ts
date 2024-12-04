@@ -10,11 +10,12 @@ import type { Data, DataKey, DataValue } from "./types.ts";
 
 /**
  * Attempts to build a valid selector for a dataset with the specified `key` and
- * optional `value`. If `tag` is specified, it is included in the resulting selector.
+ * optional `value`. If `tagName` is specified, it is included in the resulting
+ * selector.
  *
  * @param key Property or attribute name for the dataset entry.
  * @param [value] Optional value of the dataset entry.
- * @param [tag] Optional tag name for the element.
+ * @param [tagName] Optional tag name for the element.
  *
  * @returns CSS selector based on the specified `key` and optional `value`.
  *
@@ -50,19 +51,19 @@ import type { Data, DataKey, DataValue } from "./types.ts";
 export function selectDataEntry(
   key: DataKey,
   value?: DataValue | null | undefined,
-  tag?: TagName,
+  tagName?: TagName,
 ): CssSelector {
-  return selectorWithTag(selectSingleDataEntry(key, value), tag);
+  return selectorWithTag(selectSingleDataEntry(key, value), tagName);
 }
 
 /**
  * Attempts to build a CSS selector string for the specified `data` object. Note
  * that the values of the `data` object are coerced to a string and `null` excludes
- * a value but only includes a key. If `tag` is specified, it is included in the
- * resulting selector.
+ * a value but only includes a key. If `tagName` is specified, it is included in
+ * the resulting selector.
  *
  * @param data Object with key of dataset key and value of dataset value.
- * @param [tag] Optional tag name for the element.
+ * @param [tagName] Optional tag name for the element.
  *
  * @returns CSS selector based on the specified `data`.
  *
@@ -88,14 +89,14 @@ export function selectDataEntry(
  * // `a[data-some-thing="stuff"][data-other-thing="doodles"]`
  * ```
  */
-export function selectData(data: Data, tag?: TagName): CssSelector {
+export function selectData(data: Data, tagName?: TagName): CssSelector {
   let selector = "";
 
   for (const key of Object.keys(data)) {
     selector += selectSingleDataEntry(key, data[key]);
   }
 
-  return selectorWithTag(selector, tag);
+  return selectorWithTag(selector, tagName);
 }
 
 function selectSingleDataEntry(

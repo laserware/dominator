@@ -1,6 +1,7 @@
-import { isPlainObject } from "@laserware/arcade";
+import { cast, isPlainObject } from "@laserware/arcade";
 
 import type { CssSelector } from "../css/types.ts";
+import type { ElementOf, TagName } from "../dom.ts";
 import { parseFindOptions } from "../internal/findOptions.ts";
 
 import { listToArray } from "./listToArray.ts";
@@ -12,42 +13,42 @@ import type { Elem, FindOptions } from "./types.ts";
  * Query the DOM to find the elements matching the specified CSS `selector` in
  * the optionally specified `parent`.
  *
- * @template E Type of elements to return.
+ * @template TN Tag name of elements to return.
  *
  * @param selector CSS selector string to find the elements.
  * @param [parent] Optional Element or EventTarget for parent.
  *
- * @returns Array of elements of type `T` if found, otherwise empty array.
+ * @returns Array of elements of tag name `TN` if found, otherwise empty array.
  *
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if the specified `selector` is invalid.
  */
-export function findAllElems<E extends Element = HTMLElement>(
+export function findAllElems<TN extends TagName = "*">(
   selector: CssSelector,
   parent?: Elem | null,
-): E[];
+): ElementOf<TN>[];
 
 /**
  * Query the DOM using one of the specified `options` and find the elements
  * that match the criteria in the `options` object in the optionally specified
  * `parent`.
  *
- * @template E Type of elements to return.
+ * @template TN Tag name of elements to return.
  *
  * @param options Options for finding the elements.
  *
- * @returns Array of elements of type `T` if found, otherwise empty array.
+ * @returns Array of elements of tag name `TN` if found, otherwise empty array.
  *
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if `withSelector` in the specified `options` is invalid.
  * @throws {TypeError} [TypeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError) if the specified `options` are invalid.
  */
-export function findAllElems<E extends Element = HTMLElement>(
+export function findAllElems<TN extends TagName = "*">(
   options: FindOptions,
-): E[];
+): ElementOf<TN>[];
 
-export function findAllElems<E extends Element = HTMLElement>(
+export function findAllElems<TN extends TagName = "*">(
   selectorOrOptions: FindOptions | CssSelector,
   parent?: Elem | null,
-): E[] {
+): ElementOf<TN>[] {
   let selector: string;
   let validParent: Elem = parent ?? document;
 
@@ -66,5 +67,5 @@ export function findAllElems<E extends Element = HTMLElement>(
 
   const elements = toElem(validParent)?.querySelectorAll(selector);
 
-  return listToArray<E>(elements as NodeListOf<E>);
+  return listToArray<TN>(cast<NodeListOf<ElementOf<TN>>>(elements));
 }

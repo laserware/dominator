@@ -3,8 +3,7 @@ import { isElemChildOf } from "./isElemChildOf.ts";
 import type { ElemOrCssSelector } from "./types.ts";
 
 /**
- * Checks if the specified `target` is the same or a child of the specified
- * `parent`.
+ * Checks if the `target` is the same or a child element of the `parent`.
  *
  * @remarks
  * This function doesn't throw if the specified `child` and/or `parent` elements
@@ -13,7 +12,7 @@ import type { ElemOrCssSelector } from "./types.ts";
  * @param child Element, EventTarget, or CSS selector.
  * @param parent Element, EventTarget, or CSS selector for parent (or same) element.
  *
- * @returns `true` if the specified `child` is a child of or the same as the specified `parent`.
+ * @returns `true` if the `child` is a child of or the same as the specified `parent`.
  */
 export function isElemSameOrChildOf(
   child: ElemOrCssSelector,

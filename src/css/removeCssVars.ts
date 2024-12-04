@@ -1,5 +1,6 @@
 import { cast } from "@laserware/arcade";
 
+import type { ElementOf, TagName } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -8,13 +9,12 @@ import { InvalidCssVarError } from "./InvalidCssVarError.ts";
 import type { CssVarName } from "./types.ts";
 
 /**
- * Removes the specified CSS variable `name` from the optionally specified
- * `target`.
+ * Removes the CSS variable `name` from the optionally specified `target`.
  *
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param name Name of the CSS variable to remove.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
@@ -57,15 +57,15 @@ import type { CssVarName } from "./types.ts";
  * <button id="example" style="font-size: 18px;">Example</button>
  * ```
  */
-export function removeCssVar<E extends Element = HTMLElement>(
+export function removeCssVar<TN extends TagName = "*">(
   name: CssVarName,
-  target: ElemOrCssSelector<E> = document.documentElement,
-): E {
+  target: ElemOrCssSelector<TN> = document.documentElement,
+): ElementOf<TN> {
   const elem = elemOrThrow(target, `Unable to remove CSS variable ${name}`);
 
   removeSingleCssVar(elem, name);
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(elem);
 }
 
 /**
@@ -74,7 +74,7 @@ export function removeCssVar<E extends Element = HTMLElement>(
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param names Array of CSS variable names to remove.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
@@ -129,10 +129,10 @@ export function removeCssVar<E extends Element = HTMLElement>(
  * </button>
  * ```
  */
-export function removeCssVars<E extends Element = HTMLElement>(
+export function removeCssVars<TN extends TagName = "*">(
   names: CssVarName[],
-  target: ElemOrCssSelector<E> = document.documentElement,
-): E {
+  target: ElemOrCssSelector<TN> = document.documentElement,
+): ElementOf<TN> {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to remove CSS variables ${formatForError(names)}`);
 
@@ -140,7 +140,7 @@ export function removeCssVars<E extends Element = HTMLElement>(
     removeSingleCssVar(elem, name);
   }
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(elem);
 }
 
 function removeSingleCssVar(element: Element, name: CssVarName): void {

@@ -94,8 +94,8 @@ export function getInputValueRaw(target: ElemOrCssSelector): string {
   }
 }
 
-function isInputElement(elem: HTMLElement): elem is HTMLInputElement {
-  return elem instanceof HTMLInputElement;
+function isInputElement(element: HTMLElement): element is HTMLInputElement {
+  return element instanceof HTMLInputElement;
 }
 
 function asInputReturnValue<T extends InputValueTypeName>(

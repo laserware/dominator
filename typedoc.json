@@ -26,7 +26,20 @@
       "WithNullValues": "https://laserware.github.io/arcade/types/WithNullValues.html",
       "WithUndefinedValues": "https://laserware.github.io/arcade/types/WithUndefinedValues.html"
     },
+    "@laserware/arcade": {
+      "KeysOf": "https://laserware.github.io/arcade/types/KeysOf.html",
+      "OneOrManyOf": "https://laserware.github.io/arcade/types/OneOrManyOf.html",
+      "Primitive": "https://laserware.github.io/arcade/types/Primitive.html",
+      "WithNullValues": "https://laserware.github.io/arcade/types/WithNullValues.html",
+      "WithUndefinedValues": "https://laserware.github.io/arcade/types/WithUndefinedValues.html"
+    },
     "typescript": {
+      "Document": "https://developer.mozilla.org/en-US/docs/Web/API/Document",
+      "Node": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+      "ChildNode": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+      "ParentNode": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+      "Element": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+      "EventTarget": "https://developer.mozilla.org/en-US/docs/Web/API/EventTarget",
       "HTMLElement": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement",
       "SVGElement": "https://developer.mozilla.org/en-US/docs/Web/API/SVGElement"
     }

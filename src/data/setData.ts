@@ -1,5 +1,6 @@
 import { cast, isNil } from "@laserware/arcade";
 
+import type { ElementOf, TagName } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { asDataPropertyName } from "../internal/dataKeys.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
@@ -9,10 +10,9 @@ import { formatForError } from "../internal/formatForError.ts";
 import type { Data, DataKey, DataValue } from "./types.ts";
 
 /**
- * Assigns the specified `value` to the specified dataset `key` in the specified
- * `target`.
+ * Assigns the `value` to the dataset attribute/property name `key` in the `target`.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Key or property name for the dataset entry.
@@ -69,25 +69,26 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  * </div>
  * ```
  */
-export function setDataEntry<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector<E>,
+export function setDataEntry<TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
   key: DataKey,
   value: DataValue | null,
-): E {
+): ElementOf<TN> {
   const elem = elemOrThrow(target, `Unable to set data for ${key}`);
 
   setSingleDataEntry(elem, key, value);
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(elem);
 }
 
 /**
- * Assigns the specified `data` key/value pairs to the specified `target`.
+ * Assigns the `data` key/value pairs to the `target`.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
- * @param data Object with key of dataset key and value of entry value.
+ * @param data Object with keys of dataset attribute/property names and values
+ *             of corresponding values.
  *
  * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
@@ -142,10 +143,10 @@ export function setDataEntry<E extends Element = HTMLElement>(
  * </div>
  * ```
  */
-export function setData<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector<E>,
+export function setData<TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
   data: Data,
-): E {
+): ElementOf<TN> {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to set data for keys ${formatForError(data)}`);
 
@@ -153,7 +154,7 @@ export function setData<E extends Element = HTMLElement>(
     setSingleDataEntry(elem, key, data[key]);
   }
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(elem);
 }
 
 function setSingleDataEntry(

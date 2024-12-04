@@ -1,22 +1,22 @@
 import type { Attrs } from "../attrs/types.ts";
 import type { CssSelector } from "../css/types.ts";
 import type { Data } from "../data/types.ts";
-import type { TagName } from "../dom.ts";
+import type { ElementOf, TagName } from "../dom.ts";
 
 /**
  * Element or EventTarget that can be passed into functions.
  *
- * @template E Type of Element.
+ * @template TN Tag name of Element.
  */
-export type Elem<E extends Element = HTMLElement> =
-  | E
+export type Elem<TN extends TagName = "*"> =
+  | ElementOf<TN>
   | Document
   | Element
   | EventTarget
   | HTMLElement
   | SVGElement
-  | ChildNode
   | Node
+  | ChildNode
   | ParentNode;
 
 /**
@@ -26,10 +26,10 @@ export type Elem<E extends Element = HTMLElement> =
  * This type allows for flexibility in functions or methods that can accept
  * either an {@linkcode Elem} type object or a string representing a CSS selector.
  *
- * @template E Type of Element if {@linkcode Elem}.
+ * @template TN Tag name of Element if {@linkcode Elem}.
  */
-export type ElemOrCssSelector<E extends Element = HTMLElement> =
-  | Elem<E>
+export type ElemOrCssSelector<TN extends TagName = "*"> =
+  | Elem<TN>
   | CssSelector;
 
 /**
@@ -41,12 +41,12 @@ export type ElemOrCssSelector<E extends Element = HTMLElement> =
  *
  * @expand
  */
-export interface FindOptions {
+export type FindOptions<TN extends TagName = "*"> = {
   /** CSS selector search string. */
   withSelector?: CssSelector;
 
   /** Key/value pairs of attributes to search for. */
-  withAttrs?: Attrs;
+  withAttrs?: Attrs<TN>;
 
   /** Key/value pairs of dataset entries to search for. */
   withData?: Data;
@@ -55,5 +55,5 @@ export interface FindOptions {
   parent?: ElemOrCssSelector | null | undefined;
 
   /** Optional element tag name to limit search. */
-  tag?: TagName;
-}
+  tagName?: TagName;
+};

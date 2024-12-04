@@ -9,11 +9,11 @@ import { formatForError } from "../internal/formatForError.ts";
 import type { Data, DataKey, DataValue } from "./types.ts";
 
 /**
- * Attempts to get the value associated with the specified dataset `key` on the
- * specified `target`. Returns `undefined` if no entry was found for the specified
- * `key`.
+ * Attempts to get the value associated with the dataset attribute/property name
+ * `key` on the `target`. Returns `undefined` if no entry was found for the
+ * specified `key`.
  *
- * @template T Type of value to return for the corresponding key.
+ * @template V Type of value to return for the corresponding key.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Property (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
@@ -66,19 +66,19 @@ import type { Data, DataKey, DataValue } from "./types.ts";
  * // false
  * ```
  */
-export function getDataValue<T extends DataValue = DataValue>(
+export function getDataValue<V extends DataValue = DataValue>(
   target: ElemOrCssSelector,
   key: DataKey,
-): T | undefined {
+): V | undefined {
   const elem = elemOrThrow(target, `Unable to get data value for ${key}`);
 
   return getSingleDataValue(elem, key);
 }
 
 /**
- * Builds an object with the values associated with the specified dataset `keys`
- * on the specified `target`. If any of the specified `keys` don't exist, they
- * are set to `undefined` in the return value.
+ * Builds an object with the values associated with the dataset `keys` on the
+ * `target`. If any of the specified `keys` don't exist, they are set to `undefined`
+ * in the return value.
  *
  * > [!IMPORTANT]
  * > You will need to perform checks for whether a value is `undefined` in the returned
@@ -102,12 +102,12 @@ export function getDataValue<T extends DataValue = DataValue>(
  * @remarks
  * The {@linkcode arcade!WithUndefinedValues} type represents an object with values that could be `undefined`.
  *
- * @template T Shape of value to return for the corresponding keys.
+ * @template D Shape of value to return for the corresponding keys.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Properties (e.g. `someProperty`) or attribute names (e.g. `data-some-property`) for the dataset entry.
  *
- * @returns Object with specified keys and corresponding dataset property values (or `undefined` if not present).
+ * @returns Object with key of `keys` and corresponding dataset property values (or `undefined` if not present).
  *
  * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
@@ -153,10 +153,10 @@ export function getDataValue<T extends DataValue = DataValue>(
  * // { label: "Example", count: 30 }
  * ```
  */
-export function getData<T extends Data = Data>(
+export function getData<D extends Data = Data>(
   target: ElemOrCssSelector,
   keys: DataKey[],
-): WithUndefinedValues<T> {
+): WithUndefinedValues<D> {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to get data for ${formatForError(keys)}`);
 
@@ -166,16 +166,16 @@ export function getData<T extends Data = Data>(
     result[key] = getSingleDataValue(elem, key);
   }
 
-  return cast<WithUndefinedValues<T>>(result);
+  return cast<WithUndefinedValues<D>>(result);
 }
 
-function getSingleDataValue<T extends DataValue>(
+function getSingleDataValue<V extends DataValue>(
   elem: HTMLElement,
   key: DataKey,
-): T | undefined {
+): V | undefined {
   const validKey = asDataPropertyName(key);
 
   const matchingValue = elem?.dataset[validKey];
 
-  return parseDOMValue<T>(matchingValue);
+  return parseDOMValue<V>(matchingValue);
 }

@@ -1,31 +1,32 @@
 import { cast } from "@laserware/arcade";
 
+import type { ElementOf, TagName } from "../dom.ts";
 import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 
 /**
- * Returns an element of type `E` that corresponds to the specified `target`.
+ * Returns an element of type `TN` that corresponds to the specified `target`.
  * Throws if the `target` isn't a valid element.
  *
  * @internal
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param error Error message to include with the error.
  *
  * @returns Element representation of the specified `target`.
  */
-export function elemOrThrow<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector<E>,
+export function elemOrThrow<TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
   error: string,
-): E {
+): ElementOf<TN> {
   const elem = toElem(target);
 
   if (elem === null) {
     throw new InvalidElemError(error);
   }
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(elem);
 }

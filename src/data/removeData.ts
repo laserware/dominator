@@ -1,6 +1,7 @@
 import { cast } from "@laserware/arcade";
 
 import { removeAttr } from "../attrs/removeAttrs.ts";
+import type { ElementOf, TagName } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { asDataAttrName } from "../internal/dataKeys.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
@@ -9,10 +10,9 @@ import { formatForError } from "../internal/formatForError.ts";
 import type { DataKey, DataPropertyName } from "./types.ts";
 
 /**
- * Removes the dataset entry with the specified `key` from the specified
- * `target`.
+ * Removes the dataset entry with attribute/property name `key` from the `target`.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Dataset property or attribute name for the dataset entry to remove.
@@ -63,23 +63,23 @@ import type { DataKey, DataPropertyName } from "./types.ts";
  * </div>
  * ```
  */
-export function removeDataEntry<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector<E>,
+export function removeDataEntry<TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
   key: DataPropertyName,
-): E {
+): ElementOf<TN> {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to remove data for ${key}`);
 
   removeSingleDataEntry(elem, key);
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(elem);
 }
 
 /**
- * Removes the specified dataset entries with the specified `keys` from the
- * specified `target`.
+ * Removes the dataset entries with the attribute/property names `keys` from the
+ * `target`.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Array of dataset properties or attribute names to remove.
@@ -129,10 +129,10 @@ export function removeDataEntry<E extends Element = HTMLElement>(
  * </div>
  * ```
  */
-export function removeData<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector<E>,
+export function removeData<TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
   keys: DataKey[],
-): E {
+): ElementOf<TN> {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to remove data for ${formatForError(keys)}`);
 
@@ -140,7 +140,7 @@ export function removeData<E extends Element = HTMLElement>(
     removeSingleDataEntry(elem, key);
   }
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(elem);
 }
 
 function removeSingleDataEntry(element: Element, key: string): void {

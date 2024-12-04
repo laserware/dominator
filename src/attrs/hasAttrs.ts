@@ -1,5 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
+import type { TagName } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -15,24 +16,24 @@ import type { AttrName, AttrValue } from "./types.ts";
  * present, or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of an attribute.
  *
- * @template E Type of Element with corresponding attributes to search.
+ * @template TN Tag name of element with corresponding attributes to search.
  */
-export type AttrsSearch<E extends Element = HTMLElement> = PropertySearch<
-  AttrName<E>,
+export type AttrsSearch<TN extends TagName = "*"> = PropertySearch<
+  AttrName<TN>,
   AttrValue | null
 >;
 
 /**
- * Checks if the specified `target` has the specified attribute `name`. If a
- * `value` is specified, checks that the values match.
+ * Checks if the `target` has the attribute `name`. If a `value` is specified,
+ * checks that the values match.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to check for.
  * @param [value] Optional attribute value to check for.
  *
- * @returns `true` if the specified attribute `name` is present and `value` matches (if specified).
+ * @returns `true` if the attribute `name` is present and `value` matches (if specified).
  *
  * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
@@ -60,9 +61,9 @@ export type AttrsSearch<E extends Element = HTMLElement> = PropertySearch<
  * // true
  * ```
  */
-export function hasAttr<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector<E>,
-  name: AttrName<E>,
+export function hasAttr<TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
+  name: AttrName<TN>,
   value?: AttrValue,
 ): boolean {
   const elem = elemOrThrow(target, `Unable to check for attribute ${name}`);
@@ -71,15 +72,15 @@ export function hasAttr<E extends Element = HTMLElement>(
 }
 
 /**
- * Checks if the specified `target` has **all** of the attributes that match the
- * specified `search` criteria.
+ * Checks if the `target` has **all** of the attributes that match the `search`
+ * criteria.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of attribute names or attributes filter object to check for.
  *
- * @returns `true` if the specified `target` matches all search criteria.
+ * @returns `true` if the `target` matches all search criteria.
  *
  * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
@@ -110,9 +111,9 @@ export function hasAttr<E extends Element = HTMLElement>(
  * // true
  * ```
  */
-export function hasAllAttrs<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector<E>,
-  search: AttrsSearch<E>,
+export function hasAllAttrs<TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
+  search: AttrsSearch<TN>,
 ): boolean {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to check for all attributes ${formatForError(search)}`);
@@ -121,15 +122,15 @@ export function hasAllAttrs<E extends Element = HTMLElement>(
 }
 
 /**
- * Checks if the specified `target` has **some** of the attributes that match
- * the specified `search` criteria.
+ * Checks if the `target` has **some** of the attributes that match the `search`
+ * criteria.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of attribute names or attributes filter object to check for.
  *
- * @returns `true` if the specified `target` matches some search criteria.
+ * @returns `true` if the `target` matches some search criteria.
  *
  * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
@@ -159,9 +160,9 @@ export function hasAllAttrs<E extends Element = HTMLElement>(
  * // true
  * ```
  */
-export function hasSomeAttrs<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector<E>,
-  search: AttrsSearch<E>,
+export function hasSomeAttrs<TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
+  search: AttrsSearch<TN>,
 ): boolean {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to check for some attributes ${formatForError(search)}`);

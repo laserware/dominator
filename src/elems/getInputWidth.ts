@@ -6,7 +6,7 @@ let canvas: HTMLCanvasElement | null = null;
 let context: CanvasRenderingContext2D | null = null;
 
 /**
- * Gets the ideal width of the specified `input` element (in pixels) that based on
+ * Gets the ideal width of the `input` element (in pixels) that based on
  * its value or placeholder using the [measureText](https://stackoverflow.com/a/68326447)
  * approach.
  *

@@ -6,7 +6,7 @@ import { setCssVars } from "../css/setCssVars.ts";
 import type { CssVars } from "../css/types.ts";
 import { setData } from "../data/setData.ts";
 import type { Data } from "../data/types.ts";
-import type { AnyElement, ElementWithTagName, TagName } from "../dom.ts";
+import type { ElementOf, TagName } from "../dom.ts";
 import { setStyles } from "../styles/setStyles.ts";
 
 import type { Styles } from "../styles/types.ts";
@@ -24,7 +24,7 @@ export type ExcludeMethods<T> = Pick<T, NeverMethods<T>>;
  * @template TN Tag name for the associated element.
  */
 export type NonMethodElemProperties<TN extends TagName> = ExcludeMethods<
-  ElementWithTagName<TN>
+  ElementOf<TN>
 >;
 
 /**
@@ -60,7 +60,7 @@ export type EventListener<EN extends EventHandlerName> = (
  *
  * @template EN Name of the Event that `listener` is associated with.
  */
-export interface EventDescriptor<EN extends EventHandlerName> {
+export type EventDescriptor<EN extends EventHandlerName> = {
   /**
    * Callback fired when the event is fired.
    */
@@ -71,7 +71,7 @@ export interface EventDescriptor<EN extends EventHandlerName> {
    * for additional details.
    */
   options: AddEventListenerOptions;
-}
+};
 
 /**
  * Event listener or descriptor used to add listeners to an element created
@@ -102,7 +102,7 @@ export type CreateElemOptions<TN extends TagName> = Partial<
   ElemProperties<TN>
 > & {
   /** Attributes to set on element. */
-  attrs?: Attrs<ElementWithTagName<TN>>;
+  attrs?: Attrs<TN>;
 
   /** AbortController to clean up event listeners. */
   controller?: AbortController | undefined;
@@ -130,22 +130,24 @@ export type CreateElemOptions<TN extends TagName> = Partial<
 /**
  * Types of children that can be passed to {@linkcode createElem}.
  */
-export type ElemChild = AnyElement | string | null;
+export type ElemChild = HTMLElement | SVGElement | string | null;
 
 /**
- * Creates an HTML element of type `E` with the specified `tag` and `options`.
+ * Creates an HTML element with tag name `TN` and adds the properties/listeners
+ * from the `options` object.
+ *
  * The attributes, CSS variables, dataset entries, and styles specified in
  * `options` are set on the element. Optionally specify `children` to append
  * to the newly created element.
  *
  * @template TN Tag name of the created element.
  *
- * @param tag Tag name of the HTML/SVG element to create (e.g. `div`, `svg`, etc.).
+ * @param tagName Tag name of the HTML/SVG element to create (e.g. `div`, `svg`, etc.).
  * @param options Optional attributes, CSS variables, dataset entries, and styles
  *                to set on element.
  * @param [children] Optional children to append to created element.
  *
- * @returns Element of type `E` with the specified `tag` and `options`.
+ * @returns Element of tag name `TN` with the specified `options`.
  *
  * @example
  * **Code**
@@ -210,11 +212,11 @@ export type ElemChild = AnyElement | string | null;
  * ```
  */
 export function createElem<TN extends TagName>(
-  tag: TN,
+  tagName: TN,
   options: CreateElemOptions<TN> = {},
   ...children: ElemChild[]
-): ElementWithTagName<TN> {
-  const element = document.createElement(tag);
+): ElementOf<TN> {
+  const element = document.createElement(tagName);
 
   const props = { ...options };
 
@@ -263,7 +265,7 @@ export function createElem<TN extends TagName>(
     element.append(child);
   }
 
-  return cast<ElementWithTagName<TN>>(element);
+  return cast<ElementOf<TN>>(element);
 }
 
 /**
@@ -275,7 +277,7 @@ export function createElem<TN extends TagName>(
  * @param eventsDict Object with key of event name and value of event listener.
  */
 function addEventListeners<TN extends TagName>(
-  element: ElementWithTagName<TN>,
+  element: ElementOf<TN>,
   eventsDict: EventListenersOrDescriptors,
 ): void {
   const eventNames = Object.keys(eventsDict) as EventHandlerName[];

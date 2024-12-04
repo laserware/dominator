@@ -1,9 +1,13 @@
+import { cast } from "@laserware/arcade";
+
+import type { ElementOf, TagName } from "../dom.ts";
+
 import { InvalidElemError } from "./InvalidElemError.ts";
 import { isElem } from "./isElem.ts";
 import type { Elem } from "./types.ts";
 
 /**
- * Returns an element of type `E` for the specified `target`.
+ * Returns an element with tag name `TN` for the specified `target`.
  *
  * > [!NOTE]
  * > This differs from {@linkcode toElem} in that it will never return `null`, only
@@ -24,7 +28,7 @@ import type { Elem } from "./types.ts";
  * > only available on an `HTMLButtonElement` when the Element or EventTarget you
  * > passed in is an `HTMLDivElement`, you're going to get a runtime error.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element or EventTarget.
  *
@@ -39,7 +43,7 @@ import type { Elem } from "./types.ts";
  * function handleButtonClick(event: MouseEvent): void {
  *   // We know this is an `HTMLButtonElement` because the event listener was
  *   // attached to a `<button>` and `currentTarget` is therefore a button:
- *   const buttonElem = asElem<HTMLButtonElement>(event.currentTarget);
+ *   const buttonElem = asElem<"button">(event.currentTarget);
  * }
  * ```
  *
@@ -49,18 +53,18 @@ import type { Elem } from "./types.ts";
  * function handleButtonClick(event: MouseEvent): void {
  *   // We're telling TypeScript this is an `<input>` when it's actually a
  *   // button:
- *   const elem = asElem<HTMLInputElement>(event.currentTarget);
+ *   const elem = asElem<"input">(event.currentTarget);
  *
  *   // TypeScript will _not_ complain about this, but you'll get an error:
  *   console.log(elem.valueAsNumber);
  * }
  * ```
  */
-export function asElem<E extends Element = HTMLElement>(
-  target: Elem<E> | null | undefined,
-): E {
+export function asElem<TN extends TagName = "*">(
+  target: Elem<TN> | null | undefined,
+): ElementOf<TN> {
   if (isElem(target)) {
-    return target as E;
+    return cast<ElementOf<TN>>(target);
   } else {
     throw new InvalidElemError("Cannot assert as elem");
   }

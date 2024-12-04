@@ -1,7 +1,7 @@
 import type { Elem } from "./types.ts";
 
 /**
- * Returns true if the specified value is an {@linkcode Elem} instance.
+ * Returns true if the `value` is an {@linkcode Elem} instance.
  *
  * @internal
  */

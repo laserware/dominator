@@ -18,8 +18,8 @@ import type { CssVarName, CssVarValue } from "./types.ts";
 export type CssVarsSearch = PropertySearch<CssVarName, CssVarValue | null>;
 
 /**
- * Checks if the specified `target` has the specified CSS variable with `name`.
- * If a `value` is specified, checks that the values match.
+ * Checks if the `target` has the CSS variable with `name`. If a `value` is
+ * specified, checks that the values match.
  *
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
@@ -28,7 +28,7 @@ export type CssVarsSearch = PropertySearch<CssVarName, CssVarValue | null>;
  * @param [value=undefined] Optional value of the CSS variable to check for.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
- * @returns `true` if the specified CSS variable is present.
+ * @returns `true` if the CSS variable `name` is present.
  *
  * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
@@ -88,8 +88,8 @@ export function hasCssVar(
 }
 
 /**
- * Checks if **all** of the CSS variables match the specified `search` criteria
- * in the `target`.
+ * Checks if **all** of the CSS variables match the `search` criteria in the
+ * `target`.
  *
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
@@ -97,7 +97,7 @@ export function hasCssVar(
  * @param search Array of CSS variable names or CSS variables filter to check for.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
- * @returns `true` if the specified `target` matches all search criteria.
+ * @returns `true` if the `target` matches all `search` criteria.
  *
  * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *
@@ -167,8 +167,8 @@ export function hasAllCssVars(
 }
 
 /**
- * Checks if **some** of the CSS variables match the specified `search` criteria
- * in the `target`.
+ * Checks if **some** of the CSS variables match the `search` criteria in the
+ * `target`.
  *
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
@@ -176,7 +176,7 @@ export function hasAllCssVars(
  * @param search Array of CSS variable names or CSS variables filter to check for.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
- * @returns `true` if the specified `target` has **some** of the specified CSS variables.
+ * @returns `true` if the `target` matches some `search` criteria.
  *
  * @throws {@linkcode elems!InvalidElemError} if the specified `target` wasn't found.
  *

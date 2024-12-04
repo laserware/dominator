@@ -5,7 +5,7 @@ import { elemOrThrow } from "../internal/elemOr.ts";
 import type { ElemOrCssSelector } from "./types.ts";
 
 /**
- * Checks if the specified `target` is currently scrollable.
+ * Checks if the `target` is currently scrollable.
  *
  * @param target Element, EventTarget, or CSS selector.
  *

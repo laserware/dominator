@@ -1,6 +1,7 @@
 import { cast } from "@laserware/arcade";
 
 import { isCssVarName } from "../css/isCssVarName.ts";
+import type { ElementOf, TagName } from "../dom.ts";
 import { InvalidElemError } from "../elems/InvalidElemError.ts";
 import { toElem } from "../elems/toElem.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
@@ -22,11 +23,11 @@ import type { StyleKey, Styles, StyleValue } from "./types.ts";
  * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
  *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function setStyle<E extends Element = HTMLElement>(
+export function setStyle<TN extends TagName = "*">(
   target: ElemOrCssSelector,
   key: StyleKey,
   value: StyleValue,
-): E {
+): ElementOf<TN> {
   const elem = toElem(target);
   if (elem === null || !("style" in elem)) {
     throw new InvalidElemError(`Unable to set style for ${key}`);
@@ -34,7 +35,7 @@ export function setStyle<E extends Element = HTMLElement>(
 
   setSingleStyle(elem, key, value);
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(elem);
 }
 
 /**
@@ -42,7 +43,7 @@ export function setStyle<E extends Element = HTMLElement>(
  * object with key of style property name and value of the corresponding property
  * value.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param styles Object with style property values keyed by name.
@@ -52,10 +53,10 @@ export function setStyle<E extends Element = HTMLElement>(
  * @throws {@linkcode elems!InvalidElemError} if the `target` could not be found or doesn't have
  *                                            a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function setStyles<E extends Element = HTMLElement>(
+export function setStyles<TN extends TagName = "*">(
   target: ElemOrCssSelector,
   styles: Styles,
-): E {
+): ElementOf<TN> {
   const elem = toElem(target);
   if (elem === null || !("style" in elem)) {
     // prettier-ignore
@@ -66,7 +67,7 @@ export function setStyles<E extends Element = HTMLElement>(
     setSingleStyle(elem, key, styles[key as StyleKey] as StyleValue);
   }
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(elem);
 }
 
 function setSingleStyle(

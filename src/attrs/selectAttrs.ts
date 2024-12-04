@@ -9,17 +9,18 @@ import { InvalidAttrError } from "./InvalidAttrError.ts";
 import type { AttrName, Attrs, AttrValue } from "./types.ts";
 
 /**
- * Attempts to build a CSS selector string from the specified `name` and `value`. Note
- * that the `value` is coerced to a string and `null` excludes a value but only
- * includes a name. If `tag` is specified, it is included in the resulting selector.
+ * Attempts to build a CSS selector string from the attribute `name` and `value`.
+ * Note that the `value` is coerced to a string and `null` excludes a value but
+ * only includes a name. If `tagName` is specified, it is included in the
+ * resulting selector.
  *
- * @template E Element type to select attribute from.
+ * @template TN Tag name of Element to select attribute from.
  *
  * @param name Attribute name to include in the selector.
  * @param [value=undefined] Optional attribute value to include in the selector.
- * @param [tag] Optional tag name to include in the selector.
+ * @param [tagName] Optional tagName name to include in the selector.
  *
- * @returns CSS selector based on the specified attribute `name` and optional `value` and `tag`.
+ * @returns CSS selector based on the attribute `name` and optional `value` and `tagName`.
  *
  * @throws {@linkcode InvalidAttrError} if the specified `value` could not be stringified.
  *
@@ -52,30 +53,30 @@ import type { AttrName, Attrs, AttrValue } from "./types.ts";
  * // button[disabled]
  * ```
  */
-export function selectAttr<E extends Element = HTMLElement>(
-  name: AttrName<E>,
+export function selectAttr<TN extends TagName = "*">(
+  name: AttrName<TN>,
   value: AttrValue | null | undefined = undefined,
-  tag?: TagName,
+  tagName?: TagName,
 ): CssSelector {
   const selector = selectSingleAttr(name, value);
 
-  return selectorWithTag(selector, tag);
+  return selectorWithTag(selector, tagName);
 }
 
 /**
- * Attempts to build a CSS selector string from the specified `attrs` object. Note
+ * Attempts to build a CSS selector string from the `attrs` object. Note
  * that the values of the `attrs` object are coerced to a string and `null` excludes
- * a value but only includes a name. If `tag` is specified, it is included in the
+ * a value but only includes a name. If `tagName` is specified, it is included in the
  * resulting selector.
  *
- * @template E Element type to select attributes from.
+ * @template TN Tag name of Element to select attributes from.
  *
  * @param attrs Object with key of attribute name and value of attribute value.
- * @param [tag] Optional tag name to include in the selector.
+ * @param [tagName] Optional tagName name to include in the selector.
  *
- * @returns CSS selector based on the specified `attrs`.
+ * @returns CSS selector based on the `attrs`.
  *
- * @throws {@linkcode InvalidAttrError} if a value in the specified `attrs` could not be stringified.
+ * @throws {@linkcode InvalidAttrError} if a value in `attrs` could not be stringified.
  *
  * @example
  * **Single Entry With Value**
@@ -106,9 +107,9 @@ export function selectAttr<E extends Element = HTMLElement>(
  * // [disabled="true"][inert]
  * ```
  */
-export function selectAttrs<E extends Element = HTMLElement>(
-  attrs: Attrs<E>,
-  tag?: TagName,
+export function selectAttrs<TN extends TagName = "*">(
+  attrs: Attrs<TN>,
+  tagName?: TagName,
 ): CssSelector {
   let selector = "";
 
@@ -116,11 +117,11 @@ export function selectAttrs<E extends Element = HTMLElement>(
     selector += selectSingleAttr(name, attrs[name]);
   }
 
-  return selectorWithTag(selector, tag);
+  return selectorWithTag(selector, tagName);
 }
 
-function selectSingleAttr<E extends Element = HTMLElement>(
-  name: AttrName<E>,
+function selectSingleAttr<TN extends TagName = "*">(
+  name: AttrName<TN>,
   value: AttrValue | null | undefined,
 ): CssSelector {
   const validName = kebabCase(name);

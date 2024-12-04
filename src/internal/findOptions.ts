@@ -36,5 +36,5 @@ export function parseFindOptions(options: FindOptions): {
 
   const parent = toElem(options.parent) ?? document;
 
-  return { selector: selectorWithTag(selector, options.tag), parent };
+  return { selector: selectorWithTag(selector, options.tagName), parent };
 }

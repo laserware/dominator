@@ -1,5 +1,6 @@
 import { cast } from "@laserware/arcade";
 
+import type { ElementOf, TagName } from "../dom.ts";
 import type { ElemOrCssSelector } from "../elems/types.ts";
 import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -7,9 +8,9 @@ import { formatForError } from "../internal/formatForError.ts";
 import type { AttrName } from "./types.ts";
 
 /**
- * Removes the specified attribute `name` from the specified `target`.
+ * Removes the attribute `name` from the `target`.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to remove.
@@ -43,21 +44,21 @@ import type { AttrName } from "./types.ts";
  * </button>
  * ```
  */
-export function removeAttr<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector<E>,
-  name: AttrName<E>,
-): E {
+export function removeAttr<TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
+  name: AttrName<TN>,
+): ElementOf<TN> {
   const elem = elemOrThrow(target, `Unable to remove attribute ${name}`);
 
   elem.removeAttribute(name);
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(elem);
 }
 
 /**
- * Removes the attributes with specified `names` from specified `target`.
+ * Removes the attributes with `names` from the `target`.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param names Array of attribute names to remove.
@@ -104,10 +105,10 @@ export function removeAttr<E extends Element = HTMLElement>(
  * </div>
  * ```
  */
-export function removeAttrs<E extends Element = HTMLElement>(
-  target: ElemOrCssSelector<E>,
-  names: AttrName<E>[],
-): E {
+export function removeAttrs<TN extends TagName = "*">(
+  target: ElemOrCssSelector<TN>,
+  names: AttrName<TN>[],
+): ElementOf<TN> {
   // prettier-ignore
   const elem = elemOrThrow(target, `Unable to remove attributes ${formatForError(names)}`);
 
@@ -115,5 +116,5 @@ export function removeAttrs<E extends Element = HTMLElement>(
     elem.removeAttribute(name);
   }
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(elem);
 }
