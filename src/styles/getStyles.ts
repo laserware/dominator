@@ -86,7 +86,7 @@ export function getStyle<V extends StyleValue>(
  * @remarks
  * The {@linkcode arcade!WithUndefinedValues} type represents an object with values that could be `undefined`.
  *
- * @template S Shape of styles object to return.
+ * @template V Shape of styles object to return.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Names of the style properties to get values for.
@@ -124,10 +124,10 @@ export function getStyle<V extends StyleValue>(
  * // { display: "flex", lineHeight: 1.5, fontSize: undefined }
  * ```
  */
-export function getStyles<S extends Styles = Styles>(
+export function getStyles<V extends Styles = Styles>(
   target: Target,
-  keys: KeysOf<S>,
-): WithUndefinedValues<S> {
+  keys: KeysOf<V>,
+): WithUndefinedValues<V> {
   const element = toElement(target);
   if (element === null || !("style" in element)) {
     // prettier-ignore
@@ -141,7 +141,7 @@ export function getStyles<S extends Styles = Styles>(
     styles[key] = getSingleStyle(element, key);
   }
 
-  return cast<WithUndefinedValues<S>>(styles);
+  return cast<WithUndefinedValues<V>>(styles);
 }
 
 function getSingleStyle<V extends StyleValue>(

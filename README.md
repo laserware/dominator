@@ -278,5 +278,5 @@ const secondGridCellSelector = selectAttributes({
 const secondGridCell = findElement(secondGridCellSelector);
 ```
 
-You can do more than work with attributes. You can also set, get, remove, and select [dataset entries](modules/dataset.html),
-[CSS variables](modules/css.html), and [styles](modules/styles.html).
+You can do more than work with attributes. You can also set, get, remove, and select [dataset entries](https://laserware.github.io/dominator/modules/dataset.html),
+[CSS variables](https://laserware.github.io/dominator/modules/css.html), and [styles](https://laserware.github.io/dominator/modules/styles.html).

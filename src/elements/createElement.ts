@@ -10,60 +10,27 @@ import type { ElementOf, TagName } from "../dom.ts";
 import { setStyles } from "../styles/setStyles.ts";
 import type { Styles } from "../styles/types.ts";
 
-type NeverMethods<T> = {
-  [K in keyof T]: T[K] extends (...args: any[]) => any ? never : K;
-}[keyof T];
-
-export type ExcludeMethods<T> = Pick<T, NeverMethods<T>>;
-
-/**
- * Properties of an element with tag name `TN` that are _not_ methods (e.g.
- * `setAttribute` or `attachInternals`).
- *
- * @template TN Tag name for the associated element.
- */
-export type NonMethodElemProperties<TN extends TagName> = ExcludeMethods<
-  ElementOf<TN>
->;
-
-/**
- * Properties that can be set on the element with the specified `TN` tag name.
- *
- * Note that methods/functions are excluded because this is used in the
- * {@linkcode createElement} function.
- *
- * @template TN Tag name for the associated element.
- */
-export type ElemProperties<TN extends TagName> = Omit<
-  NonMethodElemProperties<TN>,
-  keyof GlobalEventHandlers
->;
-
-/**
- * Name of the event handler.
- */
-export type EventHandlerName = keyof GlobalEventHandlersEventMap;
-
-/**
- * Event listener that is called with event that corresponds to name `EN`.
- *
- * @template EN Name of the event that listener is associated with.
- */
-export type EventListener<EN extends EventHandlerName> = (
-  event: GlobalEventHandlersEventMap[EN],
-) => void;
+import type {
+  ElementPropertiesOf,
+  EventListenerFor,
+  EventNameFor,
+} from "./types.ts";
 
 /**
  * Object with a listener that is called when the corresponding event fires
  * and the options that are passed into [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener).
  *
+ * @template TN Tag name of the associated Element.
  * @template EN Name of the Event that `listener` is associated with.
  */
-export type EventDescriptor<EN extends EventHandlerName> = {
+export type EventDescriptorFor<
+  TN extends TagName,
+  EN extends EventNameFor<TN>,
+> = {
   /**
    * Callback fired when the event is fired.
    */
-  listener: EventListener<EN>;
+  listener: EventListenerFor<TN, EN>;
 
   /**
    * Event listener options object. See [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options)
@@ -76,18 +43,22 @@ export type EventDescriptor<EN extends EventHandlerName> = {
  * Event listener or descriptor used to add listeners to an element created
  * with the {@linkcode createElement} function.
  *
+ * @template TN Tag name of the associated Element.
  * @template EN Name of the Event that the listener or  is associated with.
  */
-export type EventListenerOrDescriptor<EN extends EventHandlerName> =
-  | EventListener<EN>
-  | EventDescriptor<EN>;
+export type EventListenerOrDescriptorFor<
+  TN extends TagName,
+  EN extends EventNameFor<TN>,
+> = EventListenerFor<TN, EN> | EventDescriptorFor<TN, EN>;
 
 /**
  * Object with key of event name and value of an event listener or
- * {@linkcode EventDescriptor}.
+ * {@linkcode EventDescriptorFor}.
+ *
+ * @template TN Tag name of the associated Element.
  */
-export type EventListenersOrDescriptors = {
-  [EN in EventHandlerName]?: EventListenerOrDescriptor<EN>;
+export type EventListenersOrDescriptorsFor<TN extends TagName = "*"> = {
+  [EN in EventNameFor<TN>]?: EventListenerOrDescriptorFor<TN, EN>;
 };
 
 /**
@@ -97,8 +68,8 @@ export type EventListenersOrDescriptors = {
  *
  * @template TN Tag name for the created element.
  */
-export type CreateElemOptions<TN extends TagName> = Partial<
-  Omit<ElemProperties<TN>, "attributes" | "dataset">
+export type CreateElementOptions<TN extends TagName> = Partial<
+  Omit<ElementPropertiesOf<TN>, "attributes" | "dataset">
 > & {
   /** Attributes to set on element. */
   attributes?: Attributes<TN>;
@@ -113,14 +84,14 @@ export type CreateElemOptions<TN extends TagName> = Partial<
   dataset?: Dataset;
 
   /**
-   * Event listeners or {@linkcode EventDescriptor} objects to set on element.
+   * Event listeners or {@linkcode EventDescriptorFor} objects to set on element.
    *
    * The `EventDescriptor` is an object with a `listener` field that defines
    * the callback that is fired when the corresponding event is dispatched and
    * an `options` object matching the `options` argument in `addEventListener`.
    * See the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options) for additional details.
    */
-  on?: EventListenersOrDescriptors;
+  on?: EventListenersOrDescriptorsFor;
 
   /** Styles to set on element. */
   styles?: Styles;
@@ -129,7 +100,7 @@ export type CreateElemOptions<TN extends TagName> = Partial<
 /**
  * Types of children that can be passed to {@linkcode createElement}.
  */
-export type ElemChild = HTMLElement | SVGElement | string | null;
+export type ElementChild = HTMLElement | SVGElement | string | null;
 
 /**
  * Creates an HTML element with tag name `TN` and adds the properties/listeners
@@ -212,8 +183,8 @@ export type ElemChild = HTMLElement | SVGElement | string | null;
  */
 export function createElement<TN extends TagName>(
   tagName: TN,
-  options: CreateElemOptions<TN> = {},
-  ...children: ElemChild[]
+  options: CreateElementOptions<TN> = {},
+  ...children: ElementChild[]
 ): ElementOf<TN> {
   const element = document.createElement(tagName);
 
@@ -277,14 +248,14 @@ export function createElement<TN extends TagName>(
  */
 function addEventListeners<TN extends TagName>(
   element: ElementOf<TN>,
-  eventsDict: EventListenersOrDescriptors,
+  eventsDict: EventListenersOrDescriptorsFor<TN>,
 ): void {
-  const eventNames = Object.keys(eventsDict) as EventHandlerName[];
+  const eventNames = Object.keys(eventsDict) as EventNameFor<TN>[];
 
   for (const eventName of eventNames) {
     const listenerOrDescriptor = eventsDict[eventName]!;
 
-    let eventListener: EventListener<typeof eventName>;
+    let eventListener: EventListenerFor<TN, typeof eventName>;
 
     let options: AddEventListenerOptions = {};
 
@@ -294,14 +265,20 @@ function addEventListeners<TN extends TagName>(
       options = listenerOrDescriptor.options;
     } else {
       // prettier-ignore
-      eventListener = listenerOrDescriptor as EventListener<typeof eventName>;
+      eventListener = listenerOrDescriptor as EventListenerFor<TN, typeof eventName>;
     }
 
-    element.addEventListener(eventName, eventListener, options);
+    element.addEventListener(
+      eventName,
+      cast<EventListenerOrEventListenerObject>(eventListener),
+      options,
+    );
   }
 }
 
-function isEventDescriptor(value: unknown): value is EventDescriptor<any> {
+function isEventDescriptor<TN extends TagName>(
+  value: unknown,
+): value is EventDescriptorFor<TN, any> {
   if (value === null) {
     return false;
   }

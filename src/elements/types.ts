@@ -1,7 +1,12 @@
 import type { Attributes } from "../attributes/types.ts";
 import type { CssSelector } from "../css/types.ts";
 import type { Dataset } from "../dataset/types.ts";
-import type { ElementOf, TagName } from "../dom.ts";
+import type {
+  ElementOf,
+  HTMLElementTagName,
+  SVGElementTagName,
+  TagName,
+} from "../dom.ts";
 
 /**
  * Element or EventTarget that can be passed into functions.
@@ -34,6 +39,84 @@ export type ElementLike<TN extends TagName = "*"> =
  * @template TN Tag name of Element if {@linkcode ElementLike}.
  */
 export type Target<TN extends TagName = "*"> = ElementLike<TN> | CssSelector;
+
+type NeverMethods<T> = {
+  [K in keyof T]: T[K] extends (...args: any[]) => any ? never : K;
+}[keyof T];
+
+export type ExcludeMethods<T> = Pick<T, NeverMethods<T>>;
+
+/**
+ * Properties of an element with tag name `TN` that are _not_ methods (e.g.
+ * `setAttribute` or `attachInternals`).
+ *
+ * @template TN Tag name for the associated element.
+ */
+export type NonMethodElementProperties<TN extends TagName> = ExcludeMethods<
+  ElementOf<TN>
+>;
+
+/**
+ * Properties that can be set on the element with the specified `TN` tag name.
+ *
+ * Note that methods/functions are excluded because this is used in the
+ * {@linkcode createElement} function.
+ *
+ * @template TN Tag name for the associated element.
+ */
+export type ElementPropertiesOf<TN extends TagName> = Omit<
+  NonMethodElementProperties<TN>,
+  keyof GlobalEventHandlers
+>;
+
+/**
+ * Name of the event handler.
+ *
+ * @template TN Tag name of the associated Element.
+ */
+export type EventNameFor<TN extends TagName = "*"> =
+  TN extends HTMLElementTagName
+    ? keyof HTMLElementEventMap
+    : TN extends SVGElementTagName
+      ? keyof SVGElementEventMap
+      : keyof GlobalEventHandlersEventMap;
+
+/**
+ * Any event for an HTML or SVG element.
+ *
+ * @template TN Tag name of the associated Element.
+ */
+export type EventFor<
+  TN extends TagName,
+  EN extends EventNameFor<TN>,
+> = TN extends HTMLElementTagName
+  ? HTMLElementEventMap[EN]
+  : TN extends SVGElementTagName
+    ? SVGElementEventMap[EN]
+    : never;
+
+/**
+ * Event listener that is called with event that corresponds to name `EN`.
+ *
+ * @template TN Tag name of the associated Element.
+ * @template EN Name of the event that listener is associated with.
+ */
+export type EventListenerFor<
+  TN extends TagName,
+  EN extends EventNameFor<TN>,
+> = (event: EventFor<TN, EN>) => void;
+
+export interface EventListenerObjectFor<
+  TN extends TagName,
+  EN extends EventNameFor<TN>,
+> {
+  handleEvent(object: EventFor<TN, EN>): void;
+}
+
+export type EventListenerOrEventListenerObjectFor<
+  TN extends TagName,
+  EN extends EventNameFor<TN>,
+> = EventListenerFor<TN, EN> | EventListenerObjectFor<TN, EN>;
 
 /**
  * Use to specify search criteria for finding element(s). You can find elements

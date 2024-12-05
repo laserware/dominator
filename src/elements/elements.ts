@@ -8,15 +8,11 @@ export { areElementsSame } from "./areElementsSame.ts";
 export { asElement } from "./asElement.ts";
 export {
   createElement,
-  type CreateElemOptions,
-  type ElemChild,
-  type ElemProperties,
-  type EventDescriptor,
-  type EventHandlerName,
-  type EventListener,
-  type EventListenerOrDescriptor,
-  type EventListenersOrDescriptors,
-  type NonMethodElemProperties,
+  type CreateElementOptions,
+  type ElementChild,
+  type EventDescriptorFor,
+  type EventListenerOrDescriptorFor,
+  type EventListenersOrDescriptorsFor,
 } from "./createElement.ts";
 export { elementExists } from "./elementExists.ts";
 export { findAllElements } from "./findAllElements.ts";
@@ -40,4 +36,15 @@ export { isElementScrollable } from "./isElementScrollable.ts";
 export { keepElementVisibleIn } from "./keepElementVisibleIn.ts";
 export { listToArray } from "./listToArray.ts";
 export { toElement } from "./toElement.ts";
-export type { ElementLike, FindOptions, Target } from "./types.ts";
+export type {
+  ElementLike,
+  ElementPropertiesOf,
+  EventFor,
+  EventListenerFor,
+  EventListenerObjectFor,
+  EventListenerOrEventListenerObjectFor,
+  EventNameFor,
+  FindOptions,
+  NonMethodElementProperties,
+  Target,
+} from "./types.ts";

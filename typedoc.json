@@ -9,7 +9,6 @@
     "./src/elements/elements.ts",
     "./src/styles/styles.ts",
     "./src/dom.ts",
-    "./src/search.ts",
     "./src/types.ts"
   ],
   "exclude": [
