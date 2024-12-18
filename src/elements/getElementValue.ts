@@ -2,29 +2,30 @@ import { toElementOrThrow } from "./toElement.ts";
 import type { Target } from "./types.ts";
 
 /**
- * Name of the value type associated with an input.
+ * Name of the value type associated with an element.
  */
-export type InputValueTypeName = "boolean" | "date" | "number" | "string";
+export type ElementValueTypeName = "boolean" | "date" | "number" | "string";
 
 /**
- * Type that corresponds to the {@linkcode InputValueTypeName}. This is a
+ * Type that corresponds to the {@linkcode ElementValueTypeName}. This is a
  * convenience type for coercing a type name specified as a string to the
- * actual type (e.g. `InputValueTypeName` of `"string"` would indicate that
+ * actual type (e.g. `ElementValueTypeName` of `"string"` would indicate that
  * the return value will be of type `string`).
  *
- * See {@linkcode getInputValue} to understand how this is used in practice.
+ * See {@linkcode getElementValue} to understand how this is used in practice.
  *
  * @template T Name of the input value type.
  */
-export type InputValueAsType<T extends InputValueTypeName> = T extends "boolean"
-  ? boolean
-  : T extends "date"
-    ? Date
-    : T extends "number"
-      ? number
-      : T extends "string"
-        ? string
-        : never;
+export type ElementValueAsType<T extends ElementValueTypeName> =
+  T extends "boolean"
+    ? boolean
+    : T extends "date"
+      ? Date
+      : T extends "number"
+        ? number
+        : T extends "string"
+          ? string
+          : never;
 
 /**
  * Returns the value of the specified `target` with the specified type. The
@@ -40,16 +41,12 @@ export type InputValueAsType<T extends InputValueTypeName> = T extends "boolean"
  * @returns Value of the specified `target` as type `T`.
  *
  * @throws {@linkcode InvalidElementError} if the specified `target` wasn't found.
- * @throws Error if the `target` specified is not of type `HTMLInputElement`.
  */
-export function getInputValue<T extends InputValueTypeName>(
+export function getElementValue<T extends ElementValueTypeName>(
   target: Target,
-): InputValueAsType<T> {
-  const element = toElementOrThrow(target, "Cannot get value for element");
-
-  if (!isInputElement(element)) {
-    throw new Error("Cannot get value on an element if it is not an input");
-  }
+): ElementValueAsType<T> {
+  // prettier-ignore
+  const element = toElementOrThrow<"input">(target, "Cannot get value for element");
 
   // Note that the order of these checks is important. Calling `valueAsNumber` on
   // date input will return the Unix epoch, which is _not_ what we want to return,
@@ -81,24 +78,16 @@ export function getInputValue<T extends InputValueTypeName>(
  * @returns String value of the specified `target`.
  *
  * @throws {@linkcode InvalidElementError} if the specified `target` wasn't found.
- * @throws Error if the `target` specified is not of type `HTMLInputElement`.
  */
-export function getInputValueRaw(target: Target): string {
-  const element = toElementOrThrow(target, "Cannot get value for element");
+export function getElementValueRaw(target: Target): string {
+  // prettier-ignore
+  const element = toElementOrThrow<"input">(target, "Cannot get value for element");
 
-  if (isInputElement(element)) {
-    return element.value;
-  } else {
-    throw new Error("Cannot get value on an element if it is not an input");
-  }
+  return element.value;
 }
 
-function isInputElement(element: HTMLElement): element is HTMLInputElement {
-  return element instanceof HTMLInputElement;
-}
-
-function asInputReturnValue<T extends InputValueTypeName>(
+function asInputReturnValue<T extends ElementValueTypeName>(
   value: any,
-): InputValueAsType<T> {
-  return value as unknown as InputValueAsType<T>;
+): ElementValueAsType<T> {
+  return value as unknown as ElementValueAsType<T>;
 }

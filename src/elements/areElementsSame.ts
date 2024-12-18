@@ -45,8 +45,8 @@ import type { Target } from "./types.ts";
  * ```
  */
 export function areElementsSame(
-  left: OneOrManyOf<Target>,
-  right: Target,
+  left: OneOrManyOf<Target | null>,
+  right: Target | null,
 ): boolean {
   if (Array.isArray(left)) {
     for (const item of left) {
@@ -61,7 +61,7 @@ export function areElementsSame(
   }
 }
 
-function isSameAs(left: Target, right: Target): boolean {
+function isSameAs(left: Target | null, right: Target | null): boolean {
   const sourceElement = toElement(left);
   const targetElement = toElement(right);
 

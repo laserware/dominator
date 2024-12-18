@@ -1,5 +1,5 @@
 import { render } from "../../testing.ts";
-import { getInputValue, getInputValueRaw } from "../getInputValue.ts";
+import { getElementValue, getElementValueRaw } from "../getElementValue.ts";
 
 describe("within getInputValue", () => {
   describe("the getInputValueRaw function", () => {
@@ -13,7 +13,7 @@ describe("within getInputValue", () => {
         </form>
       `);
 
-      const result = getInputValueRaw("input");
+      const result = getElementValueRaw("input");
 
       expect(result).toBe("Test");
     });
@@ -22,7 +22,7 @@ describe("within getInputValue", () => {
       const element = render(`<button>Button</button>`);
 
       expect(() => {
-        getInputValueRaw(element);
+        getElementValueRaw(element);
       }).toThrow(/Cannot get value/);
     });
   });
@@ -31,7 +31,7 @@ describe("within getInputValue", () => {
     it("returns a number value for a number input", () => {
       const element = render(`<input type="number" value="22e2" />`);
 
-      const result = getInputValue(element);
+      const result = getElementValue(element);
 
       expect(result).toBe(2200);
     });
@@ -39,7 +39,7 @@ describe("within getInputValue", () => {
     it("returns a string value for a text input", () => {
       const element = render(`<input type="text" value="22" />`);
 
-      const result = getInputValue(element);
+      const result = getElementValue(element);
 
       expect(result).toBe("22");
     });
@@ -47,7 +47,7 @@ describe("within getInputValue", () => {
     it("returns a Date for a date input", () => {
       const element = render(`<input type="date" value="2024-01-01" />`);
 
-      const result = getInputValue(element);
+      const result = getElementValue(element);
 
       expect(result).toBeInstanceOf(Date);
     });
@@ -55,7 +55,7 @@ describe("within getInputValue", () => {
     it("returns true for a checkbox input if checked is true", () => {
       const element = render(`<input type="checkbox" checked />`);
 
-      const result = getInputValue(element);
+      const result = getElementValue(element);
 
       expect(result).toBeTruthy();
     });
@@ -63,7 +63,7 @@ describe("within getInputValue", () => {
     it("returns false for a checkbox input if checked is undefined", () => {
       const element = render(`<input type="checkbox" />`);
 
-      const result = getInputValue(element);
+      const result = getElementValue(element);
 
       expect(result).toBeFalsy();
     });
@@ -71,7 +71,7 @@ describe("within getInputValue", () => {
     it("returns true for a radio input if checked is true", () => {
       const element = render(`<input type="radio" checked />`);
 
-      const result = getInputValue(element);
+      const result = getElementValue(element);
 
       expect(result).toBeTruthy();
     });
@@ -79,7 +79,7 @@ describe("within getInputValue", () => {
     it("returns false for a radio input if checked is undefined", () => {
       const element = render(`<input type="radio" />`);
 
-      const result = getInputValue(element);
+      const result = getElementValue(element);
 
       expect(result).toBeFalsy();
     });
@@ -88,7 +88,7 @@ describe("within getInputValue", () => {
       const element = render(`<button>Button</button>`);
 
       expect(() => {
-        getInputValue(element);
+        getElementValue(element);
       }).toThrow(/Cannot get value/);
     });
   });

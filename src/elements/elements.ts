@@ -20,11 +20,11 @@ export { findAllFocusable } from "./findAllFocusable.ts";
 export { findElement } from "./findElement.ts";
 export { focusElement, type FocusOptions } from "./focusElement.ts";
 export {
-  getInputValue,
-  getInputValueRaw,
-  type InputValueAsType,
-  type InputValueTypeName,
-} from "./getInputValue.ts";
+  getElementValue,
+  getElementValueRaw,
+  type ElementValueAsType,
+  type ElementValueTypeName,
+} from "./getElementValue.ts";
 export { getInputWidth } from "./getInputWidth.ts";
 export { idMatches } from "./idMatches.ts";
 export { InvalidElementError } from "./InvalidElementError.ts";
