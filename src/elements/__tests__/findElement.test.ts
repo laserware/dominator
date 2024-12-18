@@ -148,6 +148,34 @@ describe("the findElement function", () => {
     expect(result!).toEqual(element);
   });
 
+  it("finds an element with selector, attributes, dataset, and tag in different formats", () => {
+    const element = render(`
+      <button 
+        id="button"
+        class="test"
+        name="button"
+        disabled
+        aria-disabled="true"
+        aria-expanded="true"
+        draggable="true"
+        inert
+        data-some-property="thing"
+      >
+        Button
+      </button>
+      <div class="test">Test</div>
+    `);
+
+    const result = findElement({
+      withSelector: ".test",
+      withAttributes: ["name", "disabled"],
+      withDataset: "someProperty",
+      tagName: "button",
+    });
+
+    expect(result!).toEqual(element);
+  });
+
   it("throws an error if an invalid selector is specified", () => {
     render(`<div aria-hidden="true" data-value="test">Child</div>`);
 

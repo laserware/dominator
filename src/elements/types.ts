@@ -1,6 +1,6 @@
-import type { Attributes } from "../attributes/types.ts";
+import type { AttributeName, Attributes } from "../attributes/types.ts";
 import type { CssSelector } from "../css/types.ts";
-import type { Dataset } from "../dataset/types.ts";
+import type { Dataset, DatasetKey } from "../dataset/types.ts";
 import type {
   ElementOf,
   HTMLElementTagName,
@@ -132,10 +132,10 @@ export type FindOptions<TN extends TagName = "*"> = {
   withSelector?: CssSelector;
 
   /** Key/value pairs of attributes to search for. */
-  withAttributes?: Attributes<TN>;
+  withAttributes?: Attributes<TN> | AttributeName[] | AttributeName;
 
   /** Key/value pairs of dataset entries to search for. */
-  withDataset?: Dataset;
+  withDataset?: Dataset | DatasetKey[] | DatasetKey;
 
   /** Optional parent Element, EventTarget, or CSS selector. */
   parent?: Target | null | undefined;
