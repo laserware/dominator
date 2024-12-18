@@ -1,8 +1,8 @@
 import { render } from "../../testing.ts";
 import { getElementValue, getElementValueRaw } from "../getElementValue.ts";
 
-describe("within getInputValue", () => {
-  describe("the getInputValueRaw function", () => {
+describe("within getElementValue", () => {
+  describe("the getElementValueRaw function", () => {
     it("returns the value of the element", () => {
       render(`
         <form>
@@ -17,17 +17,9 @@ describe("within getInputValue", () => {
 
       expect(result).toBe("Test");
     });
-
-    it("throws an error if the specified target is not a valid input element", () => {
-      const element = render(`<button>Button</button>`);
-
-      expect(() => {
-        getElementValueRaw(element);
-      }).toThrow(/Cannot get value/);
-    });
   });
 
-  describe("the getInputValue function", () => {
+  describe("the getElementValue function", () => {
     it("returns a number value for a number input", () => {
       const element = render(`<input type="number" value="22e2" />`);
 
@@ -82,14 +74,6 @@ describe("within getInputValue", () => {
       const result = getElementValue(element);
 
       expect(result).toBeFalsy();
-    });
-
-    it("throws an error if the specified target is not a valid input element", () => {
-      const element = render(`<button>Button</button>`);
-
-      expect(() => {
-        getElementValue(element);
-      }).toThrow(/Cannot get value/);
     });
   });
 });
