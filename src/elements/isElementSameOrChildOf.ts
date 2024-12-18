@@ -14,7 +14,10 @@ import type { Target } from "./types.ts";
  *
  * @returns `true` if the `child` is a child of or the same as the specified `parent`.
  */
-export function isElementSameOrChildOf(child: Target, parent: Target): boolean {
+export function isElementSameOrChildOf(
+  child: Target | null,
+  parent: Target | null,
+): boolean {
   // Return immediately if the is same check passes, so we don't have to
   // iterate through the DOM if we don't need to:
   if (areElementsSame(child, parent)) {

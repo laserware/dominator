@@ -46,8 +46,8 @@ import type { Target } from "./types.ts";
  * ```
  */
 export function areElementsDifferent(
-  left: OneOrManyOf<Target>,
-  right: Target,
+  left: OneOrManyOf<Target | null>,
+  right: Target | null,
 ): boolean {
   if (Array.isArray(left)) {
     // Ensure we bail early if we find an element that is the same:
@@ -63,7 +63,7 @@ export function areElementsDifferent(
   }
 }
 
-function isDifferentFrom(left: Target, right: Target): boolean {
+function isDifferentFrom(left: Target | null, right: Target | null): boolean {
   const sourceElement = toElement(left);
   const targetElement = toElement(right);
 

@@ -17,7 +17,10 @@ import type { Target } from "./types.ts";
  *
  * @returns `true` if the `child` is a child of the specified `parent`.
  */
-export function isElementChildOf(child: Target, parent: Target): boolean {
+export function isElementChildOf(
+  child: Target | null,
+  parent: Target | null,
+): boolean {
   const parentElement = toElement(parent);
   const childElement = toElement(child, parentElement);
 

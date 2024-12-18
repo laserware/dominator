@@ -19,7 +19,7 @@ import type { Target } from "./types.ts";
  * @returns `true` if the `target` is of type `tagName`.
  */
 export function isElementOfType<TN extends TagName>(
-  target: Target,
+  target: Target | null,
   tagName: TN,
 ): target is ElementOf<TN> {
   const element = toElement(target);
