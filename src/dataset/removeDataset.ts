@@ -64,7 +64,7 @@ import type { DatasetKey, DatasetPropertyName } from "./types.ts";
  * ```
  */
 export function removeDatasetEntry<TN extends TagName = "*">(
-  target: Target<TN>,
+  target: Target<TN> | null,
   key: DatasetPropertyName,
 ): ElementOf<TN> {
   // prettier-ignore
@@ -130,7 +130,7 @@ export function removeDatasetEntry<TN extends TagName = "*">(
  * ```
  */
 export function removeDatasetEntries<TN extends TagName = "*">(
-  target: Target<TN>,
+  target: Target<TN> | null,
   keys: DatasetKey[],
 ): ElementOf<TN> {
   // prettier-ignore

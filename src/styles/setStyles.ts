@@ -23,7 +23,7 @@ import type { StyleKey, Styles, StyleValue } from "./types.ts";
  * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function setStyle<TN extends TagName = "*">(
-  target: Target,
+  target: Target | null,
   key: StyleKey,
   value: StyleValue,
 ): ElementOf<TN> {
@@ -52,7 +52,7 @@ export function setStyle<TN extends TagName = "*">(
  * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function setStyles<TN extends TagName = "*">(
-  target: Target,
+  target: Target | null,
   styles: Styles,
 ): ElementOf<TN> {
   const element = toElement(target);

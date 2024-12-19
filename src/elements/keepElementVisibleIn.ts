@@ -12,7 +12,10 @@ import type { Target } from "./types.ts";
  *
  * @throws {@linkcode InvalidElementError} if the `target` or `parent` specified do not exist.
  */
-export function keepElementVisibleIn(target: Target, parent: Target): void {
+export function keepElementVisibleIn(
+  target: Target | null,
+  parent: Target | null,
+): void {
   // prettier-ignore
   const activeElement = toElementOrThrow(target, "Cannot keep target visible");
 

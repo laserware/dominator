@@ -66,8 +66,8 @@ import type { Dataset, DatasetKey, DatasetValue } from "./types.ts";
  * // false
  * ```
  */
-export function getDatasetValue<V extends DatasetValue = DatasetValue>(
-  target: Target,
+export function getDatasetValue<V extends DatasetValue = string>(
+  target: Target | null,
   key: DatasetKey,
 ): V | undefined {
   // prettier-ignore
@@ -158,7 +158,7 @@ export function getDatasetValue<V extends DatasetValue = DatasetValue>(
  * ```
  */
 export function getDatasetEntries<V extends Dataset = Dataset>(
-  target: Target,
+  target: Target | null,
   keys: DatasetKey[],
 ): WithUndefinedValues<V> {
   // prettier-ignore

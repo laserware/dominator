@@ -62,7 +62,7 @@ export type AttributesSearch<TN extends TagName = "*"> = PropertySearch<
  * ```
  */
 export function hasAttribute<TN extends TagName = "*">(
-  target: Target<TN>,
+  target: Target<TN> | null,
   name: AttributeName<TN>,
   value?: AttributeValue,
 ): boolean {
@@ -113,7 +113,7 @@ export function hasAttribute<TN extends TagName = "*">(
  * ```
  */
 export function hasAllAttributes<TN extends TagName = "*">(
-  target: Target<TN>,
+  target: Target<TN> | null,
   search: AttributesSearch<TN>,
 ): boolean {
   // prettier-ignore
@@ -162,7 +162,7 @@ export function hasAllAttributes<TN extends TagName = "*">(
  * ```
  */
 export function hasSomeAttributes<TN extends TagName = "*">(
-  target: Target<TN>,
+  target: Target<TN> | null,
   search: AttributesSearch<TN>,
 ): boolean {
   // prettier-ignore

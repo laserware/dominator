@@ -73,9 +73,8 @@ import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
 export function setCssVar<TN extends TagName = "*">(
   name: CssVarName,
   value: CssVarValue,
-  target: Target<TN> = document.documentElement,
+  target: Target<TN> | null = document.documentElement,
 ): ElementOf<TN> {
-  // prettier-ignore
   const element = toElementOrThrow(target, `Cannot set CSS variable ${name}`);
 
   setSingleCssVar(element, name, value);
@@ -149,7 +148,7 @@ export function setCssVar<TN extends TagName = "*">(
  */
 export function setCssVars<TN extends TagName = "*">(
   vars: CssVars,
-  target: Target<TN> = document.documentElement,
+  target: Target<TN> | null = document.documentElement,
 ): ElementOf<TN> {
   // prettier-ignore
   const element = toElementOrThrow(target, `Cannot set CSS variables ${formatForError(vars)}`);

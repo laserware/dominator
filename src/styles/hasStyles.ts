@@ -31,7 +31,7 @@ export type StylesSearch = PropertySearch<StyleKey, StyleValue | null>;
  * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function hasStyle(
-  target: Target,
+  target: Target | null,
   key: StyleKey,
   value?: StyleValue,
 ): boolean {
@@ -54,7 +54,10 @@ export function hasStyle(
  *
  * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function hasAllStyles(target: Target, search: StylesSearch): boolean {
+export function hasAllStyles(
+  target: Target | null,
+  search: StylesSearch,
+): boolean {
   const element = toElement(target);
   if (element === null || !("style" in element)) {
     // prettier-ignore
@@ -75,7 +78,10 @@ export function hasAllStyles(target: Target, search: StylesSearch): boolean {
  *
  * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function hasSomeStyles(target: Target, search: StylesSearch): boolean {
+export function hasSomeStyles(
+  target: Target | null,
+  search: StylesSearch,
+): boolean {
   const element = toElement(target);
   if (element === null || !("style" in element)) {
     // prettier-ignore

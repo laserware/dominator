@@ -45,7 +45,7 @@ import type { AttributeName } from "./types.ts";
  * ```
  */
 export function removeAttribute<TN extends TagName = "*">(
-  target: Target<TN>,
+  target: Target<TN> | null,
   name: AttributeName<TN>,
 ): ElementOf<TN> {
   // prettier-ignore
@@ -107,7 +107,7 @@ export function removeAttribute<TN extends TagName = "*">(
  * ```
  */
 export function removeAttributes<TN extends TagName = "*">(
-  target: Target<TN>,
+  target: Target<TN> | null,
   names: AttributeName<TN>[],
 ): ElementOf<TN> {
   // prettier-ignore

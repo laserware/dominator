@@ -1,6 +1,5 @@
 import { cast, isNil, isNotNil } from "@laserware/arcade";
 
-import type { TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
@@ -22,8 +21,6 @@ export type DatasetSearch = PropertySearch<DatasetKey, DatasetValue | null>;
 /**
  * Returns true if the `target` has a dataset entry with `key` and optionally,
  * the matching `value`.
- *
- * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Property (e.g. `someProperty`) or attribute name (e.g. `data-some-property`) for the dataset entry.
@@ -60,8 +57,8 @@ export type DatasetSearch = PropertySearch<DatasetKey, DatasetValue | null>;
  * // true
  * ```
  */
-export function hasDatasetEntry<TN extends TagName = "*">(
-  target: Target<TN>,
+export function hasDatasetEntry(
+  target: Target | null,
   key: DatasetKey,
   value?: DatasetValue,
 ): boolean {
@@ -74,8 +71,6 @@ export function hasDatasetEntry<TN extends TagName = "*">(
 /**
  * Checks if the `target` has **all** of the dataset entries that match the
  * `search` criteria.
- *
- * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of dataset keys or dataset filter object to check for.
@@ -113,8 +108,8 @@ export function hasDatasetEntry<TN extends TagName = "*">(
  * // true
  * ```
  */
-export function hasAllDatasetEntries<TN extends TagName = "*">(
-  target: Target<TN>,
+export function hasAllDatasetEntries(
+  target: Target | null,
   search: DatasetSearch,
 ): boolean {
   // prettier-ignore
@@ -126,8 +121,6 @@ export function hasAllDatasetEntries<TN extends TagName = "*">(
 /**
  * Checks if the `target` has **some** of the dataset entries that match the
  * `search` criteria.
- *
- * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of dataset keys or dataset filter object to check for.
@@ -169,8 +162,8 @@ export function hasAllDatasetEntries<TN extends TagName = "*">(
  * // true
  * ```
  */
-export function hasSomeDatasetEntries<TN extends TagName = "*">(
-  target: Target<TN>,
+export function hasSomeDatasetEntries(
+  target: Target | null,
   search: DatasetSearch,
 ): boolean {
   // prettier-ignore

@@ -68,9 +68,9 @@ import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
  * // "green"
  * ```
  */
-export function getCssVar<V extends CssVarValue>(
+export function getCssVar<V extends CssVarValue = string>(
   name: CssVarName,
-  target: Target = document.documentElement,
+  target: Target | null = document.documentElement,
 ): V | undefined {
   // prettier-ignore
   const element = toElementOrThrow(target, `Cannot get CSS variable ${name}`);
@@ -165,7 +165,7 @@ export function getCssVar<V extends CssVarValue>(
  */
 export function getCssVars<V extends CssVars = CssVars>(
   names: KeysOf<V>,
-  target: Target = document.documentElement,
+  target: Target | null = document.documentElement,
 ): WithUndefinedValues<V> {
   // prettier-ignore
   const element = toElementOrThrow(target, `Cannot get CSS variables ${formatForError(names)}`);

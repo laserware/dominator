@@ -58,9 +58,9 @@ import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
  * ```
  */
 export function getAttribute<
-  V extends AttributeValue = AttributeValue,
+  V extends AttributeValue = string,
   TN extends TagName = "*",
->(target: Target<TN>, name: AttributeName<TN>): V | null {
+>(target: Target<TN> | null, name: AttributeName<TN>): V | null {
   const element = toElementOrThrow(target, `Cannot get attribute ${name}`);
 
   return getSingleAttribute<V, TN>(element, name) ?? null;
@@ -141,7 +141,7 @@ export function getAttribute<
 export function getAttributes<
   V extends Attributes = Attributes,
   TN extends TagName = "*",
->(target: Target<TN>, names: KeysOf<V>): WithNullValues<V> {
+>(target: Target<TN> | null, names: KeysOf<V>): WithNullValues<V> {
   // prettier-ignore
   const element = toElementOrThrow(target, `Cannot get attributes ${formatForError(names)}`);
 

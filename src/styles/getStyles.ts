@@ -45,8 +45,8 @@ import type { StyleKey, Styles, StyleValue } from "./types.ts";
  * // 1.5
  * ```
  */
-export function getStyle<V extends StyleValue>(
-  target: Target,
+export function getStyle<V extends StyleValue = string>(
+  target: Target | null,
   key: StyleKey,
 ): V | undefined {
   const element = toElement(target);
@@ -125,7 +125,7 @@ export function getStyle<V extends StyleValue>(
  * ```
  */
 export function getStyles<V extends Styles = Styles>(
-  target: Target,
+  target: Target | null,
   keys: KeysOf<V>,
 ): WithUndefinedValues<V> {
   const element = toElement(target);

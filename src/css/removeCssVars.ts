@@ -59,7 +59,7 @@ import type { CssVarName } from "./types.ts";
  */
 export function removeCssVar<TN extends TagName = "*">(
   name: CssVarName,
-  target: Target<TN> = document.documentElement,
+  target: Target<TN> | null = document.documentElement,
 ): ElementOf<TN> {
   // prettier-ignore
   const element = toElementOrThrow(target, `Cannot remove CSS variable ${name}`);
@@ -132,7 +132,7 @@ export function removeCssVar<TN extends TagName = "*">(
  */
 export function removeCssVars<TN extends TagName = "*">(
   names: CssVarName[],
-  target: Target<TN> = document.documentElement,
+  target: Target<TN> | null = document.documentElement,
 ): ElementOf<TN> {
   // prettier-ignore
   const element = toElementOrThrow(target, `Cannot remove CSS variables ${formatForError(names)}`);

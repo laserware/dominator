@@ -80,7 +80,7 @@ export type CssVarsSearch = PropertySearch<CssVarName, CssVarValue | null>;
 export function hasCssVar(
   name: CssVarName,
   value: CssVarValue | undefined = undefined,
-  target: Target = document.documentElement,
+  target: Target | null = document.documentElement,
 ): boolean {
   // prettier-ignore
   const element = toElementOrThrow(target, `Cannot check for CSS variable ${name}`);
@@ -159,7 +159,7 @@ export function hasCssVar(
  */
 export function hasAllCssVars(
   search: CssVarsSearch,
-  target: Target = document.documentElement,
+  target: Target | null = document.documentElement,
 ): boolean {
   // prettier-ignore
   const element = toElementOrThrow(target, `Cannot check for all CSS variables ${formatForError(search)}`);
@@ -238,7 +238,7 @@ export function hasAllCssVars(
  */
 export function hasSomeCssVars(
   search: CssVarsSearch,
-  target: Target = document.documentElement,
+  target: Target | null = document.documentElement,
 ): boolean {
   // prettier-ignore
   const element = toElementOrThrow(target, `Cannot check for some CSS variables ${formatForError(search)}`);

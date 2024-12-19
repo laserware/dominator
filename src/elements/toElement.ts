@@ -91,7 +91,7 @@ export function toElement<TN extends TagName = "*">(
  * @returns Element representation of the specified `target`.
  */
 export function toElementOrThrow<TN extends TagName = "*">(
-  target: Target<TN>,
+  target: Target<TN> | null,
   error: string,
 ): ElementOf<TN> {
   const element = toElement(target);

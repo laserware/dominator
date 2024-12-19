@@ -70,7 +70,7 @@ import type { Dataset, DatasetKey, DatasetValue } from "./types.ts";
  * ```
  */
 export function setDatasetEntry<TN extends TagName = "*">(
-  target: Target<TN>,
+  target: Target<TN> | null,
   key: DatasetKey,
   value: DatasetValue | null,
 ): ElementOf<TN> {
@@ -145,7 +145,7 @@ export function setDatasetEntry<TN extends TagName = "*">(
  * ```
  */
 export function setDatasetEntries<TN extends TagName = "*">(
-  target: Target<TN>,
+  target: Target<TN> | null,
   dataset: Dataset,
 ): ElementOf<TN> {
   // prettier-ignore

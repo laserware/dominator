@@ -52,7 +52,7 @@ import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
  * ```
  */
 export function setAttribute<TN extends TagName = "*">(
-  target: Target<TN>,
+  target: Target<TN> | null,
   name: AttributeName<TN>,
   value: AttributeValue | null | undefined,
 ): ElementOf<TN> {
@@ -111,7 +111,7 @@ export function setAttribute<TN extends TagName = "*">(
  * ```
  */
 export function setAttributes<TN extends TagName = "*">(
-  target: Target<TN>,
+  target: Target<TN> | null,
   attributes: Attributes<TN>,
 ): ElementOf<TN> {
   // prettier-ignore

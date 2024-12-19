@@ -21,7 +21,7 @@ import type { StyleKey } from "./types.ts";
  * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function removeStyle<TN extends TagName = "*">(
-  target: Target,
+  target: Target | null,
   key: StyleKey,
 ): ElementOf<TN> {
   const element = toElementOrThrow(target, `Cannot remove style ${key}`);
@@ -45,7 +45,7 @@ export function removeStyle<TN extends TagName = "*">(
  * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
 export function removeStyles<TN extends TagName = "*">(
-  target: Target,
+  target: Target | null,
   keys: StyleKey[],
 ): ElementOf<TN> {
   // prettier-ignore

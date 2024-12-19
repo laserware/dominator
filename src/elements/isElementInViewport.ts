@@ -10,7 +10,7 @@ import type { Target } from "./types.ts";
  *
  * @throws {@linkcode InvalidElementError} if the specified `target` wasn't found.
  */
-export function isElementInViewport(target: Target): boolean {
+export function isElementInViewport(target: Target | null): boolean {
   // prettier-ignore
   const element = toElementOrThrow(target, "Cannot determine if element is in view");
 

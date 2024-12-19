@@ -12,7 +12,7 @@ import type { Target } from "./types.ts";
  *
  * @throws {@linkcode InvalidElementError} if the specified `target` wasn't found.
  */
-export function isElementScrollable(target: Target): boolean {
+export function isElementScrollable(target: Target | null): boolean {
   // prettier-ignore
   const element = toElementOrThrow(target, "Cannot check if target is scrollable");
 
