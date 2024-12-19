@@ -25,6 +25,7 @@ export {
   type ElementValueAsType,
   type ElementValueTypeName,
 } from "./getElementValue.ts";
+export { hasParentElement } from "./hasParentElement.ts";
 export { getInputWidth } from "./getInputWidth.ts";
 export { idMatches } from "./idMatches.ts";
 export { InvalidElementError } from "./InvalidElementError.ts";
