@@ -56,5 +56,6 @@
   "navigationLinks": { "GitHub": "https://github.com/laserware/dominator" },
   "out": "site",
   "readme": "README.md",
+  "useFirstParagraphOfCommentAsSummary": true,
   "useTsLinkResolution": false
 }
