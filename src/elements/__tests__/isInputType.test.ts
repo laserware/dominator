@@ -2,6 +2,12 @@ import { render } from "../../testing.ts";
 import { isInputType } from "../isInputType.ts";
 
 describe("isInputType", () => {
+  it("returns true for a valid input element when type omitted", () => {
+    const element = render(`<input type="text" />`);
+
+    expect(isInputType(element)).toBe(true);
+  });
+
   it("returns true for a valid input element of the specified type", () => {
     const element = render(`<input type="text" />`);
 
@@ -22,6 +28,10 @@ describe("isInputType", () => {
 
   it("returns false for a null target", () => {
     expect(isInputType(null, "text")).toBeFalsy();
+  });
+
+  it("returns false for a null target and omitted input type", () => {
+    expect(isInputType(null)).toBeFalsy();
   });
 
   it("returns false for a valid CSS selector that does not match an input element", () => {
