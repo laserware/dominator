@@ -26,7 +26,7 @@ export { idMatches } from "./idMatches.ts";
 export { InvalidElementError } from "./InvalidElementError.ts";
 export { isElementChildOf } from "./isElementChildOf.ts";
 export { isElementInViewport } from "./isElementInViewport.ts";
-export { isElementOfType } from "./isElementOfType.ts";
+export { isElementType } from "./isElementType.ts";
 export { isElementSameOrChildOf } from "./isElementSameOrChildOf.ts";
 export { isElementScrollable } from "./isElementScrollable.ts";
 export { keepElementVisibleIn } from "./keepElementVisibleIn.ts";

@@ -1,7 +1,7 @@
 import { render } from "../../testing.ts";
 import { findAllFocusable } from "../findAllFocusable.ts";
 import { findElement } from "../findElement.ts";
-import { isElementOfType } from "../isElementOfType.ts";
+import { isElementType } from "../isElementType.ts";
 
 describe("the findAllFocusable function", () => {
   it("returns all focusable elements in the document when no parent is specified", () => {
@@ -17,9 +17,9 @@ describe("the findAllFocusable function", () => {
     const result = findAllFocusable();
 
     expect(result).toHaveLength(3);
-    expect(isElementOfType(result[0], "a")).toBeTruthy();
-    expect(isElementOfType(result[1], "input")).toBeTruthy();
-    expect(isElementOfType(result[2], "button")).toBeTruthy();
+    expect(isElementType(result[0], "a")).toBeTruthy();
+    expect(isElementType(result[1], "input")).toBeTruthy();
+    expect(isElementType(result[2], "button")).toBeTruthy();
   });
 
   it("returns all focusable elements within the specified parent", () => {
@@ -38,8 +38,8 @@ describe("the findAllFocusable function", () => {
     const result = findAllFocusable(parent);
 
     expect(result).toHaveLength(2);
-    expect(isElementOfType(result[0], "a")).toBeTruthy();
-    expect(isElementOfType(result[1], "input")).toBeTruthy();
+    expect(isElementType(result[0], "a")).toBeTruthy();
+    expect(isElementType(result[1], "input")).toBeTruthy();
   });
 
   it("returns an empty array if no focusable elements are found", () => {
@@ -68,9 +68,9 @@ describe("the findAllFocusable function", () => {
     const result = findAllFocusable(null);
 
     expect(result).toHaveLength(3);
-    expect(isElementOfType(result[0], "a")).toBeTruthy();
-    expect(isElementOfType(result[1], "input")).toBeTruthy();
-    expect(isElementOfType(result[2], "button")).toBeTruthy();
+    expect(isElementType(result[0], "a")).toBeTruthy();
+    expect(isElementType(result[1], "input")).toBeTruthy();
+    expect(isElementType(result[2], "button")).toBeTruthy();
   });
 
   it("returns all focusable elements when parent is undefined", () => {
@@ -86,8 +86,8 @@ describe("the findAllFocusable function", () => {
     const result = findAllFocusable(undefined);
 
     expect(result).toHaveLength(3);
-    expect(isElementOfType(result[0], "a")).toBeTruthy();
-    expect(isElementOfType(result[1], "input")).toBeTruthy();
-    expect(isElementOfType(result[2], "button")).toBeTruthy();
+    expect(isElementType(result[0], "a")).toBeTruthy();
+    expect(isElementType(result[1], "input")).toBeTruthy();
+    expect(isElementType(result[2], "button")).toBeTruthy();
   });
 });

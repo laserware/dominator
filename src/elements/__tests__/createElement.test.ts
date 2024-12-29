@@ -1,6 +1,6 @@
 import { render, userEvent } from "../../testing.ts";
 import { createElement } from "../createElement.ts";
-import { isElementOfType } from "../isElementOfType.ts";
+import { isElementType } from "../isElementType.ts";
 
 describe("the createElement function", () => {
   it("creates an element with no options", () => {
@@ -125,7 +125,7 @@ describe("the createElement function", () => {
     const result = createElement("div", {}, createElement("span", {}, "child element"));
 
     expect(result.children).toHaveLength(1);
-    expect(isElementOfType(result.firstElementChild!, "span")).toBeTruthy();
+    expect(isElementType(result.firstElementChild!, "span")).toBeTruthy();
     expect(result.firstElementChild!).toHaveTextContent("child element");
   });
 
@@ -142,7 +142,7 @@ describe("the createElement function", () => {
     const result = createElement("div", {}, createElement("span", {}));
 
     expect(result.children).toHaveLength(1);
-    expect(isElementOfType(result.firstElementChild!, "span")).toBeTruthy();
+    expect(isElementType(result.firstElementChild!, "span")).toBeTruthy();
   });
 
   it("ignores null children", () => {
