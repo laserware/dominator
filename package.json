@@ -30,7 +30,7 @@
   "scripts": {
     "build": "tsup && cd dist && npx prettier --write .",
     "prepublishOnly": "npm run build",
-    "preversion": "npm run eslint && npm run typecheck",
+    "preversion": "npm run eslint && npm run typecheck && npm run build",
     "version": "npm run prettier && git add -A src",
     "postversion": "git push && git push --tags",
     "docs:generate": "typedoc  --options typedoc.json",
