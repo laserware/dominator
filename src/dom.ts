@@ -820,6 +820,9 @@ export interface HTMLInsAttributes extends HTMLAttributes {
 /**
  * Options for the [`type`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types)
  * attribute of an [`<input>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input).
+ *
+ * @remarks
+ * The `datetime` input type is deprecated. Instead, use `datetime-local`.
  */
 export type HTMLInputTypeAttribute =
   | "button"

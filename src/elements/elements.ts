@@ -29,6 +29,7 @@ export { isElementInViewport } from "./isElementInViewport.ts";
 export { isElementType } from "./isElementType.ts";
 export { isElementSameOrChildOf } from "./isElementSameOrChildOf.ts";
 export { isElementScrollable } from "./isElementScrollable.ts";
+export { isInputType } from "./isInputType.ts";
 export { keepElementVisibleIn } from "./keepElementVisibleIn.ts";
 export { listToArray } from "./listToArray.ts";
 export { toElement } from "./toElement.ts";
