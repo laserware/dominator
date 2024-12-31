@@ -42,6 +42,5 @@ export type {
   EventListenerOrEventListenerObjectFor,
   EventNameFor,
   FindOptions,
-  NonMethodElementProperties,
   Target,
 } from "./types.ts";

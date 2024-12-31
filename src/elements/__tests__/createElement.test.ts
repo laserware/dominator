@@ -87,8 +87,8 @@ describe("the createElement function", () => {
         cssVars: {
           "--color-bg": "blue",
         },
+        onclick: click,
         on: {
-          click,
           dblclick: {
             listener: keydown,
             options: { once: true },

@@ -40,22 +40,6 @@ export type ElementLike<TN extends TagName = "*"> =
  */
 export type Target<TN extends TagName = "*"> = ElementLike<TN> | CssSelector;
 
-type NeverMethods<T> = {
-  [K in keyof T]: T[K] extends (...args: any[]) => any ? never : K;
-}[keyof T];
-
-export type ExcludeMethods<T> = Pick<T, NeverMethods<T>>;
-
-/**
- * Properties of an element with tag name `TN` that are _not_ methods (e.g.
- * `setAttribute` or `attachInternals`).
- *
- * @template TN Tag name for the associated element.
- */
-export type NonMethodElementProperties<TN extends TagName> = ExcludeMethods<
-  ElementOf<TN>
->;
-
 /**
  * Properties that can be set on the element with the specified `TN` tag name.
  *
@@ -64,10 +48,7 @@ export type NonMethodElementProperties<TN extends TagName> = ExcludeMethods<
  *
  * @template TN Tag name for the associated element.
  */
-export type ElementPropertiesOf<TN extends TagName> = Omit<
-  NonMethodElementProperties<TN>,
-  keyof GlobalEventHandlers
->;
+export type ElementPropertiesOf<TN extends TagName> = ElementOf<TN>;
 
 /**
  * Name of the event handler.
