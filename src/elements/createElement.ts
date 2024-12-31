@@ -74,9 +74,6 @@ export type CreateElementOptions<TN extends TagName> = Partial<
   /** Attributes to set on element. */
   attributes?: Attributes<TN>;
 
-  /** AbortController to clean up event listeners. */
-  controller?: AbortController | undefined;
-
   /** CSS variables to set on element. */
   cssVars?: CssVars;
 
@@ -97,14 +94,28 @@ export type CreateElementOptions<TN extends TagName> = Partial<
   styles?: Styles;
 };
 
+function isCreateElementOptions<TN extends TagName>(
+  value: unknown,
+): value is CreateElementOptions<TN> {
+  return !isElementChild(value) && isPlainObject(value);
+}
+
 /**
  * Types of children that can be passed to {@linkcode createElement}.
  */
 export type ElementChild = HTMLElement | SVGElement | string | null;
 
+function isElementChild(value: unknown): value is ElementChild {
+  if (typeof value === "string" || value === null) {
+    return true;
+  }
+
+  return value instanceof Element;
+}
+
 /**
  * Creates an HTML element with tag name `TN` and adds the properties/listeners
- * from the `options` object.
+ * from the `options` object as well as the optional `children`.
  *
  * The attributes, CSS variables, dataset entries, and styles specified in
  * `options` are set on the element. Optionally specify `children` to append
@@ -183,40 +194,89 @@ export type ElementChild = HTMLElement | SVGElement | string | null;
  */
 export function createElement<TN extends TagName>(
   tagName: TN,
-  options: CreateElementOptions<TN> = {},
+  options: CreateElementOptions<TN>,
+  ...children: ElementChild[]
+): ElementOf<TN>;
+
+/**
+ * Creates an HTML element with tag name `TN` with the optional `children`.
+ *
+ * > [!NOTE]
+ * > This is useful for creating an element with no properties and appending
+ * > children to it.
+ *
+ * @template TN Tag name of the created element.
+ *
+ * @param tagName Tag name of the HTML/SVG element to create (e.g. `div`, `svg`, etc.).
+ * @param [children] Optional children to append to created element.
+ *
+ * @returns Element of tag name `TN` with the specified `options`.
+ *
+ * @example
+ * **Code**
+ *
+ * ```ts
+ * // It's nice to use an import alias to shorten the function name:
+ * import { createElement as html } from "@laserware/dominator";
+ *
+ * const parent = html("div", html("span", "Hello"), html("span", "Goodbye"));
+ *
+ * document.body.appendChild(parent);
+ * ```
+ *
+ * **HTML**
+ *
+ * ```html
+ * <body>
+ *   <div>
+ *     <span>Hello</span>
+ *     <span>Goodbye</span>
+ *   </div>
+ * </body>
+ * ```
+ */
+export function createElement<TN extends TagName>(
+  tagName: TN,
+  ...children: ElementChild[]
+): ElementOf<TN>;
+
+export function createElement<TN extends TagName>(
+  tagName: TN,
+  childOrOptions?: CreateElementOptions<TN> | ElementChild,
   ...children: ElementChild[]
 ): ElementOf<TN> {
   const element = document.createElement(tagName);
 
-  const props = { ...options };
+  if (isCreateElementOptions(childOrOptions)) {
+    const { attributes, cssVars, dataset, on, styles, ...properties } =
+      childOrOptions;
 
-  if (isNotNil(options.attributes)) {
-    setAttributes(element, options.attributes);
-    delete props.attributes;
-  }
+    if (isNotNil(attributes)) {
+      setAttributes(element, attributes);
+    }
 
-  if (isNotNil(options.cssVars)) {
-    setCssVars(options.cssVars, element);
-    delete props.cssVars;
-  }
+    if (isNotNil(cssVars)) {
+      setCssVars(cssVars, element);
+    }
 
-  if (isNotNil(options.dataset)) {
-    setDatasetEntries(element, options.dataset);
-    delete props.dataset;
-  }
+    if (isNotNil(dataset)) {
+      setDatasetEntries(element, dataset);
+    }
 
-  if (isNotNil(options.on)) {
-    addEventListeners(element, options.on);
-    delete props.on;
-  }
+    if (isNotNil(on)) {
+      addEventListeners(element, on);
+    }
 
-  if (isNotNil(options.styles)) {
-    setStyles(element, options.styles);
-  }
+    if (isNotNil(styles)) {
+      setStyles(element, styles);
+    }
 
-  for (const name of Object.keys(props)) {
-    // @ts-ignore
-    element[name] = props[name];
+    for (const name of Object.keys(properties)) {
+      // @ts-ignore
+      element[name] = properties[name];
+    }
+  } else if (isElementChild(childOrOptions)) {
+    children.unshift(childOrOptions);
   }
 
   for (const child of children) {
@@ -279,13 +339,5 @@ function addEventListeners<TN extends TagName>(
 function isEventDescriptor<TN extends TagName>(
   value: unknown,
 ): value is EventDescriptorFor<TN, any> {
-  if (value === null) {
-    return false;
-  }
-
-  if (isPlainObject(value)) {
-    return "listener" in value;
-  }
-
-  return false;
+  return isPlainObject(value) && "listener" in value;
 }

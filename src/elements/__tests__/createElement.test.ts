@@ -175,4 +175,29 @@ describe("the createElement function", () => {
     expect(parent.children).toHaveLength(1);
     expect(parent.firstElementChild!).toEqual(child);
   });
+
+  it("creates a basic element with no properties when only tag is passed", () => {
+    const result = createElement("div");
+
+    expect(result.outerHTML).toBe("<div></div>");
+  });
+
+  it.each([
+    { options: null, children: [], expected: "<div></div>" },
+    { options: null, children: null, expected: "<div></div>" },
+    { options: undefined, children: undefined, expected: "<div></div>" },
+    { options: undefined, children: "Test", expected: "<div>Test</div>" },
+    { options: 10, children: undefined, expected: "<div></div>" },
+    { options: 10, children: 10, expected: "<div>10</div>" },
+    { options: "Test", children: undefined, expected: "<div>Test</div>" },
+    { options: undefined, children: createElement("span"), expected: "<div><span></span></div>" },
+  ])(
+    "creates an element when options is $options and children is $children",
+    ({ options, children, expected }) => {
+      // @ts-ignore
+      const result = createElement("div", options, children);
+
+      expect(result.outerHTML).toBe(expected);
+    },
+  );
 });
