@@ -1,4 +1,4 @@
-import { camelCase, entriesOf, kebabCase } from "@laserware/arcade";
+import { camelCase, kebabCase } from "@laserware/arcade";
 
 import type {
   DatasetAttributeName,
@@ -45,29 +45,5 @@ export function asDatasetPropertyName(key: DatasetKey): DatasetPropertyName {
     return camelCase(key.replace("data-", ""));
   } else {
     return key;
-  }
-}
-
-/**
- * Iterates through the specified object or array of keys and adds the `data-`
- * prefix (and kebab-cases the value).
- *
- * @internal
- *
- * @param values Object or array of values to add `data-` prefix to.
- */
-export function withDataPrefix<T extends Record<string, any> | any[]>(
-  values: T,
-): T {
-  if (Array.isArray(values)) {
-    return values.map((value) => asDatasetAttributeName(value)) as T;
-  } else {
-    const withDataset: Record<string, any> = {};
-
-    for (const [key, value] of entriesOf(values)) {
-      withDataset[asDatasetAttributeName(key)] = value;
-    }
-
-    return withDataset as T;
   }
 }

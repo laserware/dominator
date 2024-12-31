@@ -1,6 +1,26 @@
+import { entriesOf } from "@laserware/arcade";
+
 import { render, selectorForNonExistent } from "../../testing.ts";
-import { withDataPrefix } from "../datasetKeys.ts";
+import { asDatasetAttributeName } from "../datasetKeys.ts";
 import { hasAllDatasetEntries, hasDatasetEntry, hasSomeDatasetEntries } from "../hasDataset.ts";
+
+/**
+ * Iterates through the specified object or array of keys and adds the `data-`
+ * prefix (and kebab-cases the value).
+ */
+const withDataPrefix = <T extends Record<string, any> | any[]>(values: T): T => {
+  if (Array.isArray(values)) {
+    return values.map((value) => asDatasetAttributeName(value)) as T;
+  } else {
+    const withDataset: Record<string, any> = {};
+
+    for (const [key, value] of entriesOf(values)) {
+      withDataset[asDatasetAttributeName(key)] = value;
+    }
+
+    return withDataset as T;
+  }
+};
 
 describe("within hasDataset", () => {
   describe("the hasDatasetEntry function", () => {
