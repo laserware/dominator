@@ -1,0 +1,31 @@
+name: Release
+on:
+  push:
+    tags:
+      - v*
+env:
+  CI: true
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish to npm
+        uses: @laserware/propellant@ac29dc383db0220ff02dba078fafeb6b18b98d1c
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
