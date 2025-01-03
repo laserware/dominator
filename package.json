@@ -1,8 +1,17 @@
 {
   "name": "@laserware/dominator",
   "version": "3.0.1-beta.14",
-  "description": "Simplify DOM usage.",
+  "description": "Better ergonomics for working with the DOM and TypeScript.",
+  "author": "Mike Rourke <mike.w.rourke@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "url": "git+https://github.com/laserware/dominator.git",
+    "type": "git"
+  },
+  "type": "module",
   "browser": "dist/index.mjs",
+  "main": "dist/index.mjs",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
@@ -10,23 +19,17 @@
       "default": "./dist/index.mjs"
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/laserware/dominator.git"
-  },
-  "bugs": "https://github.com/laserware/dominator/issues",
-  "author": "Mike Rourke <mike.w.rourke@gmail.com>",
-  "license": "MIT",
-  "type": "module",
   "files": [
     "dist"
   ],
   "keywords": [
-    "dom"
+    "dom",
+    "typescript"
   ],
   "publishConfig": {
     "access": "public"
   },
+  "sideEffects": false,
   "scripts": {
     "build": "tsup && cd dist && npx prettier --write .",
     "prepublishOnly": "npm run build",
@@ -42,7 +45,7 @@
     "vitest": "vitest"
   },
   "dependencies": {
-    "@laserware/arcade": "^3.12.0"
+    "@laserware/arcade": "^3.12.1"
   },
   "devDependencies": {
     "@laserware/eslint-config": "^5.3.0",
