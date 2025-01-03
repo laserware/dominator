@@ -22,6 +22,11 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+        # Ensure a new version doesn't get published to npm if it doesn't
+        # pass all required checks/validation:
+      - name: Run Checks
+        run: npm run typecheck && npm run prettier:ci && npm run eslint && npm run vitest -- --run
+
       - name: Build
         run: npm run build
 
