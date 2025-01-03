@@ -1,6 +1,7 @@
 # Dominator
 
-Makes working with the DOM and TypeScript less gross.
+Better ergonomics for working with the DOM and TypeScript.
+
 See [documentation](https://laserware.github.io/dominator/) if you want to get right to the API.
 For a high-level overview of the library, keep reading!
 
