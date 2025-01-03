@@ -26,6 +26,6 @@ jobs:
         run: npm run build
 
       - name: Publish to npm
-        uses: laserware/propellant@v1.0.2
+        uses: laserware/propellant@v1
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
