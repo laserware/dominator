@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { render } from "../../testing.ts";
 import { isInputType } from "../isInputType.ts";
 
@@ -21,7 +23,7 @@ describe("isInputType", () => {
   });
 
   it("returns false for non-input elements", () => {
-    const element = render(`<div>Test</div>`);
+    const element = render("<div>Test</div>");
 
     expect(isInputType(element, "text")).toBeFalsy();
   });

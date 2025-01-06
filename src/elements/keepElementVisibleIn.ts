@@ -16,10 +16,9 @@ export function keepElementVisibleIn(
   target: Target | null,
   parent: Target | null,
 ): void {
-  // prettier-ignore
   const activeElement = toElementOrThrow(target, "Cannot keep target visible");
 
-  // prettier-ignore
+  // biome-ignore format:
   const scrollElement = toElementOrThrow(parent, "Cannot keep element visible in parent");
 
   const isAbove = activeElement.offsetTop < scrollElement.scrollTop;

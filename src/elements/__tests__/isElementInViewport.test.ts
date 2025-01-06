@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { isElementInViewport } from "../isElementInViewport.ts";
 
@@ -17,7 +19,7 @@ const getBoundingClientRect = (rect: Partial<DOMRect>) => () =>
 
 describe("the isElementInViewport function", () => {
   it("returns true if element is fully in the viewport", () => {
-    const element = render(`<div>Test</div>`, {
+    const element = render("<div>Test</div>", {
       getBoundingClientRect: getBoundingClientRect({ top: 10, right: 50, bottom: 50, left: 10 }),
     });
 
@@ -25,7 +27,7 @@ describe("the isElementInViewport function", () => {
   });
 
   it("returns false if element is partially out of the viewport to the top", () => {
-    const element = render(`<div>Test</div>`, {
+    const element = render("<div>Test</div>", {
       getBoundingClientRect: getBoundingClientRect({ top: -10, right: 50, bottom: 50, left: 10 }),
     });
 
@@ -33,7 +35,7 @@ describe("the isElementInViewport function", () => {
   });
 
   it("returns false if element is partially out of the viewport to the left", () => {
-    const element = render(`<div>Test</div>`, {
+    const element = render("<div>Test</div>", {
       getBoundingClientRect: getBoundingClientRect({ top: 10, right: 50, bottom: 50, left: -10 }),
     });
 
@@ -41,7 +43,7 @@ describe("the isElementInViewport function", () => {
   });
 
   it("returns false if element is partially out of the viewport to the bottom", () => {
-    const element = render(`<div>Test</div>`, {
+    const element = render("<div>Test</div>", {
       getBoundingClientRect: getBoundingClientRect({
         top: 10,
         right: 50,
@@ -54,7 +56,7 @@ describe("the isElementInViewport function", () => {
   });
 
   it("returns false if element is partially out of the viewport to the right", () => {
-    const element = render(`<div>Test</div>`, {
+    const element = render("<div>Test</div>", {
       getBoundingClientRect: getBoundingClientRect({
         top: 10,
         right: window.innerWidth + 10,
@@ -70,7 +72,7 @@ describe("the isElementInViewport function", () => {
     Object.defineProperty(window, "innerWidth", { value: 0 });
     Object.defineProperty(window, "innerHeight", { value: 0 });
 
-    const element = render(`<div>Test</div>`, {
+    const element = render("<div>Test</div>", {
       getBoundingClientRect: getBoundingClientRect({ top: 10, right: 50, bottom: 50, left: 10 }),
     });
 

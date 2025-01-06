@@ -4,8 +4,6 @@ import { cast, dedent } from "@laserware/arcade";
 
 import type { ElementOf, TagName } from "./dom.ts";
 
-export { screen, waitFor } from "@testing-library/dom";
-
 export { userEvent } from "@testing-library/user-event";
 
 /**

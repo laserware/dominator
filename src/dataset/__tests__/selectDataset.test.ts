@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { selectDatasetEntries, selectDatasetEntry } from "../selectDataset.ts";
 
 describe("within selectDataset", () => {
@@ -8,8 +10,8 @@ describe("within selectDataset", () => {
     });
 
     it("returns a selector when a dataset key and undefined is specified", () => {
-      expect(selectDatasetEntry("hidden", undefined)).toBe(`[data-hidden]`);
-      expect(selectDatasetEntry("data-hidden", undefined)).toBe(`[data-hidden]`);
+      expect(selectDatasetEntry("hidden", undefined)).toBe("[data-hidden]");
+      expect(selectDatasetEntry("data-hidden", undefined)).toBe("[data-hidden]");
     });
 
     it("returns a selector when a dataset key and valid value is specified", () => {

@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { InvalidCssVarError } from "../InvalidCssVarError.ts";
 import { setCssVar, setCssVars } from "../setCssVars.ts";
@@ -26,7 +28,7 @@ describe("within setCssVars", () => {
     });
 
     it("sets the CSS string variable on a target element", () => {
-      const element = render(`<button>Click</button>`);
+      const element = render("<button>Click</button>");
 
       setCssVar("--color-button", "blue", element);
 
@@ -66,7 +68,7 @@ describe("within setCssVars", () => {
     });
 
     it("sets the CSS variables on a target element", () => {
-      const element = render(`<button>Click</button>`);
+      const element = render("<button>Click</button>");
 
       setCssVars({ "--color-bg": "blue", "--gap": 24, "--is-big": true }, element);
 

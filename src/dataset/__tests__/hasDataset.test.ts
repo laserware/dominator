@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { entriesOf } from "@laserware/arcade";
 
 import { render, selectorForNonExistent } from "../../testing.ts";
@@ -39,7 +41,7 @@ describe("within hasDataset", () => {
     });
 
     it("returns false if the specified attribute does not exist on the target", () => {
-      const element = render(`<button>Test</button>`);
+      const element = render("<button>Test</button>");
 
       expect(hasDatasetEntry(element, "invalid")).toBeFalsy();
       expect(hasDatasetEntry(element, "data-invalid")).toBeFalsy();

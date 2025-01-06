@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it } from "bun:test";
+
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { findElement } from "../findElement.ts";
 import { isElementChildOf } from "../isElementChildOf.ts";
@@ -24,7 +26,7 @@ describe("the isElementChildOf function", () => {
 
   it("returns false when child is not a child of parent", () => {
     const child = findElement("#child")!;
-    const parent = render(`<div>Test</div>`);
+    const parent = render("<div>Test</div>");
 
     expect(isElementChildOf(child, parent)).toBeFalsy();
   });

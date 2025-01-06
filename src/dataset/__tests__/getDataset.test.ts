@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { getDatasetEntries, getDatasetValue } from "../getDataset.ts";
 
@@ -34,7 +36,7 @@ describe("within getDataset", () => {
     });
 
     it("throws an error if the element doesn't exist", () => {
-      render(`<span>Test</span>`);
+      render("<span>Test</span>");
 
       expect(() => {
         getDatasetValue("button", "name");

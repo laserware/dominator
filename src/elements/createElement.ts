@@ -324,7 +324,7 @@ function addEventListeners<TN extends TagName>(
 
       options = listenerOrDescriptor.options;
     } else {
-      // prettier-ignore
+      // biome-ignore format:
       eventListener = listenerOrDescriptor as EventListenerFor<TN, typeof eventName>;
     }
 

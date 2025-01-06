@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { render } from "../../testing.ts";
 import { hasAllStyles, hasSomeStyles, hasStyle } from "../hasStyles.ts";
 
@@ -20,7 +22,7 @@ describe("within hasStyles", () => {
     });
 
     it("returns false if the specified style does not exist on the target", () => {
-      const element = render(`<button>Test</button>`);
+      const element = render("<button>Test</button>");
 
       const result = hasStyle(element, "color");
 
@@ -36,7 +38,7 @@ describe("within hasStyles", () => {
     });
 
     it("throws an error if the target does not exist", () => {
-      render(`<span>Test</span>`);
+      render("<span>Test</span>");
 
       expect(() => {
         hasStyle("button", "color");
@@ -91,7 +93,7 @@ describe("within hasStyles", () => {
     });
 
     it("throws an error if the target does not exist", () => {
-      render(`<span>Test</span>`);
+      render("<span>Test</span>");
 
       expect(() => {
         hasAllStyles("button", ["color"]);
@@ -141,7 +143,7 @@ describe("within hasStyles", () => {
     });
 
     it("throws an error if the target does not exist", () => {
-      render(`<span>Test</span>`);
+      render("<span>Test</span>");
 
       expect(() => {
         hasSomeStyles("button", ["color"]);

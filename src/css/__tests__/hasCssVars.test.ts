@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { render } from "../../testing.ts";
 import { hasAllCssVars, hasCssVar, hasSomeCssVars } from "../hasCssVars.ts";
 import { removeCssVar, removeCssVars } from "../removeCssVars.ts";

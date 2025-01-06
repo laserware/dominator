@@ -1,4 +1,4 @@
-import { cast, type KeysOf, type WithUndefinedValues } from "@laserware/arcade";
+import { type KeysOf, type WithUndefinedValues, cast } from "@laserware/arcade";
 
 import { InvalidElementError } from "../elements/InvalidElementError.ts";
 import { toElement } from "../elements/toElement.ts";
@@ -6,7 +6,7 @@ import type { Target } from "../elements/types.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
-import type { StyleKey, Styles, StyleValue } from "./types.ts";
+import type { StyleKey, StyleValue, Styles } from "./types.ts";
 
 /**
  * Attempts to get the specified style property with name `key` from the
@@ -130,7 +130,7 @@ export function getStyles<V extends Styles = Styles>(
 ): WithUndefinedValues<V> {
   const element = toElement(target);
   if (element === null || !("style" in element)) {
-    // prettier-ignore
+    // biome-ignore format:
     throw new InvalidElementError(`Cannot get styles ${formatForError(keys)}`);
   }
 

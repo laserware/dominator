@@ -1,4 +1,7 @@
-import { render, selectorForNonExistent, waitFor } from "../../testing.ts";
+import { describe, expect, it, mock } from "bun:test";
+
+import { pause } from "@laserware/arcade";
+import { render, selectorForNonExistent } from "../../testing.ts";
 import { focusElement } from "../focusElement.ts";
 
 describe("the focusElement function", () => {
@@ -9,25 +12,23 @@ describe("the focusElement function", () => {
   });
 
   it("focuses an existing element by element reference", async () => {
-    const element = render(`<button>Test</button>`);
-    element.focus = vi.fn();
+    const element = render("<button>Test</button>");
+    element.focus = mock();
 
     focusElement(element);
 
-    await waitFor(() => {
-      expect(element.focus).toHaveBeenCalled();
-    });
+    await pause(100);
+    expect(element.focus).toHaveBeenCalled();
   });
 
   it("focuses an existing element by CSS selector", async () => {
     const element = render(`<button id="test">Test</button>`);
-    element.focus = vi.fn();
+    element.focus = mock();
 
     focusElement("#test");
 
-    await waitFor(() => {
+    await pause(100);
       expect(element.focus).toHaveBeenCalled();
-    });
   });
 
   it("does not focus if element does not exist", () => {
@@ -38,18 +39,17 @@ describe("the focusElement function", () => {
 
   it("calls onDone callback after focusing the element", async () => {
     const element = render(`<button id="test">Test</button>`);
-    const onDone = vi.fn();
+    const onDone = mock();
 
     focusElement(element, { onDone });
 
-    await waitFor(() => {
+    await pause(100);
       expect(onDone).toHaveBeenCalled();
-    });
   });
 
   it("respects the delay option", async () => {
     const element = render(`<button id="test">Test</button>`);
-    element.focus = vi.fn();
+    element.focus = mock();
     const delay = 50;
 
     focusElement(element, { delay });
@@ -63,12 +63,11 @@ describe("the focusElement function", () => {
 
   it("respects the preventScroll option", async () => {
     const element = render(`<button id="test">Test</button>`);
-    element.focus = vi.fn();
+    element.focus = mock();
 
     focusElement(element, { preventScroll: true });
 
-    await waitFor(() => {
+    await pause(100);
       expect(element.focus).toHaveBeenCalledWith({ preventScroll: true });
-    });
   });
 });

@@ -66,7 +66,7 @@ export function hasAttribute<TN extends TagName = "*">(
   name: AttributeName<TN>,
   value?: AttributeValue,
 ): boolean {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot check for attribute ${name}`);
 
   return hasSingleAttribute(element, name, value);
@@ -116,7 +116,7 @@ export function hasAllAttributes<TN extends TagName = "*">(
   target: Target<TN> | null,
   search: AttributesSearch<TN>,
 ): boolean {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot check for all attributes ${formatForError(search)}`);
 
   return hasAllProperties(element, search, hasSingleAttribute);
@@ -165,7 +165,7 @@ export function hasSomeAttributes<TN extends TagName = "*">(
   target: Target<TN> | null,
   search: AttributesSearch<TN>,
 ): boolean {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot check for some attributes ${formatForError(search)}`);
 
   return hasSomeProperties(element, search, hasSingleAttribute);

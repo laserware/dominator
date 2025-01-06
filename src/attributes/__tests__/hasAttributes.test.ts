@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { render } from "../../testing.ts";
 import { hasAllAttributes, hasAttribute, hasSomeAttributes } from "../hasAttributes.ts";
 
@@ -20,7 +22,7 @@ describe("within hasAttributes", () => {
     });
 
     it("returns false if the specified attribute does not exist on the target", () => {
-      const element = render(`<button>Test</button>`);
+      const element = render("<button>Test</button>");
 
       const result = hasAttribute(element, "invalid");
 
@@ -36,7 +38,7 @@ describe("within hasAttributes", () => {
     });
 
     it("throws an error if the target does not exist", () => {
-      render(`<span>Test</span>`);
+      render("<span>Test</span>");
 
       expect(() => {
         hasAttribute("button", "name");

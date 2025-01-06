@@ -19,7 +19,7 @@ export function parseFindOptions(options: FindOptions): {
   selector: string;
   parent: ElementLike;
 } {
-  let selector: string = "";
+  let selector = "";
 
   if (isNotNil(options.withSelector)) {
     selector += options.withSelector;

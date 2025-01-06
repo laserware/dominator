@@ -1,9 +1,11 @@
+import { describe, expect, it } from "bun:test";
+
 import { render } from "../../testing.ts";
 import { asElement } from "../asElement.ts";
 
 describe("the asElement function", () => {
   it("returns the element if target is an instance of Element", () => {
-    const target = render(`<div>Test</div>`);
+    const target = render<"div">("<div>Test</div>");
 
     const result = asElement<"div">(target);
 
@@ -24,7 +26,7 @@ describe("the asElement function", () => {
   });
 
   it("casts the EventTarget to the specified Element type", () => {
-    const target = render(`<button>Click Me</button>`);
+    const target = render<"button">("<button>Click Me</button>");
 
     const result = asElement<"button">(target);
 
@@ -33,7 +35,7 @@ describe("the asElement function", () => {
   });
 
   it("doesn't change the element type, just casts it to the type", () => {
-    const target = render(`<div>Test</div>`);
+    const target = render("<div>Test</div>");
 
     const result = asElement<"input">(target);
 

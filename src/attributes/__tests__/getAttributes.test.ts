@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { getAttribute, getAttributes } from "../getAttributes.ts";
 
@@ -14,7 +16,7 @@ describe("within getAttributes", () => {
     it("returns the number attribute value if it exists", () => {
       const element = render<"div">(`<div aria-colcount="20">Button</div>`);
 
-      const result = getAttribute(element, "aria-colcount");
+      const result = getAttribute<number>(element, "aria-colcount");
 
       expect(result).toBe(20);
     });

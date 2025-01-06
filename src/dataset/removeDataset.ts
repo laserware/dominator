@@ -67,7 +67,7 @@ export function removeDatasetEntry<TN extends TagName = "*">(
   target: Target<TN> | null,
   key: DatasetPropertyName,
 ): ElementOf<TN> {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot remove dataset entry for ${key}`);
 
   removeSingleDatasetEntry(element, key);
@@ -133,7 +133,7 @@ export function removeDatasetEntries<TN extends TagName = "*">(
   target: Target<TN> | null,
   keys: DatasetKey[],
 ): ElementOf<TN> {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot remove dataset entries ${formatForError(keys)}`);
 
   for (const key of keys) {

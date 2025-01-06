@@ -1,13 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "allowImportingTsExtensions": true,
     "declaration": true,
     "declarationMap": false,
-    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "importHelpers": true,
     "lib": ["DOM", "ESNext"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
@@ -18,11 +15,11 @@
     "skipLibCheck": true,
     "sourceMap": false,
     "strict": true,
+    "strictNullChecks": true,
     "stripInternal": true,
     "target": "ESNext",
     "verbatimModuleSyntax": true
   },
-  "include": ["./src/**/*.ts", "./src/declarations.d.ts", "./src/vitest.d.ts"],
-  "exclude": ["dist", "node_modules"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src", "./src/declarations.d.ts"],
+  "exclude": ["dist", "node_modules"]
 }

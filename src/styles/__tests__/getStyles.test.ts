@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { getStyle, getStyles } from "../getStyles.ts";
 
@@ -14,7 +16,7 @@ describe("within getStyles", () => {
     it("returns the number style value if it exists", () => {
       const element = render(`<div style="opacity: 0.5;">Button</div>`);
 
-      const result = getStyle(element, "opacity");
+      const result = getStyle<number>(element, "opacity");
 
       expect(result).toBe(0.5);
     });

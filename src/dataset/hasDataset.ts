@@ -62,7 +62,7 @@ export function hasDatasetEntry(
   key: DatasetKey,
   value?: DatasetValue,
 ): boolean {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot check for dataset entry for ${key}`);
 
   return hasSingleDatasetEntry(element, key, value);
@@ -112,7 +112,7 @@ export function hasAllDatasetEntries(
   target: Target | null,
   search: DatasetSearch,
 ): boolean {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot check for all dataset entries ${formatForError(search)}`);
 
   return hasAllProperties(element, search, hasSingleDatasetEntry);
@@ -166,7 +166,7 @@ export function hasSomeDatasetEntries(
   target: Target | null,
   search: DatasetSearch,
 ): boolean {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot check for some dataset entries ${formatForError(search)}`);
 
   return hasSomeProperties(element, search, hasSingleDatasetEntry);

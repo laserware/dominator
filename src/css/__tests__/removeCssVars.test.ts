@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { InvalidElementError } from "../../elements/InvalidElementError.ts";
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { removeCssVar, removeCssVars } from "../removeCssVars.ts";

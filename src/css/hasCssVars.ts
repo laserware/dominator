@@ -82,7 +82,7 @@ export function hasCssVar(
   value: CssVarValue | undefined = undefined,
   target: Target | null = document.documentElement,
 ): boolean {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot check for CSS variable ${name}`);
 
   return hasSingleCssVar(element, name, value);
@@ -161,7 +161,7 @@ export function hasAllCssVars(
   search: CssVarsSearch,
   target: Target | null = document.documentElement,
 ): boolean {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot check for all CSS variables ${formatForError(search)}`);
 
   return hasAllProperties(element, search, hasSingleCssVar);
@@ -240,7 +240,7 @@ export function hasSomeCssVars(
   search: CssVarsSearch,
   target: Target | null = document.documentElement,
 ): boolean {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot check for some CSS variables ${formatForError(search)}`);
 
   return hasSomeProperties(element, search, hasSingleCssVar);

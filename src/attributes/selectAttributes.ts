@@ -6,7 +6,7 @@ import { stringifyDOMValue } from "../internal/domValues.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
 
 import { InvalidAttributeError } from "./InvalidAttributeError.ts";
-import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
+import type { AttributeName, AttributeValue, Attributes } from "./types.ts";
 
 /**
  * Attempts to build a CSS selector string from the attribute `name` and `value`.
@@ -147,7 +147,7 @@ function selectSingleAttribute<TN extends TagName = "*">(
     // escaped and non-string values are surrounded with quotes:
     return `[${validName}=${JSON.stringify(stringValue)}]`;
   } catch (err: any) {
-    // prettier-ignore
+    // biome-ignore format:
     throw new InvalidAttributeError(`Could not get selector for ${name}: ${err.message}`);
   }
 }

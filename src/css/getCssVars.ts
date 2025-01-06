@@ -1,4 +1,4 @@
-import { cast, type KeysOf, type WithUndefinedValues } from "@laserware/arcade";
+import { type KeysOf, type WithUndefinedValues, cast } from "@laserware/arcade";
 
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
@@ -7,7 +7,7 @@ import { formatForError } from "../internal/formatForError.ts";
 
 import { InvalidCssVarError } from "./InvalidCssVarError.ts";
 import { isCssVarName } from "./isCssVarName.ts";
-import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
+import type { CssVarName, CssVarValue, CssVars } from "./types.ts";
 
 /**
  * Attempts to get the value associated with CSS variable `name` from the `target`.
@@ -72,7 +72,6 @@ export function getCssVar<V extends CssVarValue = string>(
   name: CssVarName,
   target: Target | null = document.documentElement,
 ): V | undefined {
-  // prettier-ignore
   const element = toElementOrThrow(target, `Cannot get CSS variable ${name}`);
 
   return getSingleCssVar<V>(element, name);
@@ -167,7 +166,7 @@ export function getCssVars<V extends CssVars = CssVars>(
   names: KeysOf<V>,
   target: Target | null = document.documentElement,
 ): WithUndefinedValues<V> {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot get CSS variables ${formatForError(names)}`);
 
   const cssVars: Record<string, CssVarValue | undefined> = {};
@@ -186,7 +185,7 @@ function getSingleCssVar<T extends CssVarValue = string>(
   name: string,
 ): T | undefined {
   if (!isCssVarName(name)) {
-    // prettier-ignore
+    // biome-ignore format:
     throw new InvalidCssVarError(`CSS variable ${name} must be a string that starts with "--"`);
   }
 
