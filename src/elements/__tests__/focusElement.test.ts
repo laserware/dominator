@@ -1,6 +1,5 @@
 import { describe, expect, it, mock } from "bun:test";
 
-import { pause } from "@laserware/arcade";
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { focusElement } from "../focusElement.ts";
 
@@ -17,7 +16,7 @@ describe("the focusElement function", () => {
 
     focusElement(element);
 
-    await pause(100);
+    await Bun.sleep(50);
     expect(element.focus).toHaveBeenCalled();
   });
 
@@ -27,8 +26,8 @@ describe("the focusElement function", () => {
 
     focusElement("#test");
 
-    await pause(100);
-      expect(element.focus).toHaveBeenCalled();
+    await Bun.sleep(50);
+    expect(element.focus).toHaveBeenCalled();
   });
 
   it("does not focus if element does not exist", () => {
@@ -43,8 +42,8 @@ describe("the focusElement function", () => {
 
     focusElement(element, { onDone });
 
-    await pause(100);
-      expect(onDone).toHaveBeenCalled();
+    await Bun.sleep(50);
+    expect(onDone).toHaveBeenCalled();
   });
 
   it("respects the delay option", async () => {
@@ -67,7 +66,7 @@ describe("the focusElement function", () => {
 
     focusElement(element, { preventScroll: true });
 
-    await pause(100);
-      expect(element.focus).toHaveBeenCalledWith({ preventScroll: true });
+    await Bun.sleep(50);
+    expect(element.focus).toHaveBeenCalledWith({ preventScroll: true });
   });
 });

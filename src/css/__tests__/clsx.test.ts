@@ -51,7 +51,7 @@ describe("the clsx function", () => {
     expect(clsx({}, {})).toBe("");
     expect(clsx({ foo: 1 }, { bar: 2 })).toBe("foo bar");
     expect(clsx({ foo: 1 }, null, { baz: 1, bat: 0 })).toBe("foo baz");
-    // biome-ignore format:
+    // prettier-ignore
     expect(clsx({ foo: 1 }, {}, {}, { bar: "a" }, { baz: null, bat: Number.POSITIVE_INFINITY })).toBe("foo bar bat");
   });
 
@@ -186,6 +186,7 @@ describe("the clsx function", () => {
         greaterZero: 1,
       });
 
+      // prettier-ignore
       expect(result).toBe("nonEmptyString whitespace function emptyObject nonEmptyObject emptyList nonEmptyList greaterZero");
     });
   });

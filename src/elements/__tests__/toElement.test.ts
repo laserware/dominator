@@ -18,13 +18,14 @@ describe("the toElement function", () => {
   it("returns the element when given an EventTarget", async () => {
     const element = render("<div>Test</div>");
 
+    // prettier-ignore
     const getTarget = (): Promise<EventTarget> => new Promise((resolve) => {
-      element.addEventListener("click", event => {
+      element.addEventListener("click", (event) => {
         resolve(event.target as EventTarget);
       });
 
       element.click();
-    })
+    });
 
     const target = await getTarget();
 
@@ -42,10 +43,10 @@ describe("the toElement function", () => {
 
     const parent = render(`<div id="parent"></div>`, {}, child);
 
-    const outer = render(`<span class="child">Outer</span>`);
+    const outer = render(`<span id="outer" class="child">Outer</span>`);
 
-    expect(toElement(".child", `#${parent.id}`)).toEqual(child);
-    expect(toElement(".child", `#${parent.id}`)).not.toEqual(outer);
+    expect(toElement(".child", `#${parent.id}`)?.id).toBe(child.id);
+    expect(toElement(".child", `#${parent.id}`)?.id).not.toBe(outer.id);
   });
 
   it("returns null when given a non-existing CSS selector", () => {

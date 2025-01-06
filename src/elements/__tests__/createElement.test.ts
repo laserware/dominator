@@ -1,7 +1,5 @@
 import { describe, expect, it, mock } from "bun:test";
 
-import { userEvent } from "@testing-library/user-event";
-
 import { getAttribute } from "../../attributes/getAttributes.ts";
 import { render } from "../../testing.ts";
 import { createElement } from "../createElement.ts";
@@ -71,9 +69,7 @@ describe("the createElement function", () => {
     expect(result).toHaveProperty("value", "hello");
   });
 
-  it("creates an element children, properties, and event listeners", async () => {
-    const user = userEvent.setup();
-
+  it("creates an element children, properties, and event listeners", () => {
     const click = mock();
     const keydown = mock();
 
@@ -96,7 +92,7 @@ describe("the createElement function", () => {
         },
         onclick: click,
         on: {
-          dblclick: {
+          keydown: {
             listener: keydown,
             options: { once: true },
           },
@@ -105,16 +101,17 @@ describe("the createElement function", () => {
       null,
     );
 
-    expect(element).toHaveProperty("type", "button");
+    expect(getAttribute(element, "type")).toBe("button");
 
-    await user.click(element);
+    element.click();
     expect(click).toHaveBeenCalled();
 
-    await user.dblClick(element);
-    await user.dblClick(element);
+    const event = new KeyboardEvent("keydown", { key: "Enter" });
+    element.dispatchEvent(event);
+    element.dispatchEvent(event);
     expect(keydown).toHaveBeenCalledTimes(1);
 
-    expect(element).toMatchSnapshot();
+    expect(element.outerHTML).toBe(`<button aria-label="Test" style="--color-bg: blue;" data-string-property="value" data-boolean-property="true" data-number-property="24" id="test" type="button" aria-disabled="false"></button>`);
   });
 
   it("appends text children to the created element", () => {
