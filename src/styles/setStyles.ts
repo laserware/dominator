@@ -1,16 +1,14 @@
-import { toElem } from "../elems/toElem.ts";
-import { InvalidElemError } from "../errors.ts";
-import { cast } from "../internal/cast.ts";
+import { cast } from "@laserware/arcade";
+
+import { isCssVarName } from "../css/isCssVarName.ts";
+import type { ElementOf, TagName } from "../dom.ts";
+import { InvalidElementError } from "../elements/InvalidElementError.ts";
+import { toElement } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import { isCssVarName } from "../typeGuards.ts";
-import type {
-  AnyElement,
-  ElemOrCssSelector,
-  StyleKey,
-  Styles,
-  StyleValue,
-} from "../types.ts";
+
+import type { StyleKey, Styles, StyleValue } from "./types.ts";
 
 /**
  * Sets the style property with name `key` to the specified `value` on the
@@ -22,24 +20,21 @@ import type {
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
- *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
- *
- * @category Styles
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function setStyle<E extends AnyElement = HTMLElement>(
-  target: ElemOrCssSelector,
+export function setStyle<TN extends TagName = "*">(
+  target: Target | null,
   key: StyleKey,
   value: StyleValue,
-): E {
-  const elem = toElem(target);
-  if (elem === null || !("style" in elem)) {
-    throw new InvalidElemError(`Unable to set style for ${key}`);
+): ElementOf<TN> {
+  const element = toElement(target);
+  if (element === null || !("style" in element)) {
+    throw new InvalidElementError(`Cannot set style for ${key}`);
   }
 
-  setSingleStyle(elem, key, value);
+  setSingleStyle(element, key, value);
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 /**
@@ -47,46 +42,43 @@ export function setStyle<E extends AnyElement = HTMLElement>(
  * object with key of style property name and value of the corresponding property
  * value.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param styles Object with style property values keyed by name.
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidElemError} If the `target` could not be found or doesn't have
- *                                      a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
- *
- * @category Styles
+ * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function setStyles<E extends AnyElement = HTMLElement>(
-  target: ElemOrCssSelector,
+export function setStyles<TN extends TagName = "*">(
+  target: Target | null,
   styles: Styles,
-): E {
-  const elem = toElem(target);
-  if (elem === null || !("style" in elem)) {
+): ElementOf<TN> {
+  const element = toElement(target);
+  if (element === null || !("style" in element)) {
     // prettier-ignore
-    throw new InvalidElemError(`Unable to set styles for ${formatForError(styles)}`);
+    throw new InvalidElementError(`Cannot set styles ${formatForError(styles)}`);
   }
 
   for (const key of Object.keys(styles)) {
-    setSingleStyle(elem, key, styles[key as StyleKey] as StyleValue);
+    setSingleStyle(element, key, styles[key as StyleKey] as StyleValue);
   }
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 function setSingleStyle(
-  element: AnyElement,
+  element: Element,
   key: string,
   value: StyleValue,
 ): void {
   const styleValue = stringifyDOMValue(value) ?? "";
 
   if (isCssVarName(key)) {
-    element.style.setProperty(key, styleValue);
+    cast<HTMLElement>(element).style.setProperty(key, styleValue);
   } else {
     // @ts-ignore
-    element.style[key] = styleValue;
+    cast<HTMLElement>(element).style[key] = styleValue;
   }
 }

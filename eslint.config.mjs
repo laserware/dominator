@@ -31,6 +31,6 @@ export default [
     },
   },
   {
-    ignores: ["eslint.config.mjs", "dist"],
+    ignores: ["eslint.config.mjs", "dist", "typedoc.config.mjs"],
   },
 ];

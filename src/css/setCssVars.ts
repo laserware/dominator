@@ -1,27 +1,22 @@
-import { isNotNil } from "@laserware/arcade";
+import { cast, isNotNil } from "@laserware/arcade";
 
-import { InvalidCssVarError } from "../errors.ts";
-import { cast } from "../internal/cast.ts";
+import type { ElementOf, TagName } from "../dom.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import { isCssVarName } from "../typeGuards.ts";
-import type {
-  AnyElement,
-  CssVarName,
-  CssVars,
-  CssVarValue,
-  ElemOrCssSelector,
-} from "../types.ts";
+
+import { InvalidCssVarError } from "./InvalidCssVarError.ts";
+import { isCssVarName } from "./isCssVarName.ts";
+import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
 
 /**
- * Sets the specified CSS variable `name` to the specified `value` in the
- * optionally specified `target`.
+ * Sets the CSS variable `name` to `value` in the optionally specified `target`.
  *
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param name Name of the CSS variable to set or update.
  * @param value Value of the CSS variable.
@@ -29,24 +24,30 @@ import type {
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidCssVarError} If the specified `name` is not a valid {@linkcode CssVarName}.
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidCssVarError} if the `name` is not a valid {@linkcode CssVarName}.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
  *
  * ```html
- * <style>:root { --color-fg: green; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: green;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: blue;">Example</button>
+ * <button id="example" style="--color-bg: blue;">
+ *   Example
+ * </button>
  * ```
  *
  * **Set in Element**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * setCssVar("--color-bg", "red", elem);
+ * setCssVar("--color-bg", "red", element);
  * ```
  *
  * **Set in `:root`**
@@ -58,27 +59,31 @@ import type {
  * **HTML (After)**
  *
  * ```html
- * <style>:root { --color-fg: blue; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: blue;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: red;">Example</button>
+ * <button id="example" style="--color-bg: red;">
+ *   Example
+ * </button>
  * ```
- *
- * @category CSS
  */
-export function setCssVar<E extends AnyElement = HTMLElement>(
+export function setCssVar<TN extends TagName = "*">(
   name: CssVarName,
   value: CssVarValue,
-  target: ElemOrCssSelector<E> = document.documentElement,
-): E {
-  const elem = elemOrThrow(target, `Unable to set CSS variable ${name}`);
+  target: Target<TN> | null = document.documentElement,
+): ElementOf<TN> {
+  const element = toElementOrThrow(target, `Cannot set CSS variable ${name}`);
 
-  setSingleCssVar(elem, name, value);
+  setSingleCssVar(element, name, value);
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 /**
- * Sets the specified CSS `vars` on the optionally specified `target`.
+ * Sets the CSS `vars` on the optionally specified `target`.
  *
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
@@ -88,31 +93,37 @@ export function setCssVar<E extends AnyElement = HTMLElement>(
  * because the key (i.e. CSS variable name) is checked prior to setting it on the
  * property.
  *
- * @template E Element type of specified `target`.
+ * @template TN Tag name of the Element representation of `target`.
  *
  * @param vars Object with key of CSS variable name and value of value to set for name.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
  * @returns Element representation of the specified `target`.
  *
- * @throws {@linkcode InvalidCssVarError} If a specified name in `vars` is not a valid {@linkcode CssVarName}.
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidCssVarError} if a name in `vars` is not a valid {@linkcode CssVarName}.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML (Before)**
  *
  * ```html
- * <style>:root { --color-fg: green; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: green;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: blue;">Example</button>
+ * <button id="example" style="--color-bg: blue;">
+ *   Example
+ * </button>
  * ```
  *
  * **Set in Element**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * setCssVars({ "--color-bg", "red" }, elem);
+ * setCssVars({ "--color-bg", "red" }, element);
  * ```
  *
  * **Set in `:root`**
@@ -124,31 +135,35 @@ export function setCssVar<E extends AnyElement = HTMLElement>(
  * **HTML (After)**
  *
  * ```html
- * <style>:root { --color-fg: blue; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: blue;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: red;">Example</button>
+ * <button id="example" style="--color-bg: red;">
+ *   Example
+ * </button>
  * ```
- *
- * @category CSS
  */
-export function setCssVars<E extends AnyElement = HTMLElement>(
+export function setCssVars<TN extends TagName = "*">(
   vars: CssVars,
-  target: ElemOrCssSelector<E> = document.documentElement,
-): E {
+  target: Target<TN> | null = document.documentElement,
+): ElementOf<TN> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to set CSS variables ${formatForError(vars)}`);
+  const element = toElementOrThrow(target, `Cannot set CSS variables ${formatForError(vars)}`);
 
   for (const key of Object.keys(vars)) {
     const varName = cast<keyof typeof vars>(key);
 
-    setSingleCssVar(elem, varName, vars[varName]);
+    setSingleCssVar(element, varName, vars[varName]);
   }
 
-  return cast<E>(elem);
+  return cast<ElementOf<TN>>(element);
 }
 
 function setSingleCssVar(
-  element: AnyElement,
+  element: Element,
   name: string,
   value: CssVarValue,
 ): void {
@@ -157,8 +172,8 @@ function setSingleCssVar(
     throw new InvalidCssVarError(`CSS variable ${name} must be a string that starts with "--"`);
   }
 
-  const attrValue = stringifyDOMValue(value);
-  if (isNotNil(attrValue)) {
-    element.style.setProperty(name, attrValue);
+  const attributeValue = stringifyDOMValue(value);
+  if (isNotNil(attributeValue)) {
+    cast<HTMLElement>(element).style.setProperty(name, attributeValue);
   }
 }

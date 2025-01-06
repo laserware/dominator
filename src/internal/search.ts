@@ -1,7 +1,9 @@
-import type { AnyElement, DOMPropertySearch, KeysOf } from "../types.ts";
+import { keysOf } from "@laserware/arcade";
+
+import type { PropertySearch } from "../types.ts";
 
 /**
- * Returns true if *all* properties in the specified `element` match the
+ * Returns true if **all** properties in the specified `element` match the
  * `search` criteria based on the specified `predicate` check.
  *
  * @internal
@@ -11,9 +13,9 @@ import type { AnyElement, DOMPropertySearch, KeysOf } from "../types.ts";
  * @param predicate Callback that returns true if the property *does not* match.
  */
 export function hasAllProperties(
-  element: AnyElement,
-  search: DOMPropertySearch,
-  predicate: (element: AnyElement, key: any, value?: any) => boolean,
+  element: Element,
+  search: PropertySearch<any, any>,
+  predicate: (element: Element, key: any, value?: any) => boolean,
 ): boolean {
   if (Array.isArray(search)) {
     for (const name of search) {
@@ -36,7 +38,7 @@ export function hasAllProperties(
 }
 
 /**
- * Returns true if *some* properties in the specified `element` match the
+ * Returns true if **some** properties in the specified `element` match the
  * `search` criteria based on the specified `predicate` check.
  *
  * @internal
@@ -46,9 +48,9 @@ export function hasAllProperties(
  * @param predicate Callback that returns true if the property *does* match.
  */
 export function hasSomeProperties(
-  element: AnyElement,
-  search: DOMPropertySearch,
-  predicate: (element: AnyElement, key: any, value?: any) => boolean,
+  element: Element,
+  search: PropertySearch<any, any>,
+  predicate: (element: Element, key: any, value?: any) => boolean,
 ): boolean {
   if (Array.isArray(search)) {
     for (const name of search) {
@@ -68,9 +70,4 @@ export function hasSomeProperties(
   }
 
   return false;
-}
-
-// TODO: Import this from `arcade`.
-function keysOf<T extends Record<any, any>>(value: T): KeysOf<T> {
-  return Object.keys(value) as KeysOf<T>;
 }

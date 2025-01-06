@@ -1,5 +1,5 @@
-import { InvalidCssVarError } from "../../errors.ts";
 import { render, selectorForNonExistent } from "../../testing.ts";
+import { InvalidCssVarError } from "../InvalidCssVarError.ts";
 import { setCssVar, setCssVars } from "../setCssVars.ts";
 
 const getCssVarNative = (name: string, target = document.documentElement): unknown =>
@@ -43,7 +43,7 @@ describe("within setCssVars", () => {
     it("throws an error if the target does not exist", () => {
       expect(() => {
         setCssVar("--button-color", "red", selectorForNonExistent);
-      }).toThrow(/Unable to set/);
+      }).toThrow(/Cannot set/);
     });
 
     it("throws an error if an invalid name is specified", () => {
@@ -78,7 +78,7 @@ describe("within setCssVars", () => {
     it("throws an error if the target does not exist", () => {
       expect(() => {
         setCssVars({ "--button-color": "red" }, selectorForNonExistent);
-      }).toThrow(/Unable to set/);
+      }).toThrow(/Cannot set/);
     });
 
     it("throws an error if an invalid name is specified", () => {

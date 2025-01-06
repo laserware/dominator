@@ -1,21 +1,16 @@
-import { InvalidCssVarError } from "../errors.ts";
-import { cast } from "../internal/cast.ts";
+import { cast, type KeysOf, type WithUndefinedValues } from "@laserware/arcade";
+
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
-import { isCssVarName } from "../typeGuards.ts";
-import type {
-  CssVarName,
-  CssVars,
-  CssVarValue,
-  ElemOrCssSelector,
-  KeysOf,
-  WithUndefinedValues,
-} from "../types.ts";
+
+import { InvalidCssVarError } from "./InvalidCssVarError.ts";
+import { isCssVarName } from "./isCssVarName.ts";
+import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
 
 /**
- * Attempts to get the value associated with the specified CSS variable `name`
- * from the specified `target`.
+ * Attempts to get the value associated with CSS variable `name` from the `target`.
  *
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
@@ -29,34 +24,40 @@ import type {
  * back to the `:root` element. If you specify a `target`, you probably want to
  * get the CSS variable on that `target`.
  *
- * @template T Type of value to return.
+ * @template V Type of value to return.
  *
  * @param name Name of the variable to get value for.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
- * @returns Value associated with the specified `name` or `undefined` if it doesn't exist.
+ * @returns Value associated with the `name` or `undefined` if it doesn't exist.
  *
- * @throws {@linkcode InvalidCssVarError} If the specified `name` is invalid.
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode InvalidCssVarError} if the specified `name` is invalid.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
  *
  * ```html
- * <style>:root { --color-fg: green; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: green;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: blue; --gap: 24;">Example</button>
+ * <button id="example" style="--color-bg: blue; --gap: 24;">
+ *   Example
+ * </button>
  * ```
  *
  * **Get from Element**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * getCssVar("--color-bg", elem);
+ * getCssVar("--color-bg", element);
  * // "blue"
  *
- * getCssVar("--gap", elem);
+ * getCssVar("--gap", element);
  * // 24
  * ```
  *
@@ -66,21 +67,20 @@ import type {
  * getCssVar("--color-fg");
  * // "green"
  * ```
- *
- * @category CSS
  */
-export function getCssVar<T extends CssVarValue>(
+export function getCssVar<V extends CssVarValue = string>(
   name: CssVarName,
-  target: ElemOrCssSelector = document.documentElement,
-): T | undefined {
-  const elem = elemOrThrow(target, `Unable to get CSS variable ${name}`);
+  target: Target | null = document.documentElement,
+): V | undefined {
+  // prettier-ignore
+  const element = toElementOrThrow(target, `Cannot get CSS variable ${name}`);
 
-  return getSingleCssVar<T>(elem, name);
+  return getSingleCssVar<V>(element, name);
 }
 
 /**
- * Builds an object with the keys equal to the specified CSS variable `names` and
- * the value equal to the corresponding variable value in the specified `target`.
+ * Builds an object with the keys equal to the CSS variable `names` and
+ * the value equal to the corresponding variable value in the `target`.
  *
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
@@ -89,64 +89,96 @@ export function getCssVar<T extends CssVarValue>(
  * number if numeric, or the string value if a string. If not found, the value
  * is excluded from the return value.
  *
- * @template T Shape of CSS variables object to return.
+ * > [!IMPORTANT]
+ * > You will need to perform checks for whether a value is `undefined` in the returned
+ * > object if some of the entries weren't present. See the code block below for
+ * > additional details.
+ *
+ * ```ts
+ * // Assuming you pass this in as the generic:
+ * type ShapeIn = {
+ *   "--color-bg": string;
+ *   "--gap": number;
+ * };
+ *
+ * // The return type of this function is:
+ * type ShapeOut = {
+ *   "--color-bg": string | undefined;
+ *   "--gap": number | undefined;
+ * };
+ * ```
+ *
+ * @remarks
+ * The {@linkcode arcade!WithUndefinedValues} type represents an object with values that could be `undefined`.
+ *
+ * @template V Shape of CSS variables object to return.
  *
  * @param names Names of the variable to get value for.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
- * @returns Object with specified names as keys and corresponding CSS variable values.
- *         Note that you will need to perform checks for whether a value is
- *          `undefined` in the returned object if some of the entries weren't present.
+ * @returns Object with `names` as keys and corresponding CSS variable values (or `undefined` if not present).
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
  *
  * ```html
- * <style>:root { --color-fg: green; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: green;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: blue; --gap: 24;">Example</button>
+ * <button
+ *   id="example"
+ *   style="--color-bg: blue; --gap: 24;"
+ * >
+ *   Example
+ * </button>
  * ```
  *
  * **Get from Element**
  *
  * ```ts
- * type CssVarsShape = { "--color-bg": string; "--gap": number; };
+ * type Shape = {
+ *   "--color-bg": string | undefined;
+ *   "--gap": number | undefined;
+ * };
  *
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * getCssVars<CssVarsShape>(["--color-bg", "--gap"], elem);
+ * getCssVars<Shape>(["--color-bg", "--gap"], element);
  *  // { "--color-bg": "blue", "--gap": 24 }
  * ```
  *
  * **Get from `:root`**
  *
  * ```ts
- * type CssVarsShape = { "--color-fg": string; };
+ * type Shape = {
+ *   "--color-fg": string | undefined;
+ * };
  *
- * getCssVars<CssVarsShape>(["--color-bg", "--gap"]);
- *  // { "--color-fg": "green", "--gap": 24 }
+ * getCssVars<Shape>(["--color-fg"]);
+ *  // { "--color-fg": "green" }
  * ```
- *
- * @category CSS
  */
-export function getCssVars<T extends CssVars = CssVars>(
-  names: KeysOf<T>,
-  target: ElemOrCssSelector = document.documentElement,
-): WithUndefinedValues<T> {
+export function getCssVars<V extends CssVars = CssVars>(
+  names: KeysOf<V>,
+  target: Target | null = document.documentElement,
+): WithUndefinedValues<V> {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to get CSS variables ${formatForError(names)}`);
+  const element = toElementOrThrow(target, `Cannot get CSS variables ${formatForError(names)}`);
 
   const cssVars: Record<string, CssVarValue | undefined> = {};
 
   for (const name of names) {
     // @ts-ignore TypeScript is complaining that the `name` isn't a valid `CssVarName`,
     //            but we check that in this function, so I don't care.
-    cssVars[name] = getSingleCssVar(elem, name);
+    cssVars[name] = getSingleCssVar(element, name);
   }
 
-  return cast<WithUndefinedValues<T>>(cssVars);
+  return cast<WithUndefinedValues<V>>(cssVars);
 }
 
 function getSingleCssVar<T extends CssVarValue = string>(

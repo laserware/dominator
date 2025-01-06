@@ -1,30 +1,25 @@
 import { isNil } from "@laserware/arcade";
 
+import { toElementOrThrow } from "../elements/toElement.ts";
+import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
-import { elemOrThrow } from "../internal/elemOr.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
-import type {
-  AnyElement,
-  CssVarName,
-  CssVarValue,
-  DOMPropertySearch,
-  ElemOrCssSelector,
-} from "../types.ts";
+import type { PropertySearch } from "../types.ts";
+
+import type { CssVarName, CssVarValue } from "./types.ts";
 
 /**
  * Search criteria for checking if CSS variables are present in an element.
  * You can use an array of CSS variable names to check only if the CSS variables are
  * present, or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of a CSS variable.
- *
- * @category CSS
  */
-export type CssVarsSearch = DOMPropertySearch<CssVarName, CssVarValue | null>;
+export type CssVarsSearch = PropertySearch<CssVarName, CssVarValue | null>;
 
 /**
- * Checks if the specified `target` has the specified CSS variable with `name`.
- * If a `value` is specified, checks that the values match.
+ * Checks if the `target` has the CSS variable with `name`. If a `value` is
+ * specified, checks that the values match.
  *
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
@@ -33,62 +28,69 @@ export type CssVarsSearch = DOMPropertySearch<CssVarName, CssVarValue | null>;
  * @param [value=undefined] Optional value of the CSS variable to check for.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
- * @returns `true` if the specified CSS variable is present.
+ * @returns `true` if the CSS variable `name` is present.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
  *
  * ```html
- * <style>:root { --color-fg: green; }</style>
+ * <style>
+ *   :root {
+ *     --color-fg: green;
+ *     --padding-small: "24px";
+ *     --is-small: true;
+ *   }
+ * </style>
  *
- * <button id="example" style="--color-bg: blue; --is-big: true;">Example</button>
+ * <button id="example" style="--color-bg: blue; --is-big: true;">
+ *   Example
+ * </button>
  * ```
  *
  * **Check Element**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * hasCssVar("--color-bg", undefined, elem);
+ * hasCssVar("--color-bg", undefined, element);
  * // true
  *
- * hasCssVar("--is-big", "true", elem);
+ * hasCssVar("--is-big", "true", element);
  * // false ("true" cannot be a string, must be the boolean value `true`)
  *
- * hasCssVar("--color-bg", "blue", elem);
+ * hasCssVar("--color-bg", "blue", element);
  * // true
  * ```
  *
  * **Check `:root`**
  *
  * ```ts
- * hasCssVar("--color-bg");
+ * hasCssVar("--color-fg");
  * // true
  *
- * hasCssVar("--is-big", "true");
+ * hasCssVar("--is-small", "true");
  * // false ("true" cannot be a string, must be the boolean value `true`)
  *
- * hasCssVar("--color-bg", "blue");
+ * hasCssVar("--color-fg", "green");
  * // true
  * ```
- *
- * @category CSS
  */
 export function hasCssVar(
   name: CssVarName,
   value: CssVarValue | undefined = undefined,
-  target: ElemOrCssSelector = document.documentElement,
+  target: Target | null = document.documentElement,
 ): boolean {
-  const elem = elemOrThrow(target, `Unable to check for CSS variable ${name}`);
+  // prettier-ignore
+  const element = toElementOrThrow(target, `Cannot check for CSS variable ${name}`);
 
-  return hasSingleCssVar(elem, name, value);
+  return hasSingleCssVar(element, name, value);
 }
 
 /**
- * Checks if *all* of the CSS variables match the specified `search` criteria
- * in the `target`.
+ * Checks if **all** of the CSS variables match the `search` criteria in the
+ * `target`.
  *
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
@@ -96,9 +98,9 @@ export function hasCssVar(
  * @param search Array of CSS variable names or CSS variables filter to check for.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
- * @returns `true` if the specified `target` matches all search criteria.
+ * @returns `true` if the `target` matches all `search` criteria.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -118,15 +120,21 @@ export function hasCssVar(
  * **Check Element**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * hasAllCssVars(["--color-bg", "--is-big"] , elem);
+ * hasAllCssVars(["--color-bg", "--is-big"] , element);
  * // true
  *
- * hasAllCssVars({ "--color-bg": "blue", "--is-big": true }, elem);
+ * hasAllCssVars({
+ *   "--color-bg": "blue",
+ *   "--is-big": true,
+ * }, element);
  * // true
  *
- * hasAllCssVars({ "--color-bg": "blue", "--missing": true }, elem);
+ * hasAllCssVars({
+ *   "--color-bg": "blue",
+ *   "--missing": true,
+ * }, element);
  * // false
  * ```
  *
@@ -136,28 +144,32 @@ export function hasCssVar(
  * hasAllCssVars(["--color-fg", "--padding-small"]);
  * // true
  *
- * hasAllCssVars({ "--color-fg": "green", "--is-small": "true" });
+ * hasAllCssVars({
+ *   "--color-fg": "green",
+ *   "--is-small": "true",
+ * });
  * // false ("true" cannot be a string, must be the boolean value `true`)
  *
- * hasAllCssVars({ "--color-fg": "green", "--is-small": false });
+ * hasAllCssVars({
+ *   "--color-fg": "green",
+ *   "--is-small": false,
+ * });
  * // false (`--is-small` is `true`)
  * ```
- *
- * @category CSS
  */
 export function hasAllCssVars(
   search: CssVarsSearch,
-  target: ElemOrCssSelector = document.documentElement,
+  target: Target | null = document.documentElement,
 ): boolean {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to check for all CSS variables ${formatForError(search)}`);
+  const element = toElementOrThrow(target, `Cannot check for all CSS variables ${formatForError(search)}`);
 
-  return hasAllProperties(elem, search, hasSingleCssVar);
+  return hasAllProperties(element, search, hasSingleCssVar);
 }
 
 /**
- * Checks if *some* of the CSS variables match the specified `search` criteria
- * in the `target`.
+ * Checks if **some** of the CSS variables match the `search` criteria in the
+ * `target`.
  *
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
@@ -165,9 +177,9 @@ export function hasAllCssVars(
  * @param search Array of CSS variable names or CSS variables filter to check for.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
- * @returns `true` if the specified `target` has *some* of the specified CSS variables.
+ * @returns `true` if the `target` matches some `search` criteria.
  *
- * @throws {@linkcode InvalidElemError} If the specified `target` wasn't found.
+ * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
  *
  * @example
  * **HTML**
@@ -187,15 +199,21 @@ export function hasAllCssVars(
  * **Check Element**
  *
  * ```ts
- * const elem = findElem("#example")!;
+ * const element = findElement("#example")!;
  *
- * hasSomeCssVars(["--color-bg"] , elem);
+ * hasSomeCssVars(["--color-bg"] , element);
  * // true
  *
- * hasSomeCssVars({ "--color-bg": "blue", "--missing": null }, elem);
+ * hasSomeCssVars({
+ *   "--color-bg": "blue",
+ *   "--missing": null,
+ * }, element);
  * // true
  *
- * hasSomeCssVars({ "--color-bg": "blue", "--missing": true }, elem);
+ * hasSomeCssVars({
+ *   "--color-bg": "blue",
+ *   "--missing": true,
+ * }, element);
  * // false
  * ```
  *
@@ -205,27 +223,31 @@ export function hasAllCssVars(
  * hasSomeCssVars(["--color-fg", "--padding-small"]);
  * // true
  *
- * hasSomeCssVars({ "--color-fg": "green", "--is-small": "true" });
+ * hasSomeCssVars({
+ *   "--color-fg": "green",
+ *   "--is-small": "true",
+ * });
  * // false ("true" cannot be a string, must be the boolean value `true`)
  *
- * hasSomeCssVars({ "--color-fg": "green", "--is-small": false });
+ * hasSomeCssVars({
+ *   "--color-fg": "green",
+ *   "--is-small": false,
+ * });
  * // false (`--is-small` is `true`)
  * ```
- *
- * @category CSS
  */
 export function hasSomeCssVars(
   search: CssVarsSearch,
-  target: ElemOrCssSelector = document.documentElement,
+  target: Target | null = document.documentElement,
 ): boolean {
   // prettier-ignore
-  const elem = elemOrThrow(target, `Unable to check for some CSS variables ${formatForError(search)}`);
+  const element = toElementOrThrow(target, `Cannot check for some CSS variables ${formatForError(search)}`);
 
-  return hasSomeProperties(elem, search, hasSingleCssVar);
+  return hasSomeProperties(element, search, hasSingleCssVar);
 }
 
 function hasSingleCssVar(
-  element: AnyElement,
+  element: Element,
   name: string,
   value?: CssVarValue | null,
 ): boolean {

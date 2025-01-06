@@ -56,7 +56,7 @@ describe("within getStyles", () => {
     it("throws an error if the target doesn't exist", () => {
       expect(() => {
         getStyle(selectorForNonExistent, "color");
-      }).toThrow(/Unable to get/);
+      }).toThrow(/Cannot get/);
     });
   });
 
@@ -91,7 +91,7 @@ describe("within getStyles", () => {
     it("throws an error if the target doesn't exist", () => {
       expect(() => {
         getStyles(selectorForNonExistent, ["color", "display"]);
-      }).toThrow(/Unable to get styles/);
+      }).toThrow(/Cannot get styles/);
     });
   });
 });

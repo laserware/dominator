@@ -1,0 +1,61 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "cleanOutputDir": true,
+  "customCss": "./docs/theme.css",
+  "entryPoints": [
+    "./src/attributes/attributes.ts",
+    "./src/css/css.ts",
+    "./src/dataset/dataset.ts",
+    "./src/elements/elements.ts",
+    "./src/styles/styles.ts",
+    "./src/dom.ts",
+    "./src/types.ts"
+  ],
+  "exclude": [
+    "**/**test.ts",
+    "src/internal/**",
+    "src/testing.ts",
+    "src/declarations.d.ts"
+  ],
+  "excludeInternal": true,
+  "excludeNotDocumented": true,
+  "externalSymbolLinkMappings": {
+    "arcade": {
+      "Primitive": "https://laserware.github.io/arcade/types/Primitive.html",
+      "WithNullValues": "https://laserware.github.io/arcade/types/WithNullValues.html",
+      "WithUndefinedValues": "https://laserware.github.io/arcade/types/WithUndefinedValues.html"
+    },
+    "@laserware/arcade": {
+      "KeysOf": "https://laserware.github.io/arcade/types/KeysOf.html",
+      "OneOrManyOf": "https://laserware.github.io/arcade/types/OneOrManyOf.html",
+      "Primitive": "https://laserware.github.io/arcade/types/Primitive.html",
+      "WithNullValues": "https://laserware.github.io/arcade/types/WithNullValues.html",
+      "WithUndefinedValues": "https://laserware.github.io/arcade/types/WithUndefinedValues.html"
+    },
+    "typescript": {
+      "CSSStyleDeclaration": "https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration",
+      "Document": "https://developer.mozilla.org/en-US/docs/Web/API/Document",
+      "Node": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+      "ChildNode": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+      "ParentNode": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+      "Element": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+      "EventTarget": "https://developer.mozilla.org/en-US/docs/Web/API/EventTarget",
+      "HTMLElement": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement",
+      "SVGElement": "https://developer.mozilla.org/en-US/docs/Web/API/SVGElement"
+    }
+  },
+  "headings": { "readme": false, "document": false },
+  "hideGenerator": true,
+  "navigation": {
+    "compactFolders": true,
+    "excludeReferences": false,
+    "includeCategories": false,
+    "includeFolders": false,
+    "includeGroups": false
+  },
+  "navigationLinks": { "GitHub": "https://github.com/laserware/dominator" },
+  "out": "site",
+  "readme": "README.md",
+  "useFirstParagraphOfCommentAsSummary": true,
+  "useTsLinkResolution": false
+}

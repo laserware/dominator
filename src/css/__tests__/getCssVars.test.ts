@@ -1,6 +1,6 @@
-import { InvalidCssVarError } from "../../errors.ts";
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { getCssVar, getCssVars } from "../getCssVars.ts";
+import { InvalidCssVarError } from "../InvalidCssVarError.ts";
 
 describe("within getCssVars", () => {
   describe("the getCssVar function", () => {
@@ -49,7 +49,7 @@ describe("within getCssVars", () => {
 
       expect(() => {
         getCssVar("--button-color", selectorForNonExistent);
-      }).toThrow(/Unable to get/);
+      }).toThrow(/Cannot get/);
     });
 
     it("throws an error if an invalid name is specified", () => {
@@ -96,7 +96,7 @@ describe("within getCssVars", () => {
 
       expect(() => {
         getCssVars(["--button-color"], selectorForNonExistent);
-      }).toThrow(/Unable to get/);
+      }).toThrow(/Cannot get/);
     });
 
     it("throws an error if an invalid name is specified", () => {

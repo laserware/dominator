@@ -1,5 +1,5 @@
 import { getCssVar } from "../../css/getCssVars.ts";
-import { InvalidElemError } from "../../errors.ts";
+import { InvalidElementError } from "../../elements/InvalidElementError.ts";
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { removeStyle, removeStyles } from "../removeStyles.ts";
 
@@ -32,7 +32,7 @@ describe("within removeStyles", () => {
     it("throws an error if the target does not exist", () => {
       expect(() => {
         removeStyle(selectorForNonExistent, "color");
-      }).toThrow(InvalidElemError);
+      }).toThrow(InvalidElementError);
     });
   });
 
@@ -49,7 +49,7 @@ describe("within removeStyles", () => {
     it("throws an error if the target does not exist", () => {
       expect(() => {
         removeStyles(selectorForNonExistent, ["color"]);
-      }).toThrow(InvalidElemError);
+      }).toThrow(InvalidElementError);
     });
   });
 });

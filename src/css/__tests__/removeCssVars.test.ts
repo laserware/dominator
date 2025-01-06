@@ -1,4 +1,4 @@
-import { InvalidElemError } from "../../errors.ts";
+import { InvalidElementError } from "../../elements/InvalidElementError.ts";
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { removeCssVar, removeCssVars } from "../removeCssVars.ts";
 
@@ -23,7 +23,7 @@ describe("within removeCssVars", () => {
     it("throws an error if the target does not exist", () => {
       expect(() => {
         removeCssVar("--background", selectorForNonExistent);
-      }).toThrow(InvalidElemError);
+      }).toThrow(InvalidElementError);
     });
   });
 
@@ -40,7 +40,7 @@ describe("within removeCssVars", () => {
     it("throws an error if the target does not exist", () => {
       expect(() => {
         removeCssVars(["--background"], selectorForNonExistent);
-      }).toThrow(InvalidElemError);
+      }).toThrow(InvalidElementError);
     });
   });
 });

@@ -1,9 +1,8 @@
 /* istanbul ignore file -- @preserve: These are testing utilities, so we don't care about coverage. */
 
-import { dedent } from "@laserware/arcade";
+import { cast, dedent } from "@laserware/arcade";
 
-import type { AnyElement } from "./dom.ts";
-import { cast } from "./internal/cast.ts";
+import type { ElementOf, TagName } from "./dom.ts";
 
 export { screen, waitFor } from "@testing-library/dom";
 
@@ -15,21 +14,27 @@ export { userEvent } from "@testing-library/user-event";
 export const selectorForNonExistent = "#never-going-to-exist";
 
 /**
- * Renders the specified markup and returns the element with the corresponding
+ * Renders the specified `html` and returns the element with the corresponding
  * contents.
  *
- * @param markup HTML markup to render.
+ * @internal
+ *
+ * @template TN Tag name of the rendered element.
+ *
+ * @param html HTML markup to render.
  * @param [options] Optional overrides for element attributes and properties (useful for mocking).
  * @param [children] Optional children to add to element.
+ *
+ * @returns Element with tag name `TN`.
  */
-export function render<E extends AnyElement = HTMLElement>(
-  markup: string,
+export function render<TN extends TagName = "*">(
+  html: string,
   options: Record<string, any> = {},
   ...children: HTMLElement[]
-): E {
+): ElementOf<TN> {
   const parent = document.createElement("div");
 
-  parent.innerHTML = dedent(markup);
+  parent.innerHTML = dedent(html);
 
   const element = parent.firstElementChild!;
 
@@ -50,5 +55,5 @@ export function render<E extends AnyElement = HTMLElement>(
     element[key] = value;
   }
 
-  return cast<E>(element);
+  return cast<ElementOf<TN>>(element);
 }
