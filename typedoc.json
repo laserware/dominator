@@ -10,12 +10,7 @@
     "./src/dom.ts",
     "./src/types.ts"
   ],
-  "exclude": [
-    "**/**test.ts",
-    "src/internal/**",
-    "src/testing.ts",
-    "src/declarations.d.ts"
-  ],
+  "exclude": ["**/**test.ts", "src/internal/**", "src/testing.ts"],
   "excludeInternal": true,
   "excludeNotDocumented": true,
   "externalSymbolLinkMappings": {

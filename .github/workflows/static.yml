@@ -1,5 +1,4 @@
 name: Deploy Documentation Site
-
 on:
   push:
     branches: [ "main" ]
