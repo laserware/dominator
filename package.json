@@ -2,12 +2,13 @@
   "name": "@laserware/dominator",
   "version": "4.0.1",
   "description": "Better ergonomics for working with the DOM and TypeScript.",
-  "author": "Mike Rourke <mike.w.rourke@gmail.com>",
+  "author": "Mike Rourke <mike.w.rourke@gmail.com> (https://mikerourke.dev/)",
   "license": "MIT",
   "repository": {
     "url": "git+https://github.com/laserware/dominator.git",
     "type": "git"
   },
+  "homepage": "https://laserware.github.io/dominator/",
   "type": "module",
   "browser": "dist/index.mjs",
   "main": "dist/index.mjs",
@@ -19,13 +20,8 @@
       "default": "./dist/index.mjs"
     }
   },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "dom",
-    "typescript"
-  ],
+  "files": ["dist"],
+  "keywords": ["dom", "typescript"],
   "publishConfig": {
     "access": "public"
   },
@@ -56,8 +52,5 @@
     "typedoc": "^0.27.6",
     "typescript": "^5.7.2"
   },
-  "trustedDependencies": [
-    "@biomejs/biome",
-    "esbuild"
-  ]
+  "trustedDependencies": ["@biomejs/biome", "esbuild"]
 }
