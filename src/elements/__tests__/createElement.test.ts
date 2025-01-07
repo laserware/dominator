@@ -111,7 +111,9 @@ describe("the createElement function", () => {
     element.dispatchEvent(event);
     expect(keydown).toHaveBeenCalledTimes(1);
 
-    expect(element.outerHTML).toBe(`<button aria-label="Test" style="--color-bg: blue;" data-string-property="value" data-boolean-property="true" data-number-property="24" id="test" type="button" aria-disabled="false"></button>`);
+    expect(element.outerHTML).toBe(
+      `<button aria-label="Test" style="--color-bg: blue;" data-string-property="value" data-boolean-property="true" data-number-property="24" id="test" type="button" aria-disabled="false"></button>`,
+    );
   });
 
   it("appends text children to the created element", () => {

@@ -18,7 +18,7 @@ describe("the toElement function", () => {
   it("returns the element when given an EventTarget", async () => {
     const element = render("<div>Test</div>");
 
-    // prettier-ignore
+    // biome-ignore format:
     const getTarget = (): Promise<EventTarget> => new Promise((resolve) => {
       element.addEventListener("click", (event) => {
         resolve(event.target as EventTarget);

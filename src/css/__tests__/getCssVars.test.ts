@@ -66,7 +66,7 @@ describe("within getCssVars", () => {
 
   describe("the getCssVars function", () => {
     it("returns the CSS vars from the :root element", () => {
-      // prettier-ignore
+      // biome-ignore format:
       render("<style>:root { --color-bg: blue; --color-fg: green; --gap: 24; --is-big: true }</style>");
 
       const result = getCssVars(["--color-bg", "--color-fg", "--gap", "--is-big"]);
@@ -80,7 +80,7 @@ describe("within getCssVars", () => {
     });
 
     it("returns the CSS vars from a specified target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button style="--color-bg: blue; --color-fg: green; --gap: 24; --is-big: true">Click</button>`);
 
       const result = getCssVars(["--color-bg", "--color-fg", "--gap", "--is-big"], element);

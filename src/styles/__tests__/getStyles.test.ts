@@ -64,7 +64,7 @@ describe("within getStyles", () => {
 
   describe("the getStyles function", () => {
     it("returns an object with the key of names passed in and values when all styles exist", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button style="color: red; display: block; opacity: 0.5;">Button</button>`);
 
       const result = getStyles(element, ["color", "display", "opacity"]);
@@ -77,7 +77,7 @@ describe("within getStyles", () => {
     });
 
     it("returns an object with the key of names passed in and values when some styles are missing", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button style="color: red; display: block; opacity: 0.5;">Button</button>`);
 
       const result = getStyles(element, ["color", "display", "opacity", "fontSize"]);
