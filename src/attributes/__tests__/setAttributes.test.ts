@@ -1,10 +1,12 @@
+import { describe, expect, it } from "bun:test";
+
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { setAttribute, setAttributes } from "../setAttributes.ts";
 
 describe("within setAttributes", () => {
   describe("the setAttribute function", () => {
     it("sets the attribute on the target when a name and value is specified", () => {
-      const element = render(`<div>Test</div>`);
+      const element = render("<div>Test</div>");
 
       const result = setAttribute(element, "inert", null)!;
 
@@ -12,7 +14,7 @@ describe("within setAttributes", () => {
     });
 
     it("sets the attribute on the target with an object value", () => {
-      const element = render(`<div>Test</div>`);
+      const element = render("<div>Test</div>");
 
       const result = setAttribute(element, "data-object", { a: "b" });
 
@@ -20,7 +22,7 @@ describe("within setAttributes", () => {
     });
 
     it("sets the attribute on the target with an array value", () => {
-      const element = render(`<div>Test</div>`);
+      const element = render("<div>Test</div>");
 
       const result = setAttribute(element, "data-array", [1, "2", true]);
 
@@ -28,7 +30,7 @@ describe("within setAttributes", () => {
     });
 
     it("removes the attribute from a target when undefined is specified as the value", () => {
-      const element = render(`<div inert>Test</div>`);
+      const element = render("<div inert>Test</div>");
 
       const result = setAttribute(element, "inert", null)!;
 
@@ -38,7 +40,7 @@ describe("within setAttributes", () => {
     });
 
     it("throws an error if the target does not exist", () => {
-      render(`<div>Test</div>`);
+      render("<div>Test</div>");
 
       expect(() => {
         setAttribute(selectorForNonExistent, "name", "parent");
@@ -48,7 +50,7 @@ describe("within setAttributes", () => {
 
   describe("the setAttributes function", () => {
     it("sets the attributes on a target when an attributes object is specified", () => {
-      const element = render(`<div>Test</div>`);
+      const element = render("<div>Test</div>");
 
       const result = setAttributes(element, { name: "parent", "aria-invalid": true })!;
 

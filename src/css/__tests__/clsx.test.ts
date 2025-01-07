@@ -1,5 +1,6 @@
-/* eslint-disable no-constant-binary-expression */
 // noinspection PointlessBooleanExpressionJS
+
+import { describe, expect, it } from "bun:test";
 
 import { clsx } from "../clsx.ts";
 
@@ -28,8 +29,8 @@ describe("the clsx function", () => {
     expect(clsx(12)).toBe("12");
     expect(clsx(0.1)).toBe("0.1");
     expect(clsx(0)).toBe("");
-    expect(clsx(Infinity)).toBe("Infinity");
-    expect(clsx(NaN)).toBe("");
+    expect(clsx(Number.POSITIVE_INFINITY)).toBe("Infinity");
+    expect(clsx(Number.NaN)).toBe("");
   });
 
   it("handles variadic numbers", () => {
@@ -50,8 +51,8 @@ describe("the clsx function", () => {
     expect(clsx({}, {})).toBe("");
     expect(clsx({ foo: 1 }, { bar: 2 })).toBe("foo bar");
     expect(clsx({ foo: 1 }, null, { baz: 1, bat: 0 })).toBe("foo baz");
-    // prettier-ignore
-    expect(clsx({ foo: 1 }, {}, {}, { bar: "a" }, { baz: null, bat: Infinity })).toBe("foo bar bat");
+    // biome-ignore format:
+    expect(clsx({ foo: 1 }, {}, {}, { bar: "a" }, { baz: null, bat: Number.POSITIVE_INFINITY })).toBe("foo bar bat");
   });
 
   it("handles arrays", () => {
@@ -168,7 +169,7 @@ describe("the clsx function", () => {
         // Falsy:
         null: null,
         emptyString: "",
-        noNumber: NaN,
+        noNumber: Number.NaN,
         zero: 0,
         negativeZero: -0,
         false: false,
@@ -185,7 +186,7 @@ describe("the clsx function", () => {
         greaterZero: 1,
       });
 
-      // prettier-ignore
+      // biome-ignore format:
       expect(result).toBe("nonEmptyString whitespace function emptyObject nonEmptyObject emptyList nonEmptyList greaterZero");
     });
   });

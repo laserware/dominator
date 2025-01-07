@@ -1,4 +1,4 @@
-import { cast, type WithUndefinedValues } from "@laserware/arcade";
+import { type WithUndefinedValues, cast } from "@laserware/arcade";
 
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
@@ -70,7 +70,7 @@ export function getDatasetValue<V extends DatasetValue = string>(
   target: Target | null,
   key: DatasetKey,
 ): V | undefined {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot get dataset value for ${key}`);
 
   return getSingleDatasetValue(element, key);
@@ -161,7 +161,7 @@ export function getDatasetEntries<V extends Dataset = Dataset>(
   target: Target | null,
   keys: DatasetKey[],
 ): WithUndefinedValues<V> {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot get dataset entries ${formatForError(keys)}`);
 
   const result: Record<DatasetKey, DatasetValue | undefined> = {};

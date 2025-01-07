@@ -1,11 +1,13 @@
+import { describe, expect, it } from "bun:test";
+
 import { render, selectorForNonExistent } from "../../testing.ts";
-import { getCssVar, getCssVars } from "../getCssVars.ts";
 import { InvalidCssVarError } from "../InvalidCssVarError.ts";
+import { getCssVar, getCssVars } from "../getCssVars.ts";
 
 describe("within getCssVars", () => {
   describe("the getCssVar function", () => {
     it("returns a CSS string variable on the :root element", () => {
-      render(`<style>:root { --color-blue: blue; --color-green: green; }</style>`);
+      render("<style>:root { --color-blue: blue; --color-green: green; }</style>");
 
       const result = getCssVar("--color-blue");
 
@@ -13,15 +15,15 @@ describe("within getCssVars", () => {
     });
 
     it("returns a CSS number variable on the :root element", () => {
-      render(`<style>:root { --gap-small: 24; }</style>`);
+      render("<style>:root { --gap-small: 24; }</style>");
 
-      const result = getCssVar("--gap-small");
+      const result = getCssVar<number>("--gap-small");
 
       expect(result).toBe(24);
     });
 
     it("returns a CSS boolean variable on the :root element", () => {
-      render(`<style>:root { --is-big: true; }</style>`);
+      render("<style>:root { --is-big: true; }</style>");
 
       const result = getCssVar("--is-big");
 
@@ -64,8 +66,8 @@ describe("within getCssVars", () => {
 
   describe("the getCssVars function", () => {
     it("returns the CSS vars from the :root element", () => {
-      // prettier-ignore
-      render(`<style>:root { --color-bg: blue; --color-fg: green; --gap: 24; --is-big: true }</style>`);
+      // biome-ignore format:
+      render("<style>:root { --color-bg: blue; --color-fg: green; --gap: 24; --is-big: true }</style>");
 
       const result = getCssVars(["--color-bg", "--color-fg", "--gap", "--is-big"]);
 
@@ -78,7 +80,7 @@ describe("within getCssVars", () => {
     });
 
     it("returns the CSS vars from a specified target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button style="--color-bg: blue; --color-fg: green; --gap: 24; --is-big: true">Click</button>`);
 
       const result = getCssVars(["--color-bg", "--color-fg", "--gap", "--is-big"], element);

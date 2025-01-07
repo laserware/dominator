@@ -1,4 +1,7 @@
-import { render, userEvent } from "../../testing.ts";
+import { describe, expect, it, mock } from "bun:test";
+
+import { getAttribute } from "../../attributes/getAttributes.ts";
+import { render } from "../../testing.ts";
 import { createElement } from "../createElement.ts";
 import { isElementType } from "../isElementType.ts";
 
@@ -18,9 +21,9 @@ describe("the createElement function", () => {
       },
     });
 
-    expect(result).toHaveAttribute("id", "test-id");
-    expect(result).toHaveAttribute("class", "test-class");
-    expect(result).toHaveAttribute("aria-label", "Example");
+    expect(getAttribute(result, "id")).toBe("test-id");
+    expect(getAttribute(result, "class")).toBe("test-class");
+    expect(getAttribute(result, "aria-label")).toBe("Example");
   });
 
   it("assigns provided CSS variables to the created element", () => {
@@ -66,11 +69,11 @@ describe("the createElement function", () => {
     expect(result).toHaveProperty("value", "hello");
   });
 
-  it("creates an element children, properties, and event listeners", async () => {
-    const click = vi.fn();
-    const keydown = vi.fn();
+  it("creates an element children, properties, and event listeners", () => {
+    const click = mock();
+    const keydown = mock();
 
-    const result = createElement(
+    const element = createElement(
       "button",
       {
         id: "test",
@@ -89,7 +92,7 @@ describe("the createElement function", () => {
         },
         onclick: click,
         on: {
-          dblclick: {
+          keydown: {
             listener: keydown,
             options: { once: true },
           },
@@ -98,27 +101,19 @@ describe("the createElement function", () => {
       null,
     );
 
-    expect(result).toHaveProperty("type", "button");
+    expect(getAttribute(element, "type")).toBe("button");
 
-    await userEvent.click(result);
+    element.click();
     expect(click).toHaveBeenCalled();
 
-    await userEvent.dblClick(result);
-    await userEvent.dblClick(result);
+    const event = new KeyboardEvent("keydown", { key: "Enter" });
+    element.dispatchEvent(event);
+    element.dispatchEvent(event);
     expect(keydown).toHaveBeenCalledTimes(1);
 
-    expect(result).toMatchInlineSnapshot(`
-      <button
-        aria-disabled="false"
-        aria-label="Test"
-        data-boolean-property="true"
-        data-number-property="24"
-        data-string-property="value"
-        id="test"
-        style="--color-bg: blue;"
-        type="button"
-      />
-    `);
+    expect(element.outerHTML).toBe(
+      `<button aria-label="Test" style="--color-bg: blue;" data-string-property="value" data-boolean-property="true" data-number-property="24" id="test" type="button" aria-disabled="false"></button>`,
+    );
   });
 
   it("appends text children to the created element", () => {
@@ -126,11 +121,11 @@ describe("the createElement function", () => {
 
     expect(result.children).toHaveLength(1);
     expect(isElementType(result.firstElementChild!, "span")).toBeTruthy();
-    expect(result.firstElementChild!).toHaveTextContent("child element");
+    expect(result.firstElementChild!.textContent).toBe("child element");
   });
 
   it("appends a child Element to the created element", () => {
-    const child = render(`<span>Child</span>`);
+    const child = render("<span>Child</span>");
     child.remove();
 
     const result = createElement("div", {}, child);
@@ -166,7 +161,7 @@ describe("the createElement function", () => {
   });
 
   it("appends element to parent when parent is provided", () => {
-    const parent = render(`<section></section>`);
+    const parent = render("<section></section>");
 
     const child = createElement("div", {});
 

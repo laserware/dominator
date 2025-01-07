@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { render } from "../../testing.ts";
 import { wrapDataset } from "../wrapDataset.ts";
 
@@ -17,7 +19,7 @@ const initialData: TestDatasetShape = {
 
 describe("the wrapDataset function", () => {
   it("sets the dataset properties to the specified initial values when called", () => {
-    const element = render(`<div>Test</div>`);
+    const element = render("<div>Test</div>");
 
     const dataset = wrapDataset<TestDatasetShape>(element, initialData);
 
@@ -28,7 +30,7 @@ describe("the wrapDataset function", () => {
   });
 
   it("creates an instance of Dataset with no initial dataset when specified", () => {
-    const element = render(`<div>Test</div>`);
+    const element = render("<div>Test</div>");
 
     const dataset = wrapDataset<TestDatasetShape>(element);
 
@@ -37,7 +39,7 @@ describe("the wrapDataset function", () => {
 
   describe("the getAll method", () => {
     it("returns all dataset when dataset entries exist on target", () => {
-      const element = render(`<div>Test</div>`);
+      const element = render("<div>Test</div>");
 
       const dataset = wrapDataset<TestDatasetShape>(element, initialData);
 
@@ -45,7 +47,7 @@ describe("the wrapDataset function", () => {
     });
 
     it("returns an empty object when no dataset entries exist on target", () => {
-      const element = render(`<div>Test</div>`);
+      const element = render("<div>Test</div>");
 
       const dataset = wrapDataset(element);
 
@@ -63,7 +65,7 @@ describe("the wrapDataset function", () => {
 
   describe("the get method", () => {
     it("returns the value when it exists in the dataset", () => {
-      const element = render(`<div>Test</div>`);
+      const element = render("<div>Test</div>");
 
       const dataset = wrapDataset<TestDatasetShape>(element, initialData);
 
@@ -74,7 +76,7 @@ describe("the wrapDataset function", () => {
     });
 
     it("returns undefined if the value isn't found", () => {
-      const element = render(`<div>Test</div>`);
+      const element = render("<div>Test</div>");
 
       const dataset = wrapDataset<TestDatasetShape>(element, initialData);
 
@@ -84,7 +86,7 @@ describe("the wrapDataset function", () => {
   });
 
   it("sets the dataset value when the set method is called", () => {
-    const element = render(`<div>Test</div>`);
+    const element = render("<div>Test</div>");
 
     const dataset = wrapDataset<TestDatasetShape>(element, initialData);
 
@@ -96,7 +98,7 @@ describe("the wrapDataset function", () => {
   });
 
   it("removes the dataset entry when the remove method is called", () => {
-    const element = render(`<div>Test</div>`);
+    const element = render("<div>Test</div>");
 
     const dataset = wrapDataset<TestDatasetShape>(element, initialData);
 
@@ -106,7 +108,7 @@ describe("the wrapDataset function", () => {
   });
 
   it("sets the dataset entries when the setAll method is called", () => {
-    const element = render(`<div>Test</div>`);
+    const element = render("<div>Test</div>");
 
     const dataset = wrapDataset<TestDatasetShape>(element);
 

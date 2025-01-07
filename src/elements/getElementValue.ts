@@ -19,7 +19,7 @@ import type { Target } from "./types.ts";
  * @throws {@linkcode InvalidElementError} if the specified `target` wasn't found.
  */
 export function getElementValue<T>(target: Target | null): T {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow<"input">(target, "Cannot get value for element");
 
   // Note that the order of these checks is important. Calling `valueAsNumber` on

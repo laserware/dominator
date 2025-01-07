@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 // noinspection SpellCheckingInspection,JSDeprecatedSymbols,JSUnusedGlobalSymbols
 
 // Type definitions for HTML attributes, based on JSX React 18 typings
@@ -1813,7 +1812,7 @@ export interface SVGAttributesTagNameMap {
  */
 export type SVGElementAttributes = SVGAttributes;
 
-// prettier-ignore
+// biome-ignore format:
 /**
  * Attributes for the [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) of type `E`.
  *

@@ -2,8 +2,8 @@ import { cast, isNil } from "@laserware/arcade";
 
 import type { ElementOf, TagName } from "../dom.ts";
 
-import { findElement } from "./findElement.ts";
 import { InvalidElementError } from "./InvalidElementError.ts";
+import { findElement } from "./findElement.ts";
 import { isElementLike } from "./isElementLike.ts";
 import type { Target } from "./types.ts";
 

@@ -6,7 +6,7 @@ import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
-import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
+import type { AttributeName, AttributeValue, Attributes } from "./types.ts";
 
 /**
  * Sets the attribute `name` of the `target` element to the `value`. The `value`
@@ -114,7 +114,7 @@ export function setAttributes<TN extends TagName = "*">(
   target: Target<TN> | null,
   attributes: Attributes<TN>,
 ): ElementOf<TN> {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot set attributes ${formatForError(attributes)}`);
 
   for (const name of Object.keys(attributes)) {

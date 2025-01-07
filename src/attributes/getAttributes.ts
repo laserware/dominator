@@ -1,4 +1,4 @@
-import { cast, type KeysOf, type WithNullValues } from "@laserware/arcade";
+import { type KeysOf, type WithNullValues, cast } from "@laserware/arcade";
 
 import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
@@ -6,7 +6,7 @@ import type { Target } from "../elements/types.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
-import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
+import type { AttributeName, AttributeValue, Attributes } from "./types.ts";
 
 /**
  * Attempts to get the attribute `name` from the `target`. If the value is found,
@@ -142,7 +142,7 @@ export function getAttributes<
   V extends Attributes = Attributes,
   TN extends TagName = "*",
 >(target: Target<TN> | null, names: KeysOf<V>): WithNullValues<V> {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot get attributes ${formatForError(names)}`);
 
   const attributes: Record<string, AttributeValue | null> = {};

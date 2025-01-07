@@ -8,7 +8,7 @@ import { formatForError } from "../internal/formatForError.ts";
 
 import { InvalidCssVarError } from "./InvalidCssVarError.ts";
 import { isCssVarName } from "./isCssVarName.ts";
-import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
+import type { CssVarName, CssVarValue, CssVars } from "./types.ts";
 
 /**
  * Sets the CSS variable `name` to `value` in the optionally specified `target`.
@@ -150,7 +150,7 @@ export function setCssVars<TN extends TagName = "*">(
   vars: CssVars,
   target: Target<TN> | null = document.documentElement,
 ): ElementOf<TN> {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot set CSS variables ${formatForError(vars)}`);
 
   for (const key of Object.keys(vars)) {
@@ -168,7 +168,7 @@ function setSingleCssVar(
   value: CssVarValue,
 ): void {
   if (!isCssVarName(name)) {
-    // prettier-ignore
+    // biome-ignore format:
     throw new InvalidCssVarError(`CSS variable ${name} must be a string that starts with "--"`);
   }
 

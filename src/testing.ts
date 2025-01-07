@@ -4,10 +4,6 @@ import { cast, dedent } from "@laserware/arcade";
 
 import type { ElementOf, TagName } from "./dom.ts";
 
-export { screen, waitFor } from "@testing-library/dom";
-
-export { userEvent } from "@testing-library/user-event";
-
 /**
  * Selector for an element that will never exist in the test DOM.
  */

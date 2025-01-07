@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { getCssVar } from "../../css/getCssVars.ts";
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { setStyle, setStyles } from "../setStyles.ts";
@@ -5,7 +7,7 @@ import { setStyle, setStyles } from "../setStyles.ts";
 describe("within setStyles", () => {
   describe("the setStyle function", () => {
     it("sets the style on the target when a name and string value is specified", () => {
-      const element = render(`<div>Test</div>`);
+      const element = render("<div>Test</div>");
 
       const result = setStyle(element, "color", "red")!;
 
@@ -13,7 +15,7 @@ describe("within setStyles", () => {
     });
 
     it("sets the style on the target when a name and number value is specified", () => {
-      const element = render(`<div>Test</div>`);
+      const element = render("<div>Test</div>");
 
       const result = setStyle(element, "margin", "24px")!;
 
@@ -30,7 +32,7 @@ describe("within setStyles", () => {
     });
 
     it("sets the style on the target when a CSS variable is specified", () => {
-      const element = render(`<div>Test</div>`);
+      const element = render("<div>Test</div>");
 
       const result = setStyle(element, "--color-bg", "blue")!;
 
@@ -46,7 +48,7 @@ describe("within setStyles", () => {
 
   describe("the setStyles function", () => {
     it("sets the styles on a target when a styles object is specified", () => {
-      const element = render(`<div>Test</div>`);
+      const element = render("<div>Test</div>");
 
       const result = setStyles(element, {
         color: "green",

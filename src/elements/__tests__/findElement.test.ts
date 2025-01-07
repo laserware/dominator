@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { selectDatasetEntry } from "../../dataset/selectDataset.ts";
 import { render } from "../../testing.ts";
 import { findElement } from "../findElement.ts";
@@ -34,9 +36,9 @@ describe("the findElement function", () => {
 
     const parent = findElement({ withSelector: "#parent" });
 
-    const result = findElement({ withSelector: `[aria-hidden]`, parent });
+    const result = findElement({ withSelector: "[aria-hidden]", parent });
 
-    expect(result!.innerHTML).toBe("Child");
+    expect(result?.innerHTML).toBe("Child");
   });
 
   it("finds an element with several attributes in an options object", () => {

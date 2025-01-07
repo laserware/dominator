@@ -57,7 +57,7 @@ export class DatasetWrapper<
    * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
    */
   constructor(target: Target<TN>, initialData?: Partial<DS>) {
-    // prettier-ignore
+    // biome-ignore format:
     this.#element = toElementOrThrow<TN>(target, "Cannot initialize Dataset wrapper");
 
     if (isNotNil(initialData)) {

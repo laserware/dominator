@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { getAttribute, getAttributes } from "../getAttributes.ts";
 
@@ -14,7 +16,7 @@ describe("within getAttributes", () => {
     it("returns the number attribute value if it exists", () => {
       const element = render<"div">(`<div aria-colcount="20">Button</div>`);
 
-      const result = getAttribute(element, "aria-colcount");
+      const result = getAttribute<number>(element, "aria-colcount");
 
       expect(result).toBe(20);
     });
@@ -43,7 +45,7 @@ describe("within getAttributes", () => {
 
   describe("the getAttributes function", () => {
     it("returns an object with the key of names passed in and values when all attributes exist", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button name="button" disabled aria-checked="true" data-count="20">Button</button>`);
 
       const result = getAttributes(element, ["name", "disabled", "aria-checked", "data-count"]);
@@ -57,7 +59,7 @@ describe("within getAttributes", () => {
     });
 
     it("returns an object with the key of names passed in and values when some attributes missing", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button name="button" disabled aria-checked="true" data-count="20">Button</button>`);
 
       const result = getAttributes(element, [

@@ -48,7 +48,7 @@ export function removeStyles<TN extends TagName = "*">(
   target: Target | null,
   keys: StyleKey[],
 ): ElementOf<TN> {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot remove styles ${formatForError(keys)}`);
 
   for (const key of keys) {

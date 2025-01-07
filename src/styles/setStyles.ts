@@ -8,7 +8,7 @@ import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
-import type { StyleKey, Styles, StyleValue } from "./types.ts";
+import type { StyleKey, StyleValue, Styles } from "./types.ts";
 
 /**
  * Sets the style property with name `key` to the specified `value` on the
@@ -57,7 +57,7 @@ export function setStyles<TN extends TagName = "*">(
 ): ElementOf<TN> {
   const element = toElement(target);
   if (element === null || !("style" in element)) {
-    // prettier-ignore
+    // biome-ignore format:
     throw new InvalidElementError(`Cannot set styles ${formatForError(styles)}`);
   }
 

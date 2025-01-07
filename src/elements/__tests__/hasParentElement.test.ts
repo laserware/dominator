@@ -1,18 +1,20 @@
+import { describe, expect, it } from "bun:test";
+
 import { render } from "../../testing.ts";
 import { hasParentElement } from "../hasParentElement.ts";
 
 describe("the hasParentElement function", () => {
   it("returns true when the child is directly within the parent", () => {
-    const child = render(`<span></span>`);
-    const parent = render(`<div></div>`, {}, child);
+    const child = render("<span></span>");
+    const parent = render("<div></div>", {}, child);
 
     expect(hasParentElement(child, parent)).toBe(true);
   });
 
   it("returns true when the child is deeply nested within the parent", () => {
-    const child = render(`<span></span>`);
-    const middle = render(`<span></span>`, {}, child);
-    const parent = render(`<div></div>`, {}, middle);
+    const child = render("<span></span>");
+    const middle = render("<span></span>", {}, child);
+    const parent = render("<div></div>", {}, middle);
 
     parent.appendChild(middle);
     middle.appendChild(child);
@@ -21,20 +23,20 @@ describe("the hasParentElement function", () => {
   });
 
   it("returns false when the child is not in the parent", () => {
-    const child = render(`<span></span>`);
-    const parent = render(`<div></div>`);
+    const child = render("<span></span>");
+    const parent = render("<div></div>");
 
     expect(hasParentElement(child, parent)).toBeFalsy();
   });
 
   it("returns false when the parent is null", () => {
-    const child = render(`<span></span>`);
+    const child = render("<span></span>");
 
     expect(hasParentElement(child, null)).toBeFalsy();
   });
 
   it("returns false when the child is null", () => {
-    const parent = render(`<div></div>`);
+    const parent = render("<div></div>");
 
     expect(hasParentElement(null, parent)).toBeFalsy();
   });

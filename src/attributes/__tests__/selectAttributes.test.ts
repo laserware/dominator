@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { InvalidAttributeError } from "../InvalidAttributeError.ts";
 import { selectAttribute, selectAttributes } from "../selectAttributes.ts";
 
@@ -12,7 +14,7 @@ describe("within selectAttributes", () => {
     it("returns a selector when an attribute name and undefined is specified", () => {
       const result = selectAttribute("aria-hidden", undefined);
 
-      expect(result).toBe(`[aria-hidden]`);
+      expect(result).toBe("[aria-hidden]");
     });
 
     it("returns a selector when an attribute name and valid value is specified", () => {

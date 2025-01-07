@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { selectorForNonExistent } from "../../testing.ts";
 import { isElementScrollable } from "../isElementScrollable.ts";
 

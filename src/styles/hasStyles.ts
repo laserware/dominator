@@ -60,7 +60,7 @@ export function hasAllStyles(
 ): boolean {
   const element = toElement(target);
   if (element === null || !("style" in element)) {
-    // prettier-ignore
+    // biome-ignore format:
     throw new InvalidElementError(`Cannot check for all styles ${formatForError(search)}`);
   }
 
@@ -84,7 +84,7 @@ export function hasSomeStyles(
 ): boolean {
   const element = toElement(target);
   if (element === null || !("style" in element)) {
-    // prettier-ignore
+    // biome-ignore format:
     throw new InvalidElementError(`Cannot check for some styles ${formatForError(search)}`);
   }
 

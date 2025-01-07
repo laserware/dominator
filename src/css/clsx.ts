@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 /*
  * MIT License
  *
@@ -63,13 +62,16 @@ export function clsx(...inputs: ClassValue[]): string {
   const inputCount = inputs.length;
 
   let index = 0;
-  let inputAtIndex;
-  let classValue;
+  let inputAtIndex: any;
+  let classValue: any;
   let result = "";
 
   for (; index < inputCount; index++) {
+    // biome-ignore lint/suspicious/noAssignInExpressions: Vendored
     if ((inputAtIndex = inputs[index])) {
+      // biome-ignore lint/suspicious/noAssignInExpressions: Vendored
       if ((classValue = toClassValue(inputAtIndex))) {
+        // biome-ignore lint/suspicious/noAssignInExpressions: Vendored
         result && (result += " ");
         result += classValue;
       }
@@ -79,8 +81,8 @@ export function clsx(...inputs: ClassValue[]): string {
 }
 
 function toClassValue(classValue: ClassValue): string {
-  let arrayIndex;
-  let key;
+  let arrayIndex: any;
+  let key: any;
   let result = "";
 
   /* istanbul ignore next -- @preserve: This never gets hit, but I don't want to change the code. */
@@ -96,7 +98,9 @@ function toClassValue(classValue: ClassValue): string {
 
       for (arrayIndex = 0; arrayIndex < valueLength; arrayIndex++) {
         if (classValue[arrayIndex]) {
+          // biome-ignore lint/suspicious/noAssignInExpressions: Vendored
           if ((key = toClassValue(classValue[arrayIndex]))) {
+            // biome-ignore lint/suspicious/noAssignInExpressions: Vendored
             result && (result += " ");
             result += key;
           }
@@ -105,6 +109,7 @@ function toClassValue(classValue: ClassValue): string {
     } else {
       for (key in classValue) {
         if (classValue[key]) {
+          // biome-ignore lint/suspicious/noAssignInExpressions: Vendored
           result && (result += " ");
           result += key;
         }

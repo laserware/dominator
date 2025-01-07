@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { render, selectorForNonExistent } from "../../testing.ts";
 import { elementExists } from "../elementExists.ts";
 

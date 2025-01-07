@@ -61,7 +61,7 @@ export function removeCssVar<TN extends TagName = "*">(
   name: CssVarName,
   target: Target<TN> | null = document.documentElement,
 ): ElementOf<TN> {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot remove CSS variable ${name}`);
 
   removeSingleCssVar(element, name);
@@ -134,7 +134,7 @@ export function removeCssVars<TN extends TagName = "*">(
   names: CssVarName[],
   target: Target<TN> | null = document.documentElement,
 ): ElementOf<TN> {
-  // prettier-ignore
+  // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot remove CSS variables ${formatForError(names)}`);
 
   for (const name of names) {
@@ -148,8 +148,7 @@ function removeSingleCssVar(element: Element, name: CssVarName): void {
   try {
     cast<HTMLElement>(element).style.removeProperty(name);
   } catch (err: any) {
-    /* istanbul ignore next -- @preserve: This will probably never get hit, but I'm hedging my bets. */
-    // prettier-ignore
+    // biome-ignore format:
     throw new InvalidCssVarError(`Cannot remove CSS variable ${name}: ${err.message}`);
   }
 }

@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { entriesOf } from "@laserware/arcade";
 
 import { render, selectorForNonExistent } from "../../testing.ts";
@@ -39,7 +41,7 @@ describe("within hasDataset", () => {
     });
 
     it("returns false if the specified attribute does not exist on the target", () => {
-      const element = render(`<button>Test</button>`);
+      const element = render("<button>Test</button>");
 
       expect(hasDatasetEntry(element, "invalid")).toBeFalsy();
       expect(hasDatasetEntry(element, "data-invalid")).toBeFalsy();
@@ -61,7 +63,7 @@ describe("within hasDataset", () => {
 
   describe("the hasAllDatasetEntries function", () => {
     it("returns true if all specified dataset keys exist on the target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button data-name="button" data-type="submit" data-big>Test</button>`);
 
       const search = ["name", "type", "big"];
@@ -71,7 +73,7 @@ describe("within hasDataset", () => {
     });
 
     it("returns true if all specified dataset entries match search filter on the target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button data-name="button" data-type="submit" data-big>Test</button>`);
 
       const search = { name: "button", type: "submit", big: null };
@@ -81,7 +83,7 @@ describe("within hasDataset", () => {
     });
 
     it("returns false if one of the specified dataset keys do not exist on the target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button data-name="button" data-type="submit" data-big>Test</button>`);
 
       const search = ["name", "type", "big", "missing"];
@@ -91,7 +93,7 @@ describe("within hasDataset", () => {
     });
 
     it("returns false if any of the specified dataset entries search filters do not match the target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button data-name="button" data-type="submit" data-big>Test</button>`);
 
       const search = {
@@ -114,7 +116,7 @@ describe("within hasDataset", () => {
 
   describe("the hasSomeDatasetEntries function", () => {
     it("returns true if some of the specified attributes exist on the target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button data-name="button" data-type="submit" data-big>Test</button>`);
 
       const search = ["name", "type", "missing"];
@@ -124,7 +126,7 @@ describe("within hasDataset", () => {
     });
 
     it("returns true if some of the specified attributes match search filter on the target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button data-name="button" data-type="submit" data-big>Test</button>`);
 
       expect(hasSomeDatasetEntries(element, { name: "button" })).toBeTruthy();
@@ -132,7 +134,7 @@ describe("within hasDataset", () => {
     });
 
     it("returns false if none of the specified attributes exist on the target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button data-name="button" data-type="submit" data-big>Test</button>`);
 
       const search = ["missing", "invalid"];
@@ -142,7 +144,7 @@ describe("within hasDataset", () => {
     });
 
     it("returns false if all of the specified attributes search filters do not match the target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button data-name="button" data-type="submit" data-big>Test</button>`);
 
       const search = {

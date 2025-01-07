@@ -1,9 +1,11 @@
+import { describe, expect, it } from "bun:test";
+
 import { render } from "../../testing.ts";
 import { listToArray } from "../listToArray.ts";
 
 describe("the listToArray function", () => {
   it("converts a NodeList to an array", () => {
-    render(`<div><span>1</span><span>2</span></div>`);
+    render("<div><span>1</span><span>2</span></div>");
 
     const result = listToArray(document.querySelectorAll("span"));
 
@@ -14,7 +16,6 @@ describe("the listToArray function", () => {
   it("converts an HTMLCollection to an array", () => {
     render(`<div><span class="child">1</span><span class="child">2</span></div>`);
 
-    // eslint-disable-next-line unicorn/prefer-query-selector
     const result = listToArray(document.getElementsByClassName("child"));
 
     expect(result).toHaveLength(2);

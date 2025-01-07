@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+
 import { render } from "../../testing.ts";
 import { hasAllCssVars, hasCssVar, hasSomeCssVars } from "../hasCssVars.ts";
 import { removeCssVar, removeCssVars } from "../removeCssVars.ts";
@@ -68,7 +70,7 @@ describe("within hasCssVars", () => {
 
   describe("the hasAllCssVars function", () => {
     it("returns true if all specified CSS variables exist on the target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button style="--color-bg: blue; --font-weight: 200; --is-big: true;">Test</button>`);
 
       const result = hasAllCssVars(["--color-bg", "--font-weight", "--is-big"], element);
@@ -87,7 +89,7 @@ describe("within hasCssVars", () => {
     });
 
     it("returns true if all specified CSS variables match search filter on the target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button style="--color-bg: blue; --font-weight: 200; --is-big: true;">Test</button>`);
 
       const result = hasAllCssVars(
@@ -103,7 +105,7 @@ describe("within hasCssVars", () => {
     });
 
     it("returns false if one of the specified CSS variables do not exist on the target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button style="--color-bg: blue; --font-weight: 200; --is-big: true;">Test</button>`);
 
       const result = hasAllCssVars(
@@ -135,7 +137,7 @@ describe("within hasCssVars", () => {
 
   describe("the hasSomeCssVars function", () => {
     it("returns true if some of the specified CSS variables exist on the target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button style="--color-bg: blue; --font-weight: 200; --is-big: true;">Test</button>`);
 
       const result = hasSomeCssVars(["--color-bg", "--font-weight", "--missing"], element);
@@ -154,7 +156,7 @@ describe("within hasCssVars", () => {
     });
 
     it("returns true if some of the specified CSS variables match search filter on the target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button style="--color-bg: blue; --font-weight: 200; --is-big: true;">Test</button>`);
 
       const result = hasSomeCssVars({ "--color-bg": "blue" }, element);
@@ -163,7 +165,7 @@ describe("within hasCssVars", () => {
     });
 
     it("returns false if none of the specified CSS variables exist on the target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button style="--color-bg: blue; --font-weight: 200; --is-big: true;">Test</button>`);
 
       const result = hasSomeCssVars(["--missing", "--invalid"], element);
@@ -182,7 +184,7 @@ describe("within hasCssVars", () => {
     });
 
     it("returns false if all of the specified CSS variables search filters do not match the target", () => {
-      // prettier-ignore
+      // biome-ignore format:
       const element = render(`<button style="--color-bg: blue; --font-weight: 200; --is-big: true;">Test</button>`);
 
       const result = hasSomeCssVars(
