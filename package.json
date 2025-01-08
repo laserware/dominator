@@ -46,7 +46,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@laserware/arcade": "^3.13.0"
+    "@laserware/arcade": "^3.13.2"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
