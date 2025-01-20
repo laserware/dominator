@@ -10,7 +10,6 @@ export function isElementLike(value: unknown): value is ElementLike {
     value instanceof Document ||
     value instanceof Element ||
     value instanceof EventTarget ||
-    value instanceof Element ||
     value instanceof HTMLElement ||
     value instanceof SVGElement ||
     value instanceof Node

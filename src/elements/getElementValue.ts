@@ -1,4 +1,4 @@
-import { cast } from "@laserware/arcade";
+import { cast, isNotNil } from "@laserware/arcade";
 
 import { toElementOrThrow } from "./toElement.ts";
 import type { Target } from "./types.ts";
@@ -25,9 +25,13 @@ export function getElementValue<T>(target: Target | null): T {
   // Note that the order of these checks is important. Calling `valueAsNumber` on
   // date input will return the Unix epoch, which is _not_ what we want to return,
   // so we do the date check first:
-  const dateValue = element.valueAsDate;
-  if (dateValue !== null) {
-    return cast<T>(new Date(dateValue));
+  try {
+    const dateValue = element.valueAsDate;
+    if (isNotNil(dateValue)) {
+      return cast<T>(new Date(dateValue));
+    }
+  } catch {
+    // Do nothing.
   }
 
   const numericValue = element.valueAsNumber;

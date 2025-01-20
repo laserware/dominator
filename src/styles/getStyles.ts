@@ -1,7 +1,6 @@
 import { type KeysOf, type WithUndefinedValues, cast } from "@laserware/arcade";
 
-import { InvalidElementError } from "../elements/InvalidElementError.ts";
-import { toElement } from "../elements/toElement.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -49,10 +48,7 @@ export function getStyle<V extends StyleValue = string>(
   target: Target | null,
   key: StyleKey,
 ): V | undefined {
-  const element = toElement(target);
-  if (element === null || !("style" in element)) {
-    throw new InvalidElementError(`Cannot get style for ${key}`);
-  }
+  const element = toElementOrThrow(target, `Cannot get style for ${key}`);
 
   return getSingleStyle<V>(element, key);
 }
@@ -128,11 +124,8 @@ export function getStyles<V extends Styles = Styles>(
   target: Target | null,
   keys: KeysOf<V>,
 ): WithUndefinedValues<V> {
-  const element = toElement(target);
-  if (element === null || !("style" in element)) {
-    // biome-ignore format:
-    throw new InvalidElementError(`Cannot get styles ${formatForError(keys)}`);
-  }
+  // biome-ignore format:
+  const element = toElementOrThrow(target, `Cannot get styles ${formatForError(keys)}`);
 
   const styles: Record<string, StyleValue | undefined> = {};
 

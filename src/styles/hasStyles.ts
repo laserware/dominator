@@ -1,7 +1,6 @@
 import { isNil } from "@laserware/arcade";
 
-import { InvalidElementError } from "../elements/InvalidElementError.ts";
-import { toElement } from "../elements/toElement.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { formatForError } from "../internal/formatForError.ts";
 import { hasAllProperties, hasSomeProperties } from "../internal/search.ts";
@@ -35,10 +34,7 @@ export function hasStyle(
   key: StyleKey,
   value?: StyleValue,
 ): boolean {
-  const element = toElement(target);
-  if (element === null || !("style" in element)) {
-    throw new InvalidElementError(`Cannot check for style ${key}`);
-  }
+  const element = toElementOrThrow(target, `Cannot check for style ${key}`);
 
   return hasSingleStyle(element, key, value);
 }
@@ -58,11 +54,8 @@ export function hasAllStyles(
   target: Target | null,
   search: StylesSearch,
 ): boolean {
-  const element = toElement(target);
-  if (element === null || !("style" in element)) {
-    // biome-ignore format:
-    throw new InvalidElementError(`Cannot check for all styles ${formatForError(search)}`);
-  }
+  // biome-ignore format:
+  const element = toElementOrThrow(target, `Cannot check for all styles ${formatForError(search)}`);
 
   return hasAllProperties(element, search, hasSingleStyle);
 }
@@ -82,11 +75,8 @@ export function hasSomeStyles(
   target: Target | null,
   search: StylesSearch,
 ): boolean {
-  const element = toElement(target);
-  if (element === null || !("style" in element)) {
-    // biome-ignore format:
-    throw new InvalidElementError(`Cannot check for some styles ${formatForError(search)}`);
-  }
+  // biome-ignore format:
+  const element = toElementOrThrow(target, `Cannot check for some styles ${formatForError(search)}`);
 
   return hasSomeProperties(element, search, hasSingleStyle);
 }

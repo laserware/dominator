@@ -2,8 +2,7 @@ import { cast } from "@laserware/arcade";
 
 import { isCssVarName } from "../css/isCssVarName.ts";
 import type { ElementOf, TagName } from "../dom.ts";
-import { InvalidElementError } from "../elements/InvalidElementError.ts";
-import { toElement } from "../elements/toElement.ts";
+import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -27,10 +26,8 @@ export function setStyle<TN extends TagName = "*">(
   key: StyleKey,
   value: StyleValue,
 ): ElementOf<TN> {
-  const element = toElement(target);
-  if (element === null || !("style" in element)) {
-    throw new InvalidElementError(`Cannot set style for ${key}`);
-  }
+  // biome-ignore format:
+  const element = toElementOrThrow(target, `Cannot set style ${formatForError(key)}`);
 
   setSingleStyle(element, key, value);
 
@@ -55,11 +52,8 @@ export function setStyles<TN extends TagName = "*">(
   target: Target | null,
   styles: Styles,
 ): ElementOf<TN> {
-  const element = toElement(target);
-  if (element === null || !("style" in element)) {
-    // biome-ignore format:
-    throw new InvalidElementError(`Cannot set styles ${formatForError(styles)}`);
-  }
+  // biome-ignore format:
+  const element = toElementOrThrow(target, `Cannot set styles ${formatForError(styles)}`);
 
   for (const key of Object.keys(styles)) {
     setSingleStyle(element, key, styles[key as StyleKey] as StyleValue);

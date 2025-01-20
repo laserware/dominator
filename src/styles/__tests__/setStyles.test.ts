@@ -39,6 +39,14 @@ describe("within setStyles", () => {
       expect(getCssVar("--color-bg", result)).toBe("blue");
     });
 
+    it("sets style on an element that hasn't been added to the DOM yet", () => {
+      const element = document.createElement("div");
+
+      const result = setStyle(element, "color", "blue")!;
+
+      expect(result.style.color).toBe("blue");
+    });
+
     it("throws an error if the target does not exist", () => {
       expect(() => {
         setStyle(selectorForNonExistent, "color", "green");
@@ -50,10 +58,16 @@ describe("within setStyles", () => {
     it("sets the styles on a target when a styles object is specified", () => {
       const element = render("<div>Test</div>");
 
-      const result = setStyles(element, {
-        color: "green",
-        fontSize: "24px",
-      })!;
+      const result = setStyles(element, { color: "green", fontSize: "24px" })!;
+
+      expect(result.style.color).toBe("green");
+      expect(result.style.fontSize).toBe("24px");
+    });
+
+    it("sets styles on an element that hasn't been added to the DOM yet", () => {
+      const element = document.createElement("div");
+
+      const result = setStyles(element, { color: "green", fontSize: "24px" })!;
 
       expect(result.style.color).toBe("green");
       expect(result.style.fontSize).toBe("24px");
