@@ -1,6 +1,6 @@
 {
   "name": "@laserware/dominator",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "Better ergonomics for working with the DOM and TypeScript.",
   "author": "Mike Rourke <mike.w.rourke@gmail.com> (https://mikerourke.dev/)",
   "license": "MIT",
