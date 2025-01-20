@@ -20,6 +20,57 @@ describe("the getElementValue function", () => {
     expect(result).toBe("22");
   });
 
+  it("returns a numeric value for a select input", () => {
+    // biome-ignore format:
+    const element = render(`
+      <select>
+        <option value="1" selected>1</option>
+        <option value="2">2</option>
+     </select>
+    `);
+
+    const result = getElementValue(element);
+
+    expect(result).toBe(1);
+  });
+
+  it("returns a string value for a select input", () => {
+    // biome-ignore format:
+    const element = render(`
+      <select>
+        <option value="a" selected>A</option>
+        <option value="b">B</option>
+     </select>
+    `);
+
+    const result = getElementValue(element);
+
+    expect(result).toBe("a");
+  });
+
+  it("returns a boolean value for a select input", () => {
+    // biome-ignore format:
+    const element = render(`
+      <select>
+        <option value="true" selected>True</option>
+        <option value="false">False</option>
+     </select>
+    `);
+
+    const result = getElementValue(element);
+
+    expect(result).toBe(true);
+  });
+
+  it("returns the first option for a select input with nothing selected", () => {
+    // biome-ignore format:
+    const element = render(`<select><option value="a">A</option><option value="b">B</option></select>`);
+
+    const result = getElementValue(element);
+
+    expect(result).toBe("a");
+  });
+
   it("returns a Date for a date input", () => {
     const element = render(`<input type="date" value="2024-01-01" />`);
 

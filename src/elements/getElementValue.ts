@@ -1,4 +1,6 @@
 import { cast, isNotNil } from "@laserware/arcade";
+import { parseDOMValue } from "../internal/domValues.ts";
+import { isElementType } from "./isElementType.ts";
 
 import { toElementOrThrow } from "./toElement.ts";
 import type { Target } from "./types.ts";
@@ -9,6 +11,8 @@ import type { Target } from "./types.ts";
  * returns a valid number, a Date if the [`valueAsDate` property](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/valueAsDate)
  * is a valid [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) (not `null`),
  * a boolean if the input is a `checkbox` or `radio` type, otherwise is returned as a `string`.
+ *
+ * If the element is a `select` element, it returns an empty string
  *
  * @template T Type of the value that gets returned.
  *
@@ -21,6 +25,13 @@ import type { Target } from "./types.ts";
 export function getElementValue<T>(target: Target | null): T {
   // biome-ignore format:
   const element = toElementOrThrow<"input">(target, "Cannot get value for element");
+
+  if (isElementType(element, "select")) {
+    const value =
+      element.value === "" ? element.value : parseDOMValue(element.value);
+
+    return cast<T>(value);
+  }
 
   // Note that the order of these checks is important. Calling `valueAsNumber` on
   // date input will return the Unix epoch, which is _not_ what we want to return,
