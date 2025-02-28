@@ -21,17 +21,17 @@ import type { StyleKey, StyleValue, Styles } from "./types.ts";
  *
  * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function setStyle<TN extends TagName = "*">(
+export function setStyle<E extends Element = HTMLElement>(
   target: Target | null,
   key: StyleKey,
   value: StyleValue,
-): ElementOf<TN> {
+): E {
   // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot set style ${formatForError(key)}`);
 
   setSingleStyle(element, key, value);
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }
 
 /**
@@ -39,7 +39,7 @@ export function setStyle<TN extends TagName = "*">(
  * object with key of style property name and value of the corresponding property
  * value.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param styles Object with style property values keyed by name.
@@ -48,10 +48,10 @@ export function setStyle<TN extends TagName = "*">(
  *
  * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function setStyles<TN extends TagName = "*">(
+export function setStyles<E extends Element = HTMLElement>(
   target: Target | null,
   styles: Styles,
-): ElementOf<TN> {
+): E {
   // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot set styles ${formatForError(styles)}`);
 
@@ -59,7 +59,7 @@ export function setStyles<TN extends TagName = "*">(
     setSingleStyle(element, key, styles[key as StyleKey] as StyleValue);
   }
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }
 
 function setSingleStyle(

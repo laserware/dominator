@@ -1,7 +1,5 @@
 import { cast } from "@laserware/arcade";
 
-import type { ElementOf, TagName } from "../dom.ts";
-
 import { toElement } from "./toElement.ts";
 import type { Target } from "./types.ts";
 
@@ -10,7 +8,7 @@ import type { Target } from "./types.ts";
  *
  * @expand
  */
-export type FocusOptions<TN extends TagName> = {
+export type FocusOptions<E extends Element> = {
   /** Delay (in milliseconds) to wait until attempting to set focus. */
   delay?: number;
 
@@ -25,7 +23,7 @@ export type FocusOptions<TN extends TagName> = {
   preventScroll?: boolean;
 
   /** Optional callback that fires after trying to set focus. */
-  onDone?(element: ElementOf<TN>): void;
+  onDone?(element: E): void;
 };
 
 /**
@@ -38,12 +36,12 @@ export type FocusOptions<TN extends TagName> = {
  * @param target Element, EventTarget, or CSS selector.
  * @param [options] Options for setting focus.
  */
-export function focusElement<TN extends TagName = "*">(
+export function focusElement<E extends Element = HTMLElement>(
   target: Target | null | undefined,
-  options?: FocusOptions<TN>,
+  options?: FocusOptions<E>,
 ): void {
   const focusCallback = (): void => {
-    const element = toElement(target, options?.parent);
+    const element = toElement<HTMLInputElement>(target, options?.parent);
 
     if (element === null) {
       return;
@@ -51,7 +49,7 @@ export function focusElement<TN extends TagName = "*">(
 
     element.focus({ preventScroll: options?.preventScroll ?? false });
 
-    options?.onDone?.(cast<ElementOf<TN>>(element));
+    options?.onDone?.(cast<E>(element));
   };
 
   setTimeout(focusCallback, options?.delay ?? 0);

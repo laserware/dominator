@@ -24,7 +24,7 @@ import type {
  * @template EN Name of the Event that `listener` is associated with.
  */
 export type EventDescriptorFor<
-  TN extends TagName,
+  TN extends TagName | string,
   EN extends EventNameFor<TN>,
 > = {
   /**
@@ -47,7 +47,7 @@ export type EventDescriptorFor<
  * @template EN Name of the Event that the listener or  is associated with.
  */
 export type EventListenerOrDescriptorFor<
-  TN extends TagName,
+  TN extends TagName | string,
   EN extends EventNameFor<TN>,
 > = EventListenerFor<TN, EN> | EventDescriptorFor<TN, EN>;
 
@@ -57,7 +57,9 @@ export type EventListenerOrDescriptorFor<
  *
  * @template TN Tag name of the associated Element.
  */
-export type EventListenersOrDescriptorsFor<TN extends TagName = "*"> = {
+export type EventListenersOrDescriptorsFor<
+  TN extends TagName | string = string,
+> = {
   [EN in EventNameFor<TN>]?: EventListenerOrDescriptorFor<TN, EN>;
 };
 
@@ -68,11 +70,11 @@ export type EventListenersOrDescriptorsFor<TN extends TagName = "*"> = {
  *
  * @template TN Tag name for the created element.
  */
-export type CreateElementOptions<TN extends TagName> = Partial<
+export type CreateElementOptions<TN extends TagName | string> = Partial<
   Omit<ElementPropertiesOf<TN>, "attributes" | "dataset">
 > & {
   /** Attributes to set on element. */
-  attributes?: Attributes<TN>;
+  attributes?: Attributes<ElementOf<TN>>;
 
   /** CSS variables to set on element. */
   cssVars?: CssVars;
@@ -94,7 +96,7 @@ export type CreateElementOptions<TN extends TagName> = Partial<
   styles?: Styles;
 };
 
-function isCreateElementOptions<TN extends TagName>(
+function isCreateElementOptions<TN extends TagName | string>(
   value: unknown,
 ): value is CreateElementOptions<TN> {
   return !isElementChild(value) && isPlainObject(value);
@@ -121,7 +123,7 @@ function isElementChild(value: unknown): value is ElementChild {
  * `options` are set on the element. Optionally specify `children` to append
  * to the newly created element.
  *
- * @template TN Tag name of the created element.
+ * @template E Type of the created Element.
  *
  * @param tagName Tag name of the HTML/SVG element to create (e.g. `div`, `svg`, etc.).
  * @param options Optional attributes, CSS variables, dataset entries, and styles
@@ -192,7 +194,7 @@ function isElementChild(value: unknown): value is ElementChild {
  * </body>
  * ```
  */
-export function createElement<TN extends TagName>(
+export function createElement<TN extends TagName | string = string>(
   tagName: TN,
   options: CreateElementOptions<TN>,
   ...children: ElementChild[]
@@ -205,7 +207,7 @@ export function createElement<TN extends TagName>(
  * > This is useful for creating an element with no properties and appending
  * > children to it.
  *
- * @template TN Tag name of the created element.
+ * @template E Type of the created Element.
  *
  * @param tagName Tag name of the HTML/SVG element to create (e.g. `div`, `svg`, etc.).
  * @param [children] Optional children to append to created element.
@@ -235,12 +237,12 @@ export function createElement<TN extends TagName>(
  * </body>
  * ```
  */
-export function createElement<TN extends TagName>(
+export function createElement<TN extends TagName | string>(
   tagName: TN,
   ...children: ElementChild[]
 ): ElementOf<TN>;
 
-export function createElement<TN extends TagName>(
+export function createElement<TN extends TagName | string>(
   tagName: TN,
   childOrOptions?: CreateElementOptions<TN> | ElementChild,
   ...children: ElementChild[]
@@ -249,7 +251,7 @@ export function createElement<TN extends TagName>(
 
   if (isCreateElementOptions(childOrOptions)) {
     const { attributes, cssVars, dataset, on, styles, ...properties } =
-      childOrOptions;
+      childOrOptions as any;
 
     if (isNotNil(attributes)) {
       setAttributes(element, attributes);
@@ -306,7 +308,7 @@ export function createElement<TN extends TagName>(
  * @param element Element to attach events to.
  * @param eventsDict Object with key of event name and value of event listener.
  */
-function addEventListeners<TN extends TagName>(
+function addEventListeners<TN extends TagName | string>(
   element: ElementOf<TN>,
   eventsDict: EventListenersOrDescriptorsFor<TN>,
 ): void {
@@ -336,7 +338,7 @@ function addEventListeners<TN extends TagName>(
   }
 }
 
-function isEventDescriptor<TN extends TagName>(
+function isEventDescriptor<TN extends TagName | string>(
   value: unknown,
 ): value is EventDescriptorFor<TN, any> {
   return isPlainObject(value) && "listener" in value;

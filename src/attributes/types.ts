@@ -1,33 +1,29 @@
 import type {
   AllAttributes,
   HTMLElementAttributes,
-  HTMLElementTagName,
   SVGElementAttributes,
-  SVGElementTagName,
-  TagName,
 } from "../dom.ts";
 
 /**
  * Valid attribute names for the element of tag name `TN`.
  *
- * @template TN TN extends TagName = "*" with corresponding attribute names.
+ * @template E Element with corresponding attribute names.
  */
-export type AttributeNameForElement<TN extends TagName> =
-  TN extends HTMLElementTagName
-    ? Extract<keyof HTMLElementAttributes<TN>, string>
-    : TN extends SVGElementTagName
-      ? Extract<keyof SVGElementAttributes, string>
-      : TN extends "*"
-        ? Extract<keyof AllAttributes, string>
-        : never;
+export type AttributeNameForElement<E extends Element> = E extends HTMLElement
+  ? Extract<keyof HTMLElementAttributes<E>, string>
+  : E extends SVGElement
+    ? Extract<keyof SVGElementAttributes, string>
+    : E extends Element
+      ? Extract<keyof AllAttributes, string>
+      : never;
 
 /**
  * Valid type for HTML/SVG attribute name.
  *
- * @template TN Tag name of element with corresponding attribute names.
+ * @template E Element with corresponding attribute names.
  */
-export type AttributeName<TN extends TagName = "*"> =
-  | AttributeNameForElement<TN>
+export type AttributeName<E extends Element = HTMLElement> =
+  | AttributeNameForElement<E>
   | string;
 
 /**
@@ -51,10 +47,10 @@ export type AttributeValue =
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
  * Some of the values may be `null` or `undefined`.
  *
- * @template TN Tag name of element with corresponding attributes.
+ * @template E Element with corresponding attributes.
  */
-export type Attributes<TN extends TagName = "*"> = Record<
-  AttributeName<TN>,
+export type Attributes<E extends Element = HTMLElement> = Record<
+  AttributeName<E>,
   AttributeValue | null | undefined
 >;
 

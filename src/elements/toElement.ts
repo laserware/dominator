@@ -1,7 +1,5 @@
 import { cast, isNil } from "@laserware/arcade";
 
-import type { ElementOf, TagName } from "../dom.ts";
-
 import { InvalidElementError } from "./InvalidElementError.ts";
 import { findElement } from "./findElement.ts";
 import { isElementLike } from "./isElementLike.ts";
@@ -23,7 +21,7 @@ import type { Target } from "./types.ts";
  * `target` is a CSS selector and we want to limit the search to the specified
  * parent.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param parent Optional Element, EventTarget, or CSS selector for parent.
@@ -52,22 +50,22 @@ import type { Target } from "./types.ts";
  * }
  * ```
  */
-export function toElement<TN extends TagName = "*">(
+export function toElement<E extends Element = HTMLElement>(
   target: Target | null | undefined,
   parent?: Target | null | undefined,
-): ElementOf<TN> | null {
+): E | null {
   if (isNil(target)) {
     return null;
   }
 
   if (isElementLike(target)) {
-    return cast<ElementOf<TN>>(target);
+    return cast<E>(target);
   }
 
   let validParent: Document | HTMLElement | null = null;
 
   if (typeof parent === "string") {
-    validParent = findElement<"*">(parent);
+    validParent = findElement<any>(parent);
   }
 
   if (isNil(parent)) {
@@ -83,22 +81,22 @@ export function toElement<TN extends TagName = "*">(
  *
  * @internal
  *
- * @template TN Tag name specified `target`.
+ * @template E Element type of specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param error Error message to include with the error.
  *
  * @returns Element representation of the specified `target`.
  */
-export function toElementOrThrow<TN extends TagName = "*">(
-  target: Target<TN> | null,
+export function toElementOrThrow<E extends Element = HTMLElement>(
+  target: Target | null,
   error: string,
-): ElementOf<TN> {
+): E {
   const element = toElement(target);
 
   if (element === null) {
     throw new InvalidElementError(error);
   }
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }

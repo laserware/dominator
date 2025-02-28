@@ -17,7 +17,7 @@ import type { ElementLike, FindOptions } from "./types.ts";
  * Query the DOM for an element matching the specified CSS `selector` in the
  * optionally specified `parent`.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param selector CSS selector string to find the element.
  * @param [parent] Optional Element or EventTarget for parent.
@@ -26,16 +26,16 @@ import type { ElementLike, FindOptions } from "./types.ts";
  *
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if the specified `selector` is invalid.
  */
-export function findElement<TN extends TagName = "*">(
+export function findElement<E extends Element = HTMLElement>(
   selector: CssSelector,
   parent?: ElementLike | null,
-): ElementOf<TN> | null;
+): E | null;
 
 /**
  * Query the DOM to find the element using one of the specified `options` in the
  * optionally specified `parent`.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param options Options for finding the element.
  *
@@ -44,14 +44,14 @@ export function findElement<TN extends TagName = "*">(
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if `withSelector` in the specified `options` is invalid.
  * @throws {TypeError} [TypeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError) if the specified `options` are invalid.
  */
-export function findElement<TN extends TagName = "*">(
+export function findElement<E extends Element = HTMLElement>(
   options: FindOptions,
-): ElementOf<TN> | null;
+): E | null;
 
-export function findElement<TN extends TagName = "*">(
+export function findElement<E extends Element = HTMLElement>(
   selectorOrOptions: FindOptions | CssSelector,
   parent?: ElementLike | null,
-): ElementOf<TN> | null {
+): E | null {
   let selector: string;
   let validParent: ElementLike = parent ?? document;
 
@@ -70,5 +70,5 @@ export function findElement<TN extends TagName = "*">(
 
   const element = toElement(validParent)?.querySelector(selector);
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }

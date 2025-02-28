@@ -91,7 +91,7 @@ export function selectDatasetEntry(
  */
 export function selectDatasetEntries(
   dataset: Dataset,
-  tagName?: TagName,
+  tagName?: TagName | string,
 ): CssSelector {
   let selector = "";
 

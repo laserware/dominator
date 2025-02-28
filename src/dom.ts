@@ -57,22 +57,25 @@ export type HTMLElementTagName = keyof HTMLElementTagNameMap;
 export type SVGElementTagName = keyof SVGElementTagNameMap;
 
 /**
- * Tag name for any HTML or SVG element. Use `"*"` to represent any element.
+ * Tag name for any HTML or SVG element.
  */
-export type TagName = HTMLElementTagName | SVGElementTagName | "*";
+export type TagName = HTMLElementTagName | SVGElementTagName;
 
 /**
  * Element type associated with the specified tag name.
  *
  * @template TN Tag name of the corresponding element.
  */
-export type ElementOf<TN extends TagName> = TN extends HTMLElementTagName
-  ? HTMLElementTagNameMap[TN]
-  : TN extends SVGElementTagName
-    ? SVGElementTagNameMap[TN]
-    : TN extends "*"
-      ? HTMLElement
-      : never;
+export type ElementOf<TN extends TagName | string> =
+  TN extends HTMLElementTagName
+    ? HTMLElementTagNameMap[TN]
+    : TN extends SVGElementTagName
+      ? SVGElementTagNameMap[TN]
+      : TN extends string
+        ? Element
+        : never;
+
+export type AnyElementEventMap = ElementEventMap & GlobalEventHandlersEventMap;
 
 /**
  * All the attributes from the [WAI-ARIA 1.1 Specification](https://www.w3.org/TR/wai-aria-1.1/).
@@ -1818,94 +1821,94 @@ export type SVGElementAttributes = SVGAttributes;
  *
  * @type E Type of HTMLElement for associated attributes.
  */
-export type HTMLElementAttributes<TN extends TagName> =
-  TN extends "a"
+export type HTMLElementAttributes<E extends HTMLElement> =
+  E extends HTMLAnchorElement
   ? HTMLAnchorAttributes
-  : TN extends "area"
+  : E extends HTMLAreaElement
   ? HTMLAreaAttributes
-  : TN extends "audio"
+  : E extends HTMLAudioElement
   ? HTMLAudioAttributes
-  : TN extends "base"
+  : E extends HTMLBaseElement
   ? HTMLBaseAttributes
-  : TN extends "button"
+  : E extends HTMLButtonElement
   ? HTMLButtonAttributes
-  : TN extends "canvas"
+  : E extends HTMLCanvasElement
   ? HTMLCanvasAttributes
-  : TN extends "col"
+  : E extends HTMLTableColElement
   ? HTMLTableColAttributes
-  : TN extends "colgroup"
+  : E extends HTMLTableColElement
   ? HTMLTableColAttributes
-  : TN extends "data"
+  : E extends HTMLDataElement
   ? HTMLDataAttributes
-  : TN extends "details"
+  : E extends HTMLDetailsElement
   ? HTMLDetailsAttributes
-  : TN extends "dialog"
+  : E extends HTMLDialogElement
   ? HTMLDialogAttributes
-  : TN extends "embed"
+  : E extends HTMLEmbedElement
   ? HTMLEmbedAttributes
-  : TN extends "fieldset"
+  : E extends HTMLFieldSetElement
   ? HTMLFieldSetAttributes
-  : TN extends "form"
+  : E extends HTMLFormElement
   ? HTMLFormAttributes
-  : TN extends "html"
+  : E extends HTMLHtmlElement
   ? HTMLHtmlAttributes
-  : TN extends "iframe"
+  : E extends HTMLIFrameElement
   ? HTMLIFrameAttributes
-  : TN extends "img"
+  : E extends HTMLImageElement
   ? HTMLImageAttributes
-  : TN extends "label"
+  : E extends HTMLLabelElement
   ? HTMLLabelAttributes
-  : TN extends "li"
+  : E extends HTMLLIElement
   ? HTMLLIAttributes
-  : TN extends "link"
+  : E extends HTMLLinkElement
   ? HTMLLinkAttributes
-  : TN extends "map"
+  : E extends HTMLMapElement
   ? HTMLMapAttributes
-  : TN extends "menu"
+  : E extends HTMLMenuElement
   ? HTMLMenuAttributes
-  : TN extends "meta"
+  : E extends HTMLMetaElement
   ? HTMLMetaAttributes
-  : TN extends "meter"
+  : E extends HTMLMeterElement
   ? HTMLMeterAttributes
-  : TN extends "object"
+  : E extends HTMLObjectElement
   ? HTMLObjectAttributes
-  : TN extends "ol"
+  : E extends HTMLOListElement
   ? HTMLOListAttributes
-  : TN extends "optgroup"
+  : E extends HTMLOptGroupElement
   ? HTMLOptGroupAttributes
-  : TN extends "option"
+  : E extends HTMLOptionElement
   ? HTMLOptionAttributes
-  : TN extends "output"
+  : E extends HTMLOutputElement
   ? HTMLOutputAttributes
-  : TN extends "param"
+  : E extends HTMLParamElement
   ? HTMLParamAttributes
-  : TN extends "progress"
+  : E extends HTMLProgressElement
   ? HTMLProgressAttributes
-  : TN extends "blockquote"
+  : E extends HTMLQuoteElement
   ? HTMLQuoteAttributes
-  : TN extends "q"
+  : E extends HTMLQuoteElement
   ? HTMLQuoteAttributes
-  : TN extends "slot"
+  : E extends HTMLSlotElement
   ? HTMLSlotAttributes
-  : TN extends "script"
+  : E extends HTMLScriptElement
   ? HTMLScriptAttributes
-  : TN extends "source"
+  : E extends HTMLSourceElement
   ? HTMLSourceAttributes
-  : TN extends "style"
+  : E extends HTMLStyleElement
   ? HTMLStyleAttributes
-  : TN extends "table"
+  : E extends HTMLTableElement
   ? HTMLTableAttributes
-  : TN extends "template"
+  : E extends HTMLTemplateElement
   ? HTMLTemplateAttributes
-  : TN extends "td"
+  : E extends HTMLTableCellElement
   ? HTMLTableCellAttributes
-  : TN extends "th"
+  : E extends HTMLTableCellElement
   ? HTMLTableCellAttributes
-  : TN extends "time"
+  : E extends HTMLTimeElement
   ? HTMLTimeAttributes
-  : TN extends "track"
+  : E extends HTMLTrackElement
   ? HTMLTrackAttributes
-  : TN extends "video"
+  : E extends HTMLVideoElement
   ? HTMLVideoAttributes
   : HTMLAttributes;
 

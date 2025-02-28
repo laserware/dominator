@@ -21,7 +21,7 @@ import type { TagName } from "../dom.ts";
  */
 export function selectorWithTag(
   selector: CssSelector,
-  tagName?: TagName,
+  tagName?: TagName | string,
 ): CssSelector {
   if (isNil(tagName)) {
     return selector;

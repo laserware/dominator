@@ -35,7 +35,6 @@ export { listToArray } from "./listToArray.ts";
 export { toElement } from "./toElement.ts";
 export type {
   ElementLike,
-  ElementPropertiesOf,
   EventFor,
   EventListenerFor,
   EventListenerObjectFor,

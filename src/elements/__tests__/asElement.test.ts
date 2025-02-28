@@ -5,9 +5,9 @@ import { asElement } from "../asElement.ts";
 
 describe("the asElement function", () => {
   it("returns the element if target is an instance of Element", () => {
-    const target = render<"div">("<div>Test</div>");
+    const target = render<HTMLDivElement>("<div>Test</div>");
 
-    const result = asElement<"div">(target);
+    const result = asElement<HTMLDivElement>(target);
 
     expect(result).toEqual(target);
     expect(result).toBeInstanceOf(HTMLDivElement);
@@ -15,20 +15,20 @@ describe("the asElement function", () => {
 
   it("throws error if target is null", () => {
     expect(() => {
-      asElement<"div">(null);
+      asElement<HTMLDivElement>(null);
     }).toThrow(/Cannot assert as element/);
   });
 
   it("throws error if target is undefined", () => {
     expect(() => {
-      asElement<"div">(undefined);
+      asElement<HTMLDivElement>(undefined);
     }).toThrow(/Cannot assert as element/);
   });
 
   it("casts the EventTarget to the specified Element type", () => {
-    const target = render<"button">("<button>Click Me</button>");
+    const target = render<HTMLButtonElement>("<button>Click Me</button>");
 
-    const result = asElement<"button">(target);
+    const result = asElement<HTMLButtonElement>(target);
 
     expect(result).toEqual(target);
     expect(result).toBeInstanceOf(HTMLButtonElement);
@@ -37,7 +37,7 @@ describe("the asElement function", () => {
   it("doesn't change the element type, just casts it to the type", () => {
     const target = render("<div>Test</div>");
 
-    const result = asElement<"input">(target);
+    const result = asElement<HTMLInputElement>(target);
 
     expect(result).toBeInstanceOf(HTMLDivElement);
     expect(result.value).toBeUndefined();

@@ -4,7 +4,7 @@ import type { ElementOf, TagName } from "../dom.ts";
 
 import { InvalidElementError } from "./InvalidElementError.ts";
 import { isElementLike } from "./isElementLike.ts";
-import type { ElementLike } from "./types.ts";
+import type { ElementLike, Target } from "./types.ts";
 
 /**
  * Returns an element with tag name `TN` for the specified `target`.
@@ -28,7 +28,7 @@ import type { ElementLike } from "./types.ts";
  * > only available on an `HTMLButtonElement` when the Element or EventTarget you
  * > passed in is an `HTMLDivElement`, you're going to get a runtime error.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param target Element or EventTarget.
  *
@@ -60,11 +60,11 @@ import type { ElementLike } from "./types.ts";
  * }
  * ```
  */
-export function asElement<TN extends TagName = "*">(
-  target: ElementLike<TN> | null | undefined,
-): ElementOf<TN> {
+export function asElement<E extends Element = HTMLElement>(
+  target: Target | null | undefined,
+): E {
   if (isElementLike(target)) {
-    return cast<ElementOf<TN>>(target);
+    return cast<E>(target);
   } else {
     throw new InvalidElementError("Cannot assert as element");
   }
