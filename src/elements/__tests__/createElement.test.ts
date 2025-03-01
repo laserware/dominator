@@ -81,6 +81,7 @@ describe("the createElement function", () => {
         ariaDisabled: "false",
         attributes: {
           "aria-label": "Test",
+          "data-stuff": "Off",
         },
         dataset: {
           stringProperty: "value",

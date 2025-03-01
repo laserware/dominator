@@ -93,7 +93,7 @@ export type EventDescriptorFor<
   /**
    * Callback fired when the event is fired.
    */
-  listener: EventListenerFor<TN, EN>;
+  listener: EventListenerOrEventListenerObjectFor<TN, EN>;
 
   /**
    * Event listener options object. See [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options)
@@ -112,7 +112,7 @@ export type EventDescriptorFor<
 export type EventListenerOrDescriptorFor<
   TN extends TagName | string,
   EN extends EventNameFor<TN>,
-> = EventListenerFor<TN, EN> | EventDescriptorFor<TN, EN>;
+> = EventListenerOrEventListenerObjectFor<TN, EN> | EventDescriptorFor<TN, EN>;
 
 /**
  * Object with key of event name and value of an event listener or
@@ -157,13 +157,13 @@ export type CreateElementOptions<TN extends TagName | string> = Partial<
   namespace?: Namespace;
 
   /** Attributes to set on element. */
-  attributes?: Attributes<ElementOf<TN>>;
+  attributes?: Attributes<ElementOf<TN>> | Record<string, any>;
 
   /** CSS variables to set on element. */
   cssVars?: CssVars;
 
   /** Dataset entries to set on element. */
-  dataset?: Dataset;
+  dataset?: Dataset | Record<string, any>;
 
   /**
    * Event listeners or {@linkcode EventDescriptorFor} objects to set on element.
@@ -407,7 +407,10 @@ function addEventListeners<TN extends TagName | string>(
   for (const eventName of eventNames) {
     const listenerOrDescriptor = eventsDict[eventName]!;
 
-    let eventListener: EventListenerFor<TN, typeof eventName>;
+    let eventListener: EventListenerOrEventListenerObjectFor<
+      TN,
+      typeof eventName
+    >;
 
     let options: AddEventListenerOptions = {};
 
@@ -417,7 +420,7 @@ function addEventListeners<TN extends TagName | string>(
       options = listenerOrDescriptor.options;
     } else {
       // biome-ignore format:
-      eventListener = listenerOrDescriptor as EventListenerFor<TN, typeof eventName>;
+      eventListener = listenerOrDescriptor as EventListenerOrEventListenerObjectFor<TN, typeof eventName>;
     }
 
     element.addEventListener(
