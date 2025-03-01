@@ -1,7 +1,6 @@
 import { cast } from "@laserware/arcade";
 
 import { removeAttribute } from "../attributes/removeAttributes.ts";
-import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -12,7 +11,7 @@ import type { DatasetKey, DatasetPropertyName } from "./types.ts";
 /**
  * Removes the dataset entry with attribute/property name `key` from the `target`.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Dataset property or attribute name for the dataset entry to remove.
@@ -63,23 +62,23 @@ import type { DatasetKey, DatasetPropertyName } from "./types.ts";
  * </div>
  * ```
  */
-export function removeDatasetEntry<TN extends TagName = "*">(
-  target: Target<TN> | null,
+export function removeDatasetEntry<E extends Element = HTMLElement>(
+  target: Target | null,
   key: DatasetPropertyName,
-): ElementOf<TN> {
+): E {
   // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot remove dataset entry for ${key}`);
 
   removeSingleDatasetEntry(element, key);
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }
 
 /**
  * Removes the dataset entries with the attribute/property names `keys` from the
  * `target`.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Array of dataset properties or attribute names to remove.
@@ -129,10 +128,10 @@ export function removeDatasetEntry<TN extends TagName = "*">(
  * </div>
  * ```
  */
-export function removeDatasetEntries<TN extends TagName = "*">(
-  target: Target<TN> | null,
+export function removeDatasetEntries<E extends Element = HTMLElement>(
+  target: Target | null,
   keys: DatasetKey[],
-): ElementOf<TN> {
+): E {
   // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot remove dataset entries ${formatForError(keys)}`);
 
@@ -140,7 +139,7 @@ export function removeDatasetEntries<TN extends TagName = "*">(
     removeSingleDatasetEntry(element, key);
   }
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }
 
 function removeSingleDatasetEntry(element: Element, key: string): void {

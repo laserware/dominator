@@ -1,7 +1,6 @@
 import { cast, isNotNil } from "@laserware/arcade";
 
 import type { AttributeValue } from "../attributes/types.ts";
-import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { parseDOMValue, stringifyDOMValue } from "../internal/domValues.ts";
@@ -34,15 +33,15 @@ export type AnyDatasetShape = Record<string, DatasetValue | null>;
  * See usage examples in {@linkcode wrapDataset}.
  *
  * @template DS The shape of the dataset data.
- * @template TN Tag name of element with which the dataset is associated.
+ * @template E Type of element with which the dataset is associated.
  *
  * @class
  */
 export class DatasetWrapper<
   DS extends AnyDatasetShape,
-  TN extends TagName = "*",
+  E extends Element = HTMLElement,
 > {
-  readonly #element: ElementOf<TN>;
+  readonly #element: E;
 
   /**
    * Creates a new instance of a {@linkcode DatasetWrapper} class to manage the dataset
@@ -56,9 +55,9 @@ export class DatasetWrapper<
    *
    * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
    */
-  constructor(target: Target<TN>, initialData?: Partial<DS>) {
+  constructor(target: Target, initialData?: Partial<DS>) {
     // biome-ignore format:
-    this.#element = toElementOrThrow<TN>(target, "Cannot initialize Dataset wrapper");
+    this.#element = toElementOrThrow(target, "Cannot initialize Dataset wrapper");
 
     if (isNotNil(initialData)) {
       this.setAll(initialData);
@@ -68,7 +67,7 @@ export class DatasetWrapper<
   /**
    * Element containing the dataset property being managed.
    */
-  public get element(): ElementOf<TN> {
+  public get element(): E {
     return this.#element;
   }
 
@@ -193,7 +192,7 @@ export class DatasetWrapper<
  * that can fully or partially match the shape specified in the `DS` generic.
  *
  * @template DS The shape of the dataset data.
- * @template TN Tag name of element with which the dataset is associated.
+ * @template E Type of element with which the dataset is associated.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param [initialData] Optional full or partial dataset that corresponds to the dataset shape.
@@ -280,7 +279,7 @@ export class DatasetWrapper<
  */
 export function wrapDataset<
   DS extends AnyDatasetShape,
-  TN extends TagName = "*",
->(target: Element | Target, initialData?: Partial<DS>): DatasetWrapper<DS, TN> {
-  return new DatasetWrapper<DS, TN>(target, initialData);
+  E extends Element = HTMLElement,
+>(target: Element | Target, initialData?: Partial<DS>): DatasetWrapper<DS, E> {
+  return new DatasetWrapper<DS, E>(target, initialData);
 }

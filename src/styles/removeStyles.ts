@@ -1,7 +1,6 @@
 import { cast } from "@laserware/arcade";
 
 import { isCssVarName } from "../css/isCssVarName.ts";
-import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -11,7 +10,7 @@ import type { StyleKey } from "./types.ts";
 /**
  * Removes the specified style `key` from the specified `target`.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Key of the style property to remove.
@@ -20,22 +19,22 @@ import type { StyleKey } from "./types.ts";
  *
  * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function removeStyle<TN extends TagName = "*">(
+export function removeStyle<E extends Element = HTMLElement>(
   target: Target | null,
   key: StyleKey,
-): ElementOf<TN> {
+): E {
   const element = toElementOrThrow(target, `Cannot remove style ${key}`);
 
   removeSingleStyle(element, key);
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }
 
 /**
  * Removes the style properties with names matching the specified `keys` from
  * the specified `target`.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param keys Array of style property names to remove.
@@ -44,10 +43,10 @@ export function removeStyle<TN extends TagName = "*">(
  *
  * @throws {@linkcode elements!InvalidElementError} if the `target` could not be found or doesn't have a [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) property.
  */
-export function removeStyles<TN extends TagName = "*">(
+export function removeStyles<E extends Element = HTMLElement>(
   target: Target | null,
   keys: StyleKey[],
-): ElementOf<TN> {
+): E {
   // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot remove styles ${formatForError(keys)}`);
 
@@ -55,7 +54,7 @@ export function removeStyles<TN extends TagName = "*">(
     removeSingleStyle(element, key);
   }
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }
 
 function removeSingleStyle(element: Element, key: StyleKey): void {

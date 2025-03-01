@@ -8,11 +8,17 @@ export { areElementsSame } from "./areElementsSame.ts";
 export { asElement } from "./asElement.ts";
 export {
   createElement,
+  Namespace,
   type CreateElementOptions,
   type ElementChild,
   type EventDescriptorFor,
+  type EventFor,
+  type EventListenerFor,
+  type EventListenerObjectFor,
   type EventListenerOrDescriptorFor,
+  type EventListenerOrEventListenerObjectFor,
   type EventListenersOrDescriptorsFor,
+  type EventNameFor,
 } from "./createElement.ts";
 export { elementExists } from "./elementExists.ts";
 export { findAllElements } from "./findAllElements.ts";
@@ -35,12 +41,6 @@ export { listToArray } from "./listToArray.ts";
 export { toElement } from "./toElement.ts";
 export type {
   ElementLike,
-  ElementPropertiesOf,
-  EventFor,
-  EventListenerFor,
-  EventListenerObjectFor,
-  EventListenerOrEventListenerObjectFor,
-  EventNameFor,
   FindOptions,
   Target,
 } from "./types.ts";

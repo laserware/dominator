@@ -51,7 +51,7 @@ import type { Dataset, DatasetKey, DatasetValue } from "./types.ts";
 export function selectDatasetEntry(
   key: DatasetKey,
   value?: DatasetValue | null | undefined,
-  tagName?: TagName,
+  tagName?: TagName | string,
 ): CssSelector {
   return selectorWithTag(selectSingleDataEntry(key, value), tagName);
 }
@@ -91,7 +91,7 @@ export function selectDatasetEntry(
  */
 export function selectDatasetEntries(
   dataset: Dataset,
-  tagName?: TagName,
+  tagName?: TagName | string,
 ): CssSelector {
   let selector = "";
 

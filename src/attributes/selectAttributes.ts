@@ -15,10 +15,10 @@ import type { AttributeName, AttributeValue, Attributes } from "./types.ts";
  * resulting selector.
  *
  * > [!NOTE]
- * > If you specify the optional `TN` (tag name) generic, you'll get autocomplete
- * > on the attributes for the Element associated with that tag name.
+ * > If you specify the optional `E` generic, you'll get autocomplete
+ * > on the attributes for the element associated with that type.
  *
- * @template TN Tag name of Element to select attribute from.
+ * @template E Type of element to select attribute from.
  *
  * @param name Attribute name to include in the selector.
  * @param [value=undefined] Optional attribute value to include in the selector.
@@ -57,10 +57,10 @@ import type { AttributeName, AttributeValue, Attributes } from "./types.ts";
  * // button[disabled]
  * ```
  */
-export function selectAttribute<TN extends TagName = "*">(
-  name: AttributeName<TN>,
+export function selectAttribute<E extends Element = HTMLElement>(
+  name: AttributeName<E>,
   value: AttributeValue | null | undefined = undefined,
-  tagName?: TagName,
+  tagName?: TagName | string,
 ): CssSelector {
   const selector = selectSingleAttribute(name, value);
 
@@ -74,10 +74,10 @@ export function selectAttribute<TN extends TagName = "*">(
  * resulting selector.
  *
  * > [!NOTE]
- * > If you specify the optional `TN` (tag name) generic, you'll get autocomplete
- * > on the attributes for the Element associated with that tag name.
+ * > If you specify the optional `E` generic, you'll get autocomplete
+ * > on the attributes for the element associated with that type.
  *
- * @template TN Tag name of Element to select attributes from.
+ * @template E Type of element to select attributes from.
  *
  * @param attributes Object with key of attribute name and value of attribute value.
  * @param [tagName] Optional tagName name to include in the selector.
@@ -115,9 +115,9 @@ export function selectAttribute<TN extends TagName = "*">(
  * // [disabled="true"][inert]
  * ```
  */
-export function selectAttributes<TN extends TagName = "*">(
-  attributes: Attributes<TN>,
-  tagName?: TagName,
+export function selectAttributes<E extends Element = HTMLElement>(
+  attributes: Attributes<E>,
+  tagName?: TagName | string,
 ): CssSelector {
   let selector = "";
 
@@ -128,8 +128,8 @@ export function selectAttributes<TN extends TagName = "*">(
   return selectorWithTag(selector, tagName);
 }
 
-function selectSingleAttribute<TN extends TagName = "*">(
-  name: AttributeName<TN>,
+function selectSingleAttribute<E extends Element = HTMLElement>(
+  name: AttributeName<E>,
   value: AttributeValue | null | undefined,
 ): CssSelector {
   const validName = kebabCase(name);

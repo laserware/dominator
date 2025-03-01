@@ -1,6 +1,5 @@
 import { cast } from "@laserware/arcade";
 
-import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
@@ -12,7 +11,7 @@ import type { AttributeName, AttributeValue, Attributes } from "./types.ts";
  * Sets the attribute `name` of the `target` element to the `value`. The `value`
  * is coerced to a string.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to set.
@@ -51,16 +50,16 @@ import type { AttributeName, AttributeValue, Attributes } from "./types.ts";
  * </div>
  * ```
  */
-export function setAttribute<TN extends TagName = "*">(
-  target: Target<TN> | null,
-  name: AttributeName<TN>,
+export function setAttribute<E extends Element = HTMLElement>(
+  target: Target | null,
+  name: AttributeName<E>,
   value: AttributeValue | null | undefined,
-): ElementOf<TN> {
+): E {
   const element = toElementOrThrow(target, `Cannot set attribute ${name}`);
 
   setSingleAttribute(element, name, value);
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }
 
 /**
@@ -68,7 +67,7 @@ export function setAttribute<TN extends TagName = "*">(
  * the object is the attribute name and the value of the object is the attribute
  * value.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param attributes Object with key of attribute name and value of attribute value.
@@ -89,7 +88,7 @@ export function setAttribute<TN extends TagName = "*">(
  * **Code**
  *
  * ```ts
- * let element = findElement<"div">("#example")!;
+ * let element = findElement<HTMLDivElement>("#example")!;
  *
  * element = setAttributes(element, {
  *   "aria-label", "Click me",
@@ -110,10 +109,10 @@ export function setAttribute<TN extends TagName = "*">(
  * </div>
  * ```
  */
-export function setAttributes<TN extends TagName = "*">(
-  target: Target<TN> | null,
-  attributes: Attributes<TN>,
-): ElementOf<TN> {
+export function setAttributes<E extends Element = HTMLElement>(
+  target: Target | null,
+  attributes: Attributes<E>,
+): E {
   // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot set attributes ${formatForError(attributes)}`);
 
@@ -121,11 +120,11 @@ export function setAttributes<TN extends TagName = "*">(
     setSingleAttribute(element, name, attributes[name]);
   }
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }
 
-function setSingleAttribute<TN extends TagName = "*">(
-  element: ElementOf<TN>,
+function setSingleAttribute<E extends Element = HTMLElement>(
+  element: E,
   name: string,
   value: AttributeValue | null | undefined,
 ): void {

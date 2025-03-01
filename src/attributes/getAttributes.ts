@@ -1,6 +1,5 @@
 import { type KeysOf, type WithNullValues, cast } from "@laserware/arcade";
 
-import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
@@ -18,7 +17,7 @@ import type { AttributeName, AttributeValue, Attributes } from "./types.ts";
  * [Element.getAttribute](https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute) API.
  *
  * @template V Type of value to return.
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to get.
@@ -59,11 +58,11 @@ import type { AttributeName, AttributeValue, Attributes } from "./types.ts";
  */
 export function getAttribute<
   V extends AttributeValue = string,
-  TN extends TagName = "*",
->(target: Target<TN> | null, name: AttributeName<TN>): V | null {
-  const element = toElementOrThrow(target, `Cannot get attribute ${name}`);
+  E extends Element = HTMLElement,
+>(target: Target | null, name: AttributeName<E>): V | null {
+  const element = toElementOrThrow<E>(target, `Cannot get attribute ${name}`);
 
-  return getSingleAttribute<V, TN>(element, name) ?? null;
+  return getSingleAttribute<V, E>(element, name) ?? null;
 }
 
 /**
@@ -95,7 +94,6 @@ export function getAttribute<
  * The {@linkcode arcade!WithNullValues} type represents an object with values that could be `null`.
  *
  * @template V Shape of attributes object value to return.
- * @template TN Tag name of the Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param names Names of the attributes for which to find values.
@@ -138,10 +136,10 @@ export function getAttribute<
  * // { "aria-label": "Example", "aria-valuemax": 30, invalid: null }
  * ```
  */
-export function getAttributes<
-  V extends Attributes = Attributes,
-  TN extends TagName = "*",
->(target: Target<TN> | null, names: KeysOf<V>): WithNullValues<V> {
+export function getAttributes<V extends Attributes = Attributes>(
+  target: Target | null,
+  names: KeysOf<V>,
+): WithNullValues<V> {
   // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot get attributes ${formatForError(names)}`);
 
@@ -156,8 +154,8 @@ export function getAttributes<
 
 function getSingleAttribute<
   V extends AttributeValue = AttributeValue,
-  TN extends TagName = "*",
->(element: ElementOf<TN>, name: AttributeName<TN>): V | null {
+  E extends Element = HTMLElement,
+>(element: E, name: AttributeName<E>): V | null {
   const attributeValue = element.getAttribute(name);
 
   return parseDOMValue<V>(attributeValue) ?? null;

@@ -20,7 +20,7 @@ export function isInputType(
   target: Target | null,
   inputType?: HTMLInputTypeAttribute,
 ): target is HTMLInputElement {
-  const element = toElement<"input">(target);
+  const element = toElement<HTMLInputElement>(target);
 
   if (isElementType(element, "input")) {
     return isNil(inputType) ? true : element.type === inputType;

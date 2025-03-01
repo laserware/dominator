@@ -55,5 +55,5 @@ export function findAllFocusable(
 ): HTMLElement[] {
   const parentElement = toElement(parent) ?? document;
 
-  return findAllElements<"div">(focusableElementsSelector, parentElement);
+  return findAllElements<HTMLElement>(focusableElementsSelector, parentElement);
 }

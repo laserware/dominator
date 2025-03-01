@@ -1,6 +1,5 @@
 import { cast } from "@laserware/arcade";
 
-import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -14,7 +13,7 @@ import type { CssVarName } from "./types.ts";
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param name Name of the CSS variable to remove.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
@@ -57,16 +56,16 @@ import type { CssVarName } from "./types.ts";
  * <button id="example" style="font-size: 18px;">Example</button>
  * ```
  */
-export function removeCssVar<TN extends TagName = "*">(
+export function removeCssVar<E extends Element = HTMLElement>(
   name: CssVarName,
-  target: Target<TN> | null = document.documentElement,
-): ElementOf<TN> {
+  target: Target | null = document.documentElement,
+): E {
   // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot remove CSS variable ${name}`);
 
   removeSingleCssVar(element, name);
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }
 
 /**
@@ -75,7 +74,7 @@ export function removeCssVar<TN extends TagName = "*">(
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param names Array of CSS variable names to remove.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
@@ -130,10 +129,10 @@ export function removeCssVar<TN extends TagName = "*">(
  * </button>
  * ```
  */
-export function removeCssVars<TN extends TagName = "*">(
+export function removeCssVars<E extends Element = HTMLElement>(
   names: CssVarName[],
-  target: Target<TN> | null = document.documentElement,
-): ElementOf<TN> {
+  target: Target | null = document.documentElement,
+): E {
   // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot remove CSS variables ${formatForError(names)}`);
 
@@ -141,7 +140,7 @@ export function removeCssVars<TN extends TagName = "*">(
     removeSingleCssVar(element, name);
   }
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }
 
 function removeSingleCssVar(element: Element, name: CssVarName): void {

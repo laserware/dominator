@@ -24,9 +24,9 @@ import type { Target } from "./types.ts";
  */
 export function getElementValue<T>(target: Target | null): T {
   // biome-ignore format:
-  const element = toElementOrThrow<"input">(target, "Cannot get value for element");
+  const element = toElementOrThrow<HTMLInputElement>(target, "Cannot get value for element");
 
-  if (isElementType(element, "select")) {
+  if (isElementType<HTMLSelectElement>(element, "select")) {
     const value =
       element.value === "" ? element.value : parseDOMValue(element.value);
 

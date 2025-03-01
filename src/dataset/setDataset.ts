@@ -1,6 +1,5 @@
 import { cast, isNil } from "@laserware/arcade";
 
-import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
@@ -12,7 +11,7 @@ import type { Dataset, DatasetKey, DatasetValue } from "./types.ts";
 /**
  * Assigns the `value` to the dataset attribute/property name `key` in the `target`.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param key Key or property name for the dataset entry.
@@ -69,23 +68,23 @@ import type { Dataset, DatasetKey, DatasetValue } from "./types.ts";
  * </div>
  * ```
  */
-export function setDatasetEntry<TN extends TagName = "*">(
-  target: Target<TN> | null,
+export function setDatasetEntry<E extends Element = HTMLElement>(
+  target: Target | null,
   key: DatasetKey,
   value: DatasetValue | null,
-): ElementOf<TN> {
+): E {
   // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot set dataset entry for ${key}`);
 
   setSingleDatasetEntry(element, key, value);
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }
 
 /**
  * Assigns the `dataset` key/value pairs to the `target`.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param dataset Object with keys of dataset attribute/property names and values
@@ -144,10 +143,10 @@ export function setDatasetEntry<TN extends TagName = "*">(
  * </div>
  * ```
  */
-export function setDatasetEntries<TN extends TagName = "*">(
-  target: Target<TN> | null,
+export function setDatasetEntries<E extends Element = HTMLElement>(
+  target: Target | null,
   dataset: Dataset,
-): ElementOf<TN> {
+): E {
   // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot set dataset entries ${formatForError(dataset)}`);
 
@@ -155,7 +154,7 @@ export function setDatasetEntries<TN extends TagName = "*">(
     setSingleDatasetEntry(element, key, dataset[key]);
   }
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }
 
 function setSingleDatasetEntry(

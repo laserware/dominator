@@ -1,6 +1,5 @@
 import { cast, isNotNil } from "@laserware/arcade";
 
-import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
@@ -16,7 +15,7 @@ import type { CssVarName, CssVarValue, CssVars } from "./types.ts";
  * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
  * (i.e. `:root`).
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param name Name of the CSS variable to set or update.
  * @param value Value of the CSS variable.
@@ -70,16 +69,16 @@ import type { CssVarName, CssVarValue, CssVars } from "./types.ts";
  * </button>
  * ```
  */
-export function setCssVar<TN extends TagName = "*">(
+export function setCssVar<E extends Element = HTMLElement>(
   name: CssVarName,
   value: CssVarValue,
-  target: Target<TN> | null = document.documentElement,
-): ElementOf<TN> {
+  target: Target | null = document.documentElement,
+): E {
   const element = toElementOrThrow(target, `Cannot set CSS variable ${name}`);
 
   setSingleCssVar(element, name, value);
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }
 
 /**
@@ -93,7 +92,7 @@ export function setCssVar<TN extends TagName = "*">(
  * because the key (i.e. CSS variable name) is checked prior to setting it on the
  * property.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param vars Object with key of CSS variable name and value of value to set for name.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
@@ -146,10 +145,10 @@ export function setCssVar<TN extends TagName = "*">(
  * </button>
  * ```
  */
-export function setCssVars<TN extends TagName = "*">(
+export function setCssVars<E extends Element = HTMLElement>(
   vars: CssVars,
-  target: Target<TN> | null = document.documentElement,
-): ElementOf<TN> {
+  target: Target | null = document.documentElement,
+): E {
   // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot set CSS variables ${formatForError(vars)}`);
 
@@ -159,7 +158,7 @@ export function setCssVars<TN extends TagName = "*">(
     setSingleCssVar(element, varName, vars[varName]);
   }
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }
 
 function setSingleCssVar(

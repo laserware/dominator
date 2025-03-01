@@ -2,8 +2,6 @@
 
 import { cast, dedent } from "@laserware/arcade";
 
-import type { ElementOf, TagName } from "./dom.ts";
-
 /**
  * Selector for an element that will never exist in the test DOM.
  */
@@ -15,19 +13,19 @@ export const selectorForNonExistent = "#never-going-to-exist";
  *
  * @internal
  *
- * @template TN Tag name of the rendered element.
+ * @template E Type of Element.
  *
  * @param html HTML markup to render.
  * @param [options] Optional overrides for element attributes and properties (useful for mocking).
  * @param [children] Optional children to add to element.
  *
- * @returns Element with tag name `TN`.
+ * @returns Element of type `E`.
  */
-export function render<TN extends TagName = "*">(
+export function render<E extends Element = HTMLElement>(
   html: string,
   options: Record<string, any> = {},
   ...children: HTMLElement[]
-): ElementOf<TN> {
+): E {
   const parent = document.createElement("div");
 
   parent.innerHTML = dedent(html);
@@ -51,5 +49,5 @@ export function render<TN extends TagName = "*">(
     element[key] = value;
   }
 
-  return cast<ElementOf<TN>>(element);
+  return cast<E>(element);
 }

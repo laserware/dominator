@@ -1,6 +1,5 @@
 import { isNil } from "@laserware/arcade";
 
-import type { TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { formatForError } from "../internal/formatForError.ts";
@@ -16,10 +15,10 @@ import type { AttributeName, AttributeValue } from "./types.ts";
  * present, or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of an attribute.
  *
- * @template TN Tag name of element with corresponding attributes to search.
+ * @template E Element with corresponding attributes to search.
  */
-export type AttributesSearch<TN extends TagName = "*"> = PropertySearch<
-  AttributeName<TN>,
+export type AttributesSearch<E extends Element = HTMLElement> = PropertySearch<
+  AttributeName<E>,
   AttributeValue | null
 >;
 
@@ -27,7 +26,7 @@ export type AttributesSearch<TN extends TagName = "*"> = PropertySearch<
  * Checks if the `target` has the attribute `name`. If a `value` is specified,
  * checks that the values match.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param name Name of the attribute to check for.
@@ -61,9 +60,9 @@ export type AttributesSearch<TN extends TagName = "*"> = PropertySearch<
  * // true
  * ```
  */
-export function hasAttribute<TN extends TagName = "*">(
-  target: Target<TN> | null,
-  name: AttributeName<TN>,
+export function hasAttribute<E extends Element = HTMLElement>(
+  target: Target | null,
+  name: AttributeName<E>,
   value?: AttributeValue,
 ): boolean {
   // biome-ignore format:
@@ -76,7 +75,7 @@ export function hasAttribute<TN extends TagName = "*">(
  * Checks if the `target` has **all** of the attributes that match the `search`
  * criteria.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of attribute names or attributes filter object to check for.
@@ -112,9 +111,9 @@ export function hasAttribute<TN extends TagName = "*">(
  * // true
  * ```
  */
-export function hasAllAttributes<TN extends TagName = "*">(
-  target: Target<TN> | null,
-  search: AttributesSearch<TN>,
+export function hasAllAttributes<E extends Element = HTMLElement>(
+  target: Target | null,
+  search: AttributesSearch<E>,
 ): boolean {
   // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot check for all attributes ${formatForError(search)}`);
@@ -126,7 +125,7 @@ export function hasAllAttributes<TN extends TagName = "*">(
  * Checks if the `target` has **some** of the attributes that match the `search`
  * criteria.
  *
- * @template TN Tag name of the Element representation of `target`.
+ * @template E Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
  * @param search Array of attribute names or attributes filter object to check for.
@@ -161,9 +160,9 @@ export function hasAllAttributes<TN extends TagName = "*">(
  * // true
  * ```
  */
-export function hasSomeAttributes<TN extends TagName = "*">(
-  target: Target<TN> | null,
-  search: AttributesSearch<TN>,
+export function hasSomeAttributes<E extends Element = HTMLElement>(
+  target: Target | null,
+  search: AttributesSearch<E>,
 ): boolean {
   // biome-ignore format:
   const element = toElementOrThrow(target, `Cannot check for some attributes ${formatForError(search)}`);
