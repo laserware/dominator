@@ -15,8 +15,8 @@ import type { AttributeName, AttributeValue, Attributes } from "./types.ts";
  * resulting selector.
  *
  * > [!NOTE]
- * > If you specify the optional `TN` (tag name) generic, you'll get autocomplete
- * > on the attributes for the Element associated with that tag name.
+ * > If you specify the optional `E` generic, you'll get autocomplete
+ * > on the attributes for the element associated with that type.
  *
  * @template E Type of element to select attribute from.
  *
@@ -74,10 +74,10 @@ export function selectAttribute<E extends Element = HTMLElement>(
  * resulting selector.
  *
  * > [!NOTE]
- * > If you specify the optional `TN` (tag name) generic, you'll get autocomplete
- * > on the attributes for the Element associated with that tag name.
+ * > If you specify the optional `E` generic, you'll get autocomplete
+ * > on the attributes for the element associated with that type.
  *
- * @template E Type of Element to select attributes from.
+ * @template E Type of element to select attributes from.
  *
  * @param attributes Object with key of attribute name and value of attribute value.
  * @param [tagName] Optional tagName name to include in the selector.

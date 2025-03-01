@@ -47,12 +47,12 @@
 export type Booleanish = boolean | "true" | "false";
 
 /**
- * Tag name for HTML element.
+ * Tag name for HTML elements.
  */
 export type HTMLElementTagName = keyof HTMLElementTagNameMap;
 
 /**
- * Tag name for SVG element.
+ * Tag name for SVG elements.
  */
 export type SVGElementTagName = keyof SVGElementTagNameMap;
 
@@ -60,20 +60,6 @@ export type SVGElementTagName = keyof SVGElementTagNameMap;
  * Tag name for any HTML or SVG element.
  */
 export type TagName = HTMLElementTagName | SVGElementTagName;
-
-/**
- * Element type associated with the specified tag name.
- *
- * @template TN Tag name of the corresponding element.
- */
-export type ElementOf<TN extends TagName | string> =
-  TN extends HTMLElementTagName
-    ? HTMLElementTagNameMap[TN]
-    : TN extends SVGElementTagName
-      ? SVGElementTagNameMap[TN]
-      : TN extends string
-        ? Element
-        : never;
 
 export type AnyElementEventMap = ElementEventMap & GlobalEventHandlersEventMap;
 

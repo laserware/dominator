@@ -1,13 +1,7 @@
 import type { AttributeName, Attributes } from "../attributes/types.ts";
 import type { CssSelector } from "../css/types.ts";
 import type { Dataset, DatasetKey } from "../dataset/types.ts";
-import type {
-  AnyElementEventMap,
-  ElementOf,
-  HTMLElementTagName,
-  SVGElementTagName,
-  TagName,
-} from "../dom.ts";
+import type { TagName } from "../dom.ts";
 
 /**
  * Element or EventTarget that can be passed into functions.
@@ -37,69 +31,6 @@ export type ElementLike =
 export type Target = ElementLike | CssSelector;
 
 /**
- * Name of the event handler.
- *
- * @template TN Tag name of the associated Element.
- */
-export type EventNameFor<TN extends TagName | string> =
-  TN extends HTMLElementTagName
-    ? keyof HTMLElementEventMap
-    : TN extends SVGElementTagName
-      ? keyof SVGElementEventMap
-      : TN extends string
-        ? keyof AnyElementEventMap
-        : never;
-
-/**
- * Any event for an HTML or SVG element.
- *
- * @template TN Tag name of the associated Element.
- */
-export type EventFor<
-  TN extends TagName | string,
-  EN extends EventNameFor<TN>,
-> = TN extends HTMLElementTagName
-  ? HTMLElementEventMap[EN]
-  : TN extends SVGElementTagName
-    ? SVGElementEventMap[EN]
-    : TN extends string
-      ? AnyElementEventMap
-      : never;
-
-/**
- * Event listener that is called with event that corresponds to name `EN`.
- *
- * @template TN Tag name of the associated Element.
- * @template EN Name of the event that listener is associated with.
- */
-export type EventListenerFor<
-  TN extends TagName | string,
-  EN extends EventNameFor<TN>,
-> = (event: EventFor<TN, EN>) => void;
-
-export interface EventListenerObjectFor<
-  TN extends TagName | string,
-  EN extends EventNameFor<TN>,
-> {
-  handleEvent(object: EventFor<TN, EN>): void;
-}
-
-export type EventListenerOrEventListenerObjectFor<
-  TN extends TagName | string,
-  EN extends EventNameFor<TN>,
-> = EventListenerFor<TN, EN> | EventListenerObjectFor<TN, EN>;
-
-/**
- * Properties that can be set on the element with the specified `TN` tag name.
- *
- * Note that methods/functions are excluded because this is used in the
- * {@linkcode createElement} function.
- *
- * @template TN Tag name for the associated element.
- */
-export type ElementPropertiesOf<TN extends TagName | string> = ElementOf<TN>;
-
-/**
  * Use to specify search criteria for finding element(s). You can find elements
  * by selector, dataset entries, or attributes.
  *
@@ -122,5 +53,5 @@ export type FindOptions<E extends Element = HTMLElement> = {
   parent?: Target | null | undefined;
 
   /** Optional element tag name to limit search. */
-  tagName?: TagName;
+  tagName?: TagName | string;
 };

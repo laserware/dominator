@@ -1,7 +1,6 @@
 import { cast } from "@laserware/arcade";
 
 import { isCssVarName } from "../css/isCssVarName.ts";
-import type { ElementOf, TagName } from "../dom.ts";
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";

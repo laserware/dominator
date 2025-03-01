@@ -88,7 +88,7 @@ export function setAttribute<E extends Element = HTMLElement>(
  * **Code**
  *
  * ```ts
- * let element = findElement<"div">("#example")!;
+ * let element = findElement<HTMLDivElement>("#example")!;
  *
  * element = setAttributes(element, {
  *   "aria-label", "Click me",

@@ -1,13 +1,11 @@
 import { cast } from "@laserware/arcade";
 
-import type { ElementOf, TagName } from "../dom.ts";
-
 import { InvalidElementError } from "./InvalidElementError.ts";
 import { isElementLike } from "./isElementLike.ts";
-import type { ElementLike, Target } from "./types.ts";
+import type { Target } from "./types.ts";
 
 /**
- * Returns an element with tag name `TN` for the specified `target`.
+ * Returns an element of type `E` for the specified `target`.
  *
  * > [!NOTE]
  * > This differs from {@linkcode toElement} in that it will never return `null`, only
@@ -43,7 +41,7 @@ import type { ElementLike, Target } from "./types.ts";
  * function handleButtonClick(event: MouseEvent): void {
  *   // We know this is an `HTMLButtonElement` because the event listener was
  *   // attached to a `<button>` and `currentTarget` is therefore a button:
- *   const buttonElement = asElement<"button">(event.currentTarget);
+ *   const buttonElement = asElement<HTMLButtonElement>(event.currentTarget);
  * }
  * ```
  *
@@ -53,7 +51,7 @@ import type { ElementLike, Target } from "./types.ts";
  * function handleButtonClick(event: MouseEvent): void {
  *   // We're telling TypeScript this is an `<input>` when it's actually a
  *   // button:
- *   const element = asElement<"input">(event.currentTarget);
+ *   const element = asElement<HTMLInputElement>(event.currentTarget);
  *
  *   // TypeScript will _not_ complain about this, but you'll get an error:
  *   console.log(element.valueAsNumber);

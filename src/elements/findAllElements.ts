@@ -11,12 +11,12 @@ import type { ElementLike, FindOptions } from "./types.ts";
  * Query the DOM to find the elements matching the specified CSS `selector` in
  * the optionally specified `parent`.
  *
- * @template E Type of Elements to return.
+ * @template E Type of elements to return.
  *
  * @param selector CSS selector string to find the elements.
  * @param [parent] Optional Element or EventTarget for parent.
  *
- * @returns Array of elements of tag name `TN` if found, otherwise empty array.
+ * @returns Array of elements of type `E` if found, otherwise empty array.
  *
  * @throws {SyntaxError} [SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError) if the specified `selector` is invalid.
  */
@@ -30,7 +30,7 @@ export function findAllElements<E extends Element = HTMLElement>(
  * that match the criteria in the `options` object in the optionally specified
  * `parent`.
  *
- * @template E Type of Elements to return.
+ * @template E Type of elements to return.
  *
  * @param options Options for finding the elements.
  *

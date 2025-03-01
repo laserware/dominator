@@ -5,7 +5,7 @@ import type {
 } from "../dom.ts";
 
 /**
- * Valid attribute names for the element of tag name `TN`.
+ * Valid attribute names for the element of type `E`.
  *
  * @template E Element with corresponding attribute names.
  */

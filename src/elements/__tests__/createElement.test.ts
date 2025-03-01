@@ -51,7 +51,7 @@ describe("the createElement function", () => {
   });
 
   it("creates an element with children and no properties", () => {
-    const result = createElement("main", {}, createElement("span", {}, "Hello"));
+    const result = createElement("main", createElement("span", {}, "Hello"));
 
     expect(result.outerHTML).toBe("<main><span>Hello</span></main>");
   });
@@ -63,7 +63,7 @@ describe("the createElement function", () => {
   });
 
   it("creates an element with children and properties", () => {
-    const result = createElement("input", { type: "text", value: "hello" });
+    const result = createElement<HTMLInputElement>("input", { type: "text", value: "hello" });
 
     expect(result).toHaveProperty("type", "text");
     expect(result).toHaveProperty("value", "hello");
@@ -73,7 +73,7 @@ describe("the createElement function", () => {
     const click = mock();
     const keydown = mock();
 
-    const element = createElement(
+    const element = createElement<HTMLButtonElement>(
       "button",
       {
         id: "test",
@@ -117,7 +117,7 @@ describe("the createElement function", () => {
   });
 
   it("appends text children to the created element", () => {
-    const result = createElement("div", {}, createElement("span", {}, "child element"));
+    const result = createElement("div", createElement("span", {}, "child element"));
 
     expect(result.children).toHaveLength(1);
     expect(isElementType(result.firstElementChild!, "span")).toBeTruthy();
@@ -134,7 +134,7 @@ describe("the createElement function", () => {
   });
 
   it("invokes child builder functions", () => {
-    const result = createElement("div", {}, createElement("span", {}));
+    const result = createElement("div", createElement("span", {}));
 
     expect(result.children).toHaveLength(1);
     expect(isElementType(result.firstElementChild!, "span")).toBeTruthy();
