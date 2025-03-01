@@ -115,7 +115,7 @@ export function parseDOMValue<
   // it is a valid number, it would get converted to one. However, if it fails,
   // it will throw an error. Instead, we first try to convert it to a number
   // using the `Number` initializer.
-  const numericValue = Number(value);
+  const numericValue = Number.parseFloat(value as string);
   if (!Number.isNaN(numericValue)) {
     return numericValue as T;
   }
