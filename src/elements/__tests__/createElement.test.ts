@@ -63,7 +63,7 @@ describe("the createElement function", () => {
   });
 
   it("creates an element with children and properties", () => {
-    const result = createElement<HTMLInputElement>("input", { type: "text", value: "hello" });
+    const result = createElement("input", { type: "text", value: "hello" });
 
     expect(result).toHaveProperty("type", "text");
     expect(result).toHaveProperty("value", "hello");
@@ -73,7 +73,7 @@ describe("the createElement function", () => {
     const click = mock();
     const keydown = mock();
 
-    const element = createElement<HTMLButtonElement>(
+    const element = createElement(
       "button",
       {
         id: "test",

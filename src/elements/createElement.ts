@@ -6,79 +6,94 @@ import { setCssVars } from "../css/setCssVars.ts";
 import type { CssVars } from "../css/types.ts";
 import { setDatasetEntries } from "../dataset/setDataset.ts";
 import type { Dataset } from "../dataset/types.ts";
-import type { AnyElementEventMap, TagName } from "../dom.ts";
+import type {
+  AnyElementEventMap,
+  ElementOf,
+  HTMLElementTagName,
+  SVGElementTagName,
+  TagName,
+} from "../dom.ts";
 import { setStyles } from "../styles/setStyles.ts";
 import type { Styles } from "../styles/types.ts";
-
-export const Namespace = {
-  HTML: "http://www.w3.org/1999/xhtml",
-  SVG: "http://www.w3.org/2000/svg",
-} as const;
-
-export type Namespace = (typeof Namespace)[keyof typeof Namespace];
 
 /**
  * Name of the event handler.
  *
- * @template E Type of the associated element.
+ * @template TN Tag name of the associated element.
  */
-export type EventNameFor<E extends Element> = E extends HTMLElement
-  ? keyof HTMLElementEventMap
-  : E extends SVGElement
-    ? keyof SVGElementEventMap
-    : keyof AnyElementEventMap;
+export type EventNameFor<TN extends TagName | string> =
+  TN extends HTMLElementTagName
+    ? keyof HTMLElementEventMap
+    : TN extends SVGElementTagName
+      ? keyof SVGElementEventMap
+      : TN extends string
+        ? keyof AnyElementEventMap
+        : never;
 
 /**
  * Any event for an HTML or SVG element.
  *
- * @template E Type of the associated element.
+ * @template TN Tag name of the associated element.
  */
 export type EventFor<
-  E extends Element,
-  EN extends EventNameFor<E>,
-> = E extends HTMLElement
+  TN extends TagName | string,
+  EN extends EventNameFor<TN>,
+> = TN extends HTMLElementTagName
   ? HTMLElementEventMap[EN]
-  : E extends SVGElement
+  : TN extends SVGElementTagName
     ? SVGElementEventMap[EN]
-    : AnyElementEventMap;
+    : TN extends string
+      ? AnyElementEventMap
+      : never;
 
 /**
  * Event listener that is called with event that corresponds to name `EN`.
  *
- * @template E Type of the associated element.
+ * @template TN Tag name of the associated element.
  * @template EN Name of the event that listener is associated with.
  */
-export type EventListenerFor<E extends Element, EN extends EventNameFor<E>> = (
-  event: EventFor<E, EN>,
-) => void;
+export type EventListenerFor<
+  TN extends TagName | string,
+  EN extends EventNameFor<TN>,
+> = (event: EventFor<TN, EN>) => void;
 
 export interface EventListenerObjectFor<
-  E extends Element,
-  EN extends EventNameFor<E>,
+  TN extends TagName | string,
+  EN extends EventNameFor<TN>,
 > {
-  handleEvent(object: EventFor<E, EN>): void;
+  handleEvent(object: EventFor<TN, EN>): void;
 }
 
 export type EventListenerOrEventListenerObjectFor<
-  E extends Element,
-  EN extends EventNameFor<E>,
-> = EventListenerFor<E, EN> | EventListenerObjectFor<E, EN>;
+  TN extends TagName | string,
+  EN extends EventNameFor<TN>,
+> = EventListenerFor<TN, EN> | EventListenerObjectFor<TN, EN>;
+
+/**
+ * Properties that can be set on the element with the specified `TN` tag name.
+ *
+ * Note that methods/functions are excluded because this is used in the
+ * {@linkcode createElement} function.
+ *
+ * @template TN Tag name for the associated element.
+ */
+export type ElementPropertiesOf<TN extends TagName | string> = ElementOf<TN>;
 
 /**
  * Object with a listener that is called when the corresponding event fires
  * and the options that are passed into [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener).
  *
- * @template E Type of the associated element.
+ * @template TN Tag name of the associated element.
  * @template EN Name of the Event that `listener` is associated with.
  */
 export type EventDescriptorFor<
-  E extends Element,
-  EN extends EventNameFor<E>,
+  TN extends TagName | string,
+  EN extends EventNameFor<TN>,
 > = {
   /**
    * Callback fired when the event is fired.
    */
-  listener: EventListenerOrEventListenerObjectFor<E, EN>;
+  listener: EventListenerFor<TN, EN>;
 
   /**
    * Event listener options object. See [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options)
@@ -91,33 +106,48 @@ export type EventDescriptorFor<
  * Event listener or descriptor used to add listeners to an element created
  * with the {@linkcode createElement} function.
  *
- * @template E Type of the associated element.
+ * @template TN Tag name of the associated element.
  * @template EN Name of the Event that the listener or  is associated with.
  */
 export type EventListenerOrDescriptorFor<
-  E extends Element,
-  EN extends EventNameFor<E>,
-> = EventListenerOrEventListenerObjectFor<E, EN> | EventDescriptorFor<E, EN>;
+  TN extends TagName | string,
+  EN extends EventNameFor<TN>,
+> = EventListenerFor<TN, EN> | EventDescriptorFor<TN, EN>;
 
 /**
  * Object with key of event name and value of an event listener or
  * {@linkcode EventDescriptorFor}.
  *
- * @template E Type of the associated element.
+ * @template TN Tag name of the associated element.
  */
-export type EventListenersOrDescriptorsFor<E extends Element> = {
-  [EN in EventNameFor<E>]?: EventListenerOrDescriptorFor<E, EN>;
+export type EventListenersOrDescriptorsFor<
+  TN extends TagName | string = string,
+> = {
+  [EN in EventNameFor<TN>]?: EventListenerOrDescriptorFor<TN, EN>;
 };
+
+/**
+ * Namespace for the element. This is only required for SVG elements.
+ */
+export const Namespace = {
+  HTML: "http://www.w3.org/1999/xhtml",
+  SVG: "http://www.w3.org/2000/svg",
+} as const;
+
+/**
+ * Namespace for the element.
+ */
+export type Namespace = (typeof Namespace)[keyof typeof Namespace];
 
 /**
  * Options for creating an element using {@linkcode createElement}.
  *
  * @expand
  *
- * @template E Type of created element.
+ * @template TN Tag name for the created element.
  */
-export type CreateElementOptions<E extends Element> = Partial<
-  Omit<E, "attributes" | "dataset">
+export type CreateElementOptions<TN extends TagName | string> = Partial<
+  Omit<ElementPropertiesOf<TN>, "attributes" | "dataset">
 > & {
   /**
    * Namespace to use when creating the element. This is required for elements
@@ -127,7 +157,7 @@ export type CreateElementOptions<E extends Element> = Partial<
   namespace?: Namespace;
 
   /** Attributes to set on element. */
-  attributes?: Attributes<E>;
+  attributes?: Attributes<ElementOf<TN>>;
 
   /** CSS variables to set on element. */
   cssVars?: CssVars;
@@ -143,15 +173,15 @@ export type CreateElementOptions<E extends Element> = Partial<
    * an `options` object matching the `options` argument in `addEventListener`.
    * See the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options) for additional details.
    */
-  on?: EventListenersOrDescriptorsFor<E>;
+  on?: EventListenersOrDescriptorsFor;
 
   /** Styles to set on element. */
   styles?: Styles;
 };
 
-function isCreateElementOptions<E extends Element>(
+function isCreateElementOptions<TN extends TagName | string>(
   value: unknown,
-): value is CreateElementOptions<E> {
+): value is CreateElementOptions<TN> {
   return !isElementChild(value) && is.objectLiteral(value);
 }
 
@@ -169,21 +199,21 @@ function isElementChild(value: unknown): value is ElementChild {
 }
 
 /**
- * Creates an HTML element of type `E` and adds the properties/listeners
+ * Creates an HTML element with tag name `TN` and adds the properties/listeners
  * from the `options` object as well as the optional `children`.
  *
  * The attributes, CSS variables, dataset entries, and styles specified in
  * `options` are set on the element. Optionally specify `children` to append
  * to the newly created element.
  *
- * @template E Type of the created element.
+ * @template TN Tag name of the created element.
  *
  * @param tagName Tag name of the HTML/SVG element to create (e.g. `div`, `svg`, etc.).
  * @param options Optional attributes, CSS variables, dataset entries, and styles
  *                to set on element.
  * @param [children] Optional children to append to created element.
  *
- * @returns Element of type `E` with the specified `options`.
+ * @returns Element of tag name `TN` with the specified `options`.
  *
  * @example
  * **Code**
@@ -247,25 +277,25 @@ function isElementChild(value: unknown): value is ElementChild {
  * </body>
  * ```
  */
-export function createElement<E extends Element = HTMLElement>(
-  tagName: TagName | string,
-  options: CreateElementOptions<E>,
+export function createElement<TN extends TagName | string = string>(
+  tagName: TN,
+  options: CreateElementOptions<TN>,
   ...children: ElementChild[]
-): E;
+): ElementOf<TN>;
 
 /**
- * Creates an HTML element of type `E` with the optional `children`.
+ * Creates an HTML element with tag name `TN` with the optional `children`.
  *
  * > [!NOTE]
  * > This is useful for creating an element with no properties and appending
  * > children to it.
  *
- * @template E Type of the created element.
+ * @template TN Tag name of the created element.
  *
  * @param tagName Tag name of the HTML/SVG element to create (e.g. `div`, `svg`, etc.).
  * @param [children] Optional children to append to created element.
  *
- * @returns Element of type `E` with the specified `options`.
+ * @returns Element of tag name `TN` with the specified `options`.
  *
  * @example
  * **Code**
@@ -290,18 +320,17 @@ export function createElement<E extends Element = HTMLElement>(
  * </body>
  * ```
  */
-export function createElement<E extends Element = HTMLElement>(
-  tagName: TagName | string,
+export function createElement<TN extends TagName | string>(
+  tagName: TN,
   ...children: ElementChild[]
-): E;
+): ElementOf<TN>;
 
-export function createElement<E extends Element = HTMLElement>(
-  tagName: TagName | string,
-  childOrOptions?: CreateElementOptions<E> | ElementChild,
+export function createElement<TN extends TagName | string>(
+  tagName: TN,
+  childOrOptions?: CreateElementOptions<TN> | ElementChild,
   ...children: ElementChild[]
-): E {
+): ElementOf<TN> {
   let element: Element;
-
   if (isCreateElementOptions(childOrOptions)) {
     if (is.notNil(childOrOptions.namespace)) {
       element = document.createElementNS(childOrOptions.namespace, tagName);
@@ -325,7 +354,7 @@ export function createElement<E extends Element = HTMLElement>(
     }
 
     if (is.notNil(on)) {
-      addEventListeners(element as E, on);
+      addEventListeners(element as ElementOf<TN>, on);
     }
 
     if (is.notNil(styles)) {
@@ -358,30 +387,27 @@ export function createElement<E extends Element = HTMLElement>(
     element.append(child);
   }
 
-  return cast<E>(element);
+  return cast<ElementOf<TN>>(element);
 }
 
 /**
  * Adds specified event listeners in `eventsDict` to the specified `element`.
  *
- * @template E Type of the specified `element`.
+ * @template TN Tag name of the specified `element`.
  *
  * @param element Element to attach events to.
  * @param eventsDict Object with key of event name and value of event listener.
  */
-function addEventListeners<E extends Element>(
-  element: E,
-  eventsDict: EventListenersOrDescriptorsFor<E>,
+function addEventListeners<TN extends TagName | string>(
+  element: ElementOf<TN>,
+  eventsDict: EventListenersOrDescriptorsFor<TN>,
 ): void {
-  const eventNames = Object.keys(eventsDict) as EventNameFor<E>[];
+  const eventNames = Object.keys(eventsDict) as EventNameFor<TN>[];
 
   for (const eventName of eventNames) {
     const listenerOrDescriptor = eventsDict[eventName]!;
 
-    let eventListener: EventListenerOrEventListenerObjectFor<
-      E,
-      typeof eventName
-    >;
+    let eventListener: EventListenerFor<TN, typeof eventName>;
 
     let options: AddEventListenerOptions = {};
 
@@ -391,7 +417,7 @@ function addEventListeners<E extends Element>(
       options = listenerOrDescriptor.options;
     } else {
       // biome-ignore format:
-      eventListener = listenerOrDescriptor as EventListenerOrEventListenerObjectFor<E, typeof eventName>;
+      eventListener = listenerOrDescriptor as EventListenerFor<TN, typeof eventName>;
     }
 
     element.addEventListener(
@@ -402,8 +428,8 @@ function addEventListeners<E extends Element>(
   }
 }
 
-function isEventDescriptor<E extends Element>(
+function isEventDescriptor<TN extends TagName | string>(
   value: unknown,
-): value is EventDescriptorFor<E, any> {
+): value is EventDescriptorFor<TN, any> {
   return is.objectLiteral(value) && "listener" in value;
 }

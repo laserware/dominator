@@ -61,6 +61,18 @@ export type SVGElementTagName = keyof SVGElementTagNameMap;
  */
 export type TagName = HTMLElementTagName | SVGElementTagName;
 
+/**
+ * Element type associated with the specified tag name.
+ *
+ * @template TN Tag name of the corresponding element.
+ */
+export type ElementOf<TN extends TagName | string> =
+  TN extends HTMLElementTagName
+    ? HTMLElementTagNameMap[TN]
+    : TN extends SVGElementTagName
+      ? SVGElementTagNameMap[TN]
+      : HTMLElement;
+
 export type AnyElementEventMap = ElementEventMap & GlobalEventHandlersEventMap;
 
 /**
