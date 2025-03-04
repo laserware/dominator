@@ -1,4 +1,5 @@
 import { describe, expect, it, mock } from "bun:test";
+import { noop } from "@laserware/arcade";
 
 import { getAttribute } from "../../attributes/getAttributes.ts";
 import { render } from "../../testing.ts";
@@ -73,6 +74,10 @@ describe("the createElement function", () => {
     const click = mock();
     const keydown = mock();
 
+    const handleContextMenu = (event: MouseEvent) => {
+      noop();
+    };
+
     const element = createElement(
       "button",
       {
@@ -94,6 +99,10 @@ describe("the createElement function", () => {
         on: {
           keydown: {
             listener: keydown,
+            options: { once: true },
+          },
+          contextmenu: {
+            listener: handleContextMenu,
             options: { once: true },
           },
         },

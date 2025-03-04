@@ -77,7 +77,10 @@ export type EventListenerOrEventListenerObjectFor<
  *
  * @template TN Tag name for the associated element.
  */
-export type ElementPropertiesOf<TN extends TagName | string> = ElementOf<TN>;
+export type ElementPropertiesOf<TN extends TagName | string> = Omit<
+  ElementOf<TN>,
+  "attributes" | "dataset"
+>;
 
 /**
  * Object with a listener that is called when the corresponding event fires
@@ -147,7 +150,7 @@ export type Namespace = (typeof Namespace)[keyof typeof Namespace];
  * @template TN Tag name for the created element.
  */
 export type CreateElementOptions<TN extends TagName | string> = Partial<
-  Omit<ElementPropertiesOf<TN>, "attributes" | "dataset">
+  ElementPropertiesOf<TN>
 > & {
   /**
    * Namespace to use when creating the element. This is required for elements
@@ -173,7 +176,7 @@ export type CreateElementOptions<TN extends TagName | string> = Partial<
    * an `options` object matching the `options` argument in `addEventListener`.
    * See the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options) for additional details.
    */
-  on?: EventListenersOrDescriptorsFor;
+  on?: EventListenersOrDescriptorsFor<TN>;
 
   /** Styles to set on element. */
   styles?: Styles;
