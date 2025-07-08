@@ -37,12 +37,12 @@
     "preversion": "bun run check && bun run typecheck && bun run build",
     "version": "git add -A src",
     "postversion": "git push && git push --tags",
+    "check:biome": "biome check --write src",
+    "check:types": "tsc --noEmit",
     "ci": "biome ci src",
     "docs:generate": "typedoc  --options typedoc.json",
     "docs:serve": "mkdir -p ./site && cd ./site && bunx vite",
-    "check": "biome check --write src",
-    "test": "bun test",
-    "typecheck": "tsc --noEmit"
+    "test": "bun test"
   },
   "dependencies": {
     "@laserware/arcade": "^3.21.2"
