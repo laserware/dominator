@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 
 import { render, selectorForNonExistent } from "../../testing.ts";
-import { InvalidCssVarError } from "../InvalidCssVarError.ts";
 import { getCssVar, getCssVars } from "../getCssVars.ts";
+import { InvalidCssVarError } from "../InvalidCssVarError.ts";
 
 describe("within getCssVars", () => {
   describe("the getCssVar function", () => {
@@ -66,7 +66,7 @@ describe("within getCssVars", () => {
 
   describe("the getCssVars function", () => {
     it("returns the CSS vars from the :root element", () => {
-      // biome-ignore format:
+      // biome-ignore format: Ignore
       render("<style>:root { --color-bg: blue; --color-fg: green; --gap: 24; --is-big: true }</style>");
 
       const result = getCssVars(["--color-bg", "--color-fg", "--gap", "--is-big"]);
@@ -80,7 +80,7 @@ describe("within getCssVars", () => {
     });
 
     it("returns the CSS vars from a specified target", () => {
-      // biome-ignore format:
+      // biome-ignore format: Ignore
       const element = render(`<button style="--color-bg: blue; --color-fg: green; --gap: 24; --is-big: true">Click</button>`);
 
       const result = getCssVars(["--color-bg", "--color-fg", "--gap", "--is-big"], element);

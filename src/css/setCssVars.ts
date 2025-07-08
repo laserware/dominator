@@ -7,13 +7,13 @@ import { formatForError } from "../internal/formatForError.ts";
 
 import { InvalidCssVarError } from "./InvalidCssVarError.ts";
 import { isCssVarName } from "./isCssVarName.ts";
-import type { CssVarName, CssVarValue, CssVars } from "./types.ts";
+import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
 
 /**
  * Sets the CSS variable `name` to `value` in the optionally specified `target`.
  *
- * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
- * (i.e. `:root`).
+ * If no `target` is specified, the [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
+ * (i.e. `:root`) is used.
  *
  * @template E Element representation of `target`.
  *
@@ -84,17 +84,17 @@ export function setCssVar<E extends Element = HTMLElement>(
 /**
  * Sets the CSS `vars` on the optionally specified `target`.
  *
- * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
- * (i.e. `:root`).
+ * If no `target` is specified, the [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
+ * (i.e. `:root`) is used.
  *
  * @remarks
  * The keys in the `vars` argument are not limited to type {@linkcode CssVarName}
- * because the key (i.e. CSS variable name) is checked prior to setting it on the
+ * because the key (i.e., CSS variable name) is checked before setting it on the
  * property.
  *
  * @template E Element representation of `target`.
  *
- * @param vars Object with key of CSS variable name and value of value to set for name.
+ * @param vars Object with a key of CSS variable name and value of value to set for name.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
  *
  * @returns Element representation of the specified `target`.
@@ -149,7 +149,7 @@ export function setCssVars<E extends Element = HTMLElement>(
   vars: CssVars,
   target: Target | null = document.documentElement,
 ): E {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot set CSS variables ${formatForError(vars)}`);
 
   for (const key of Object.keys(vars)) {
@@ -167,7 +167,7 @@ function setSingleCssVar(
   value: CssVarValue,
 ): void {
   if (!isCssVarName(name)) {
-    // biome-ignore format:
+    // biome-ignore format: Ignore
     throw new InvalidCssVarError(`CSS variable ${name} must be a string that starts with "--"`);
   }
 

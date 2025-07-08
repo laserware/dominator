@@ -1,4 +1,4 @@
-import { type KeysOf, type WithUndefinedValues, cast } from "@laserware/arcade";
+import { cast, type KeysOf, type WithUndefinedValues } from "@laserware/arcade";
 
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
@@ -7,13 +7,13 @@ import { formatForError } from "../internal/formatForError.ts";
 
 import { InvalidCssVarError } from "./InvalidCssVarError.ts";
 import { isCssVarName } from "./isCssVarName.ts";
-import type { CssVarName, CssVarValue, CssVars } from "./types.ts";
+import type { CssVarName, CssVars, CssVarValue } from "./types.ts";
 
 /**
- * Attempts to get the value associated with CSS variable `name` from the `target`.
+ * Attempts to get the value associated with the CSS variable `name` from the `target`.
  *
- * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
- * (i.e. `:root`).
+ * If no `target` is specified, the [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
+ * (i.e. `:root`) will be used.
  *
  * If found, the value is coerced to a numeric value if number-like, or a boolean
  * if `"true"` or `"false"`. All CSS variables are technically strings, but it's
@@ -81,16 +81,16 @@ export function getCssVar<V extends CssVarValue = string>(
  * Builds an object with the keys equal to the CSS variable `names` and
  * the value equal to the corresponding variable value in the `target`.
  *
- * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
- * (i.e. `:root`).
+ * If no `target` is specified, the [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
+ * (i.e. `:root`) will be used.
  *
- * If the value is found it is coerced to a boolean if `"true"` or `"false"`, a
+ * If the value is found, it is coerced to a boolean if `"true"` or `"false"`, a
  * number if numeric, or the string value if a string. If not found, the value
  * is excluded from the return value.
  *
  * > [!IMPORTANT]
  * > You will need to perform checks for whether a value is `undefined` in the returned
- * > object if some of the entries weren't present. See the code block below for
+ * > object if some entries weren't present. See the code block below for
  * > additional details.
  *
  * ```ts
@@ -166,7 +166,7 @@ export function getCssVars<V extends CssVars = CssVars>(
   names: KeysOf<V>,
   target: Target | null = document.documentElement,
 ): WithUndefinedValues<V> {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot get CSS variables ${formatForError(names)}`);
 
   const cssVars: Record<string, CssVarValue | undefined> = {};
@@ -185,7 +185,7 @@ function getSingleCssVar<T extends CssVarValue = string>(
   name: string,
 ): T | undefined {
   if (!isCssVarName(name)) {
-    // biome-ignore format:
+    // biome-ignore format: Ignore
     throw new InvalidCssVarError(`CSS variable ${name} must be a string that starts with "--"`);
   }
 

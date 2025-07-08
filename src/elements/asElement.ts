@@ -18,12 +18,12 @@ import type { Target } from "./types.ts";
  * This function is useful for getting the [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
  * from an Event as a specific element type without needing to use a non-null
  * assertion. In some cases, you know _exactly_ what type of element will be
- * associated with an Event and you want to assert it as such.
+ * associated with an Event, and you want to assert it as such.
  *
  * > [!WARNING]
  * > With this function, you are telling TypeScript what the element is, even if
  * > the type you pass into the generic is incorrect. If you try to access properties
- * > only available on an `HTMLButtonElement` when the Element or EventTarget you
+ * > only available on an `HTMLButtonElement`, when the Element or EventTarget you
  * > passed in is an `HTMLDivElement`, you're going to get a runtime error.
  *
  * @template E Element representation of `target`.

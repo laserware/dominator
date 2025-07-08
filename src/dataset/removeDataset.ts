@@ -66,7 +66,7 @@ export function removeDatasetEntry<E extends Element = HTMLElement>(
   target: Target | null,
   key: DatasetPropertyName,
 ): E {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot remove dataset entry for ${key}`);
 
   removeSingleDatasetEntry(element, key);
@@ -132,7 +132,7 @@ export function removeDatasetEntries<E extends Element = HTMLElement>(
   target: Target | null,
   keys: DatasetKey[],
 ): E {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot remove dataset entries ${formatForError(keys)}`);
 
   for (const key of keys) {
@@ -145,7 +145,7 @@ export function removeDatasetEntries<E extends Element = HTMLElement>(
 function removeSingleDatasetEntry(element: Element, key: string): void {
   const validAttrName = asDatasetAttributeName(key);
 
-  // We remove the _attribute_ rather than deleting the entry from the elements
+  // We remove the _attribute_ rather than deleting the entry from the element's
   // dataset because deleting a dataset entry using `delete` won't work in
   // older versions of Safari:
   removeAttribute(element, validAttrName);

@@ -6,10 +6,10 @@ import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
-import type { StyleKey, StyleValue, Styles } from "./types.ts";
+import type { StyleKey, Styles, StyleValue } from "./types.ts";
 
 /**
- * Sets the style property with name `key` to the specified `value` on the
+ * Sets the style property with the name `key` to the specified `value` on the
  * specified `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
@@ -25,7 +25,7 @@ export function setStyle<E extends Element = HTMLElement>(
   key: StyleKey,
   value: StyleValue,
 ): E {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot set style ${formatForError(key)}`);
 
   setSingleStyle(element, key, value);
@@ -51,7 +51,7 @@ export function setStyles<E extends Element = HTMLElement>(
   target: Target | null,
   styles: Styles,
 ): E {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot set styles ${formatForError(styles)}`);
 
   for (const key of Object.keys(styles)) {

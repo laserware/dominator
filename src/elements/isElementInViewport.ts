@@ -11,13 +11,13 @@ import type { Target } from "./types.ts";
  * @throws {@linkcode InvalidElementError} if the specified `target` wasn't found.
  */
 export function isElementInViewport(target: Target | null): boolean {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, "Cannot determine if element is in view");
 
   const { top, left, bottom, right } = element.getBoundingClientRect();
 
   const viewWidth = window.innerWidth || document.documentElement.clientWidth;
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const viewHeight = window.innerHeight || document.documentElement.clientHeight;
 
   return top >= 0 && left >= 0 && bottom <= viewHeight && right <= viewWidth;

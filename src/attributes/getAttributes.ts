@@ -1,11 +1,11 @@
-import { type KeysOf, type WithNullValues, cast } from "@laserware/arcade";
+import { cast, type KeysOf, type WithNullValues } from "@laserware/arcade";
 
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
-import type { AttributeName, AttributeValue, Attributes } from "./types.ts";
+import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
 
 /**
  * Attempts to get the attribute `name` from the `target`. If the value is found,
@@ -73,7 +73,7 @@ export function getAttribute<
  *
  * > [!IMPORTANT]
  * > You will need to perform checks for whether a value is `null` in the returned
- * > object if some of the entries weren't present. See the code block below for
+ * > object if some entries weren't present. See the code block below for
  * > additional details.
  *
  * ```ts
@@ -140,7 +140,7 @@ export function getAttributes<V extends Attributes = Attributes>(
   target: Target | null,
   names: KeysOf<V>,
 ): WithNullValues<V> {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot get attributes ${formatForError(names)}`);
 
   const attributes: Record<string, AttributeValue | null> = {};

@@ -4,7 +4,7 @@ import type { Target } from "./types.ts";
 
 /**
  * Checks if the `target` matches the specified `tagName`. If the `target`
- * doesn't exist or is invalid, returns `false`.
+ * doesn't exist or is invalid, it returns `false`.
  *
  * @remarks
  * You can't `UPPERCASE` the `tagName` without getting a type error. That's because

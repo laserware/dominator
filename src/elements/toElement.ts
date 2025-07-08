@@ -1,7 +1,7 @@
 import { cast, isNil } from "@laserware/arcade";
 
-import { InvalidElementError } from "./InvalidElementError.ts";
 import { findElement } from "./findElement.ts";
+import { InvalidElementError } from "./InvalidElementError.ts";
 import { isElementLike } from "./isElementLike.ts";
 import type { Target } from "./types.ts";
 
@@ -44,9 +44,9 @@ import type { Target } from "./types.ts";
  * function handleButtonClick(event: MouseEvent): void {
  *   const buttonElement = toElement<HTMLButtonElement>(event.currentTarget);
  *
- *   // Note that need to use optional chaining because the return value of
- *   // toElement be `null` (even though we *know* that `currentTarget` is defined):
- *   buttonElem?.focus?.();
+ *   // Note that you need to use optional chaining because the return value of
+ *   // toElement may be `null` (even though we *know* that `currentTarget` is defined):
+ *   buttonElement?.focus?.();
  * }
  * ```
  */

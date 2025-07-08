@@ -58,11 +58,11 @@ export function selectDatasetEntry(
 
 /**
  * Attempts to build a CSS selector string for the specified `dataset` object. Note
- * that the values of the `dataset` object are coerced to a string and `null` excludes
+ * that the values of the `dataset` object are coerced to a string, and `null` excludes
  * a value but only includes a key. If `tagName` is specified, it is included in
  * the resulting selector.
  *
- * @param dataset Object with key of dataset key and value of dataset value.
+ * @param dataset Object with a key of the dataset key and value of dataset value.
  * @param [tagName] Optional tag name for the element.
  *
  * @returns CSS selector based on the specified `dataset`.
@@ -108,7 +108,7 @@ function selectSingleDataEntry(
 ): CssSelector {
   const attributeName = asDatasetAttributeName(key);
 
-  // If a value was specified, that's what we want to search by. So for key
+  // If a value was specified, that's what we want to search for. So for the key
   // of `someKey` and value of `someValue`, we would return `[data-some-key="someValue"]`,
   // otherwise we would just return `[data-some-key]`:
   if (isNil(value)) {

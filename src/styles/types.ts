@@ -1,7 +1,7 @@
 import type { CssVarName } from "../css/types.ts";
 
 /**
- * Valid style keys (i.e. non-methods) that can be set on an element.
+ * Valid style keys (i.e., non-methods) that can be set on an element.
  */
 export type StyleKey =
   | Exclude<
@@ -10,7 +10,7 @@ export type StyleKey =
       | "length"
       | "parentRule"
 
-      // These are methods which can't be stringified:
+      // These are methods that can't be stringified:
       | "getPropertyPriority"
       | "getPropertyValue"
       | "item"

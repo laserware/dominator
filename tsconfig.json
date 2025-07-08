@@ -9,6 +9,7 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "noEmit": true,
+    "noUnusedParameters": false,
     "outDir": "./dist",
     "removeComments": false,
     "resolveJsonModule": true,

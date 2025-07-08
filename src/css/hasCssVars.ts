@@ -12,7 +12,7 @@ import type { CssVarName, CssVarValue } from "./types.ts";
 /**
  * Search criteria for checking if CSS variables are present in an element.
  * You can use an array of CSS variable names to check only if the CSS variables are
- * present, or an object to search for specific values. Use `null` for the value
+ * present or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of a CSS variable.
  */
 export type CssVarsSearch = PropertySearch<CssVarName, CssVarValue | null>;
@@ -21,8 +21,8 @@ export type CssVarsSearch = PropertySearch<CssVarName, CssVarValue | null>;
  * Checks if the `target` has the CSS variable with `name`. If a `value` is
  * specified, checks that the values match.
  *
- * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
- * (i.e. `:root`).
+ * If no `target` is specified, the [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
+ * (i.e. `:root`) is used.
  *
  * @param name Name of the CSS variable to check for.
  * @param [value=undefined] Optional value of the CSS variable to check for.
@@ -82,7 +82,7 @@ export function hasCssVar(
   value: CssVarValue | undefined = undefined,
   target: Target | null = document.documentElement,
 ): boolean {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot check for CSS variable ${name}`);
 
   return hasSingleCssVar(element, name, value);
@@ -92,8 +92,8 @@ export function hasCssVar(
  * Checks if **all** of the CSS variables match the `search` criteria in the
  * `target`.
  *
- * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
- * (i.e. `:root`).
+ * If no `target` is specified, the [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
+ * (i.e. `:root`) is used.
  *
  * @param search Array of CSS variable names or CSS variables filter to check for.
  * @param [target=documentElement] Optional Element, EventTarget, or CSS selector.
@@ -161,7 +161,7 @@ export function hasAllCssVars(
   search: CssVarsSearch,
   target: Target | null = document.documentElement,
 ): boolean {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot check for all CSS variables ${formatForError(search)}`);
 
   return hasAllProperties(element, search, hasSingleCssVar);
@@ -240,7 +240,7 @@ export function hasSomeCssVars(
   search: CssVarsSearch,
   target: Target | null = document.documentElement,
 ): boolean {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot check for some CSS variables ${formatForError(search)}`);
 
   return hasSomeProperties(element, search, hasSingleCssVar);

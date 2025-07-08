@@ -34,7 +34,7 @@
 // TypeScript Version: 2.8
 
 /**
- * This module contain type definitions for DOM attributes and elements.
+ * This module contains type definitions for DOM attributes and elements.
  *
  * @module dom
  * @mergeModuleWith types
@@ -192,7 +192,7 @@ export interface AriaAttributes {
    */
   "aria-grabbed"?: Booleanish | undefined | null;
   /**
-   * Indicates the availability and type of interactive popup element, such as
+   * Indicates the availability and the type of interactive popup element, such as
    * menu or dialog, that can be triggered by an element.
    */
   "aria-haspopup"?:
@@ -234,7 +234,7 @@ export interface AriaAttributes {
    */
   "aria-level"?: number | undefined | null;
   /**
-   * Indicates that an element will be updated, and describes the types of
+   * Indicates that an element will be updated and describes the types of
    * updates the user agents, assistive technologies, and user can expect from
    * the live region.
    */
@@ -259,7 +259,7 @@ export interface AriaAttributes {
    */
   "aria-orientation"?: "horizontal" | "vertical" | undefined | null;
   /**
-   * Identifies an element (or elements) in order to define a visual, functional,
+   * Identifies an element (or elements) to define a visual, functional,
    * or contextual parent/child relationship between DOM elements where the DOM
    * hierarchy cannot be used to represent the relationship.
    * See {@linkcode aria-controls}.
@@ -283,7 +283,7 @@ export interface AriaAttributes {
    */
   "aria-pressed"?: boolean | "false" | "mixed" | "true" | undefined | null;
   /**
-   * Indicates that the element is not editable, but is otherwise operable.
+   * Indicates that the element is not editable but is otherwise operable.
    * See {@linkcode aria-disabled}.
    */
   "aria-readonly"?: Booleanish | undefined | null;
@@ -1813,7 +1813,7 @@ export interface SVGAttributesTagNameMap {
  */
 export type SVGElementAttributes = SVGAttributes;
 
-// biome-ignore format:
+// biome-ignore format: Ignore
 /**
  * Attributes for the [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) of type `E`.
  *

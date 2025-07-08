@@ -47,7 +47,7 @@ export type EventFor<
       : never;
 
 /**
- * Event listener that is called with event that corresponds to name `EN`.
+ * Event listener that is called with an event that corresponds to the name `EN`.
  *
  * @template TN Tag name of the associated element.
  * @template EN Name of the event that listener is associated with.
@@ -110,7 +110,7 @@ export type EventDescriptorFor<
  * with the {@linkcode createElement} function.
  *
  * @template TN Tag name of the associated element.
- * @template EN Name of the Event that the listener or  is associated with.
+ * @template EN Name of the Event that the listener or is associated with.
  */
 export type EventListenerOrDescriptorFor<
   TN extends TagName | string,
@@ -118,7 +118,7 @@ export type EventListenerOrDescriptorFor<
 > = EventListenerOrEventListenerObjectFor<TN, EN> | EventDescriptorFor<TN, EN>;
 
 /**
- * Object with key of event name and value of an event listener or
+ * Object with a key of event name and value of an event listener or
  * {@linkcode EventDescriptorFor}.
  *
  * @template TN Tag name of the associated element.
@@ -159,17 +159,17 @@ export type CreateElementOptions<TN extends TagName | string> = Partial<
    */
   namespace?: Namespace;
 
-  /** Attributes to set on element. */
+  /** Attributes to set on an element. */
   attributes?: Attributes<ElementOf<TN>> | Record<string, any>;
 
-  /** CSS variables to set on element. */
+  /** CSS variables to set on an element. */
   cssVars?: CssVars;
 
-  /** Dataset entries to set on element. */
+  /** Dataset entries to set on an element. */
   dataset?: Dataset | Record<string, any>;
 
   /**
-   * Event listeners or {@linkcode EventDescriptorFor} objects to set on element.
+   * Event listeners or {@linkcode EventDescriptorFor} objects to set on an element.
    *
    * The `EventDescriptor` is an object with a `listener` field that defines
    * the callback that is fired when the corresponding event is dispatched and
@@ -178,7 +178,7 @@ export type CreateElementOptions<TN extends TagName | string> = Partial<
    */
   on?: EventListenersOrDescriptorsFor<TN>;
 
-  /** Styles to set on element. */
+  /** Styles to set on an element. */
   styles?: Styles;
 };
 
@@ -202,19 +202,19 @@ function isElementChild(value: unknown): value is ElementChild {
 }
 
 /**
- * Creates an HTML element with tag name `TN` and adds the properties/listeners
+ * Creates an HTML element with the tag name `TN` and adds the properties/listeners
  * from the `options` object as well as the optional `children`.
  *
  * The attributes, CSS variables, dataset entries, and styles specified in
- * `options` are set on the element. Optionally specify `children` to append
+ * `options` are set on the element. Optionally, specify `children` to append
  * to the newly created element.
  *
  * @template TN Tag name of the created element.
  *
  * @param tagName Tag name of the HTML/SVG element to create (e.g. `div`, `svg`, etc.).
  * @param options Optional attributes, CSS variables, dataset entries, and styles
- *                to set on element.
- * @param [children] Optional children to append to created element.
+ *                to set on an element.
+ * @param [children] Optional children to append to a created element.
  *
  * @returns Element of tag name `TN` with the specified `options`.
  *
@@ -287,7 +287,7 @@ export function createElement<TN extends TagName | string = string>(
 ): ElementOf<TN>;
 
 /**
- * Creates an HTML element with tag name `TN` with the optional `children`.
+ * Creates an HTML element with the tag name `TN` with the optional `children`.
  *
  * > [!NOTE]
  * > This is useful for creating an element with no properties and appending
@@ -399,7 +399,7 @@ export function createElement<TN extends TagName | string>(
  * @template TN Tag name of the specified `element`.
  *
  * @param element Element to attach events to.
- * @param eventsDict Object with key of event name and value of event listener.
+ * @param eventsDict Object with a key of event name and value of event listener.
  */
 function addEventListeners<TN extends TagName | string>(
   element: ElementOf<TN>,
@@ -422,7 +422,7 @@ function addEventListeners<TN extends TagName | string>(
 
       options = listenerOrDescriptor.options;
     } else {
-      // biome-ignore format:
+      // biome-ignore format: Ignore
       eventListener = listenerOrDescriptor as EventListenerOrEventListenerObjectFor<TN, typeof eventName>;
     }
 

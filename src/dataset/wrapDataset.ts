@@ -22,8 +22,8 @@ export type AnyDatasetShape = Record<string, DatasetValue | null>;
  *
  * Trying to work with the `dataset` property using TypeScript is not great. You
  * have to _repeatedly_ perform a bunch of type checks, which is tedious and
- * results in overly-verbose code. This class makes it much easier to get and
- * set properties of the `dataset` (which map to the corresponding `data-*`
+ * results in overly verbose code. This class makes it much easier to get and
+ * set properties of the `dataset` (which maps to the corresponding `data-*`
  * attributes on an element).
  *
  * The `dataset` property is a (very barebones) [DOMStringMap](https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap).
@@ -46,7 +46,7 @@ export class DatasetWrapper<
   /**
    * Creates a new instance of a {@linkcode DatasetWrapper} class to manage the dataset
    * property of the corresponding `target`. Optionally pass in `initialData`
-   * that can fully match the shape specified in the `DS` generic or partially.
+   * that can fully (or partially) match the shape specified in the `DS` generic.
    *
    * @template DS The shape of the dataset data.
    *
@@ -56,7 +56,7 @@ export class DatasetWrapper<
    * @throws {@linkcode elements!InvalidElementError} if the specified `target` wasn't found.
    */
   constructor(target: Target, initialData?: Partial<DS>) {
-    // biome-ignore format:
+    // biome-ignore format: Ignore
     this.#element = toElementOrThrow(target, "Cannot initialize Dataset wrapper");
 
     if (isNotNil(initialData)) {
@@ -138,7 +138,7 @@ export class DatasetWrapper<
 
   /**
    * Updates the element's dataset property values to match the `entries` object
-   * specified. You can pass in a subset of the shape of dataset and only those
+   * specified. You can pass in a subset of the shape of the dataset, and only those
    * values will be updated.
    *
    * @param entries Data to update in the dataset.
@@ -226,7 +226,7 @@ export class DatasetWrapper<
  *   status: string | undefined;
  * }
  *
- * // You can pass in initial dataset which will be added to the element's
+ * // You can pass in the initial dataset which will be added to the element's
  * // dataset (as well as set as attributes on the element).
  * const dataset = wrapDataset<Shape>(element, {
  *   isActive: false,
@@ -248,7 +248,7 @@ export class DatasetWrapper<
  * // Remove from the element:
  * dataset.remove("label");
  *
- * // Update existing entry or add new one if not present:
+ * // Update the existing entry or add a new one if not present:
  * dataset.set("status", "warning");
  *
  * // Sets multiple entries on element:

@@ -17,7 +17,7 @@ export const selectorForNonExistent = "#never-going-to-exist";
  *
  * @param html HTML markup to render.
  * @param [options] Optional overrides for element attributes and properties (useful for mocking).
- * @param [children] Optional children to add to element.
+ * @param [children] Optional children to add to an element.
  *
  * @returns Element of type `E`.
  */

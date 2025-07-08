@@ -32,7 +32,7 @@ export type DatasetValue =
  *
  * Valid key/value pair representing dataset attributes/properties (prior to stringifying).
  * The key should be a valid {@linkcode DatasetKey} and the value must be a valid
- * {@linkcode DatasetValue}. Some of the values may be `null` or `undefined`.
+ * {@linkcode DatasetValue}. Some values may be `null` or `undefined`.
  *
  * Note that the `HTMLElement.dataset` property is a
  * [DOMStringMap](https://developer.mozilla.org/en-US/docs/Web/API/DOMStringMap).

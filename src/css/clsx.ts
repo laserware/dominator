@@ -34,7 +34,7 @@ export type ClassValue =
   | undefined;
 
 /**
- * Object with key of class name and value of truthy/falsy condition.
+ * Object with a key of class name and value of truthy/falsy condition.
  * The object is passed into the {@linkcode clsx} function.
  */
 export type ClassDict = Record<string, any>;
@@ -46,7 +46,7 @@ export type ClassArray = ClassValue[];
 
 /**
  * A tiny (239B) utility for constructing `className` strings conditionally.
- * Also serves as a faster & smaller drop-in replacement for the
+ * Also serves as a faster and smaller drop-in replacement for the
  * [classnames](https://www.npmjs.com/package/classnames) package.
  *
  * @remarks

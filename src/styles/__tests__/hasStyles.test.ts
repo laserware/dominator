@@ -48,7 +48,7 @@ describe("within hasStyles", () => {
 
   describe("the hasAllStyles function", () => {
     it("returns true if all specified styles exist on the target", () => {
-      // biome-ignore format:
+      // biome-ignore format: Ignore
       const element = render(`<button style="color: red; background: blue; line-height: 1.5;">Test</button>`);
 
       const result = hasAllStyles(element, ["color", "background", "lineHeight"]);
@@ -57,7 +57,7 @@ describe("within hasStyles", () => {
     });
 
     it("returns true if all specified styles match search filter on the target", () => {
-      // biome-ignore format:
+      // biome-ignore format: Ignore
       const element = render(`<button style="color: red; background: blue; line-height: 1.5;">Test</button>`);
 
       const result = hasAllStyles(element, {
@@ -70,7 +70,7 @@ describe("within hasStyles", () => {
     });
 
     it("returns false if one of the specified styles do not exist on the target", () => {
-      // biome-ignore format:
+      // biome-ignore format: Ignore
       const element = render(`<button style="color: red; background: blue; line-height: 1.5;">Test</button>`);
 
       const result = hasAllStyles(element, ["color", "background", "lineHeight", "border"]);
@@ -79,7 +79,7 @@ describe("within hasStyles", () => {
     });
 
     it("returns false if any of the specified styles search filters do not match the target", () => {
-      // biome-ignore format:
+      // biome-ignore format: Ignore
       const element = render(`<button style="color: red; background: blue; line-height: 1.5;">Test</button>`);
 
       const result = hasAllStyles(element, {
@@ -103,7 +103,7 @@ describe("within hasStyles", () => {
 
   describe("the hasSomeStyles function", () => {
     it("returns true if some of the specified styles exist on the target", () => {
-      // biome-ignore format:
+      // biome-ignore format: Ignore
       const element = render(`<button style="color: red; background: blue; line-height: 1.5;">Test</button>`);
 
       const result = hasSomeStyles(element, ["color", "background", "border"]);
@@ -112,7 +112,7 @@ describe("within hasStyles", () => {
     });
 
     it("returns true if some of the specified styles match search filter on the target", () => {
-      // biome-ignore format:
+      // biome-ignore format: Ignore
       const element = render(`<button style="color: red; background: blue; line-height: 1.5;">Test</button>`);
 
       const result = hasSomeStyles(element, { color: "red" });
@@ -121,7 +121,7 @@ describe("within hasStyles", () => {
     });
 
     it("returns false if none of the specified styles exist on the target", () => {
-      // biome-ignore format:
+      // biome-ignore format: Ignore
       const element = render(`<button style="color: red; background: blue; line-height: 1.5;">Test</button>`);
 
       const result = hasSomeStyles(element, ["border", "padding"]);
@@ -130,7 +130,7 @@ describe("within hasStyles", () => {
     });
 
     it("returns false if all of the specified styles search filters do not match the target", () => {
-      // biome-ignore format:
+      // biome-ignore format: Ignore
       const element = render(`<button style="color: red; background: blue; line-height: 1.5;">Test</button>`);
 
       const result = hasSomeStyles(element, {

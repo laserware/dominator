@@ -45,7 +45,7 @@ export type AttributeValue =
 
 /**
  * Valid key/value pair representing HTML/SVG attributes (prior to stringifying).
- * Some of the values may be `null` or `undefined`.
+ * Some values may be `null` or `undefined`.
  *
  * @template E Element with corresponding attributes.
  */

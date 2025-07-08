@@ -1,4 +1,4 @@
-import { cast, isPlainObject } from "@laserware/arcade";
+import { cast, isObjectLiteral } from "@laserware/arcade";
 
 import type { CssSelector } from "../css/types.ts";
 
@@ -54,7 +54,7 @@ export function findElement<E extends Element = HTMLElement>(
   let selector: string;
   let validParent: ElementLike = parent ?? document;
 
-  if (isPlainObject(selectorOrOptions)) {
+  if (isObjectLiteral(selectorOrOptions)) {
     const parsed = parseFindOptions(selectorOrOptions);
 
     selector = parsed.selector;

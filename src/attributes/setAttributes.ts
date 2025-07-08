@@ -5,7 +5,7 @@ import type { Target } from "../elements/types.ts";
 import { stringifyDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
-import type { AttributeName, AttributeValue, Attributes } from "./types.ts";
+import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
 
 /**
  * Sets the attribute `name` of the `target` element to the `value`. The `value`
@@ -70,7 +70,7 @@ export function setAttribute<E extends Element = HTMLElement>(
  * @template E Element representation of `target`.
  *
  * @param target Element, EventTarget, or CSS selector.
- * @param attributes Object with key of attribute name and value of attribute value.
+ * @param attributes Object with a key of attribute name and value of attribute value.
  *
  * @returns Element representation of the specified `target`.
  *
@@ -113,7 +113,7 @@ export function setAttributes<E extends Element = HTMLElement>(
   target: Target | null,
   attributes: Attributes<E>,
 ): E {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot set attributes ${formatForError(attributes)}`);
 
   for (const name of Object.keys(attributes)) {

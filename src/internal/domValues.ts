@@ -4,18 +4,18 @@ import type { DatasetValue } from "../dataset/types.ts";
 import type { StyleValue } from "../styles/types.ts";
 
 /**
- * Converts the specified value to a string. If the value is `null`, returns
+ * Converts the specified value to a string. If the value is `null`, it returns
  * an empty string. HTML element attributes, properties, and dataset values
  * usually can only be a string.
  *
  * @internal
  *
- * Any non-primitive value (e.g. an object or array), is stringified via
+ * Any non-primitive value (e.g., an object or array) is stringified via
  * [JSON.stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
  *
  * @param value Value to convert to a valid attribute value.
  *
- * @returns string representation of tha value if defined, otherwise `undefined`.
+ * @returns string representation of the value if defined, otherwise `undefined`.
  */
 export function stringifyDOMValue(value: unknown): string | undefined {
   if (value === undefined) {
@@ -47,7 +47,7 @@ export function stringifyDOMValue(value: unknown): string | undefined {
  *
  * Note that it will return the string value directly if it couldn't
  * convert it to the specified type `T` generic. If the value is `null` or
- * `undefined`, returns `undefined`.
+ * `undefined`, it returns `undefined`.
  *
  * @internal
  *

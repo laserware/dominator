@@ -13,9 +13,9 @@ import type { Target } from "./types.ts";
  * @throws {@linkcode InvalidElementError} if the specified `target` wasn't found.
  */
 export function isElementScrollable(target: Target | null): boolean {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, "Cannot check if target is scrollable");
 
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   return element.clientHeight < element.scrollHeight || element.clientWidth < element.scrollWidth;
 }

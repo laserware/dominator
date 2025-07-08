@@ -23,7 +23,7 @@ import type { Target } from "./types.ts";
  * @throws {@linkcode InvalidElementError} if the specified `target` wasn't found.
  */
 export function getElementValue<T>(target: Target | null): T {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow<HTMLInputElement>(target, "Cannot get value for element");
 
   if (isElementType<HTMLSelectElement>(element, "select")) {

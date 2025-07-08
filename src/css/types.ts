@@ -18,7 +18,7 @@ export type CssVarName = `--${string}`;
 export type CssVarValue = boolean | number | string;
 
 /**
- * Represents an object with key of {@linkcode CssVarName} and value
+ * Represents an object with a key of {@linkcode CssVarName} and value
  * of {@linkcode CssVarValue}.
  */
 export type CssVars = Record<CssVarName, CssVarValue>;

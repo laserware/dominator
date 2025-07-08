@@ -47,7 +47,7 @@ export function removeStyles<E extends Element = HTMLElement>(
   target: Target | null,
   keys: StyleKey[],
 ): E {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot remove styles ${formatForError(keys)}`);
 
   for (const key of keys) {

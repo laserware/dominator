@@ -1,6 +1,6 @@
 /* istanbul ignore file -- @preserve: Cannot test because of Intl.ListFormat. */
 
-import { isPlainObject } from "@laserware/arcade";
+import { isObjectLiteral } from "@laserware/arcade";
 
 const formatter = new Intl.ListFormat("en", {
   style: "short",
@@ -11,7 +11,7 @@ type FormattableValue = string | number;
 
 /**
  * Returns a formatted display value for an error message contingent on the
- * specified `valueOrValues`. For object and array types, uses the
+ * specified `valueOrValues`. For object and array types, use the
  * [Intl.ListFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat)
  * API to get the result.
  *
@@ -35,11 +35,11 @@ export function formatForError(
     return valueOrValues;
   }
 
-  // We need the list to be a string prior to passing it to the `format` method,
+  // We need the list to be a string before passing it to the `format` method,
   // so we ensure only strings are included in the list.
   let stringValues: string[];
 
-  if (isPlainObject(valueOrValues)) {
+  if (isObjectLiteral(valueOrValues)) {
     stringValues = getStringValues(Object.keys(valueOrValues));
   } else {
     stringValues = getStringValues(valueOrValues);

@@ -3,7 +3,7 @@ import type { Target } from "./types.ts";
 
 /**
  * Checks if the specified `child` has the specified `parent`. If either element
- * doesn't exist in the DOM, returns `false`.
+ * doesn't exist in the DOM, it returns `false`.
  *
  * @param child Element, EventTarget, or CSS selector.
  * @param parent Element, EventTarget, or CSS selector of parent.

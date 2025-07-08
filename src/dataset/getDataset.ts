@@ -1,4 +1,4 @@
-import { type WithUndefinedValues, cast } from "@laserware/arcade";
+import { cast, type WithUndefinedValues } from "@laserware/arcade";
 
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
@@ -70,7 +70,7 @@ export function getDatasetValue<V extends DatasetValue = string>(
   target: Target | null,
   key: DatasetKey,
 ): V | undefined {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot get dataset value for ${key}`);
 
   return getSingleDatasetValue(element, key);
@@ -83,7 +83,7 @@ export function getDatasetValue<V extends DatasetValue = string>(
  *
  * > [!IMPORTANT]
  * > You will need to perform checks for whether a value is `undefined` in the returned
- * > object if some of the entries weren't present. See the code block below for
+ * > object if some entries weren't present. See the code block below for
  * > additional details.
  *
  * ```ts
@@ -161,7 +161,7 @@ export function getDatasetEntries<V extends Dataset = Dataset>(
   target: Target | null,
   keys: DatasetKey[],
 ): WithUndefinedValues<V> {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot get dataset entries ${formatForError(keys)}`);
 
   const result: Record<DatasetKey, DatasetValue | undefined> = {};

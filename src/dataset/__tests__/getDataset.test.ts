@@ -46,7 +46,7 @@ describe("within getDataset", () => {
 
   describe("the getDatasetEntries function", () => {
     it("returns an object with the key of names passed in and values when all dataset entries exist", () => {
-      // biome-ignore format:
+      // biome-ignore format: Ignore
       const element = render(`<button data-name="button" data-disabled data-checked="true" data-count="20">Button</button>`);
 
       const result = getDatasetEntries(element, ["name", "disabled", "data-checked", "data-count"]);
@@ -60,7 +60,7 @@ describe("within getDataset", () => {
     });
 
     it("returns an object with the key of names passed in and values when some dataset entries missing", () => {
-      // biome-ignore format:
+      // biome-ignore format: Ignore
       const element = render(`<button data-name="button" data-disabled data-checked="true" data-count="20">Button</button>`);
 
       const result = getDatasetEntries(element, [

@@ -18,7 +18,7 @@ export function keepElementVisibleIn(
 ): void {
   const activeElement = toElementOrThrow(target, "Cannot keep target visible");
 
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const scrollElement = toElementOrThrow(parent, "Cannot keep element visible in parent");
 
   const isAbove = activeElement.offsetTop < scrollElement.scrollTop;

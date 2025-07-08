@@ -10,8 +10,8 @@ import type { CssVarName } from "./types.ts";
 /**
  * Removes the CSS variable `name` from the optionally specified `target`.
  *
- * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
- * (i.e. `:root`).
+ * If no `target` is specified, the [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
+ * (i.e. `:root`) is used.
  *
  * @template E Element representation of `target`.
  *
@@ -60,7 +60,7 @@ export function removeCssVar<E extends Element = HTMLElement>(
   name: CssVarName,
   target: Target | null = document.documentElement,
 ): E {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot remove CSS variable ${name}`);
 
   removeSingleCssVar(element, name);
@@ -71,8 +71,8 @@ export function removeCssVar<E extends Element = HTMLElement>(
 /**
  * Removes the CSS variables with `names` from the optionally specified `target`.
  *
- * If no `target` is specified, uses [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
- * (i.e. `:root`).
+ * If no `target` is specified, the [`documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)
+ * (i.e. `:root`) is used.
  *
  * @template E Element representation of `target`.
  *
@@ -133,7 +133,7 @@ export function removeCssVars<E extends Element = HTMLElement>(
   names: CssVarName[],
   target: Target | null = document.documentElement,
 ): E {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot remove CSS variables ${formatForError(names)}`);
 
   for (const name of names) {
@@ -147,7 +147,7 @@ function removeSingleCssVar(element: Element, name: CssVarName): void {
   try {
     cast<HTMLElement>(element).style.removeProperty(name);
   } catch (err: any) {
-    // biome-ignore format:
+    // biome-ignore format: Ignore
     throw new InvalidCssVarError(`Cannot remove CSS variable ${name}: ${err.message}`);
   }
 }

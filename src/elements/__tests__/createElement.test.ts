@@ -60,6 +60,7 @@ describe("the createElement function", () => {
   it("creates an element with no children and properties", () => {
     const result = createElement("div", { className: "test", styles: { margin: 0, padding: 0 } });
 
+    // noinspection CssRedundantUnit
     expect(result.outerHTML).toBe(`<div style="margin: 0px; padding: 0px;" class="test"></div>`);
   });
 

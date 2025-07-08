@@ -1,7 +1,7 @@
 import { cast, isNil } from "@laserware/arcade";
 
 /**
- * Converts the `items` of type [NodeList](https://developer.mozilla.org/en-US/docs/Web/API/NodeList)
+ * Converts the `items` of a type [NodeList](https://developer.mozilla.org/en-US/docs/Web/API/NodeList)
  * or [HTMLCollection](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCollection)
  * to an array.
  *

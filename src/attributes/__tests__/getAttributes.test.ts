@@ -45,7 +45,7 @@ describe("within getAttributes", () => {
 
   describe("the getAttributes function", () => {
     it("returns an object with the key of names passed in and values when all attributes exist", () => {
-      // biome-ignore format:
+      // biome-ignore format: Ignore
       const element = render(`<button name="button" disabled aria-checked="true" data-count="20">Button</button>`);
 
       const result = getAttributes(element, ["name", "disabled", "aria-checked", "data-count"]);
@@ -59,7 +59,7 @@ describe("within getAttributes", () => {
     });
 
     it("returns an object with the key of names passed in and values when some attributes missing", () => {
-      // biome-ignore format:
+      // biome-ignore format: Ignore
       const element = render(`<button name="button" disabled aria-checked="true" data-count="20">Button</button>`);
 
       const result = getAttributes(element, [

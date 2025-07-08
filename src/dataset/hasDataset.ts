@@ -13,7 +13,7 @@ import type { DatasetKey, DatasetValue } from "./types.ts";
 /**
  * Search criteria for checking if dataset entries are present in an element.
  * You can use an array of dataset property/attribute names to check only if the
- * dataset entries are present, or an object to search for specific values.
+ * dataset entries are present or an object to search for specific values.
  * Use `null` for the value if you only care about the presence of a dataset entry.
  */
 export type DatasetSearch = PropertySearch<DatasetKey, DatasetValue | null>;
@@ -62,7 +62,7 @@ export function hasDatasetEntry(
   key: DatasetKey,
   value?: DatasetValue,
 ): boolean {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot check for dataset entry for ${key}`);
 
   return hasSingleDatasetEntry(element, key, value);
@@ -112,7 +112,7 @@ export function hasAllDatasetEntries(
   target: Target | null,
   search: DatasetSearch,
 ): boolean {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot check for all dataset entries ${formatForError(search)}`);
 
   return hasAllProperties(element, search, hasSingleDatasetEntry);
@@ -166,7 +166,7 @@ export function hasSomeDatasetEntries(
   target: Target | null,
   search: DatasetSearch,
 ): boolean {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot check for some dataset entries ${formatForError(search)}`);
 
   return hasSomeProperties(element, search, hasSingleDatasetEntry);

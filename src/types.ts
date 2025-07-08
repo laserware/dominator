@@ -23,10 +23,10 @@ export type PropertyFilter<K extends string, V> = {
 
 /**
  * Search criteria that can be used to determine if a DOM property is present
- * on an element. If an array, only the presence of the property **names** are
+ * on an element. If an array, only the presence of the property **names** is
  * checked. If an object, the property name **and** value are checked.
  *
- * To check for the existence of a property only (i.e. you don't care what the
+ * To check for the existence of a property only (i.e., you don't care what the
  * value is), use `null` for the field.
  *
  * @template K Key of the property to search.

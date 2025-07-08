@@ -14,17 +14,17 @@
  * @module css
  */
 export {
-  clsx,
   type ClassArray,
   type ClassDict,
   type ClassValue,
+  clsx,
 } from "./clsx.ts";
 export { getCssVar, getCssVars } from "./getCssVars.ts";
 export {
+  type CssVarsSearch,
   hasAllCssVars,
   hasCssVar,
   hasSomeCssVars,
-  type CssVarsSearch,
 } from "./hasCssVars.ts";
 export { InvalidCssVarError } from "./InvalidCssVarError.ts";
 export { removeCssVar, removeCssVars } from "./removeCssVars.ts";

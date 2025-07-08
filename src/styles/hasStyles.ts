@@ -12,13 +12,13 @@ import type { StyleKey, StyleValue } from "./types.ts";
 /**
  * Search criteria for checking if style properties are present in an element.
  * You can use an array of style property names to check only if the styles are
- * present, or an object to search for specific values. Use `null` for the value
+ * present or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of a style property.
  */
 export type StylesSearch = PropertySearch<StyleKey, StyleValue | null>;
 
 /**
- * Checks if the specified `target` has the specified style property with name `key`.
+ * Checks if the specified `target` has the specified style property with the name `key`.
  * If a `value` is specified, checks that the values match.
  *
  * @param target Element, EventTarget, or CSS selector.
@@ -54,7 +54,7 @@ export function hasAllStyles(
   target: Target | null,
   search: StylesSearch,
 ): boolean {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot check for all styles ${formatForError(search)}`);
 
   return hasAllProperties(element, search, hasSingleStyle);
@@ -75,7 +75,7 @@ export function hasSomeStyles(
   target: Target | null,
   search: StylesSearch,
 ): boolean {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot check for some styles ${formatForError(search)}`);
 
   return hasSomeProperties(element, search, hasSingleStyle);

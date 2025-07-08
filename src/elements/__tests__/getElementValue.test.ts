@@ -21,7 +21,7 @@ describe("the getElementValue function", () => {
   });
 
   it("returns a numeric value for a select input", () => {
-    // biome-ignore format:
+    // biome-ignore format: Ignore
     const element = render(`
       <select>
         <option value="1" selected>1</option>
@@ -35,7 +35,7 @@ describe("the getElementValue function", () => {
   });
 
   it("returns a string value for a select input", () => {
-    // biome-ignore format:
+    // biome-ignore format: Ignore
     const element = render(`
       <select>
         <option value="a" selected>A</option>
@@ -49,7 +49,7 @@ describe("the getElementValue function", () => {
   });
 
   it("returns a boolean value for a select input", () => {
-    // biome-ignore format:
+    // biome-ignore format: Ignore
     const element = render(`
       <select>
         <option value="true" selected>True</option>
@@ -63,7 +63,7 @@ describe("the getElementValue function", () => {
   });
 
   it("returns the first option for a select input with nothing selected", () => {
-    // biome-ignore format:
+    // biome-ignore format: Ignore
     const element = render(`<select><option value="a">A</option><option value="b">B</option></select>`);
 
     const result = getElementValue(element);

@@ -7,10 +7,10 @@
  */
 export { getAttribute, getAttributes } from "./getAttributes.ts";
 export {
+  type AttributesSearch,
   hasAllAttributes,
   hasAttribute,
   hasSomeAttributes,
-  type AttributesSearch,
 } from "./hasAttributes.ts";
 export { InvalidAttributeError } from "./InvalidAttributeError.ts";
 export { removeAttribute, removeAttributes } from "./removeAttributes.ts";

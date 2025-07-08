@@ -73,7 +73,7 @@ export function setDatasetEntry<E extends Element = HTMLElement>(
   key: DatasetKey,
   value: DatasetValue | null,
 ): E {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot set dataset entry for ${key}`);
 
   setSingleDatasetEntry(element, key, value);
@@ -147,7 +147,7 @@ export function setDatasetEntries<E extends Element = HTMLElement>(
   target: Target | null,
   dataset: Dataset,
 ): E {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot set dataset entries ${formatForError(dataset)}`);
 
   for (const key of Object.keys(dataset)) {

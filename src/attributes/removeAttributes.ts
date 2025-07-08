@@ -108,7 +108,7 @@ export function removeAttributes<E extends Element = HTMLElement>(
   target: Target | null,
   names: AttributeName<E>[],
 ): E {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot remove attributes ${formatForError(names)}`);
 
   for (const name of names) {

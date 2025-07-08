@@ -1,14 +1,14 @@
-import { type KeysOf, type WithUndefinedValues, cast } from "@laserware/arcade";
+import { cast, type KeysOf, type WithUndefinedValues } from "@laserware/arcade";
 
 import { toElementOrThrow } from "../elements/toElement.ts";
 import type { Target } from "../elements/types.ts";
 import { parseDOMValue } from "../internal/domValues.ts";
 import { formatForError } from "../internal/formatForError.ts";
 
-import type { StyleKey, StyleValue, Styles } from "./types.ts";
+import type { StyleKey, Styles, StyleValue } from "./types.ts";
 
 /**
- * Attempts to get the specified style property with name `key` from the
+ * Attempts to get the specified style property with the name `key` from the
  * specified `target`. If the value is found, it is coerced to a boolean if
  * `"true"` or `"false"`, a number if numeric, or the string value if a string.
  * If not found, returns `undefined`.
@@ -56,13 +56,13 @@ export function getStyle<V extends StyleValue = string>(
 /**
  * Builds an object with the keys equal to the specified `keys` and
  * the value equal to the corresponding style property value in the specified
- * `target`. If the value is found it is coerced to a boolean if `"true"` or
+ * `target`. If the value is found, it is coerced to a boolean if `"true"` or
  * `"false"`, a number if numeric, or the string value if a string. If not
  * found, the value is excluded from the return value.
  *
  * > [!IMPORTANT]
  * > You will need to perform checks for whether a value is `undefined` in the returned
- * > object if some of the entries weren't present. See the code block below for
+ * > object if some entries weren't present. See the code block below for
  * > additional details.
  *
  * ```ts
@@ -124,7 +124,7 @@ export function getStyles<V extends Styles = Styles>(
   target: Target | null,
   keys: KeysOf<V>,
 ): WithUndefinedValues<V> {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot get styles ${formatForError(keys)}`);
 
   const styles: Record<string, StyleValue | undefined> = {};
@@ -145,7 +145,7 @@ function getSingleStyle<V extends StyleValue>(
   // `parseDOMValue` because it may be `null` and we only want to return
   // `undefined` if the style doesn't exist.
 
-  // @ts-ignore I know `key` is a valid key for styles. If it wasn't we return `undefined`.
+  // @ts-ignore I know `key` is a valid key for styles. If it wasn't, we return `undefined`.
   const styleEntry = element.style[key];
 
   if (styleEntry !== undefined && styleEntry !== "") {
@@ -154,7 +154,7 @@ function getSingleStyle<V extends StyleValue>(
 
   const styleProperty = cast<HTMLElement>(element).style.getPropertyValue(key);
 
-  // Apparently the `kebab-case` version of a style property name is accessible
+  // Apparently, the `kebab-case` version of a style property name is accessible
   // from the element's `style` property, so style["font-size"] works.
   // This is a fallback in case someone passes in a CSS variable.
   if (styleProperty !== "") {

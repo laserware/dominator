@@ -12,7 +12,7 @@ import type { AttributeName, AttributeValue } from "./types.ts";
 /**
  * Search criteria for checking if attributes are present in an element.
  * You can use an array of attribute names to check only if the attributes are
- * present, or an object to search for specific values. Use `null` for the value
+ *  present or an object to search for specific values. Use `null` for the value
  * if you only care about the presence of an attribute.
  *
  * @template E Element with corresponding attributes to search.
@@ -65,7 +65,7 @@ export function hasAttribute<E extends Element = HTMLElement>(
   name: AttributeName<E>,
   value?: AttributeValue,
 ): boolean {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot check for attribute ${name}`);
 
   return hasSingleAttribute(element, name, value);
@@ -115,7 +115,7 @@ export function hasAllAttributes<E extends Element = HTMLElement>(
   target: Target | null,
   search: AttributesSearch<E>,
 ): boolean {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot check for all attributes ${formatForError(search)}`);
 
   return hasAllProperties(element, search, hasSingleAttribute);
@@ -164,7 +164,7 @@ export function hasSomeAttributes<E extends Element = HTMLElement>(
   target: Target | null,
   search: AttributesSearch<E>,
 ): boolean {
-  // biome-ignore format:
+  // biome-ignore format: Ignore
   const element = toElementOrThrow(target, `Cannot check for some attributes ${formatForError(search)}`);
 
   return hasSomeProperties(element, search, hasSingleAttribute);

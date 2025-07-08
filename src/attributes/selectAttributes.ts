@@ -6,7 +6,7 @@ import { stringifyDOMValue } from "../internal/domValues.ts";
 import { selectorWithTag } from "../internal/selectorWithTag.ts";
 
 import { InvalidAttributeError } from "./InvalidAttributeError.ts";
-import type { AttributeName, AttributeValue, Attributes } from "./types.ts";
+import type { AttributeName, Attributes, AttributeValue } from "./types.ts";
 
 /**
  * Attempts to build a CSS selector string from the attribute `name` and `value`.
@@ -69,7 +69,7 @@ export function selectAttribute<E extends Element = HTMLElement>(
 
 /**
  * Attempts to build a CSS selector string from the `attributes` object. Note
- * that the values of the `attributes` object are coerced to a string and `null` excludes
+ * that the values of the `attributes` object are coerced to a string, and `null` excludes
  * a value but only includes a name. If `tagName` is specified, it is included in the
  * resulting selector.
  *
@@ -79,7 +79,7 @@ export function selectAttribute<E extends Element = HTMLElement>(
  *
  * @template E Type of element to select attributes from.
  *
- * @param attributes Object with key of attribute name and value of attribute value.
+ * @param attributes Object with a key of attribute name and value of attribute value.
  * @param [tagName] Optional tagName name to include in the selector.
  *
  * @returns CSS selector based on the `attributes`.
@@ -143,11 +143,11 @@ function selectSingleAttribute<E extends Element = HTMLElement>(
     // caught the `null` and `undefined` above:
     const stringValue = stringifyDOMValue(value);
 
-    // We JSON.stringify the value  to ensure any JSON strings are
-    // escaped and non-string values are surrounded with quotes:
+    // We JSON.stringify the value to ensure any JSON strings are
+    // escaped, and non-string values are surrounded with quotes:
     return `[${validName}=${JSON.stringify(stringValue)}]`;
   } catch (err: any) {
-    // biome-ignore format:
+    // biome-ignore format: Ignore
     throw new InvalidAttributeError(`Could not get selector for ${name}: ${err.message}`);
   }
 }

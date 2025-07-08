@@ -5,17 +5,12 @@
  *
  * @module dataset
  */
-export {
-  wrapDataset,
-  type AnyDatasetShape,
-  type DatasetWrapper,
-} from "./wrapDataset.ts";
 export { getDatasetEntries, getDatasetValue } from "./getDataset.ts";
 export {
+  type DatasetSearch,
   hasAllDatasetEntries,
   hasDatasetEntry,
   hasSomeDatasetEntries,
-  type DatasetSearch,
 } from "./hasDataset.ts";
 export { removeDatasetEntries, removeDatasetEntry } from "./removeDataset.ts";
 export { selectDatasetEntries, selectDatasetEntry } from "./selectDataset.ts";
@@ -27,3 +22,8 @@ export type {
   DatasetPropertyName,
   DatasetValue,
 } from "./types.ts";
+export {
+  type AnyDatasetShape,
+  type DatasetWrapper,
+  wrapDataset,
+} from "./wrapDataset.ts";
