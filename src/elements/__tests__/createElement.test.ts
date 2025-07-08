@@ -84,7 +84,6 @@ describe("the createElement function", () => {
       {
         id: "test",
         type: "button",
-        ariaDisabled: "false",
         attributes: {
           "aria-label": "Test",
         },
@@ -122,7 +121,7 @@ describe("the createElement function", () => {
     expect(keydown).toHaveBeenCalledTimes(1);
 
     expect(element.outerHTML).toBe(
-      `<button aria-label="Test" style="--color-bg: blue;" data-string-property="value" data-boolean-property="true" data-number-property="24" id="test" type="button" aria-disabled="false"></button>`,
+      `<button aria-label="Test" style="--color-bg: blue;" data-string-property="value" data-boolean-property="true" data-number-property="24" id="test" type="button"></button>`,
     );
   });
 
